@@ -32,7 +32,7 @@ const wordImage = (word, category) => {
 export default function App() {
   const [screen, setScreen] = useState('home'); // home, create, join, lobby, game, guessed
   const [playerName, setPlayerName] = useState(() => localStorage.getItem('playerName') || '');
-  const [playerId] = useState(() => {
+  const [playerId, setPlayerId] = useState(() => {
     let id = localStorage.getItem('playerId');
     if (!id) { id = generatePlayerId(); localStorage.setItem('playerId', id); }
     return id;
@@ -58,8 +58,32 @@ export default function App() {
   const isHost = room?.host_id === playerId;
 
   useEffect(() => {
-    questionsEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    // Scroll only inside the questions list, not the whole page (better on mobile)
+    const el = questionsEndRef.current;
+    if (el && el.parentElement) {
+      el.parentElement.scrollTop = el.parentElement.scrollHeight;
+    }
   }, [questions]);
+
+  // ── Polling fallback: refresh data every 2s while in a room ──────────────
+  // This ensures sync works even if Supabase realtime is unreliable.
+  useEffect(() => {
+    if (!roomCode || (screen !== 'lobby' && screen !== 'game')) return;
+    const poll = async () => {
+      const { data: r } = await supabase.from('rooms').select('*').eq('id', roomCode).single();
+      if (r) setRoom(r);
+      const { data: pData } = await supabase.from('players').select('*').eq('room_id', roomCode).order('joined_at');
+      if (pData) setPlayers(pData);
+      const { data: qData } = await supabase.from('questions').select('*').eq('room_id', roomCode).order('created_at');
+      if (qData) {
+        setQuestions(qData);
+        const unanswered = qData.find(q => !q.answer);
+        setPendingQuestion(unanswered || null);
+      }
+    };
+    const interval = setInterval(poll, 2000);
+    return () => clearInterval(interval);
+  }, [roomCode, screen]);
 
   const cleanup = useCallback(() => {
     subscriptionsRef.current.forEach(s => supabase.removeChannel(s));
@@ -142,20 +166,6 @@ export default function App() {
   };
 
   // ── Subscribe to room data ───────────────────────────────────────────────
-  const fetchPlayers = async (rId) => {
-    const { data } = await supabase.from('players').select('*').eq('room_id', rId).order('joined_at');
-    if (data) setPlayers(data);
-  };
-
-  const fetchQuestions = async (rId) => {
-    const { data } = await supabase.from('questions').select('*').eq('room_id', rId).order('created_at');
-    if (data) {
-      setQuestions(data);
-      const unanswered = data.find(q => !q.answer);
-      setPendingQuestion(unanswered || null);
-    }
-  };
-
   const subscribeToRoom = useCallback((rId) => {
     const roomSub = supabase.channel(`room:${rId}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'rooms', filter: `id=eq.${rId}` },
@@ -189,14 +199,18 @@ export default function App() {
     if (!playerName.trim() || !secretWord.trim()) { setError('Užpildyk visus laukus!'); return; }
     setLoading(true); setError('');
     saveName();
+    // Always generate fresh playerId for a new game (avoids duplicate key error)
+    const freshId = generatePlayerId();
+    localStorage.setItem('playerId', freshId);
+    setPlayerId(freshId);
     const code = generateRoomCode();
     const { error: e1 } = await supabase.from('rooms').insert({
       id: code, secret_word: secretWord.trim(), secret_category: secretCategory,
-      host_id: playerId, status: 'waiting'
+      host_id: freshId, status: 'waiting'
     });
     if (e1) { setError(e1.message); setLoading(false); return; }
     const { error: e2 } = await supabase.from('players').insert({
-      id: playerId, room_id: code, name: playerName.trim(), is_host: true
+      id: freshId, room_id: code, name: playerName.trim(), is_host: true
     });
     if (e2) { setError(e2.message); setLoading(false); return; }
     const { data: r } = await supabase.from('rooms').select('*').eq('id', code).single();
@@ -216,11 +230,11 @@ export default function App() {
     const { data: r } = await supabase.from('rooms').select('*').eq('id', code).single();
     if (!r) { setError('Kambarys nerastas!'); setLoading(false); return; }
     if (r.status === 'finished') { setError('Žaidimas jau baigtas!'); setLoading(false); return; }
-    // Check if already in room
-    const { data: existing } = await supabase.from('players').select('*').eq('id', playerId).eq('room_id', code).single();
-    if (!existing) {
-      await supabase.from('players').insert({ id: playerId, room_id: code, name: playerName.trim(), is_host: false });
-    }
+    // Always generate fresh playerId for joining (avoids duplicate key error)
+    const freshId = generatePlayerId();
+    localStorage.setItem('playerId', freshId);
+    setPlayerId(freshId);
+    await supabase.from('players').insert({ id: freshId, room_id: code, name: playerName.trim(), is_host: false });
     setRoom(r); setRoomCode(code);
     // Fetch initial data
     const { data: pData } = await supabase.from('players').select('*').eq('room_id', code).order('joined_at');
