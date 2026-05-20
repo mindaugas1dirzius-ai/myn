@@ -261,6 +261,30 @@ html, body, #root {
   border: 1px solid rgba(123, 47, 255, 0.4);
 }
 
+.btn-surrender {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  background: transparent;
+  color: var(--text2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-surrender:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.btn-surrender:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .btn-back {
   background: none;
   border: none;

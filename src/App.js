@@ -56,6 +56,7 @@ export default function App() {
   const [aiInput, setAiInput] = useState('');
   const [aiThinking, setAiThinking] = useState(false);
   const [aiWon, setAiWon] = useState(false);
+  const [aiSurrendered, setAiSurrendered] = useState(false);
 
   const subscriptionsRef = useRef([]);
   const questionsEndRef = useRef(null);
@@ -302,7 +303,7 @@ export default function App() {
   // ── AI game functions ────────────────────────────────────────────────────
   const startAiGame = async () => {
     setError(''); setLoading(true);
-    setAiQuestions([]); setAiWon(false); setAiInput('');
+    setAiQuestions([]); setAiWon(false); setAiSurrendered(false); setAiInput('');
     try {
       const resp = await fetch('/api/ai', {
         method: 'POST',
@@ -374,8 +375,9 @@ export default function App() {
   if (screen === 'aigame') return <AiGameScreen
     aiCategory={aiCategory} aiSecretWord={aiSecretWord}
     aiQuestions={aiQuestions} aiInput={aiInput} setAiInput={setAiInput}
-    aiThinking={aiThinking} aiWon={aiWon} onAsk={askAi}
-    onPlayAgain={() => { setAiQuestions([]); setAiWon(false); setScreen('aisetup'); }}
+    aiThinking={aiThinking} aiWon={aiWon} aiSurrendered={aiSurrendered}
+    onAsk={askAi} onSurrender={() => setAiSurrendered(true)}
+    onPlayAgain={() => { setAiQuestions([]); setAiWon(false); setAiSurrendered(false); setScreen('aisetup'); }}
     onHome={() => setScreen('home')} />;
 
   if (screen === 'create') return <CreateScreen
@@ -712,7 +714,7 @@ function AiSetupScreen({ aiCategory, setAiCategory, onBack, onStart, loading, er
 
 function AiGameScreen({
   aiCategory, aiSecretWord, aiQuestions, aiInput, setAiInput,
-  aiThinking, aiWon, onAsk, onPlayAgain, onHome
+  aiThinking, aiWon, aiSurrendered, onAsk, onSurrender, onPlayAgain, onHome
 }) {
   const feedRef = useRef(null);
   useEffect(() => {
@@ -744,18 +746,19 @@ function AiGameScreen({
   }
 
   const lost = left <= 0;
-  if (lost) {
+  if (lost || aiSurrendered) {
     return (
       <div className="screen guessed-screen">
         <div className="confetti-header">
-          <div className="big-emoji">😅</div>
-          <h2>Klausimai baigėsi!</h2>
+          <div className="big-emoji">{aiSurrendered ? '🏳️' : '😅'}</div>
+          <h2>{aiSurrendered ? 'Pasidavei!' : 'Klausimai baigėsi!'}</h2>
         </div>
         <div className="revealed-card">
+          <img src={wordImage(aiSecretWord, aiCategory)} alt={aiSecretWord} className="revealed-image" />
           <div className="revealed-info">
             <span className="revealed-category">{aiCategory}</span>
             <h2 className="revealed-word">{aiSecretWord}</h2>
-            <p className="guessed-sub">Tai buvo slaptas žodis</p>
+            <p className="guessed-sub">AI buvo sugalvojęs šį žodį</p>
           </div>
         </div>
         <button className="btn btn-primary" onClick={onPlayAgain}>Bandyti dar kartą</button>
@@ -829,6 +832,9 @@ function AiGameScreen({
               →
             </button>
           </div>
+          <button className="btn-surrender" onClick={onSurrender} disabled={aiThinking}>
+            🏳️ Pasiduodu — parodyk žodį
+          </button>
         </div>
       </div>
     </div>
