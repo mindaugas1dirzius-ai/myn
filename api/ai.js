@@ -19,31 +19,56 @@ export default async function handler(req, res) {
       try { body = JSON.parse(body); } catch (e) { body = {}; }
     }
     if (!body || typeof body !== 'object') body = {};
-    const { action, category, secretWord, question } = body;
+    const { action, category, secretWord, question, difficulty } = body;
 
     let systemPrompt = '';
     let userMessage = '';
 
     if (action === 'pickWord') {
-      // AI sugalvoja žodį pagal kategoriją
-      const examples = {
-        'Daiktas': 'pvz: stalas, telefonas, knyga, šaukštas, dviratis, laikrodis, kėdė, puodelis',
-        'Gyvūnas': 'pvz: katė, dramblys, pingvinas, voras, arklys, delfinas, lapė, pelėda',
-        'Veikėjas': 'pvz: gydytojas, mokytojas, ugniagesys, policininkas, virėjas, pilotas',
-        'Vieta': 'pvz: mokykla, paplūdimys, ligoninė, biblioteka, parkas, oro uostas',
-        'Veiksmas': 'pvz: bėgti, miegoti, plaukti, valgyti, šokti, dainuoti, skaityti'
+      // AI sugalvoja žodį pagal kategoriją ir sunkumą
+      const examplesEasy = {
+        'Daiktas': 'stalas, knyga, kėdė, kamuolys, batai, kepurė, šaukštas, puodelis',
+        'Gyvūnas': 'katė, šuo, arklys, kiškis, meška, žuvis, varlė, bitė',
+        'Veikėjas': 'gydytojas, mokytojas, virėjas, policininkas, ugniagesys',
+        'Vieta': 'mokykla, parkas, parduotuvė, miškas, jūra, namas',
+        'Veiksmas': 'bėgti, miegoti, valgyti, šokti, plaukti, juoktis'
       };
-      systemPrompt = `Tu esi žaidimo "20 klausimų" vedėjas. Sugalvok VIENĄ paprastą, kasdienį, visiems gerai žinomą lietuvišką žodį pagal kategoriją.
+      const examplesHard = {
+        'Daiktas': 'mikroskopas, kompasas, teleskopas, termometras, parašiutas, akordeonas',
+        'Gyvūnas': 'kengūra, pingvinas, krokodilas, povas, ežiukas, šikšnosparnis, koala',
+        'Veikėjas': 'archeologas, dirigentas, vulkanologas, žurnalistas, architektas',
+        'Vieta': 'observatorija, vulkanas, oranžerija, švyturys, katedra, uostas',
+        'Veiksmas': 'šnabždėti, vairuoti, slidinėti, fotografuoti, dirigentauti, žongliruoti'
+      };
+      const isHard = difficulty === 'sunku';
+      const examples = isHard ? examplesHard : examplesEasy;
+
+      if (isHard) {
+        systemPrompt = `Tu esi žaidimo "20 klausimų" vedėjas. Sugalvok VIENĄ sudėtingesnį, bet visiems žinomą lietuvišką žodį.
 
 SVARBU:
 - Žodis turi būti TIKRAS, egzistuojantis lietuvių kalbos žodis
-- Paprastas ir kasdienis — toks, kurį žino kiekvienas vaikas
-- Vardininko linksniu (pvz. "stalas", NE "stalo")
-- Vienaskaita
-- Mažosiomis raidėmis
+- Sudėtingesnis, bet vis tiek visiems suprantamas (ne mokslinis terminas)
+- Toks, kurį žino daugumas suaugusiųjų ir paauglių
+- ✅ GERI pavyzdžiai: mikroskopas, kengūra, vulkanas, teleskopas, krokodilas
+- ❌ BLOGI: per daug reti, moksliniai, niekam nežinomi žodžiai
+- Vardininko linksniu, vienaskaita, mažosiomis raidėmis
 
-Atsakyk TIK tuo vienu žodžiu, be jokio papildomo teksto, be taško, be kabučių.`;
-      userMessage = `Kategorija: ${category}. ${examples[category] || ''}. Sugalvok vieną tokį žodį.`;
+Atsakyk TIK tuo vienu žodžiu, be jokio papildomo teksto.`;
+      } else {
+        systemPrompt = `Tu esi žaidimo "20 klausimų" vedėjas. Sugalvok VIENĄ labai paprastą, visiems gerai žinomą lietuvišką žodį.
+
+GRIEŽTAI SVARBU:
+- Žodis turi būti TIKRAS, dažnai vartojamas lietuvių kalbos žodis
+- LABAI PAPRASTAS — toks, kurį žino KIEKVIENAS 6 metų vaikas
+- ✅ GERI pavyzdžiai: katė, šuo, stalas, obuolys, mašina, namas, saulė, knyga
+- ❌ BLOGI pavyzdžiai: reti, moksliniai, sudėtingi, neįprasti žodžiai
+- Vardininko linksniu, vienaskaita, mažosiomis raidėmis
+- NEGALVOK keistų ar retų žodžių — rink TIK kasdienius
+
+Atsakyk TIK tuo vienu žodžiu, be jokio papildomo teksto.`;
+      }
+      userMessage = `Kategorija: ${category}. Paprasti pavyzdžiai: ${examples[category] || ''}. Sugalvok vieną tokį pat paprastą, gerai žinomą žodį (gali būti iš pavyzdžių arba panašaus lygio).`;
     } else if (action === 'answer') {
       // AI atsako į žaidėjo klausimą — su mąstymu ir istorija
       const history = Array.isArray(body.history) ? body.history : [];
@@ -79,7 +104,7 @@ SVARBU: Būk NUOSEKLUS. Jei anksčiau pasakei kad žodis "lengvas", tai negali v
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5',
+        model: 'claude-sonnet-4-6',
         max_tokens: 300,
         system: systemPrompt,
         messages: [{ role: 'user', content: userMessage }]

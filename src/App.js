@@ -51,6 +51,7 @@ export default function App() {
 
   // AI game state
   const [aiCategory, setAiCategory] = useState('Daiktas');
+  const [aiDifficulty, setAiDifficulty] = useState('lengva');
   const [aiSecretWord, setAiSecretWord] = useState('');
   const [aiQuestions, setAiQuestions] = useState([]); // {question, answer}
   const [aiInput, setAiInput] = useState('');
@@ -308,7 +309,7 @@ export default function App() {
       const resp = await fetch('/api/ai', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'pickWord', category: aiCategory })
+        body: JSON.stringify({ action: 'pickWord', category: aiCategory, difficulty: aiDifficulty })
       });
       const data = await resp.json();
       if (data.error) { setError(data.error); setLoading(false); return; }
@@ -373,6 +374,7 @@ export default function App() {
 
   if (screen === 'aisetup') return <AiSetupScreen
     aiCategory={aiCategory} setAiCategory={setAiCategory}
+    aiDifficulty={aiDifficulty} setAiDifficulty={setAiDifficulty}
     onBack={() => setScreen('home')} onStart={startAiGame}
     loading={loading} error={error} />;
 
@@ -687,7 +689,7 @@ function GameScreen({
 }
 
 // ── AI žaidimo ekranai ──────────────────────────────────────────────────
-function AiSetupScreen({ aiCategory, setAiCategory, onBack, onStart, loading, error }) {
+function AiSetupScreen({ aiCategory, setAiCategory, aiDifficulty, setAiDifficulty, onBack, onStart, loading, error }) {
   return (
     <div className="screen">
       <div className="screen-header">
@@ -706,6 +708,17 @@ function AiSetupScreen({ aiCategory, setAiCategory, onBack, onStart, loading, er
               className={`chip ${aiCategory === c ? 'chip-active' : ''}`}
               onClick={() => setAiCategory(c)}>{c}</button>
           ))}
+        </div>
+      </div>
+      <div className="form-section">
+        <label className="field-label">Sunkumas</label>
+        <div className="category-chips">
+          <button
+            className={`chip ${aiDifficulty === 'lengva' ? 'chip-active' : ''}`}
+            onClick={() => setAiDifficulty('lengva')}>😊 Lengva</button>
+          <button
+            className={`chip ${aiDifficulty === 'sunku' ? 'chip-active' : ''}`}
+            onClick={() => setAiDifficulty('sunku')}>🔥 Sunku</button>
         </div>
         {error && <p className="error-text">{error}</p>}
         <button className="btn btn-primary" onClick={onStart} disabled={loading}>

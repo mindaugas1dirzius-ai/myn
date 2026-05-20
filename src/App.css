@@ -285,6 +285,11 @@ html, body, #root {
   cursor: not-allowed;
 }
 
+.chip-anything {
+  background: linear-gradient(135deg, rgba(123, 47, 255, 0.2), rgba(212, 0, 255, 0.15));
+  border-color: rgba(123, 47, 255, 0.5);
+}
+
 .btn-back {
   background: none;
   border: none;
