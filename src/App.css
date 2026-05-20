@@ -236,6 +236,31 @@ html, body, #root {
   border: 1px solid var(--border);
 }
 
+.btn-ai {
+  background: linear-gradient(135deg, #1a0b2e 0%, #2d1b4e 100%);
+  color: #e0c3ff;
+  border: 1px solid #7b2fff;
+  box-shadow: 0 0 18px rgba(123, 47, 255, 0.35);
+}
+
+.btn-ai:hover:not(:disabled) {
+  box-shadow: 0 0 28px rgba(123, 47, 255, 0.6);
+  border-color: #d400ff;
+}
+
+.ai-intro {
+  color: var(--text2);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 12px 0 20px;
+  text-align: center;
+}
+
+.ai-hint {
+  background: linear-gradient(135deg, rgba(123, 47, 255, 0.15), rgba(212, 0, 255, 0.1));
+  border: 1px solid rgba(123, 47, 255, 0.4);
+}
+
 .btn-back {
   background: none;
   border: none;

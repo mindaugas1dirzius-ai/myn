@@ -49,6 +49,14 @@ export default function App() {
   const [voiceActive, setVoiceActive] = useState(false);
   const [pendingQuestion, setPendingQuestion] = useState(null);
 
+  // AI game state
+  const [aiCategory, setAiCategory] = useState('Daiktas');
+  const [aiSecretWord, setAiSecretWord] = useState('');
+  const [aiQuestions, setAiQuestions] = useState([]); // {question, answer}
+  const [aiInput, setAiInput] = useState('');
+  const [aiThinking, setAiThinking] = useState(false);
+  const [aiWon, setAiWon] = useState(false);
+
   const subscriptionsRef = useRef([]);
   const questionsEndRef = useRef(null);
   const peerConnectionsRef = useRef({});
@@ -291,6 +299,61 @@ export default function App() {
     await supabase.from('rooms').update({ status: 'guessed' }).eq('id', room.id);
   };
 
+  // ── AI game functions ────────────────────────────────────────────────────
+  const startAiGame = async () => {
+    setError(''); setLoading(true);
+    setAiQuestions([]); setAiWon(false); setAiInput('');
+    try {
+      const resp = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'pickWord', category: aiCategory })
+      });
+      const data = await resp.json();
+      if (data.error) { setError(data.error); setLoading(false); return; }
+      setAiSecretWord((data.result || '').trim());
+      setScreen('aigame');
+    } catch (e) {
+      setError('Nepavyko susisiekti su AI: ' + String(e));
+    }
+    setLoading(false);
+  };
+
+  const askAi = async () => {
+    if (!aiInput.trim() || aiThinking || aiWon) return;
+    const q = aiInput.trim();
+    setAiInput('');
+    setAiThinking(true);
+    // Add question with no answer yet
+    setAiQuestions(prev => [...prev, { question: q, answer: null }]);
+    try {
+      const resp = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'answer', category: aiCategory,
+          secretWord: aiSecretWord, question: q
+        })
+      });
+      const data = await resp.json();
+      let answer = (data.result || 'GALI BŪTI').toUpperCase().trim();
+      // Normalize
+      if (answer.includes('ATSP')) answer = 'ATSPĖJOTE';
+      else if (answer.includes('TAIP')) answer = 'TAIP';
+      else if (answer.startsWith('NE')) answer = 'NE';
+      else answer = 'GALI BŪTI';
+      setAiQuestions(prev => prev.map((item, i) =>
+        i === prev.length - 1 ? { ...item, answer } : item
+      ));
+      if (answer === 'ATSPĖJOTE') setAiWon(true);
+    } catch (e) {
+      setAiQuestions(prev => prev.map((item, i) =>
+        i === prev.length - 1 ? { ...item, answer: 'GALI BŪTI' } : item
+      ));
+    }
+    setAiThinking(false);
+  };
+
   // ── Render ───────────────────────────────────────────────────────────────
   useEffect(() => {
     if (room?.status === 'playing' && screen === 'lobby') setScreen('game');
@@ -300,7 +363,20 @@ export default function App() {
 
   if (screen === 'home') return <HomeScreen
     playerName={playerName} setPlayerName={setPlayerName}
-    onCreate={() => setScreen('create')} onJoin={() => setScreen('join')} />;
+    onCreate={() => setScreen('create')} onJoin={() => setScreen('join')}
+    onPlayAI={() => setScreen('aisetup')} />;
+
+  if (screen === 'aisetup') return <AiSetupScreen
+    aiCategory={aiCategory} setAiCategory={setAiCategory}
+    onBack={() => setScreen('home')} onStart={startAiGame}
+    loading={loading} error={error} />;
+
+  if (screen === 'aigame') return <AiGameScreen
+    aiCategory={aiCategory} aiSecretWord={aiSecretWord}
+    aiQuestions={aiQuestions} aiInput={aiInput} setAiInput={setAiInput}
+    aiThinking={aiThinking} aiWon={aiWon} onAsk={askAi}
+    onPlayAgain={() => { setAiQuestions([]); setAiWon(false); setScreen('aisetup'); }}
+    onHome={() => setScreen('home')} />;
 
   if (screen === 'create') return <CreateScreen
     playerName={playerName} setPlayerName={setPlayerName}
@@ -345,7 +421,7 @@ export default function App() {
 // SCREENS
 // ═══════════════════════════════════════════════════════════════════════════
 
-function HomeScreen({ playerName, setPlayerName, onCreate, onJoin }) {
+function HomeScreen({ playerName, setPlayerName, onCreate, onJoin, onPlayAI }) {
   return (
     <div className="screen home-screen">
       <div className="home-hero">
@@ -369,6 +445,9 @@ function HomeScreen({ playerName, setPlayerName, onCreate, onJoin }) {
         </button>
         <button className="btn btn-secondary" onClick={onJoin} disabled={!playerName.trim()}>
           Prisijungti
+        </button>
+        <button className="btn btn-ai" onClick={onPlayAI} disabled={!playerName.trim()}>
+          🤖 Žaisti su AI
         </button>
       </div>
     </div>
@@ -597,6 +676,161 @@ function GameScreen({
           <span>{currentQuestioner?.name || '...'} klausinėja...</span>
         </div>
       )}
+    </div>
+  );
+}
+
+// ── AI žaidimo ekranai ──────────────────────────────────────────────────
+function AiSetupScreen({ aiCategory, setAiCategory, onBack, onStart, loading, error }) {
+  return (
+    <div className="screen">
+      <div className="screen-header">
+        <button className="btn-back" onClick={onBack}>←</button>
+        <h2>🤖 Žaisti su AI</h2>
+      </div>
+      <p className="ai-intro">
+        AI sugalvos slaptą žodį. Tu klausinėji, AI atsako TAIP / NE / GALI BŪTI.
+        Bandyk atspėti!
+      </p>
+      <div className="form-section">
+        <label className="field-label">Kategorija</label>
+        <div className="category-chips">
+          {CATEGORIES.map(c => (
+            <button key={c}
+              className={`chip ${aiCategory === c ? 'chip-active' : ''}`}
+              onClick={() => setAiCategory(c)}>{c}</button>
+          ))}
+        </div>
+        {error && <p className="error-text">{error}</p>}
+        <button className="btn btn-primary" onClick={onStart} disabled={loading}>
+          {loading ? 'AI galvoja žodį...' : 'Pradėti žaidimą'}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function AiGameScreen({
+  aiCategory, aiSecretWord, aiQuestions, aiInput, setAiInput,
+  aiThinking, aiWon, onAsk, onPlayAgain, onHome
+}) {
+  const feedRef = useRef(null);
+  useEffect(() => {
+    if (feedRef.current) feedRef.current.scrollTop = feedRef.current.scrollHeight;
+  }, [aiQuestions]);
+
+  const left = 20 - aiQuestions.length;
+
+  if (aiWon) {
+    const imageUrl = wordImage(aiSecretWord, aiCategory);
+    return (
+      <div className="screen guessed-screen">
+        <div className="confetti-header">
+          <div className="big-emoji">🎉</div>
+          <h2>Atspėjai!</h2>
+        </div>
+        <div className="revealed-card">
+          <img src={imageUrl} alt={aiSecretWord} className="revealed-image" />
+          <div className="revealed-info">
+            <span className="revealed-category">{aiCategory}</span>
+            <h2 className="revealed-word">{aiSecretWord}</h2>
+            <p className="guessed-sub">Klausimų panaudota: {aiQuestions.length}</p>
+          </div>
+        </div>
+        <button className="btn btn-primary" onClick={onPlayAgain}>Žaisti dar kartą</button>
+        <button className="btn btn-secondary" onClick={onHome}>Į pradžią</button>
+      </div>
+    );
+  }
+
+  const lost = left <= 0;
+  if (lost) {
+    return (
+      <div className="screen guessed-screen">
+        <div className="confetti-header">
+          <div className="big-emoji">😅</div>
+          <h2>Klausimai baigėsi!</h2>
+        </div>
+        <div className="revealed-card">
+          <div className="revealed-info">
+            <span className="revealed-category">{aiCategory}</span>
+            <h2 className="revealed-word">{aiSecretWord}</h2>
+            <p className="guessed-sub">Tai buvo slaptas žodis</p>
+          </div>
+        </div>
+        <button className="btn btn-primary" onClick={onPlayAgain}>Bandyti dar kartą</button>
+        <button className="btn btn-secondary" onClick={onHome}>Į pradžią</button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="screen game-screen">
+      <div className="game-header">
+        <div className="game-meta">
+          <span className="questions-left">
+            <strong>{left}</strong>
+            <small>liko</small>
+          </span>
+          <span className="category-badge">{aiCategory}</span>
+        </div>
+        <span className="game-header-logo">MYN</span>
+        <div className="game-actions">
+          <button className="btn-guessed" onClick={onHome}>✕</button>
+        </div>
+      </div>
+
+      <div className="secret-hint ai-hint">
+        <span>🤖 AI sugalvojo žodį — klausinėk ir spėk!</span>
+      </div>
+
+      <div className="questions-feed" ref={feedRef}>
+        {aiQuestions.length === 0 && (
+          <div className="empty-feed">
+            <div className="empty-icon">?</div>
+            <p>Užduok pirmą klausimą!<br />Pvz. „Ar tai gyva?"</p>
+          </div>
+        )}
+        {aiQuestions.map((q, i) => (
+          <div key={i} className="question-bubble my-question">
+            <div className="question-meta">
+              <span className="q-name">Tu</span>
+              {q.answer && <span className={`answer-badge answer-${
+                q.answer === 'TAIP' ? 'taip' :
+                q.answer === 'NE' ? 'ne' :
+                q.answer === 'ATSPĖJOTE' ? 'taip' : 'gali_buti'
+              }`}>{q.answer}</span>}
+            </div>
+            <p className="q-text">{q.question}</p>
+            {!q.answer && (
+              <div className="waiting-answer" style={{ marginTop: 8 }}>
+                <div className="pulse-dot" />
+                <span>AI galvoja...</span>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <div className="question-input-area">
+        <div className="my-turn-input">
+          <div className="input-row">
+            <input
+              className="input-field question-input"
+              placeholder="Užduok klausimą AI..."
+              value={aiInput}
+              onChange={e => setAiInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && onAsk()}
+              maxLength={120}
+              disabled={aiThinking}
+              autoFocus
+            />
+            <button className="btn-send" onClick={onAsk} disabled={!aiInput.trim() || aiThinking}>
+              →
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
