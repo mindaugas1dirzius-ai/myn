@@ -328,12 +328,16 @@ export default function App() {
     // Add question with no answer yet
     setAiQuestions(prev => [...prev, { question: q, answer: null }]);
     try {
+      // Send full history so AI stays consistent with previous answers
+      const history = aiQuestions
+        .filter(item => item.answer)
+        .map(item => ({ question: item.question, answer: item.answer }));
       const resp = await fetch('/api/ai', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'answer', category: aiCategory,
-          secretWord: aiSecretWord, question: q
+          secretWord: aiSecretWord, question: q, history
         })
       });
       const data = await resp.json();

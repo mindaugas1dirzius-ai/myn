@@ -26,15 +26,37 @@ export default async function handler(req, res) {
 
     if (action === 'pickWord') {
       // AI sugalvoja žodį pagal kategoriją
-      systemPrompt = `Tu esi žaidimo "20 klausimų" vedėjas. Tavo užduotis — sugalvoti vieną konkretų lietuvišką žodį pagal nurodytą kategoriją. Žodis turi būti gerai žinomas, nei per lengvas, nei per sunkus atspėti. Atsakyk TIK tuo vienu žodžiu, mažosiomis raidėmis, be jokio papildomo teksto, be taško.`;
-      userMessage = `Kategorija: ${category}. Sugalvok žodį.`;
+      const examples = {
+        'Daiktas': 'pvz: stalas, telefonas, knyga, šaukštas, dviratis, laikrodis, kėdė, puodelis',
+        'Gyvūnas': 'pvz: katė, dramblys, pingvinas, voras, arklys, delfinas, lapė, pelėda',
+        'Veikėjas': 'pvz: gydytojas, mokytojas, ugniagesys, policininkas, virėjas, pilotas',
+        'Vieta': 'pvz: mokykla, paplūdimys, ligoninė, biblioteka, parkas, oro uostas',
+        'Veiksmas': 'pvz: bėgti, miegoti, plaukti, valgyti, šokti, dainuoti, skaityti'
+      };
+      systemPrompt = `Tu esi žaidimo "20 klausimų" vedėjas. Sugalvok VIENĄ paprastą, kasdienį, visiems gerai žinomą lietuvišką žodį pagal kategoriją.
+
+SVARBU:
+- Žodis turi būti TIKRAS, egzistuojantis lietuvių kalbos žodis
+- Paprastas ir kasdienis — toks, kurį žino kiekvienas vaikas
+- Vardininko linksniu (pvz. "stalas", NE "stalo")
+- Vienaskaita
+- Mažosiomis raidėmis
+
+Atsakyk TIK tuo vienu žodžiu, be jokio papildomo teksto, be taško, be kabučių.`;
+      userMessage = `Kategorija: ${category}. ${examples[category] || ''}. Sugalvok vieną tokį žodį.`;
     } else if (action === 'answer') {
-      // AI atsako į žaidėjo klausimą — su mąstymu
+      // AI atsako į žaidėjo klausimą — su mąstymu ir istorija
+      const history = Array.isArray(body.history) ? body.history : [];
+      let historyText = '';
+      if (history.length > 0) {
+        historyText = '\n\nANKSTESNI KLAUSIMAI IR TAVO ATSAKYMAI (privalai būti nuoseklus su jais):\n' +
+          history.map((h, i) => `${i + 1}. "${h.question}" → ${h.answer}`).join('\n');
+      }
       systemPrompt = `Tu žaidi žaidimą "20 klausimų". Tu sugalvojai slaptą žodį: "${secretWord}" (kategorija: ${category}). Žaidėjas užduoda klausimus apie šį žodį ir bando jį atspėti.
 
-Tavo užduotis — TEISINGAI ir SĄŽININGAI atsakyti į žaidėjo klausimą apie žodį "${secretWord}".
+Tavo užduotis — TEISINGAI, SĄŽININGAI ir NUOSEKLIAI atsakyti į žaidėjo klausimą apie žodį "${secretWord}".
 
-Pirmiausia trumpai pagalvok: ar teiginys/klausimas tinka žodžiui "${secretWord}"? Tada nuspręsk atsakymą.
+Pirmiausia pagalvok: ar teiginys/klausimas tinka žodžiui "${secretWord}"? Patikrink ankstesnius savo atsakymus, kad neprieštarautum sau. Tada nuspręsk atsakymą.${historyText}
 
 Atsakyk JSON formatu (be jokio kito teksto):
 {"mintis": "trumpas paaiškinimas kodėl", "atsakymas": "TAIP" arba "NE" arba "GALI BŪTI" arba "ATSPĖJOTE"}
@@ -45,7 +67,7 @@ Taisyklės:
 - "GALI BŪTI" — tik jei tikrai priklauso nuo aplinkybių
 - "ATSPĖJOTE" — TIK jei žaidėjas tiesiogiai pasakė patį žodį "${secretWord}" arba labai artimą sinonimą
 
-Būk tikslus ir logiškas. Jei žaidėjas klausia "ar tai didesnis už šunį?" — pagalvok apie realų "${secretWord}" dydį ir atsakyk teisingai.`;
+SVARBU: Būk NUOSEKLUS. Jei anksčiau pasakei kad žodis "lengvas", tai negali vėliau sakyti kad "sunkus". Jei klausia tą patį du kartus — atsakyk vienodai. Būk logiškas: jei žodis "${secretWord}" yra mažas ir lengvas daiktas, tai jį galima pakelti.`;
       userMessage = `Žaidėjo klausimas/spėjimas: ${question}`;
     }
 
