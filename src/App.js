@@ -434,9 +434,9 @@ function HomeScreen({ playerName, setPlayerName, onCreate, onJoin, onPlayAI }) {
     <div className="screen home-screen">
       <div className="home-hero">
         <div className="myn-logo">
-          <div className="myn-logo-mark">MYN</div>
-          <div className="myn-logo-name">Mine Yes – Yours No</div>
-          <div className="myn-logo-tagline">One scene. Different minds.</div>
+          <div className="myn-logo-mark">MINA</div>
+          <div className="myn-logo-name">One word can destroy everything</div>
+          <div className="myn-logo-tagline">Emocija &gt; Logika</div>
         </div>
         <div className="orb-ring">
           <div className="orb-core">?</div>
@@ -587,7 +587,7 @@ function GameScreen({
           </span>
           <span className="category-badge">{room?.secret_category}</span>
         </div>
-        <span className="game-header-logo">MYN</span>
+        <span className="game-header-logo">MINA</span>
         <div className="game-actions">
           <button
             className={`btn-voice ${voiceActive ? 'voice-on' : ''}`}
@@ -794,7 +794,7 @@ function AiGameScreen({
           </span>
           <span className="category-badge">{aiCategory}</span>
         </div>
-        <span className="game-header-logo">MYN</span>
+        <span className="game-header-logo">MINA</span>
         <div className="game-actions">
           <button className="btn-guessed" onClick={onHome}>✕</button>
         </div>
@@ -806,9 +806,16 @@ function AiGameScreen({
 
       <div className="questions-feed" ref={feedRef}>
         {aiQuestions.length === 0 && (
-          <div className="empty-feed">
+          <div className="empty-feed ai-empty">
             <div className="empty-icon">?</div>
-            <p>Užduok pirmą klausimą!<br />Pvz. „Ar tai gyva?"</p>
+            <p className="ai-empty-title">AI sugalvojo žodį!</p>
+            <p className="ai-empty-sub">Pradėk nuo šių klausimų:</p>
+            <div className="suggestion-chips">
+              {['Ar tai gyva?', 'Ar tai didelis?', 'Ar tai galima rasti namuose?', 'Ar tai naudojama kasdien?'].map(s => (
+                <button key={s} className="suggestion-chip"
+                  onClick={() => setAiInput(s)}>{s}</button>
+              ))}
+            </div>
           </div>
         )}
         {aiQuestions.map((q, i) => (
