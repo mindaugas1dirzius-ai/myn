@@ -801,19 +801,29 @@ function AiGameScreen({
       </div>
 
       <div className="secret-hint ai-hint">
-        <span>🤖 AI sugalvojo žodį — klausinėk ir spėk!</span>
+        <span>💣 Kažkas čia tuoj sprogs — klausinėk prieš detonaciją!</span>
       </div>
 
       <div className="questions-feed" ref={feedRef}>
         {aiQuestions.length === 0 && (
           <div className="empty-feed ai-empty">
-            <div className="empty-icon">?</div>
-            <p className="ai-empty-title">AI sugalvojo žodį!</p>
-            <p className="ai-empty-sub">Pradėk nuo šių klausimų:</p>
+            <div className="ai-orb-big">
+              <div className="ai-orb-core">🤖</div>
+            </div>
+            <p className="ai-empty-title">MINA UŽTAISYTA</p>
+            <p className="ai-empty-sub">AI paslėpė objektą. Klausinėk prieš detonaciją!</p>
             <div className="suggestion-chips">
-              {['Ar tai gyva?', 'Ar tai didelis?', 'Ar tai galima rasti namuose?', 'Ar tai naudojama kasdien?'].map(s => (
-                <button key={s} className="suggestion-chip"
-                  onClick={() => setAiInput(s)}>{s}</button>
+              {[
+                { icon: '🔍', text: 'Ar tai gyva?' },
+                { icon: '📏', text: 'Ar tai didelis?' },
+                { icon: '🏠', text: 'Ar tai galima rasti namuose?' },
+                { icon: '✋', text: 'Ar tai galima paimti į rankas?' }
+              ].map(s => (
+                <button key={s.text} className="suggestion-chip"
+                  onClick={() => setAiInput(s.text)}>
+                  <span className="chip-icon">{s.icon}</span>
+                  <span>{s.text}</span>
+                </button>
               ))}
             </div>
           </div>
@@ -831,7 +841,7 @@ function AiGameScreen({
             <p className="q-text">{q.question}</p>
             {!q.answer && (
               <div className="waiting-answer" style={{ marginTop: 8 }}>
-                <div className="pulse-dot" />
+                <span className="typing-dots"><span></span><span></span><span></span></span>
                 <span>AI galvoja...</span>
               </div>
             )}

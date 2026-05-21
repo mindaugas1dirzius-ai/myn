@@ -82,27 +82,34 @@ html, body, #root {
 
 .myn-logo-mark {
   font-family: 'Orbitron', monospace;
-  font-size: 52px;
+  font-size: 66px;
   font-weight: 900;
   background: var(--grad);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  filter: drop-shadow(0 0 16px rgba(0,180,255,0.6));
-  letter-spacing: -2px;
+  filter: drop-shadow(0 0 24px rgba(123,47,255,0.8));
+  letter-spacing: -1px;
   line-height: 1;
+  animation: logo-glow 3s ease-in-out infinite;
+}
+
+@keyframes logo-glow {
+  0%, 100% { filter: drop-shadow(0 0 24px rgba(123,47,255,0.7)); }
+  50% { filter: drop-shadow(0 0 38px rgba(212,0,255,0.95)); }
 }
 
 .myn-logo-name {
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   background: var(--grad);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  margin-top: 4px;
 }
 
 .myn-logo-tagline {
@@ -231,9 +238,14 @@ html, body, #root {
 }
 
 .btn-secondary {
-  background: var(--bg4);
-  color: var(--text2);
-  border: 1px solid var(--border);
+  background: rgba(123, 47, 255, 0.08);
+  color: var(--text);
+  border: 1.5px solid rgba(123, 47, 255, 0.45);
+}
+
+.btn-secondary:hover:not(:disabled), .btn-secondary:active:not(:disabled) {
+  background: rgba(123, 47, 255, 0.18);
+  border-color: rgba(123, 47, 255, 0.8);
 }
 
 .btn-ai {
@@ -672,18 +684,64 @@ html, body, #root {
   padding: 20px;
 }
 
+.ai-orb-big {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-orb-big::before, .ai-orb-big::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(212,0,255,0.4);
+  animation: ai-wave 2.6s ease-out infinite;
+}
+
+.ai-orb-big::after { animation-delay: 1.3s; }
+
+@keyframes ai-wave {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+.ai-orb-core {
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(123,47,255,0.9), rgba(212,0,255,0.7), rgba(80,20,160,0.5));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  box-shadow: 0 0 50px rgba(212,0,255,0.6), inset 0 0 24px rgba(255,255,255,0.15);
+  animation: ai-core-pulse 2.4s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes ai-core-pulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(212,0,255,0.5), inset 0 0 24px rgba(255,255,255,0.12); transform: scale(1); }
+  50% { box-shadow: 0 0 75px rgba(212,0,255,0.85), inset 0 0 34px rgba(255,255,255,0.22); transform: scale(1.06); }
+}
+
 .ai-empty-title {
   font-family: 'Orbitron', monospace;
-  font-size: 17px !important;
-  font-weight: 700;
+  font-size: 18px !important;
+  font-weight: 800;
   color: var(--text) !important;
-  margin-top: 4px;
+  margin-top: 8px;
+  letter-spacing: 0.5px;
 }
 
 .ai-empty-sub {
-  font-size: 13px !important;
+  font-size: 14px !important;
   color: var(--text2) !important;
-  margin-top: -8px;
+  margin-top: -6px;
 }
 
 .suggestion-chips {
@@ -691,26 +749,36 @@ html, body, #root {
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  max-width: 320px;
-  margin-top: 8px;
+  max-width: 340px;
+  margin-top: 12px;
 }
 
 .suggestion-chip {
-  padding: 14px 18px;
-  background: linear-gradient(135deg, rgba(123, 47, 255, 0.12), rgba(212, 0, 255, 0.08));
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 18px;
+  background: linear-gradient(135deg, rgba(123, 47, 255, 0.14), rgba(212, 0, 255, 0.07));
   border: 1px solid rgba(123, 47, 255, 0.35);
-  border-radius: 12px;
+  border-radius: 14px;
   color: var(--text);
-  font-size: 14px;
+  font-size: 14.5px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
-  text-align: center;
+  transition: all 0.2s ease;
+  text-align: left;
 }
 
 .suggestion-chip:hover, .suggestion-chip:active {
-  background: linear-gradient(135deg, rgba(123, 47, 255, 0.25), rgba(212, 0, 255, 0.18));
+  background: linear-gradient(135deg, rgba(123, 47, 255, 0.3), rgba(212, 0, 255, 0.18));
   border-color: #d400ff;
-  transform: translateY(-1px);
+  transform: translateX(3px);
+  box-shadow: 0 4px 18px rgba(123, 47, 255, 0.3);
+}
+
+.chip-icon {
+  font-size: 19px;
+  flex-shrink: 0;
 }
 
 /* Chat bubbles */
@@ -838,6 +906,28 @@ html, body, #root {
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.3; transform: scale(0.7); }
+}
+
+.typing-dots {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.typing-dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d400ff;
+  animation: typing-bounce 1.3s ease-in-out infinite;
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-6px); opacity: 1; }
 }
 
 .my-turn-input { display: flex; flex-direction: column; gap: 8px; }
