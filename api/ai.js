@@ -43,32 +43,36 @@ export default async function handler(req, res) {
       const isHard = difficulty === 'sunku';
       const examples = isHard ? examplesHard : examplesEasy;
 
+      // Atsitiktinis "sėklos" skaičius kad AI rinktųsi skirtingai
+      const seed = Math.floor(Math.random() * 1000);
+
       if (isHard) {
         systemPrompt = `Tu esi žaidimo "20 klausimų" vedėjas. Sugalvok VIENĄ sudėtingesnį, bet visiems žinomą lietuvišką žodį.
 
 SVARBU:
 - Žodis turi būti TIKRAS, egzistuojantis lietuvių kalbos žodis
-- Sudėtingesnis, bet vis tiek visiems suprantamas (ne mokslinis terminas)
+- Sudėtingesnis, bet vis tiek visiems suprantamas (ne specialistų terminas)
 - Toks, kurį žino daugumas suaugusiųjų ir paauglių
-- ✅ GERI pavyzdžiai: mikroskopas, kengūra, vulkanas, teleskopas, krokodilas
-- ❌ BLOGI: per daug reti, moksliniai, niekam nežinomi žodžiai
+- GRIEŽTAI DRAUDŽIAMA kartoti šiuos žodžius: ${examples[category] || ''}
+- Rink KAŽ KĄ NAUJĄ ir netikėtą — ne tipinį atsakymą
 - Vardininko linksniu, vienaskaita, mažosiomis raidėmis
+- Atsitiktinis skaičius (ignoruok): ${seed}
 
 Atsakyk TIK tuo vienu žodžiu, be jokio papildomo teksto.`;
       } else {
-        systemPrompt = `Tu esi žaidimo "20 klausimų" vedėjas. Sugalvok VIENĄ labai paprastą, visiems gerai žinomą lietuvišką žodį.
+        systemPrompt = `Tu esi žaidimo "20 klausimų" vedėjas. Sugalvok VIENĄ paprastą, visiems žinomą lietuvišką žodį.
 
 GRIEŽTAI SVARBU:
 - Žodis turi būti TIKRAS, dažnai vartojamas lietuvių kalbos žodis
-- LABAI PAPRASTAS — toks, kurį žino KIEKVIENAS 6 metų vaikas
-- ✅ GERI pavyzdžiai: katė, šuo, stalas, obuolys, mašina, namas, saulė, knyga
-- ❌ BLOGI pavyzdžiai: reti, moksliniai, sudėtingi, neįprasti žodžiai
+- PAPRASTAS — toks, kurį žino kiekvienas
+- GRIEŽTAI DRAUDŽIAMA rinktis šiuos žodžius: ${examples[category] || ''}
+- Rink KAŽ KĄ KITA — netikėtą, įdomų, bet vis tiek paprastą
 - Vardininko linksniu, vienaskaita, mažosiomis raidėmis
-- NEGALVOK keistų ar retų žodžių — rink TIK kasdienius
+- Atsitiktinis skaičius (ignoruok): ${seed}
 
 Atsakyk TIK tuo vienu žodžiu, be jokio papildomo teksto.`;
       }
-      userMessage = `Kategorija: ${category}. Paprasti pavyzdžiai: ${examples[category] || ''}. Sugalvok vieną tokį pat paprastą, gerai žinomą žodį (gali būti iš pavyzdžių arba panašaus lygio).`;
+      userMessage = `Kategorija: ${category}. Sugalvok vieną žodį iš šios kategorijos. NEGALIMA rinktis: ${examples[category] || ''}. Rink ką nors visiškai kitą ir netikėtą!`;
     } else if (action === 'answer') {
       // AI atsako į žaidėjo klausimą — su mąstymu ir istorija
       const history = Array.isArray(body.history) ? body.history : [];
