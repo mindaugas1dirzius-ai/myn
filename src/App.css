@@ -544,7 +544,44 @@ html, body, #root {
 }
 
 /* ── GAME SCREEN ───────────────────────────────────── */
-.game-screen { padding: 0; gap: 0; }
+.game-screen {
+  padding: 0;
+  gap: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.game-input-fixed {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
+  padding-bottom: max(16px, env(safe-area-inset-bottom));
+  background: rgba(5,5,16,0.97);
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.btn-home {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  font-size: 17px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.btn-home:hover, .btn-home:active {
+  background: rgba(255,255,255,0.14);
+}
 
 .game-header {
   display: flex;

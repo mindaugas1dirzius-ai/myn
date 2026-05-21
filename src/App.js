@@ -410,6 +410,7 @@ export default function App() {
     myQuestion={myQuestion} setMyQuestion={setMyQuestion}
     onSendQuestion={sendQuestion} onAnswer={answerQuestion}
     onGuessed={markGuessed}
+    onLeave={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }}
     voiceActive={voiceActive}
     onVoiceToggle={() => voiceActive ? stopVoice() : startVoice()}
     questionsEndRef={questionsEndRef} />;
@@ -570,7 +571,7 @@ function LobbyScreen({ room, players, isHost, roomCode, onStart, error }) {
 function GameScreen({
   room, players, questions, playerId,
   pendingQuestion, myQuestion, setMyQuestion,
-  onSendQuestion, onAnswer, onGuessed,
+  onSendQuestion, onAnswer, onGuessed, onLeave,
   voiceActive, onVoiceToggle, questionsEndRef
 }) {
   const currentQuestioner = players.find(p => p.id === room?.current_questioner);
@@ -581,6 +582,7 @@ function GameScreen({
     <div className="screen game-screen">
       <div className="game-header">
         <div className="game-meta">
+          <button className="btn-home" onClick={onLeave} title="Grįžti į pradžią">🏠</button>
           <span className="questions-left">
             <strong>{room?.questions_left}</strong>
             <small>liko</small>
@@ -646,44 +648,44 @@ function GameScreen({
         <div ref={questionsEndRef} />
       </div>
 
-      {!iAmHost && (
-        <div className="question-input-area">
-          {pendingQuestion ? (
-            <div className="waiting-answer">
-              <div className="pulse-dot" />
-              <span>Laukiama atsakymo...</span>
-            </div>
-          ) : isMyTurnToAsk ? (
-            <div className="my-turn-input">
-              <div className="turn-indicator">Tavo eilė!</div>
-              <div className="input-row">
-                <input
-                  className="input-field question-input"
-                  placeholder="Užduok klausimą..."
-                  value={myQuestion}
-                  onChange={e => setMyQuestion(e.target.value)}
-                  onKeyDown={e => e.key === 'Enter' && onSendQuestion()}
-                  maxLength={120}
-                  autoFocus
-                />
-                <button className="btn-send" onClick={onSendQuestion} disabled={!myQuestion.trim()}>
-                  →
-                </button>
+      <div className="game-input-fixed">
+        {!iAmHost && (
+          <>
+            {pendingQuestion ? (
+              <div className="waiting-answer">
+                <div className="pulse-dot" />
+                <span>Laukiama atsakymo...</span>
               </div>
-            </div>
-          ) : (
-            <div className="others-turn">
-              <span>{currentQuestioner?.name || '...'} klausinėja...</span>
-            </div>
-          )}
-        </div>
-      )}
-
-      {iAmHost && !pendingQuestion && (
-        <div className="host-waiting">
-          <span>{currentQuestioner?.name || '...'} klausinėja...</span>
-        </div>
-      )}
+            ) : isMyTurnToAsk ? (
+              <div className="my-turn-input">
+                <div className="turn-indicator">Tavo eilė!</div>
+                <div className="input-row">
+                  <input
+                    className="input-field question-input"
+                    placeholder="Užduok klausimą..."
+                    value={myQuestion}
+                    onChange={e => setMyQuestion(e.target.value)}
+                    onKeyDown={e => e.key === 'Enter' && onSendQuestion()}
+                    maxLength={120}
+                  />
+                  <button className="btn-send" onClick={onSendQuestion} disabled={!myQuestion.trim()}>
+                    →
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="others-turn">
+                <span>{currentQuestioner?.name || '...'} klausinėja...</span>
+              </div>
+            )}
+          </>
+        )}
+        {iAmHost && !pendingQuestion && (
+          <div className="host-waiting">
+            <span>{currentQuestioner?.name || '...'} klausinėja...</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
