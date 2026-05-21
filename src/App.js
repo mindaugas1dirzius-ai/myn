@@ -594,7 +594,7 @@ function GameScreen({
             onClick={onVoiceToggle}
             title={voiceActive ? 'Išjungti balsą' : 'Įjungti balsą'}
           >
-            {voiceActive ? '🎙' : '🎙'}
+            {voiceActive ? '🔴' : '🎙️'}
           </button>
           {iAmHost && (
             <button className="btn-guessed" onClick={onGuessed}>
