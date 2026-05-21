@@ -681,60 +681,67 @@ html, body, #root {
 
 .ai-empty {
   opacity: 1;
-  padding: 20px;
+  padding: 16px;
+  justify-content: flex-start;
+  padding-top: 24px;
 }
 
 .ai-orb-big {
   position: relative;
-  width: 130px;
-  height: 130px;
-  margin: 0 auto 8px;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .ai-orb-big::before, .ai-orb-big::after {
   content: '';
   position: absolute;
-  inset: 0;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  border: 2px solid rgba(212,0,255,0.4);
-  animation: ai-wave 2.6s ease-out infinite;
+  border: 2px solid rgba(212,0,255,0.5);
+  animation: ai-wave 2.8s ease-out infinite;
+  z-index: 0;
 }
 
-.ai-orb-big::after { animation-delay: 1.3s; }
+.ai-orb-big::after { animation-delay: 1.4s; }
 
 @keyframes ai-wave {
-  0% { transform: scale(0.6); opacity: 0.9; }
-  100% { transform: scale(1.5); opacity: 0; }
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
 }
 
 .ai-orb-core {
-  width: 78px;
-  height: 78px;
+  position: relative;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, rgba(123,47,255,0.9), rgba(212,0,255,0.7), rgba(80,20,160,0.5));
+  background: radial-gradient(circle at 35% 30%, rgba(123,47,255,1), rgba(212,0,255,0.85), rgba(80,20,160,0.7));
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 34px;
-  box-shadow: 0 0 50px rgba(212,0,255,0.6), inset 0 0 24px rgba(255,255,255,0.15);
-  animation: ai-core-pulse 2.4s ease-in-out infinite;
+  font-size: 28px;
+  box-shadow: 0 0 40px rgba(212,0,255,0.6), inset 0 0 20px rgba(255,255,255,0.2);
+  animation: ai-core-pulse 2.6s ease-in-out infinite;
   z-index: 2;
 }
 
 @keyframes ai-core-pulse {
-  0%, 100% { box-shadow: 0 0 40px rgba(212,0,255,0.5), inset 0 0 24px rgba(255,255,255,0.12); transform: scale(1); }
-  50% { box-shadow: 0 0 75px rgba(212,0,255,0.85), inset 0 0 34px rgba(255,255,255,0.22); transform: scale(1.06); }
+  0%, 100% { box-shadow: 0 0 35px rgba(212,0,255,0.5), inset 0 0 20px rgba(255,255,255,0.18); }
+  50% { box-shadow: 0 0 55px rgba(212,0,255,0.8), inset 0 0 26px rgba(255,255,255,0.28); }
 }
 
 .ai-empty-title {
   font-family: 'Orbitron', monospace;
-  font-size: 18px !important;
+  font-size: 16px !important;
   font-weight: 800;
   color: var(--text) !important;
-  margin-top: 8px;
+  margin-top: 18px;
+  margin-bottom: 4px;
   letter-spacing: 0.5px;
 }
 
@@ -747,10 +754,10 @@ html, body, #root {
 .suggestion-chips {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 9px;
   width: 100%;
   max-width: 340px;
-  margin-top: 12px;
+  margin-top: 14px;
 }
 
 .suggestion-chip {

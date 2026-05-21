@@ -801,7 +801,7 @@ function AiGameScreen({
       </div>
 
       <div className="secret-hint ai-hint">
-        <span>💣 Kažkas čia tuoj sprogs — klausinėk prieš detonaciją!</span>
+        <span>🤖 AI sugalvojo žodį — klausinėk ir spėk!</span>
       </div>
 
       <div className="questions-feed" ref={feedRef}>
@@ -810,8 +810,7 @@ function AiGameScreen({
             <div className="ai-orb-big">
               <div className="ai-orb-core">🤖</div>
             </div>
-            <p className="ai-empty-title">MINA UŽTAISYTA</p>
-            <p className="ai-empty-sub">AI paslėpė objektą. Klausinėk prieš detonaciją!</p>
+            <p className="ai-empty-title">Laukiame jūsų klausimų</p>
             <div className="suggestion-chips">
               {[
                 { icon: '🔍', text: 'Ar tai gyva?' },
