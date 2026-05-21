@@ -474,7 +474,7 @@ function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, se
         <input className="input-field" value={playerName} onChange={e => setPlayerName(e.target.value)} maxLength={20} />
       </div>
       <div className="form-section">
-        <label className="field-label">Slapta žodis / vardas</label>
+        <label className="field-label">Slaptas žodis / vardas</label>
         <input
           className="input-field secret-input"
           placeholder="Pvz: katė, Eiffelio bokštas..."
