@@ -69,13 +69,7 @@ export default function App() {
 
   const isHost = room?.host_id === playerId;
 
-  useEffect(() => {
-    // Scroll only inside the questions list, not the whole page (better on mobile)
-    const el = questionsEndRef.current;
-    if (el && el.parentElement) {
-      el.parentElement.scrollTop = el.parentElement.scrollHeight;
-    }
-  }, [questions]);
+  // Scroll valdomas GameScreen komponente (userScrolledRef)
 
   // ── Polling fallback: refresh data every 2s while in a room ──────────────
   // This ensures sync works even if Supabase realtime is unreliable.
