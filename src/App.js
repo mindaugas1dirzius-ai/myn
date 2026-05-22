@@ -501,9 +501,7 @@ export default function App() {
     const isGuess = pendingQuestion.is_guess;
     const newGuessesLeft = isGuess ? Math.max(0, (room.guesses_left ?? 3) - 1) : (room.guesses_left ?? 3);
 
-    if (answer === 'yra' || (isGuess && answer === 'taip')) {
-      await supabase.from('rooms').update({ status: 'guessed', questions_left: newQuestionsLeft, guesses_left: newGuessesLeft }).eq('id', room.id);
-    } else if (newQuestionsLeft <= 0) {
+    if (newQuestionsLeft <= 0) {
       await supabase.from('rooms').update({ status: 'finished', questions_left: 0, guesses_left: newGuessesLeft, current_questioner: nextQuestioner }).eq('id', room.id);
     } else {
       await supabase.from('rooms').update({ questions_left: newQuestionsLeft, guesses_left: newGuessesLeft, current_questioner: nextQuestioner }).eq('id', room.id);
