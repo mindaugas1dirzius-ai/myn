@@ -491,33 +491,67 @@ export default function App() {
 // SCREENS
 // ═══════════════════════════════════════════════════════════════════════════
 
-const SPLASH_ITEMS = [
-  { text: 'TAIP', color: '#34d399', shape: 'cat', fromLeft: true, top: 15, delay: 0.1 },
-  { text: 'NO', color: '#f472b6', shape: 'rocket', fromLeft: false, top: 35, delay: 0.4 },
-  { text: 'GALI BŪTI', color: '#a78bfa', shape: 'star', fromLeft: true, top: 55, delay: 0.7 },
-  { text: 'YES!', color: '#60a5fa', shape: 'fox', fromLeft: false, top: 72, delay: 1.0 },
-  { text: 'NE', color: '#fbbf24', shape: 'crown', fromLeft: true, top: 85, delay: 1.3 },
+const FLYING_ITEMS = [
+  { text: 'TAIP', color: '#34d399' }, { text: 'NE', color: '#f472b6' },
+  { text: 'YES', color: '#60a5fa' }, { text: 'NO', color: '#f87171' },
+  { text: 'GALI BŪTI', color: '#a78bfa' }, { text: 'OUI', color: '#fbbf24' },
+  { text: 'SI', color: '#34d399' }, { text: 'ДА', color: '#60a5fa' },
+  { text: 'НЕТ', color: '#f472b6' }, { text: '?', color: '#a78bfa' },
+  { text: '20', color: '#fbbf24' }, { text: 'YRA', color: '#34d399' },
 ];
 
+const FLYING_SHAPES = ['cat','rocket','star','diamond','triangle','circle','fox','crown'];
+
 function FlyingElements() {
+  const items = React.useMemo(() => {
+    const all = [];
+    for (let i = 0; i < 18; i++) {
+      const fromLeft = Math.random() > 0.5;
+      const item = FLYING_ITEMS[i % FLYING_ITEMS.length];
+      all.push({
+        id: i,
+        fromLeft,
+        top: 5 + Math.random() * 85,
+        duration: 2.5 + Math.random() * 3,
+        delay: Math.random() * 3.5,
+        size: 11 + Math.random() * 8,
+        color: item.color,
+        text: item.text,
+        shape: FLYING_SHAPES[i % FLYING_SHAPES.length],
+        rotate: (Math.random() - 0.5) * 30,
+      });
+    }
+    return all;
+  }, []);
+
   return (
     <div style={{position:'absolute',inset:0,overflow:'hidden',pointerEvents:'none',zIndex:0}}>
-      {SPLASH_ITEMS.map((item, i) => (
-        <div key={i} style={{
+      {items.map(item => (
+        <div key={item.id} style={{
           position:'absolute',
           top: item.top + '%',
-          left: item.fromLeft ? '-130px' : '110%',
-          display:'flex', alignItems:'center', gap:'10px',
-          animation: `${item.fromLeft ? 'flyR' : 'flyL'} 1.6s ease-in-out ${item.delay}s both`,
+          left: item.fromLeft ? '-120px' : '110%',
+          display:'flex',alignItems:'center',gap:'8px',
+          animation: `${item.fromLeft ? 'flyR' : 'flyL'} ${item.duration}s ease-in-out ${item.delay}s infinite`,
         }}>
-          <svg width="30" height="30" viewBox="0 0 28 28" fill="none" style={{opacity:0.6,flexShrink:0}}>
-            {item.shape === 'cat' && <><path d="M7 18 C7 12 10 8 14 8 C18 8 21 12 21 18 C21 22 18 24 14 24 C10 24 7 22 7 18Z" stroke={item.color} strokeWidth="1.2"/><path d="M8 10 L6 5 L11 9M20 10 L22 5 L17 9" stroke={item.color} strokeWidth="1"/><circle cx="11" cy="16" r="1.2" fill={item.color}/><circle cx="17" cy="16" r="1.2" fill={item.color}/></>}
-            {item.shape === 'rocket' && <><path d="M14 4 L18 16 L14 14 L10 16 Z" stroke={item.color} strokeWidth="1.2"/><path d="M10 16 L8 22 L14 19 L20 22 L18 16" stroke={item.color} strokeWidth="1"/><circle cx="14" cy="11" r="2" stroke={item.color} strokeWidth="1"/></>}
-            {item.shape === 'star' && <path d="M14 3 L16.5 10.5 L24 10.5 L18 15.5 L20.5 23 L14 18.5 L7.5 23 L10 15.5 L4 10.5 L11.5 10.5 Z" stroke={item.color} strokeWidth="1.2"/>}
-            {item.shape === 'fox' && <><path d="M9 20 C9 14 11 10 14 10 C17 10 19 14 19 20" stroke={item.color} strokeWidth="1.2"/><path d="M9 12 L6 5 L12 10M19 12 L22 5 L16 10" stroke={item.color} strokeWidth="1"/><circle cx="11.5" cy="15" r="1" fill={item.color}/><circle cx="16.5" cy="15" r="1" fill={item.color}/></>}
-            {item.shape === 'crown' && <path d="M5 20 L5 12 L9 16 L14 8 L19 16 L23 12 L23 20 Z" stroke={item.color} strokeWidth="1.2"/>}
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" style={{opacity:0.5,flexShrink:0}}>
+            {item.shape === 'cat' && <><path d="M7 18 C7 12 10 8 14 8 C18 8 21 12 21 18 C21 22 18 24 14 24 C10 24 7 22 7 18Z" stroke={item.color} strokeWidth="1"/><path d="M8 10 L6 5 L11 9M20 10 L22 5 L17 9" stroke={item.color} strokeWidth="1"/><circle cx="11" cy="16" r="1.2" fill={item.color} opacity="0.6"/><circle cx="17" cy="16" r="1.2" fill={item.color} opacity="0.6"/></>}
+            {item.shape === 'rocket' && <><path d="M14 4 L18 16 L14 14 L10 16 Z" stroke={item.color} strokeWidth="1"/><path d="M10 16 L8 22 L14 19 L20 22 L18 16" stroke={item.color} strokeWidth="0.8"/><circle cx="14" cy="11" r="2" stroke={item.color} strokeWidth="0.8"/></>}
+            {item.shape === 'star' && <path d="M14 3 L16.5 10.5 L24 10.5 L18 15.5 L20.5 23 L14 18.5 L7.5 23 L10 15.5 L4 10.5 L11.5 10.5 Z" stroke={item.color} strokeWidth="1"/>}
+            {item.shape === 'diamond' && <path d="M14 3 L24 14 L14 25 L4 14 Z" stroke={item.color} strokeWidth="1"/>}
+            {item.shape === 'triangle' && <path d="M14 4 L25 22 L3 22 Z" stroke={item.color} strokeWidth="1"/>}
+            {item.shape === 'circle' && <><circle cx="14" cy="14" r="9" stroke={item.color} strokeWidth="1"/><circle cx="14" cy="14" r="4" stroke={item.color} strokeWidth="0.6" opacity="0.5"/></>}
+            {item.shape === 'fox' && <><path d="M9 20 C9 14 11 10 14 10 C17 10 19 14 19 20" stroke={item.color} strokeWidth="1"/><path d="M9 12 L6 5 L12 10M19 12 L22 5 L16 10" stroke={item.color} strokeWidth="1"/><circle cx="11.5" cy="15" r="1" fill={item.color} opacity="0.6"/><circle cx="16.5" cy="15" r="1" fill={item.color} opacity="0.6"/></>}
+            {item.shape === 'crown' && <path d="M5 20 L5 12 L9 16 L14 8 L19 16 L23 12 L23 20 Z" stroke={item.color} strokeWidth="1"/>}
           </svg>
-          <span style={{color:item.color,fontSize:'14px',fontWeight:700,letterSpacing:'2px',opacity:0.8,whiteSpace:'nowrap'}}>{item.text}</span>
+          <span style={{
+            color: item.color,
+            fontSize: item.size + 'px',
+            fontWeight: 700,
+            letterSpacing: '2px',
+            opacity: 0.7,
+            whiteSpace: 'nowrap',
+          }}>{item.text}</span>
         </div>
       ))}
     </div>
