@@ -177,7 +177,11 @@ export default function App() {
 
   // ── Subscribe to room data ───────────────────────────────────────────────
   const subscribeToRoom = useCallback((rId) => {
-    const roomSub = supabase.channel(`room:${rId}`)
+    // FIX #2: Clear old subscriptions before creating new ones
+    subscriptionsRef.current.forEach(s => supabase.removeChannel(s));
+    subscriptionsRef.current = [];
+
+    const roomSub = supabase.channel(`room:${rId}:${Date.now()}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'rooms', filter: `id=eq.${rId}` },
         ({ new: r }) => { if (r) setRoom(r); })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'players', filter: `room_id=eq.${rId}` },
