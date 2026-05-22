@@ -48,6 +48,8 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [voiceActive, setVoiceActive] = useState(false);
   const [pendingQuestion, setPendingQuestion] = useState(null);
+  const [chatMessages, setChatMessages] = useState([]);
+  const [activeTab, setActiveTab] = useState('questions');
 
   // AI game state
   const [aiCategory, setAiCategory] = useState('Daiktas');
@@ -216,6 +218,9 @@ export default function App() {
             setPendingQuestion(unanswered || null);
           }
         })
+      .on('broadcast', { event: 'chat' }, ({ payload }) => {
+        if (payload) setChatMessages(prev => [...prev, payload]);
+      })
       .subscribe();
 
     subscriptionsRef.current.push(roomSub);
@@ -304,6 +309,16 @@ export default function App() {
       question: q
     });
     sendingRef.current = false;
+  };
+
+  const sendChat = (text, playerName) => {
+    if (!text.trim() || !roomCode) return;
+    const msg = { text: text.trim(), name: playerName, time: Date.now() };
+    // Send via broadcast
+    const ch = subscriptionsRef.current[0];
+    if (ch) ch.send({ type: 'broadcast', event: 'chat', payload: msg });
+    // Also add locally immediately
+    setChatMessages(prev => [...prev, msg]);
   };
 
   const answerQuestion = async (answer) => {
@@ -436,6 +451,8 @@ export default function App() {
     pendingQuestion={pendingQuestion}
     myQuestion={myQuestion} setMyQuestion={setMyQuestion}
     onSendQuestion={sendQuestion} onAnswer={answerQuestion}
+    chatMessages={chatMessages} onSendChat={(t) => sendChat(t, playerName)}
+    activeTab={activeTab} setActiveTab={setActiveTab}
     onGuessed={markGuessed}
     onLeave={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }}
     voiceActive={voiceActive}
@@ -599,11 +616,47 @@ function GameScreen({
   room, players, questions, playerId,
   pendingQuestion, myQuestion, setMyQuestion,
   onSendQuestion, onAnswer, onGuessed, onLeave,
-  voiceActive, onVoiceToggle, questionsEndRef
+  voiceActive, onVoiceToggle, questionsEndRef,
+  chatMessages, onSendChat, activeTab, setActiveTab
 }) {
   const currentQuestioner = players.find(p => p.id === room?.current_questioner);
   const isMyTurnToAsk = room?.current_questioner === playerId && !pendingQuestion;
   const iAmHost = room?.host_id === playerId;
+  const [chatInput, setChatInput] = React.useState('');
+  const [unreadChat, setUnreadChat] = React.useState(0);
+  const chatEndRef = React.useRef(null);
+  const questFeedRef = React.useRef(null);
+  const userScrolledRef = React.useRef(false);
+
+  // Auto-scroll questions only when new question added and user not scrolled up
+  React.useEffect(() => {
+    if (activeTab !== 'questions') return;
+    if (!userScrolledRef.current && questionsEndRef?.current) {
+      questionsEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [questions, activeTab]);
+
+  // Auto-scroll chat when new message and on chat tab
+  React.useEffect(() => {
+    if (activeTab === 'chat') {
+      chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      setUnreadChat(0);
+    } else if (chatMessages.length > 0) {
+      setUnreadChat(prev => prev + 1);
+    }
+  }, [chatMessages]);
+
+  const handleQuestScroll = (e) => {
+    const el = e.target;
+    const isAtBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 40;
+    userScrolledRef.current = !isAtBottom;
+  };
+
+  const handleSendChat = () => {
+    if (!chatInput.trim()) return;
+    onSendChat(chatInput);
+    setChatInput('');
+  };
 
   return (
     <div className="screen game-screen">
@@ -640,76 +693,129 @@ function GameScreen({
         </div>
       )}
 
-      <div className="questions-feed">
-        {questions.length === 0 && (
-          <div className="empty-feed">
-            <div className="empty-icon">?</div>
-            <p>Dar nėra klausimų.<br />
-              {isMyTurnToAsk ? 'Tavo eilė klausti!' : `${currentQuestioner?.name || '...'} klausinėja`}
-            </p>
-          </div>
-        )}
-        {questions.map(q => (
-          <div key={q.id} className={`question-bubble ${q.player_id === playerId ? 'my-question' : ''}`}>
-            <div className="question-meta">
-              <span className="q-name">{q.player_id === playerId ? 'Tu' : q.player_name}</span>
-              {q.answer && <span className={`answer-badge answer-${q.answer}`}>
-                {ANSWERS.find(a => a.key === q.answer)?.label}
-              </span>}
-            </div>
-            <p className="q-text">{q.question}</p>
-            {!q.answer && iAmHost && (
-              <div className="answer-buttons">
-                {ANSWERS.map(a => (
-                  <button key={a.key}
-                    className="answer-btn"
-                    style={{ '--answer-color': a.color }}
-                    onClick={() => onAnswer(a.key)}>
-                    {a.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
-        <div ref={questionsEndRef} />
+      <div className="game-tabs">
+        <button
+          className={`game-tab ${activeTab === 'questions' ? 'active' : ''}`}
+          onClick={() => setActiveTab('questions')}
+        >
+          Klausimai
+        </button>
+        <button
+          className={`game-tab ${activeTab === 'chat' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('chat'); setUnreadChat(0); }}
+        >
+          Chatas {unreadChat > 0 && <span className="chat-badge">{unreadChat}</span>}
+        </button>
       </div>
 
-      <div className="game-input-fixed">
-        {!iAmHost && (
-          <>
-            {pendingQuestion ? (
-              <div className="waiting-answer">
-                <div className="pulse-dot" />
-                <span>Laukiama atsakymo...</span>
+      {activeTab === 'questions' ? (
+        <div className="questions-feed" ref={questFeedRef} onScroll={handleQuestScroll}>
+          {questions.length === 0 && (
+            <div className="empty-feed">
+              <div className="empty-icon">?</div>
+              <p>Dar nėra klausimų.<br />
+                {isMyTurnToAsk ? 'Tavo eilė klausti!' : `${currentQuestioner?.name || '...'} klausinėja`}
+              </p>
+            </div>
+          )}
+          {questions.map(q => (
+            <div key={q.id} className={`question-bubble ${q.player_id === playerId ? 'my-question' : ''}`}>
+              <div className="question-meta">
+                <span className="q-name">{q.player_id === playerId ? 'Tu' : q.player_name}</span>
+                {q.answer && <span className={`answer-badge answer-${q.answer}`}>
+                  {ANSWERS.find(a => a.key === q.answer)?.label}
+                </span>}
               </div>
-            ) : isMyTurnToAsk ? (
-              <div className="my-turn-input">
-                <div className="turn-indicator">Tavo eilė!</div>
-                <div className="input-row">
-                  <input
-                    className="input-field question-input"
-                    placeholder="Užduok klausimą..."
-                    value={myQuestion}
-                    onChange={e => setMyQuestion(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && onSendQuestion()}
-                    maxLength={120}
-                  />
-                  <button className="btn-send" onClick={onSendQuestion} disabled={!myQuestion.trim()}>
-                    →
-                  </button>
+              <p className="q-text">{q.question}</p>
+              {!q.answer && iAmHost && (
+                <div className="answer-buttons">
+                  {ANSWERS.map(a => (
+                    <button key={a.key}
+                      className="answer-btn"
+                      style={{ '--answer-color': a.color }}
+                      onClick={() => onAnswer(a.key)}>
+                      {a.label}
+                    </button>
+                  ))}
                 </div>
-              </div>
-            ) : (
-              <div className="others-turn">
+              )}
+            </div>
+          ))}
+          <div ref={questionsEndRef} />
+        </div>
+      ) : (
+        <div className="questions-feed chat-feed">
+          {chatMessages.length === 0 && (
+            <div className="empty-feed">
+              <div className="empty-icon">💬</div>
+              <p>Dar nėra žinučių.</p>
+            </div>
+          )}
+          {chatMessages.map((msg, i) => (
+            <div key={i} className={`chat-bubble ${msg.name === players.find(p=>p.id===playerId)?.name ? 'my-chat' : ''}`}>
+              <span className="chat-name">{msg.name}</span>
+              <p className="chat-text">{msg.text}</p>
+            </div>
+          ))}
+          <div ref={chatEndRef} />
+        </div>
+      )}
+
+      <div className="game-input-fixed">
+        {activeTab === 'questions' ? (
+          <>
+            {!iAmHost && (
+              <>
+                {pendingQuestion ? (
+                  <div className="waiting-answer">
+                    <div className="pulse-dot" />
+                    <span>Laukiama atsakymo...</span>
+                  </div>
+                ) : isMyTurnToAsk ? (
+                  <div className="my-turn-input">
+                    <div className="turn-indicator">Tavo eilė!</div>
+                    <div className="input-row">
+                      <input
+                        className="input-field question-input"
+                        placeholder="Užduok klausimą..."
+                        value={myQuestion}
+                        onChange={e => setMyQuestion(e.target.value)}
+                        onKeyDown={e => e.key === 'Enter' && onSendQuestion()}
+                        maxLength={120}
+                      />
+                      <button className="btn-send" onClick={onSendQuestion} disabled={!myQuestion.trim()}>
+                        →
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="others-turn">
+                    <span>{currentQuestioner?.name || '...'} klausinėja...</span>
+                  </div>
+                )}
+              </>
+            )}
+            {iAmHost && !pendingQuestion && (
+              <div className="host-waiting">
                 <span>{currentQuestioner?.name || '...'} klausinėja...</span>
               </div>
             )}
           </>
-        )}
-        {iAmHost && !pendingQuestion && (
-          <div className="host-waiting">
-            <span>{currentQuestioner?.name || '...'} klausinėja...</span>
+        ) : (
+          <div className="my-turn-input">
+            <div className="input-row">
+              <input
+                className="input-field question-input"
+                placeholder="Rašyk žinutę..."
+                value={chatInput}
+                onChange={e => setChatInput(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && handleSendChat()}
+                maxLength={200}
+              />
+              <button className="btn-send" onClick={handleSendChat} disabled={!chatInput.trim()}>
+                →
+              </button>
+            </div>
           </div>
         )}
       </div>

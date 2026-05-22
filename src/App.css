@@ -1168,3 +1168,71 @@ html, body, #root {
   background-clip: text;
   margin-top: 4px;
 }
+
+/* ── Game tabs ─────────────────────────────────────────────────────────── */
+.game-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+.game-tab {
+  flex: 1;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.game-tab.active {
+  color: #a78bfa;
+  border-bottom: 2px solid #a78bfa;
+}
+.chat-badge {
+  background: #ef4444;
+  color: #fff;
+  border-radius: 99px;
+  font-size: 11px;
+  padding: 1px 6px;
+  margin-left: 4px;
+}
+
+/* ── Chat bubbles ──────────────────────────────────────────────────────── */
+.chat-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.chat-bubble {
+  max-width: 75%;
+  align-self: flex-start;
+}
+.chat-bubble.my-chat {
+  align-self: flex-end;
+}
+.chat-name {
+  font-size: 11px;
+  color: #a78bfa;
+  display: block;
+  margin-bottom: 2px;
+}
+.chat-bubble.my-chat .chat-name {
+  text-align: right;
+  color: #6ee7b7;
+}
+.chat-text {
+  background: rgba(255,255,255,0.06);
+  border-radius: 12px 12px 12px 2px;
+  padding: 8px 12px;
+  color: #e2e8f0;
+  font-size: 14px;
+  margin: 0;
+}
+.chat-bubble.my-chat .chat-text {
+  background: rgba(167,139,250,0.15);
+  border-radius: 12px 12px 2px 12px;
+}
