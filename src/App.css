@@ -1085,7 +1085,8 @@ html, body, #root {
 /* ── GUESSED SCREEN ────────────────────────────────── */
 .guessed-screen {
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 40px;
   gap: 24px;
   text-align: center;
 }
@@ -1252,8 +1253,6 @@ html, body, #root {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  max-height: 280px;
-  overflow-y: auto;
 }
 .history-item {
   display: flex;
