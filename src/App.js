@@ -151,8 +151,15 @@ export default function App() {
   useEffect(() => {
     if (!roomCode || (screen !== 'lobby' && screen !== 'game')) return;
     const poll = async () => {
-      const { data: r } = await supabase.from('rooms').select('*').eq('id', roomCode).single();
-      if (r) setRoom(r);
+      const { data: r, error: roomErr } = await supabase.from('rooms').select('*').eq('id', roomCode).single();
+      if (r) {
+        setRoom(r);
+      } else if (roomErr?.code === 'PGRST116') {
+        // Kambarys ištrintas — grįžti namo
+        setScreen('home'); setRoom(null); setRoomCode('');
+        setPlayers([]); setQuestions([]); setPendingQuestion(null); setChatMessages([]);
+        return;
+      }
       const { data: pData } = await supabase.from('players').select('*').eq('room_id', roomCode).order('joined_at');
       if (pData) setPlayers(pData);
       const { data: qData } = await supabase.from('questions').select('*').eq('room_id', roomCode).order('created_at');
@@ -188,7 +195,13 @@ export default function App() {
     cleanup();
     setScreen('home');
     setRoom(null);
+    setRoomCode('');
+    setPlayers([]);
     setQuestions([]);
+    setPendingQuestion(null);
+    setMyQuestion('');
+    setChatMessages([]);
+    setVoiceActive(false);
   }, [roomCode, playerId, cleanup]);
 
   // FIX #1: Ghost players - cleanup when tab closes
@@ -288,7 +301,7 @@ export default function App() {
   const subscribeToRoom = useCallback((rId) => {
     const roomSub = supabase.channel(`room:${rId}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'rooms', filter: `id=eq.${rId}` },
-        ({ new: r }) => { if (r) setRoom(r); })
+        ({ new: r }) => { if (r?.id) setRoom(r); })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'players', filter: `room_id=eq.${rId}` },
         async () => {
           const { data } = await supabase.from('players').select('*').eq('room_id', rId).order('joined_at');
