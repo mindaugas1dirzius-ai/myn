@@ -621,9 +621,11 @@ function GameScreen({
   const iAmHost = room?.host_id === playerId;
   const [chatInput, setChatInput] = React.useState('');
   const [unreadChat, setUnreadChat] = React.useState(0);
+  const [unreadQuestions, setUnreadQuestions] = React.useState(0);
   const chatEndRef = React.useRef(null);
   const questFeedRef = React.useRef(null);
   const userScrolledRef = React.useRef(false);
+  const prevQuestionsLen = React.useRef(questions.length);
 
   // Auto-scroll questions only when new question added and user not scrolled up
   React.useEffect(() => {
@@ -631,6 +633,16 @@ function GameScreen({
     if (!userScrolledRef.current && questionsEndRef?.current) {
       questionsEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
+  }, [questions, activeTab]);
+
+  // Track unread questions when on chat tab
+  React.useEffect(() => {
+    if (questions.length > prevQuestionsLen.current) {
+      if (activeTab === 'chat') {
+        setUnreadQuestions(prev => prev + (questions.length - prevQuestionsLen.current));
+      }
+    }
+    prevQuestionsLen.current = questions.length;
   }, [questions, activeTab]);
 
   // Auto-scroll chat when new message and on chat tab
@@ -693,9 +705,9 @@ function GameScreen({
       <div className="game-tabs">
         <button
           className={`game-tab ${activeTab === 'questions' ? 'active' : ''}`}
-          onClick={() => setActiveTab('questions')}
+          onClick={() => { setActiveTab('questions'); setUnreadQuestions(0); }}
         >
-          Klausimai
+          Klausimai {unreadQuestions > 0 && <span className="chat-badge">{unreadQuestions}</span>}
         </button>
         <button
           className={`game-tab ${activeTab === 'chat' ? 'active' : ''}`}
