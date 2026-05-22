@@ -11,6 +11,10 @@ create table if not exists rooms (
   questions_left int not null default 20,
   guesses_left int not null default 3,
   current_questioner text,
+  host_name text,
+  is_public boolean not null default false,
+  max_players int,
+  language text not null default 'lt',
   created_at timestamptz default now()
 );
 
@@ -38,6 +42,10 @@ create table if not exists questions (
 -- Migracijos esamoms DB (idempotentiška — galima paleisti kelis kartus)
 alter table rooms add column if not exists guesses_left int not null default 3;
 alter table questions add column if not exists is_guess boolean default false;
+alter table rooms add column if not exists host_name text;
+alter table rooms add column if not exists is_public boolean not null default false;
+alter table rooms add column if not exists max_players int;
+alter table rooms add column if not exists language text not null default 'lt';
 
 -- Enable realtime
 alter publication supabase_realtime add table rooms;

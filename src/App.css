@@ -1274,6 +1274,140 @@ html, body, #root {
   font-size: 13px;
 }
 
+/* ── Viešieji kambariai ────────────────────────────────────────────────── */
+.btn-public {
+  background: rgba(0,180,255,0.07);
+  color: var(--text);
+  border: 1.5px solid rgba(0,180,255,0.3);
+}
+.btn-public:hover:not(:disabled), .btn-public:active:not(:disabled) {
+  background: rgba(0,180,255,0.15);
+  border-color: var(--blue);
+  box-shadow: 0 0 14px rgba(0,180,255,0.3);
+}
+
+.btn-toggle {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  color: var(--text2);
+  font-size: 14px;
+  min-height: 52px;
+  transition: all 0.2s;
+}
+.btn-toggle.active {
+  border-color: rgba(0,180,255,0.5);
+  color: var(--text);
+  background: rgba(0,180,255,0.06);
+}
+.toggle-track {
+  width: 46px;
+  height: 26px;
+  border-radius: 13px;
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  position: relative;
+  flex-shrink: 0;
+  transition: all 0.25s;
+}
+.btn-toggle.active .toggle-track {
+  background: var(--blue);
+  border-color: var(--blue);
+  box-shadow: 0 0 10px rgba(0,180,255,0.5);
+}
+.toggle-thumb {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  top: 2px;
+  left: 2px;
+  transition: left 0.25s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+.btn-toggle.active .toggle-thumb { left: 22px; }
+
+.public-rooms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+.public-room-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: slide-in 0.25s ease-out;
+  transition: border-color 0.2s;
+}
+.public-room-card:hover { border-color: rgba(0,180,255,0.3); }
+.public-room-card.room-full { opacity: 0.6; }
+
+.public-room-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.public-room-host {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+.lang-badge {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 50px;
+  font-weight: 600;
+}
+.lang-lt { background: rgba(0,180,255,0.1); color: var(--blue); border: 1px solid rgba(0,180,255,0.25); }
+.lang-en { background: rgba(123,47,255,0.1); color: #a78bfa; border: 1px solid rgba(123,47,255,0.25); }
+
+.public-room-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.public-room-players {
+  font-size: 13px;
+  color: var(--text2);
+}
+.public-room-join {
+  padding: 13px !important;
+  font-size: 14px !important;
+  min-height: 48px;
+}
+.public-rooms-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 16px;
+  opacity: 0.55;
+  text-align: center;
+  color: var(--text2);
+  font-size: 14px;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
 /* ── Flying elements animacijos ───────────────────────────────────────── */
 @keyframes flyR {
   0% { transform: translateX(-140px) rotate(-8deg); opacity: 0; }

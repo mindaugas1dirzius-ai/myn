@@ -116,6 +116,9 @@ export default function App() {
   const [myQuestion, setMyQuestion] = useState('');
   const [secretWord, setSecretWord] = useState('');
   const [secretCategory, setSecretCategory] = useState('Daiktas');
+  const [isPublic, setIsPublic] = useState(false);
+  const [maxPlayers, setMaxPlayers] = useState(8);
+  const [roomLanguage, setRoomLanguage] = useState('lt');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [voiceActive, setVoiceActive] = useState(false);
@@ -325,7 +328,11 @@ export default function App() {
     const code = generateRoomCode();
     const { error: e1 } = await supabase.from('rooms').insert({
       id: code, secret_word: secretWord.trim(), secret_category: secretCategory,
-      host_id: freshId, status: 'waiting'
+      host_id: freshId, status: 'waiting',
+      host_name: playerName.trim(),
+      is_public: isPublic,
+      max_players: isPublic ? maxPlayers : null,
+      language: roomLanguage
     });
     if (e1) { setError(e1.message); setLoading(false); return; }
     const { error: e2 } = await supabase.from('players').insert({
@@ -350,6 +357,15 @@ export default function App() {
     if (!r) { setError('Kambarys nerastas!'); setLoading(false); return; }
     if (r.status === 'finished') { setError('Žaidimas jau baigtas!'); setLoading(false); return; }
 
+    if (r.is_public && r.max_players) {
+      const { data: currentPlayers } = await supabase.from('players').select('id').eq('room_id', code);
+      const storedCheck = localStorage.getItem('playerId');
+      const isHost = storedCheck && storedCheck === r.host_id;
+      if (!isHost && currentPlayers && currentPlayers.length >= r.max_players) {
+        setError('Kambarys pilnas!'); setLoading(false); return;
+      }
+    }
+
     const storedId = localStorage.getItem('playerId');
     const isReturningHost = !!(storedId && storedId === r.host_id);
     const joinId = isReturningHost ? storedId : generatePlayerId();
@@ -373,6 +389,36 @@ export default function App() {
     subscribeToRoom(code);
     setLoading(false);
     setScreen(r.status === 'waiting' ? 'lobby' : 'game');
+  };
+
+  const joinPublicRoom = async (code) => {
+    if (!playerName.trim()) return;
+    setLoading(true); setError('');
+    saveName();
+    const { data: r } = await supabase.from('rooms').select('*').eq('id', code).single();
+    if (!r) { setError('Kambarys nerastas!'); setLoading(false); return; }
+    if (r.status !== 'waiting') { setError('Žaidimas jau pradėtas!'); setLoading(false); return; }
+    const { data: currentPlayers } = await supabase.from('players').select('id').eq('room_id', code);
+    const storedCheck = localStorage.getItem('playerId');
+    const isHostCheck = storedCheck && storedCheck === r.host_id;
+    if (!isHostCheck && r.max_players && currentPlayers && currentPlayers.length >= r.max_players) {
+      setError('Kambarys pilnas!'); setLoading(false); return;
+    }
+    const storedId = localStorage.getItem('playerId');
+    const isReturningHost = !!(storedId && storedId === r.host_id);
+    const joinId = isReturningHost ? storedId : generatePlayerId();
+    localStorage.setItem('playerId', joinId);
+    setPlayerId(joinId);
+    const { data: existing } = await supabase.from('players').select('id').eq('id', joinId).eq('room_id', code).single();
+    if (!existing) {
+      await supabase.from('players').insert({ id: joinId, room_id: code, name: playerName.trim(), is_host: isReturningHost });
+    }
+    setRoom(r); setRoomCode(code);
+    const { data: pData } = await supabase.from('players').select('*').eq('room_id', code).order('joined_at');
+    if (pData) setPlayers(pData);
+    subscribeToRoom(code);
+    setLoading(false);
+    setScreen('lobby');
   };
 
   const startGame = async () => {
@@ -531,7 +577,13 @@ export default function App() {
   if (screen === 'home') return <HomeScreen
     playerName={playerName} setPlayerName={setPlayerName}
     onCreate={() => setScreen('create')} onJoin={() => setScreen('join')}
-    onPlayAI={() => setScreen('aisetup')} />;
+    onPlayAI={() => setScreen('aisetup')} onPublic={() => setScreen('public')} />;
+
+  if (screen === 'public') return <PublicRoomsScreen
+    playerName={playerName}
+    onBack={() => setScreen('home')}
+    onJoin={joinPublicRoom}
+    loading={loading} error={error} />;
 
   if (screen === 'aisetup') return <AiSetupScreen
     aiCategory={aiCategory} setAiCategory={setAiCategory}
@@ -551,6 +603,9 @@ export default function App() {
     playerName={playerName} setPlayerName={setPlayerName}
     secretWord={secretWord} setSecretWord={setSecretWord}
     secretCategory={secretCategory} setSecretCategory={setSecretCategory}
+    isPublic={isPublic} setIsPublic={setIsPublic}
+    maxPlayers={maxPlayers} setMaxPlayers={setMaxPlayers}
+    roomLanguage={roomLanguage} setRoomLanguage={setRoomLanguage}
     onBack={() => setScreen('home')} onCreate={createRoom}
     loading={loading} error={error} />;
 
@@ -659,7 +714,7 @@ function Stars() {
   );
 }
 
-function HomeScreen({ playerName, setPlayerName, onCreate, onJoin, onPlayAI }) {
+function HomeScreen({ playerName, setPlayerName, onCreate, onJoin, onPlayAI, onPublic }) {
   return (
     <div className="screen home-screen">
       <Stars />
@@ -685,6 +740,9 @@ function HomeScreen({ playerName, setPlayerName, onCreate, onJoin, onPlayAI }) {
         <button className="btn btn-secondary" onClick={onJoin} disabled={!playerName.trim()}>
           Prisijungti
         </button>
+        <button className="btn btn-public" onClick={onPublic} disabled={!playerName.trim()}>
+          🌍 Viešieji kambariai
+        </button>
         <button className="btn btn-ai" onClick={onPlayAI} disabled={!playerName.trim()}>
           🤖 Žaisti su AI
         </button>
@@ -693,7 +751,7 @@ function HomeScreen({ playerName, setPlayerName, onCreate, onJoin, onPlayAI }) {
   );
 }
 
-function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, secretCategory, setSecretCategory, onBack, onCreate, loading, error }) {
+function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, secretCategory, setSecretCategory, isPublic, setIsPublic, maxPlayers, setMaxPlayers, roomLanguage, setRoomLanguage, onBack, onCreate, loading, error }) {
   return (
     <div className="screen">
       <Stars />
@@ -725,6 +783,35 @@ function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, se
         />
         <p className="field-hint">Kiti žaidėjai to nematys!</p>
       </div>
+      <div className="form-section">
+        <label className="field-label">3. Kambario tipas</label>
+        <button className={`btn-toggle ${isPublic ? 'active' : ''}`} onClick={() => setIsPublic(v => !v)}>
+          <div className="toggle-track"><div className="toggle-thumb" /></div>
+          <span>{isPublic ? '🌍 Viešas — visi gali prisijungti' : '🔒 Privatus — tik su kodu'}</span>
+        </button>
+      </div>
+      {isPublic && (
+        <>
+          <div className="form-section">
+            <label className="field-label">Kambario kalba</label>
+            <div className="category-chips">
+              {[{k:'lt',l:'🇱🇹 Lietuvių'},{k:'en',l:'🇬🇧 English'}].map(({k,l}) => (
+                <button key={k} className={`chip ${roomLanguage === k ? 'chip-active' : ''}`}
+                  onClick={() => setRoomLanguage(k)}>{l}</button>
+              ))}
+            </div>
+          </div>
+          <div className="form-section">
+            <label className="field-label">Maksimalus žaidėjų skaičius</label>
+            <div className="category-chips">
+              {[4,6,8,10,12].map(n => (
+                <button key={n} className={`chip ${maxPlayers === n ? 'chip-active' : ''}`}
+                  onClick={() => setMaxPlayers(n)}>{n}</button>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
       {error && <p className="error-text">{error}</p>}
       <button className="btn btn-primary" onClick={onCreate} disabled={loading || !secretWord.trim()}>
         {loading ? 'Kuriama...' : 'Sukurti kambarį'}
@@ -1231,6 +1318,92 @@ function AiGameScreen({
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function PublicRoomsScreen({ playerName, onBack, onJoin, loading, error }) {
+  const [rooms, setRooms] = React.useState([]);
+  const [langFilter, setLangFilter] = React.useState('all');
+  const [fetching, setFetching] = React.useState(true);
+
+  React.useEffect(() => {
+    const load = async () => {
+      setFetching(true);
+      let query = supabase
+        .from('rooms')
+        .select('*, players(id)')
+        .eq('is_public', true)
+        .eq('status', 'waiting')
+        .order('created_at', { ascending: false });
+      if (langFilter !== 'all') query = query.eq('language', langFilter);
+      const { data } = await query;
+      setRooms(data || []);
+      setFetching(false);
+    };
+    load();
+    const interval = setInterval(load, 5000);
+    return () => clearInterval(interval);
+  }, [langFilter]);
+
+  return (
+    <div className="screen">
+      <Stars />
+      <div className="screen-header">
+        <button className="btn-back" onClick={onBack}>←</button>
+        <h2>🌍 Viešieji kambariai</h2>
+      </div>
+      <div className="form-section">
+        <label className="field-label">Filtruoti pagal kalbą</label>
+        <div className="category-chips">
+          {[{k:'all',l:'Visos'},{k:'lt',l:'🇱🇹 LT'},{k:'en',l:'🇬🇧 EN'}].map(({k,l}) => (
+            <button key={k} className={`chip ${langFilter===k?'chip-active':''}`}
+              onClick={() => setLangFilter(k)}>{l}</button>
+          ))}
+        </div>
+      </div>
+      {error && <p className="error-text">{error}</p>}
+      {fetching ? (
+        <div className="public-rooms-empty"><p>Ieškoma kambarių...</p></div>
+      ) : rooms.length === 0 ? (
+        <div className="public-rooms-empty">
+          <div className="empty-icon">🌐</div>
+          <p>Nėra viešų kambarių.<br/>Būk pirmas ir sukurk savą!</p>
+        </div>
+      ) : (
+        <div className="public-rooms-list">
+          {rooms.map(r => {
+            const playerCount = r.players?.length || 0;
+            const isFull = r.max_players ? playerCount >= r.max_players : false;
+            return (
+              <div key={r.id} className={`public-room-card ${isFull ? 'room-full' : ''}`}>
+                <div className="public-room-top">
+                  <div className="public-room-host">
+                    <div className="player-avatar" style={{width:32,height:32,fontSize:13}}>{(r.host_name||'?')[0].toUpperCase()}</div>
+                    <span>{r.host_name || 'Nežinomas'}</span>
+                  </div>
+                  <span className={`lang-badge lang-${r.language||'lt'}`}>
+                    {r.language === 'en' ? '🇬🇧 EN' : '🇱🇹 LT'}
+                  </span>
+                </div>
+                <div className="public-room-meta">
+                  <span className="category-badge">{r.secret_category}</span>
+                  <span className="public-room-players">
+                    👥 {playerCount}{r.max_players ? `/${r.max_players}` : ''}
+                  </span>
+                </div>
+                <button
+                  className={`btn ${isFull ? 'btn-secondary' : 'btn-primary'} public-room-join`}
+                  onClick={() => !isFull && onJoin(r.id)}
+                  disabled={isFull || loading || !playerName.trim()}
+                >
+                  {isFull ? '🔴 Pilnas' : loading ? 'Jungiamasi...' : 'Prisijungti →'}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
