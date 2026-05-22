@@ -916,6 +916,7 @@ function GameScreen({
   const [unreadChat, setUnreadChat] = React.useState(0);
   const [unreadQuestions, setUnreadQuestions] = React.useState(0);
   const [soundOn, setSoundOn] = React.useState(() => localStorage.getItem('soundEnabled') !== 'false');
+  const justAnsweredRef = React.useRef(false);
   const chatEndRef = React.useRef(null);
   const questFeedRef = React.useRef(null);
   const userScrolledRef = React.useRef(false);
@@ -924,8 +925,8 @@ function GameScreen({
   // Auto-scroll questions only when new question added and user not scrolled up
   React.useEffect(() => {
     if (activeTab !== 'questions') return;
-    if (!userScrolledRef.current && questionsEndRef?.current) {
-      questionsEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (!userScrolledRef.current && questFeedRef?.current) {
+      questFeedRef.current.scrollTop = questFeedRef.current.scrollHeight;
     }
   }, [questions, activeTab]);
 
@@ -1041,6 +1042,22 @@ function GameScreen({
                 </span>}
               </div>
               <p className="q-text">{q.question}</p>
+              {!q.answer && iAmHost && (
+                <div className="answer-buttons">
+                  {ANSWERS.map(a => (
+                    <button key={a.key}
+                      className="answer-btn"
+                      style={{ '--answer-color': a.color }}
+                      onTouchStart={() => {
+                        justAnsweredRef.current = true;
+                        setTimeout(() => { justAnsweredRef.current = false; }, 500);
+                      }}
+                      onClick={() => onAnswer(a.key)}>
+                      {a.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
           <div ref={questionsEndRef} />
@@ -1105,27 +1122,18 @@ function GameScreen({
                 )}
               </>
             )}
-            {iAmHost && pendingQuestion && (
-              <div className="answer-buttons">
-                {ANSWERS.map(a => (
-                  <button key={a.key}
-                    className="answer-btn"
-                    style={{ '--answer-color': a.color }}
-                    onClick={() => onAnswer(a.key)}>
-                    {a.label}
-                  </button>
-                ))}
+            {iAmHost && !pendingQuestion && (
+              <div className="host-waiting">
+                <span>{currentQuestioner?.name || '...'} klausinėja...</span>
               </div>
             )}
-            {iAmHost && !pendingQuestion && (
-              <>
-                <div className="host-waiting">
-                  <span>{currentQuestioner?.name || '...'} klausinėja...</span>
-                </div>
-                <button className="btn-guessed-big" onClick={onGuessed}>
-                  Atspėta! 🎉
-                </button>
-              </>
+            {iAmHost && (
+              <button className="btn-guessed-big" onClick={() => {
+                if (justAnsweredRef.current) return;
+                onGuessed();
+              }}>
+                Atspėta! 🎉
+              </button>
             )}
           </>
         ) : (
