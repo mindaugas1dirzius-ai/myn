@@ -516,7 +516,7 @@ function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, se
         <input className="input-field" value={playerName} readOnly style={{opacity:0.6}} />
       </div>
       <div className="form-section">
-        <label className="field-label">Kategorija</label>
+        <label className="field-label">1. Pasirinkite kategoriją</label>
         <div className="category-chips">
           {CATEGORIES.map(c => (
             <button key={c}
@@ -526,7 +526,7 @@ function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, se
         </div>
       </div>
       <div className="form-section">
-        <label className="field-label">Slaptas žodis</label>
+        <label className="field-label">2. Įrašykite slaptą žodį</label>
         <input
           className="input-field secret-input"
           placeholder="Pvz: katė, Eiffelio bokštas..."
