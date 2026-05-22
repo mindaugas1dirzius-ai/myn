@@ -461,12 +461,14 @@ export default function App() {
 
   if (screen === 'guessed') return <GuessedScreen
     room={room}
-    onPlayAgain={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }} />;
+    onPlayAgain={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }}
+    onHome={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }} />;
 
   if (screen === 'finished') return <FinishedScreen
     room={room}
     questions={questions}
-    onPlayAgain={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }} />;
+    onPlayAgain={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }}
+    onHome={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }} />;
 
   return null;
 }
@@ -1010,7 +1012,7 @@ function AiGameScreen({
   );
 }
 
-function GuessedScreen({ room, onPlayAgain }) {
+function GuessedScreen({ room, onPlayAgain, onHome }) {
   const imageUrl = room?.secret_image_url ||
     wordImage(room?.secret_word, room?.secret_category);
 
@@ -1033,11 +1035,12 @@ function GuessedScreen({ room, onPlayAgain }) {
         </div>
       </div>
       <button className="btn btn-primary" onClick={onPlayAgain}>Žaisti dar kartą</button>
+      <button className="btn btn-secondary" onClick={onHome}>Į pradžią</button>
     </div>
   );
 }
 
-function FinishedScreen({ room, questions, onPlayAgain }) {
+function FinishedScreen({ room, questions, onPlayAgain, onHome }) {
   const imageUrl = room?.secret_image_url ||
     wordImage(room?.secret_word, room?.secret_category);
   return (
@@ -1069,6 +1072,7 @@ function FinishedScreen({ room, questions, onPlayAgain }) {
         </div>
       )}
       <button className="btn btn-primary" onClick={onPlayAgain}>Žaisti dar kartą</button>
+      <button className="btn btn-secondary" onClick={onHome}>Į pradžią</button>
     </div>
   );
 }
