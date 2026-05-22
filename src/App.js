@@ -305,6 +305,22 @@ export default function App() {
     sendingRef.current = false;
   };
 
+  const sendGuess = async () => {
+    if (!myQuestion.trim()) return;
+    if (pendingQuestion) { setError('Palaukite, kol bus atsakytas ankstesnis klausimas!'); return; }
+    if (sendingRef.current) return;
+    if ((room?.guesses_left || 0) <= 0) { setError('Spėjimų limitą išnaudotas!'); return; }
+    sendingRef.current = true;
+    const q = '🎯 SPĖJIMAS: ' + myQuestion.trim();
+    setMyQuestion('');
+    await supabase.from('questions').insert({
+      room_id: room.id, player_id: playerId,
+      player_name: players.find(p => p.id === playerId)?.name || 'Nežinomas',
+      question: q, is_guess: true
+    });
+    sendingRef.current = false;
+  };
+
   const sendChat = (text, playerName) => {
     if (!text.trim() || !roomCode) return;
     const msg = { text: text.trim(), name: playerName, time: Date.now() };
@@ -319,16 +335,19 @@ export default function App() {
     if (!pendingQuestion) return;
     await supabase.from('questions').update({ answer }).eq('id', pendingQuestion.id);
 
-    // Next questioner
     const others = players.filter(p => p.id !== playerId);
     const currentIdx = others.findIndex(p => p.id === room.current_questioner);
     const nextQuestioner = others[(currentIdx + 1) % others.length]?.id || others[0]?.id;
     const newQuestionsLeft = room.questions_left - 1;
+    const isGuess = pendingQuestion.is_guess;
+    const newGuessesLeft = isGuess ? Math.max(0, (room.guesses_left ?? 3) - 1) : (room.guesses_left ?? 3);
 
-    if (newQuestionsLeft <= 0) {
-      await supabase.from('rooms').update({ status: 'finished', questions_left: 0, current_questioner: nextQuestioner }).eq('id', room.id);
+    if (answer === 'yra' || (isGuess && answer === 'taip')) {
+      await supabase.from('rooms').update({ status: 'guessed', questions_left: newQuestionsLeft, guesses_left: newGuessesLeft }).eq('id', room.id);
+    } else if (newQuestionsLeft <= 0) {
+      await supabase.from('rooms').update({ status: 'finished', questions_left: 0, guesses_left: newGuessesLeft, current_questioner: nextQuestioner }).eq('id', room.id);
     } else {
-      await supabase.from('rooms').update({ questions_left: newQuestionsLeft, current_questioner: nextQuestioner }).eq('id', room.id);
+      await supabase.from('rooms').update({ questions_left: newQuestionsLeft, guesses_left: newGuessesLeft, current_questioner: nextQuestioner }).eq('id', room.id);
     }
     setPendingQuestion(null);
   };
@@ -444,7 +463,8 @@ export default function App() {
     playerId={playerId}
     pendingQuestion={pendingQuestion}
     myQuestion={myQuestion} setMyQuestion={setMyQuestion}
-    onSendQuestion={sendQuestion} onAnswer={answerQuestion}
+    onSendQuestion={sendQuestion} onSendGuess={sendGuess} onAnswer={answerQuestion}
+    guessesLeft={room?.guesses_left ?? 3}
     chatMessages={chatMessages} onSendChat={(t) => sendChat(t, playerName)}
     activeTab={activeTab} setActiveTab={setActiveTab}
     onGuessed={markGuessed}
@@ -684,7 +704,8 @@ function GameScreen({
   pendingQuestion, myQuestion, setMyQuestion,
   onSendQuestion, onAnswer, onGuessed, onLeave,
   voiceActive, onVoiceToggle, questionsEndRef,
-  chatMessages, onSendChat, activeTab, setActiveTab
+  chatMessages, onSendChat, activeTab, setActiveTab,
+  onSendGuess, guessesLeft
 }) {
   const currentQuestioner = players.find(p => p.id === room?.current_questioner);
   const isMyTurnToAsk = room?.current_questioner === playerId && !pendingQuestion;
@@ -866,6 +887,14 @@ function GameScreen({
                         →
                       </button>
                     </div>
+                    <button
+                      className="btn-guess"
+                      onClick={onSendGuess}
+                      disabled={!myQuestion.trim() || guessesLeft <= 0}
+                      title={guessesLeft <= 0 ? 'Spėjimų limitą išnaudotas' : `Spėti žodį (liko ${guessesLeft})`}
+                    >
+                      🎯 Spėti žodį ({guessesLeft} liko)
+                    </button>
                   </div>
                 ) : (
                   <div className="others-turn">

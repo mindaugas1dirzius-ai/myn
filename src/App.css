@@ -1287,3 +1287,26 @@ html, body, #root {
   90% { opacity: 0.8; }
   100% { transform: translateX(calc(-100vw - 140px)) rotate(-8deg); opacity: 0; }
 }
+
+/* ── Spėjimo mygtukas ──────────────────────────────────────────────────── */
+.btn-guess {
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px;
+  background: rgba(251,191,36,0.1);
+  border: 0.5px solid rgba(251,191,36,0.3);
+  border-radius: 10px;
+  color: #fbbf24;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-guess:hover:not(:disabled) {
+  background: rgba(251,191,36,0.2);
+  border-color: rgba(251,191,36,0.5);
+}
+.btn-guess:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
