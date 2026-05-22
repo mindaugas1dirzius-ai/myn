@@ -1,68 +1,6 @@
-﻿import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase, generateRoomCode, generatePlayerId } from './lib/supabase';
 import './App.css';
-// === GARSO SISTEMA ===
-let _soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
-const playSound = (type) => {
-  if (!_soundEnabled) return;
-  try {
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    if (!window._myna_ctx) window._myna_ctx = new AudioCtx();
-    const ctx = window._myna_ctx;
-    const now = ctx.currentTime;
-    const makeOsc = (freq, startT, endT, vol, wave) => {
-      wave = wave || 'sine'; vol = vol || 0.3;
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.type = wave;
-      osc.frequency.setValueAtTime(freq, startT);
-      gain.gain.setValueAtTime(vol, startT);
-      gain.gain.exponentialRampToValueAtTime(0.001, endT);
-      osc.start(startT); osc.stop(endT);
-    };
-    if (type === 'click') { makeOsc(800, now, now+0.08, 0.15, 'square'); }
-    else if (type === 'taip') {
-      makeOsc(523, now, now+0.18, 0.25);
-      makeOsc(659, now+0.08, now+0.26, 0.25);
-      makeOsc(784, now+0.16, now+0.4, 0.3);
-    }
-    else if (type === 'ne') {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.frequency.setValueAtTime(400, now);
-      osc.frequency.exponentialRampToValueAtTime(200, now+0.3);
-      gain.gain.setValueAtTime(0.25, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now+0.35);
-      osc.start(now); osc.stop(now+0.35);
-    }
-    else if (type === 'galiButi') {
-      makeOsc(440, now, now+0.15, 0.2);
-      makeOsc(480, now+0.1, now+0.28, 0.15);
-    }
-    else if (type === 'spejimas') {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.frequency.setValueAtTime(300, now);
-      osc.frequency.exponentialRampToValueAtTime(600, now+0.5);
-      gain.gain.setValueAtTime(0.3, now);
-      gain.gain.setValueAtTime(0.1, now+0.15);
-      gain.gain.setValueAtTime(0.3, now+0.3);
-      gain.gain.exponentialRampToValueAtTime(0.001, now+0.6);
-      osc.start(now); osc.stop(now+0.6);
-    }
-    else if (type === 'atspeta') {
-      [523,659,784,1047].forEach((f,i) => makeOsc(f, now+i*0.1, now+i*0.1+0.25, 0.3));
-      makeOsc(262, now, now+0.5, 0.2);
-    }
-    else if (type === 'pralaimejimas') {
-      [392,349,330,294].forEach((f,i) => makeOsc(f, now+i*0.15, now+i*0.15+0.3, 0.2));
-    }
-  } catch(e) {}
-};
-
 
 const ANSWERS = [
   { key: 'taip', label: 'TAIP', icon: '✓', color: '#22c55e' },
@@ -769,7 +707,6 @@ function GameScreen({
   const isMyTurnToAsk = room?.current_questioner === playerId && !pendingQuestion;
   const iAmHost = room?.host_id === playerId;
   const [chatInput, setChatInput] = React.useState('');
-  const [soundOn, setSoundOn] = React.useState(() => localStorage.getItem('soundEnabled') !== 'false');
   const [unreadChat, setUnreadChat] = React.useState(0);
   const [unreadQuestions, setUnreadQuestions] = React.useState(0);
   const chatEndRef = React.useRef(null);
@@ -830,7 +767,8 @@ function GameScreen({
         </div>
         <span className="game-header-logo">MINA</span>
         <div className="game-actions">
-           ? 'voice-on' : ''}`}
+          <button
+            className={`btn-voice ${voiceActive ? 'voice-on' : ''}`}
             onClick={onVoiceToggle}
             title={voiceActive ? 'Išjungti balsą' : 'Įjungti balsą'}
           >
@@ -887,7 +825,7 @@ function GameScreen({
                     <button key={a.key}
                       className="answer-btn"
                       style={{ '--answer-color': a.color }}
-                      onClick={() => { playSound(a.key === 'taip' || a.key === 'yra' ? 'taip' : a.key === 'ne' ? 'ne' : 'galiButi'); onAnswer(a.key); }}>
+                      onClick={() => onAnswer(a.key)}>
                       {a.label}
                     </button>
                   ))}
@@ -937,13 +875,13 @@ function GameScreen({
                         onKeyDown={e => e.key === 'Enter' && onSendQuestion()}
                         maxLength={120}
                       />
-                      <button className="btn-send" onClick={() => { playSound('click'); onSendQuestion(); }} disabled={!myQuestion.trim()}>
+                      <button className="btn-send" onClick={onSendQuestion} disabled={!myQuestion.trim()}>
                         →
                       </button>
                     </div>
                     <button
                       className="btn-guess"
-                      onClick={() => { playSound('spejimas'); onSendGuess(); }}
+                      onClick={onSendGuess}
                       disabled={!myQuestion.trim() || guessesLeft <= 0}
                       title={guessesLeft <= 0 ? 'Spėjimų limitą išnaudotas' : `Spėti žodį (liko ${guessesLeft})`}
                     >
@@ -1177,7 +1115,6 @@ function AiGameScreen({
 }
 
 function GuessedScreen({ room, onPlayAgain, onHome }) {
-  React.useEffect(() => { playSound('atspeta'); }, []);
   const imageUrl = room?.secret_image_url ||
     wordImage(room?.secret_word, room?.secret_category);
 
@@ -1206,7 +1143,6 @@ function GuessedScreen({ room, onPlayAgain, onHome }) {
 }
 
 function FinishedScreen({ room, questions, onPlayAgain, onHome }) {
-  React.useEffect(() => { playSound('pralaimejimas'); }, []);
   const imageUrl = room?.secret_image_url ||
     wordImage(room?.secret_word, room?.secret_category);
   return (
@@ -1242,5 +1178,3 @@ function FinishedScreen({ room, questions, onPlayAgain, onHome }) {
     </div>
   );
 }
-
-
