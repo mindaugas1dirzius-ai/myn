@@ -349,11 +349,17 @@ export default function App() {
     const { data: r } = await supabase.from('rooms').select('*').eq('id', code).single();
     if (!r) { setError('Kambarys nerastas!'); setLoading(false); return; }
     if (r.status === 'finished') { setError('Žaidimas jau baigtas!'); setLoading(false); return; }
-    // Always generate fresh playerId for joining (avoids duplicate key error)
-    const freshId = generatePlayerId();
-    localStorage.setItem('playerId', freshId);
-    setPlayerId(freshId);
-    await supabase.from('players').insert({ id: freshId, room_id: code, name: playerName.trim(), is_host: false });
+
+    const storedId = localStorage.getItem('playerId');
+    const isReturningHost = !!(storedId && storedId === r.host_id);
+    const joinId = isReturningHost ? storedId : generatePlayerId();
+    localStorage.setItem('playerId', joinId);
+    setPlayerId(joinId);
+
+    const { data: existing } = await supabase.from('players').select('id').eq('id', joinId).eq('room_id', code).single();
+    if (!existing) {
+      await supabase.from('players').insert({ id: joinId, room_id: code, name: playerName.trim(), is_host: isReturningHost });
+    }
     setRoom(r); setRoomCode(code);
     // Fetch initial data
     const { data: pData } = await supabase.from('players').select('*').eq('room_id', code).order('joined_at');
