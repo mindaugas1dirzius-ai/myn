@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
 
 * {
   box-sizing: border-box;
@@ -1377,3 +1377,9 @@ html, body, #root {
               radial-gradient(ellipse at 80% 80%, rgba(168,85,247,0.12) 0%, transparent 50%),
               #050510;
 }
+
+/* Sound button */
+.btn-sound { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; color: #fff; font-size: 18px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background 0.2s, transform 0.1s; padding: 0; margin-right: 4px; }
+.btn-sound:hover { background: rgba(255,255,255,0.18); transform: scale(1.08); }
+.btn-sound:active { transform: scale(0.94); }
+
