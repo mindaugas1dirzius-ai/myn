@@ -2,6 +2,67 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase, generateRoomCode, generatePlayerId } from './lib/supabase';
 import './App.css';
 
+// ═══════════════════════════════════════════════════════
+// GARSO SISTEMA
+// ═══════════════════════════════════════════════════════
+let _soundEnabled = localStorage.getItem('soundEnabled') !== 'false';
+
+const playSound = (type) => {
+  if (!_soundEnabled) return;
+  try {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!window._minaCtx) window._minaCtx = new AudioCtx();
+    const ctx = window._minaCtx;
+    const now = ctx.currentTime;
+    const makeOsc = (freq, startT, endT, vol, wave) => {
+      vol = vol || 0.3; wave = wave || 'sine';
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = wave;
+      osc.frequency.setValueAtTime(freq, startT);
+      gain.gain.setValueAtTime(vol, startT);
+      gain.gain.exponentialRampToValueAtTime(0.001, endT);
+      osc.start(startT); osc.stop(endT);
+    };
+    if (type === 'click') {
+      makeOsc(800, now, now + 0.08, 0.15, 'square');
+    } else if (type === 'taip') {
+      makeOsc(523, now, now + 0.18, 0.25);
+      makeOsc(659, now + 0.08, now + 0.26, 0.25);
+      makeOsc(784, now + 0.16, now + 0.4, 0.3);
+    } else if (type === 'ne') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.setValueAtTime(400, now);
+      osc.frequency.exponentialRampToValueAtTime(200, now + 0.3);
+      gain.gain.setValueAtTime(0.25, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+      osc.start(now); osc.stop(now + 0.35);
+    } else if (type === 'galiButi') {
+      makeOsc(440, now, now + 0.15, 0.2);
+      makeOsc(480, now + 0.1, now + 0.28, 0.15);
+    } else if (type === 'spejimas') {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.setValueAtTime(300, now);
+      osc.frequency.exponentialRampToValueAtTime(600, now + 0.5);
+      gain.gain.setValueAtTime(0.3, now);
+      gain.gain.setValueAtTime(0.1, now + 0.15);
+      gain.gain.setValueAtTime(0.3, now + 0.3);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+      osc.start(now); osc.stop(now + 0.6);
+    } else if (type === 'atspeta') {
+      [523, 659, 784, 1047].forEach((f, i) => makeOsc(f, now + i * 0.1, now + i * 0.1 + 0.25, 0.3));
+      makeOsc(262, now, now + 0.5, 0.2);
+    } else if (type === 'pralaimejimas') {
+      [392, 349, 330, 294].forEach((f, i) => makeOsc(f, now + i * 0.15, now + i * 0.15 + 0.3, 0.2));
+    }
+  } catch (e) {}
+};
+
 const ANSWERS = [
   { key: 'taip', label: 'TAIP', icon: '✓', color: '#22c55e' },
   { key: 'ne', label: 'NE', icon: '✗', color: '#ef4444' },
@@ -334,6 +395,11 @@ export default function App() {
 
   const answerQuestion = async (answer) => {
     if (!pendingQuestion) return;
+    // Garsas pagal atsakymą
+    if (answer === 'taip' || answer === 'yra') playSound('taip');
+    else if (answer === 'ne') playSound('ne');
+    else playSound('galiButi');
+
     await supabase.from('questions').update({ answer }).eq('id', pendingQuestion.id);
 
     const others = players.filter(p => p.id !== playerId);
@@ -354,6 +420,7 @@ export default function App() {
   };
 
   const markGuessed = async () => {
+    playSound('atspeta');
     await supabase.from('rooms').update({ status: 'guessed' }).eq('id', room.id);
   };
 
@@ -404,6 +471,11 @@ export default function App() {
       else if (answer.includes('TAIP')) answer = 'TAIP';
       else if (answer.startsWith('NE')) answer = 'NE';
       else answer = 'GALI BŪTI';
+      // Garsas AI atsakymui
+      if (answer === 'ATSPĖJOTE') { playSound('atspeta'); }
+      else if (answer === 'TAIP') { playSound('taip'); }
+      else if (answer === 'NE') { playSound('ne'); }
+      else { playSound('galiButi'); }
       setAiQuestions(prev => prev.map((item, i) =>
         i === prev.length - 1 ? { ...item, answer } : item
       ));
@@ -709,6 +781,7 @@ function GameScreen({
   const [chatInput, setChatInput] = React.useState('');
   const [unreadChat, setUnreadChat] = React.useState(0);
   const [unreadQuestions, setUnreadQuestions] = React.useState(0);
+  const [soundOn, setSoundOn] = React.useState(() => localStorage.getItem('soundEnabled') !== 'false');
   const chatEndRef = React.useRef(null);
   const questFeedRef = React.useRef(null);
   const userScrolledRef = React.useRef(false);
@@ -754,6 +827,14 @@ function GameScreen({
     setChatInput('');
   };
 
+  const toggleSound = () => {
+    const next = !soundOn;
+    setSoundOn(next);
+    _soundEnabled = next;
+    localStorage.setItem('soundEnabled', String(next));
+    if (next) playSound('click');
+  };
+
   return (
     <div className="screen game-screen">
       <div className="game-header">
@@ -767,6 +848,13 @@ function GameScreen({
         </div>
         <span className="game-header-logo">MINA</span>
         <div className="game-actions">
+          <button
+            className="btn-sound"
+            onClick={toggleSound}
+            title={soundOn ? 'Išjungti garsą' : 'Įjungti garsą'}
+          >
+            {soundOn ? '🔊' : '🔇'}
+          </button>
           <button
             className={`btn-voice ${voiceActive ? 'voice-on' : ''}`}
             onClick={onVoiceToggle}
@@ -875,13 +963,13 @@ function GameScreen({
                         onKeyDown={e => e.key === 'Enter' && onSendQuestion()}
                         maxLength={120}
                       />
-                      <button className="btn-send" onClick={onSendQuestion} disabled={!myQuestion.trim()}>
+                      <button className="btn-send" onClick={() => { playSound('click'); onSendQuestion(); }} disabled={!myQuestion.trim()}>
                         →
                       </button>
                     </div>
                     <button
                       className="btn-guess"
-                      onClick={onSendGuess}
+                      onClick={() => { playSound('spejimas'); onSendGuess(); }}
                       disabled={!myQuestion.trim() || guessesLeft <= 0}
                       title={guessesLeft <= 0 ? 'Spėjimų limitą išnaudotas' : `Spėti žodį (liko ${guessesLeft})`}
                     >
@@ -1115,6 +1203,7 @@ function AiGameScreen({
 }
 
 function GuessedScreen({ room, onPlayAgain, onHome }) {
+  React.useEffect(() => { playSound('atspeta'); }, []);
   const imageUrl = room?.secret_image_url ||
     wordImage(room?.secret_word, room?.secret_category);
 
@@ -1143,6 +1232,7 @@ function GuessedScreen({ room, onPlayAgain, onHome }) {
 }
 
 function FinishedScreen({ room, questions, onPlayAgain, onHome }) {
+  React.useEffect(() => { playSound('pralaimejimas'); }, []);
   const imageUrl = room?.secret_image_url ||
     wordImage(room?.secret_word, room?.secret_category);
   return (
