@@ -290,15 +290,20 @@ export default function App() {
     setScreen('game');
   };
 
+  const sendingRef = useRef(false);
   const sendQuestion = async () => {
     if (!myQuestion.trim()) return;
     if (pendingQuestion) { setError('Palaukite, kol bus atsakytas ankstesnis klausimas!'); return; }
+    if (sendingRef.current) return;
+    sendingRef.current = true;
+    const q = myQuestion.trim();
+    setMyQuestion('');
     await supabase.from('questions').insert({
       room_id: room.id, player_id: playerId,
       player_name: players.find(p => p.id === playerId)?.name || 'Nežinomas',
-      question: myQuestion.trim()
+      question: q
     });
-    setMyQuestion('');
+    sendingRef.current = false;
   };
 
   const answerQuestion = async (answer) => {
