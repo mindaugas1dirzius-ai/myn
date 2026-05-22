@@ -371,6 +371,16 @@ export default function App() {
     if (room?.status === 'finished' && screen === 'game') setScreen('finished');
   }, [room?.status, screen]);
 
+  // FIX #2b: Poll room status every 2s in lobby (realtime fallback)
+  useEffect(() => {
+    if (screen !== 'lobby' || !roomCode) return;
+    const poll = setInterval(async () => {
+      const { data: r } = await supabase.from('rooms').select('status').eq('id', roomCode).single();
+      if (r && r.status !== room?.status) setRoom(prev => ({ ...prev, ...r }));
+    }, 2000);
+    return () => clearInterval(poll);
+  }, [screen, roomCode, room?.status]);
+
   if (screen === 'home') return <HomeScreen
     playerName={playerName} setPlayerName={setPlayerName}
     onCreate={() => setScreen('create')} onJoin={() => setScreen('join')}
