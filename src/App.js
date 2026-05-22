@@ -525,9 +525,39 @@ function FlyingElements() {
   );
 }
 
+function Stars() {
+  const stars = React.useMemo(() => {
+    return Array.from({length: 40}, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 0.8 + Math.random() * 1.4,
+      duration: 2 + Math.random() * 3,
+      delay: Math.random() * 4,
+    }));
+  }, []);
+  return (
+    <div style={{position:'fixed',inset:0,pointerEvents:'none',zIndex:0,overflow:'hidden'}}>
+      {stars.map(s => (
+        <div key={s.id} style={{
+          position:'absolute',
+          left: s.x + '%',
+          top: s.y + '%',
+          width: s.size + 'px',
+          height: s.size + 'px',
+          borderRadius: '50%',
+          background: '#fff',
+          animation: `starBlink ${s.duration}s ease-in-out ${s.delay}s infinite`,
+        }}/>
+      ))}
+    </div>
+  );
+}
+
 function HomeScreen({ playerName, setPlayerName, onCreate, onJoin, onPlayAI }) {
   return (
     <div className="screen home-screen">
+      <Stars />
       <div className="home-hero">
         <div className="myn-logo">
           <div className="myn-logo-mark">MINA</div>
@@ -561,6 +591,7 @@ function HomeScreen({ playerName, setPlayerName, onCreate, onJoin, onPlayAI }) {
 function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, secretCategory, setSecretCategory, onBack, onCreate, loading, error }) {
   return (
     <div className="screen">
+      <Stars />
       <div className="screen-header">
         <button className="btn-back" onClick={onBack}>←</button>
         <h2>Naujas žaidimas</h2>
@@ -600,6 +631,7 @@ function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, se
 function JoinScreen({ playerName, setPlayerName, roomCode, setRoomCode, onBack, onJoin, loading, error }) {
   return (
     <div className="screen">
+      <Stars />
       <div className="screen-header">
         <button className="btn-back" onClick={onBack}>←</button>
         <h2>Prisijungti</h2>
