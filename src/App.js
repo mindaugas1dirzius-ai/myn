@@ -617,7 +617,7 @@ export default function App() {
 
   if (screen === 'lobby') return <LobbyScreen
     room={room} players={players} isHost={isHost}
-    roomCode={roomCode} onStart={startGame} error={error} />;
+    roomCode={roomCode} onStart={startGame} onLeave={leaveRoom} error={error} />;
 
   if (screen === 'game') return <GameScreen
     room={room} players={players} questions={questions}
@@ -795,7 +795,7 @@ function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, se
           <div className="form-section">
             <label className="field-label">Kambario kalba</label>
             <div className="category-chips">
-              {[{k:'lt',l:'🇱🇹 Lietuvių'},{k:'en',l:'🇬🇧 English'}].map(({k,l}) => (
+              {[{k:'lt',l:'🇱🇹 Lietuvių'},{k:'en',l:'🇬🇧 English'},{k:'all',l:'🌐 Visos'}].map(({k,l}) => (
                 <button key={k} className={`chip ${roomLanguage === k ? 'chip-active' : ''}`}
                   onClick={() => setRoomLanguage(k)}>{l}</button>
               ))}
@@ -849,7 +849,7 @@ function JoinScreen({ playerName, setPlayerName, roomCode, setRoomCode, onBack, 
   );
 }
 
-function LobbyScreen({ room, players, isHost, roomCode, onStart, error }) {
+function LobbyScreen({ room, players, isHost, roomCode, onStart, onLeave, error }) {
   const [copied, setCopied] = useState(false);
   const copy = () => {
     navigator.clipboard.writeText(roomCode);
@@ -857,7 +857,8 @@ function LobbyScreen({ room, players, isHost, roomCode, onStart, error }) {
   };
   return (
     <div className="screen lobby-screen">
-      <div className="screen-header center">
+      <div className="screen-header">
+        <button className="btn-back" onClick={onLeave}>←</button>
         <h2>Laukiama žaidėjų</h2>
       </div>
       <div className="room-code-card" onClick={copy}>
@@ -1328,6 +1329,7 @@ function PublicRoomsScreen({ playerName, onBack, onJoin, loading, error }) {
   const [fetching, setFetching] = React.useState(true);
 
   React.useEffect(() => {
+    let cancelled = false;
     const load = async () => {
       setFetching(true);
       let query = supabase
@@ -1338,12 +1340,14 @@ function PublicRoomsScreen({ playerName, onBack, onJoin, loading, error }) {
         .order('created_at', { ascending: false });
       if (langFilter !== 'all') query = query.eq('language', langFilter);
       const { data } = await query;
-      setRooms(data || []);
-      setFetching(false);
+      if (!cancelled) {
+        setRooms(data || []);
+        setFetching(false);
+      }
     };
     load();
     const interval = setInterval(load, 5000);
-    return () => clearInterval(interval);
+    return () => { cancelled = true; clearInterval(interval); };
   }, [langFilter]);
 
   return (
