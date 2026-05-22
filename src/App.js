@@ -1050,9 +1050,16 @@ function GameScreen({
                       style={{ '--answer-color': a.color }}
                       onTouchStart={() => {
                         justAnsweredRef.current = true;
-                        setTimeout(() => { justAnsweredRef.current = false; }, 500);
+                        setTimeout(() => { justAnsweredRef.current = false; }, 1000);
                       }}
-                      onClick={() => onAnswer(a.key)}>
+                      onTouchEnd={(e) => {
+                        e.preventDefault();
+                        onAnswer(a.key);
+                      }}
+                      onClick={() => {
+                        if (justAnsweredRef.current) return;
+                        onAnswer(a.key);
+                      }}>
                       {a.label}
                     </button>
                   ))}
