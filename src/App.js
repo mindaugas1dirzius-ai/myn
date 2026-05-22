@@ -513,17 +513,7 @@ function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, se
       </div>
       <div className="form-section">
         <label className="field-label">Tavo vardas</label>
-        <input className="input-field" value={playerName} onChange={e => setPlayerName(e.target.value)} maxLength={20} />
-      </div>
-      <div className="form-section">
-        <label className="field-label">Slaptas žodis / vardas</label>
-        <input
-          className="input-field secret-input"
-          placeholder="Pvz: katė, Eiffelio bokštas..."
-          value={secretWord} onChange={e => setSecretWord(e.target.value)}
-          maxLength={50} type="text" autoComplete="off"
-        />
-        <p className="field-hint">Kiti žaidėjai to nematys!</p>
+        <input className="input-field" value={playerName} readOnly style={{opacity:0.6}} />
       </div>
       <div className="form-section">
         <label className="field-label">Kategorija</label>
@@ -534,6 +524,16 @@ function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, se
               onClick={() => setSecretCategory(c)}>{c}</button>
           ))}
         </div>
+      </div>
+      <div className="form-section">
+        <label className="field-label">Slaptas žodis</label>
+        <input
+          className="input-field secret-input"
+          placeholder="Pvz: katė, Eiffelio bokštas..."
+          value={secretWord} onChange={e => setSecretWord(e.target.value)}
+          maxLength={50} type="text" autoComplete="off"
+        />
+        <p className="field-hint">Kiti žaidėjai to nematys!</p>
       </div>
       {error && <p className="error-text">{error}</p>}
       <button className="btn btn-primary" onClick={onCreate} disabled={loading || !secretWord.trim()}>
