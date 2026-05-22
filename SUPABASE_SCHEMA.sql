@@ -9,6 +9,7 @@ create table if not exists rooms (
   host_id text not null,
   status text not null default 'waiting', -- waiting, playing, guessed, finished
   questions_left int not null default 20,
+  guesses_left int not null default 3,
   current_questioner text,
   created_at timestamptz default now()
 );
@@ -30,8 +31,13 @@ create table if not exists questions (
   player_name text not null,
   question text not null,
   answer text, -- 'taip', 'ne', 'gali_buti', 'yra'
+  is_guess boolean default false,
   created_at timestamptz default now()
 );
+
+-- Migracijos esamoms DB (idempotentiška — galima paleisti kelis kartus)
+alter table rooms add column if not exists guesses_left int not null default 3;
+alter table questions add column if not exists is_guess boolean default false;
 
 -- Enable realtime
 alter publication supabase_realtime add table rooms;

@@ -174,12 +174,13 @@ export default function App() {
         }).catch(() => {});
       }
     };
-    document.addEventListener('visibilitychange', () => {
+    const handleVisibility = () => {
       if (document.hidden) handleLeave();
-    });
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
     window.addEventListener('beforeunload', handleLeave);
     return () => {
-      document.removeEventListener('visibilitychange', handleLeave);
+      document.removeEventListener('visibilitychange', handleVisibility);
       window.removeEventListener('beforeunload', handleLeave);
     };
   }, [roomCode, playerId]);

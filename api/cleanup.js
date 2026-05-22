@@ -15,6 +15,9 @@ export default async function handler(req, res) {
     process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.REACT_APP_SUPABASE_ANON_KEY
   );
 
+  const { data: player } = await sb.from('players').select('id').eq('id', playerId).eq('room_id', roomId).single();
+  if (!player) return res.status(403).json({ error: 'Player not found in room' });
+
   await sb.from('players').delete().eq('id', playerId).eq('room_id', roomId);
 
   const { data: remaining } = await sb.from('players').select('id').eq('room_id', roomId);
