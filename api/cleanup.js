@@ -18,11 +18,22 @@ export default async function handler(req, res) {
   const { data: player } = await sb.from('players').select('id').eq('id', playerId).eq('room_id', roomId).single();
   if (!player) return res.status(403).json({ error: 'Player not found in room' });
 
+  const { data: room } = await sb.from('rooms').select('host_id, is_public').eq('id', roomId).single();
+
   await sb.from('players').delete().eq('id', playerId).eq('room_id', roomId);
 
-  const { data: remaining } = await sb.from('players').select('id').eq('room_id', roomId);
+  const { data: remaining } = await sb.from('players').select('*').eq('room_id', roomId).order('joined_at');
+
   if (!remaining || remaining.length === 0) {
-    await sb.from('rooms').delete().eq('id', roomId);
+    if (!room?.is_public) {
+      await sb.from('rooms').delete().eq('id', roomId);
+    }
+    // Atviras kambarys lieka — kūrėjas gali grįžti
+  } else if (room?.host_id === playerId) {
+    // Kūrėjas išėjo, liko žaidėjų — pirmas likusysis tampa kūrėju
+    const newHost = remaining[0];
+    await sb.from('rooms').update({ host_id: newHost.id, host_name: newHost.name }).eq('id', roomId);
+    await sb.from('players').update({ is_host: true }).eq('id', newHost.id).eq('room_id', roomId);
   }
 
   return res.status(200).json({ ok: true });

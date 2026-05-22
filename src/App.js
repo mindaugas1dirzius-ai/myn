@@ -735,13 +735,13 @@ function HomeScreen({ playerName, setPlayerName, onCreate, onJoin, onPlayAI, onP
           maxLength={20} autoFocus
         />
         <button className="btn btn-primary" onClick={onCreate} disabled={!playerName.trim()}>
-          Kurti kambarį
+          ✨ Kurti kambarį
         </button>
         <button className="btn btn-secondary" onClick={onJoin} disabled={!playerName.trim()}>
-          Prisijungti
+          🔑 Prisijungti
         </button>
         <button className="btn btn-public" onClick={onPublic} disabled={!playerName.trim()}>
-          🌍 Viešieji kambariai
+          🌍 Atviri kambariai
         </button>
         <button className="btn btn-ai" onClick={onPlayAI} disabled={!playerName.trim()}>
           🤖 Žaisti su AI
@@ -787,7 +787,7 @@ function CreateScreen({ playerName, setPlayerName, secretWord, setSecretWord, se
         <label className="field-label">3. Kambario tipas</label>
         <button className={`btn-toggle ${isPublic ? 'active' : ''}`} onClick={() => setIsPublic(v => !v)}>
           <div className="toggle-track"><div className="toggle-thumb" /></div>
-          <span>{isPublic ? '🌍 Viešas — visi gali prisijungti' : '🔒 Privatus — tik su kodu'}</span>
+          <span>{isPublic ? '🌍 Atviras — visi gali prisijungti' : '🔒 Privatus — tik su kodu'}</span>
         </button>
       </div>
       {isPublic && (
@@ -1351,7 +1351,7 @@ function PublicRoomsScreen({ playerName, onBack, onJoin, loading, error }) {
       <Stars />
       <div className="screen-header">
         <button className="btn-back" onClick={onBack}>←</button>
-        <h2>🌍 Viešieji kambariai</h2>
+        <h2>🌍 Atviri kambariai</h2>
       </div>
       <div className="form-section">
         <label className="field-label">Filtruoti pagal kalbą</label>
@@ -1368,7 +1368,7 @@ function PublicRoomsScreen({ playerName, onBack, onJoin, loading, error }) {
       ) : rooms.length === 0 ? (
         <div className="public-rooms-empty">
           <div className="empty-icon">🌐</div>
-          <p>Nėra viešų kambarių.<br/>Būk pirmas ir sukurk savą!</p>
+          <p>Nėra atvirų kambarių.<br/>Būk pirmas ir sukurk savą!</p>
         </div>
       ) : (
         <div className="public-rooms-list">
