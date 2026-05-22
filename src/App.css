@@ -1273,3 +1273,17 @@ html, body, #root {
   color: #e2e8f0;
   font-size: 13px;
 }
+
+/* ── Flying elements animacijos ───────────────────────────────────────── */
+@keyframes flyR {
+  0% { transform: translateX(-140px) rotate(-8deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.8; }
+  100% { transform: translateX(calc(100vw + 140px)) rotate(8deg); opacity: 0; }
+}
+@keyframes flyL {
+  0% { transform: translateX(140px) rotate(8deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.8; }
+  100% { transform: translateX(calc(-100vw - 140px)) rotate(-8deg); opacity: 0; }
+}
