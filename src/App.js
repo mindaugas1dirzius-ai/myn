@@ -465,6 +465,7 @@ export default function App() {
 
   if (screen === 'finished') return <FinishedScreen
     room={room}
+    questions={questions}
     onPlayAgain={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }} />;
 
   return null;
@@ -1036,7 +1037,7 @@ function GuessedScreen({ room, onPlayAgain }) {
   );
 }
 
-function FinishedScreen({ room, onPlayAgain }) {
+function FinishedScreen({ room, questions, onPlayAgain }) {
   const imageUrl = room?.secret_image_url ||
     wordImage(room?.secret_word, room?.secret_category);
   return (
@@ -1053,6 +1054,20 @@ function FinishedScreen({ room, onPlayAgain }) {
           <h2 className="revealed-word">{room?.secret_word}</h2>
         </div>
       </div>
+      {questions && questions.length > 0 && (
+        <div className="history-section">
+          <h3 className="history-title">Klausimų istorija</h3>
+          <div className="history-list">
+            {questions.map((q, i) => (
+              <div key={q.id} className="history-item">
+                <span className="history-num">{i + 1}</span>
+                <span className="history-q">{q.question}</span>
+                {q.answer && <span className={`answer-badge answer-${q.answer}`}>{ANSWERS.find(a => a.key === q.answer)?.label}</span>}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <button className="btn btn-primary" onClick={onPlayAgain}>Žaisti dar kartą</button>
     </div>
   );
