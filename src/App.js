@@ -1343,8 +1343,8 @@ function PublicRoomsScreen({ playerName, onBack, onJoin, loading, error }) {
 
   React.useEffect(() => {
     let cancelled = false;
+    setFetching(true);
     const load = async () => {
-      setFetching(true);
       let query = supabase
         .from('rooms')
         .select('*, players(id)')
