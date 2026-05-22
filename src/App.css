@@ -215,7 +215,7 @@ html, body, #root {
   box-shadow: 0 0 0 3px rgba(0,180,255,0.1), var(--glow-b);
 }
 
-.input-field::placeholder { color: var(--text3); }
+.input-field::placeholder { color: #6677aa; opacity: 1; }
 
 .code-input {
   text-transform: uppercase;
