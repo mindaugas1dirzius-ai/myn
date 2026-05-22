@@ -63,6 +63,17 @@ const playSound = (type) => {
   } catch (e) {}
 };
 
+// iOS Safari AudioContext unlock — atsblokuoja garsą pirmo lietimo metu
+(() => {
+  const unlock = () => {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!window._minaCtx) window._minaCtx = new AudioCtx();
+    if (window._minaCtx.state === 'suspended') window._minaCtx.resume().catch(() => {});
+  };
+  document.addEventListener('touchstart', unlock, { once: true });
+  document.addEventListener('click', unlock, { once: true });
+})();
+
 const ANSWERS = [
   { key: 'taip', label: 'TAIP', icon: '✓', color: '#22c55e' },
   { key: 'ne', label: 'NE', icon: '✗', color: '#ef4444' },
@@ -161,6 +172,21 @@ export default function App() {
   }, []);
 
   useEffect(() => () => cleanup(), [cleanup]);
+
+  const leaveRoom = useCallback(() => {
+    if (roomCode && playerId) {
+      fetch('/api/cleanup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ roomId: roomCode, playerId }),
+        keepalive: true
+      }).catch(() => {});
+    }
+    cleanup();
+    setScreen('home');
+    setRoom(null);
+    setQuestions([]);
+  }, [roomCode, playerId, cleanup]);
 
   // FIX #1: Ghost players - cleanup when tab closes
   useEffect(() => {
@@ -542,21 +568,21 @@ export default function App() {
     chatMessages={chatMessages} onSendChat={(t) => sendChat(t, playerName)}
     activeTab={activeTab} setActiveTab={setActiveTab}
     onGuessed={markGuessed}
-    onLeave={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }}
+    onLeave={leaveRoom}
     voiceActive={voiceActive}
     onVoiceToggle={() => voiceActive ? stopVoice() : startVoice()}
     questionsEndRef={questionsEndRef} />;
 
   if (screen === 'guessed') return <GuessedScreen
     room={room}
-    onPlayAgain={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }}
-    onHome={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }} />;
+    onPlayAgain={leaveRoom}
+    onHome={leaveRoom} />;
 
   if (screen === 'finished') return <FinishedScreen
     room={room}
     questions={questions}
-    onPlayAgain={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }}
-    onHome={() => { cleanup(); setScreen('home'); setRoom(null); setQuestions([]); }} />;
+    onPlayAgain={leaveRoom}
+    onHome={leaveRoom} />;
 
   return null;
 }
