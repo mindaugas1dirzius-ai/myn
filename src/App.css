@@ -1325,3 +1325,18 @@ html, body, #root {
   cursor: pointer;
   letter-spacing: 0.5px;
 }
+
+/* ── Atspeta big mygtukas ──────────────────────────────────────────────── */
+.btn-guessed-big {
+  width: calc(100% - 32px);
+  margin: 8px 16px;
+  padding: 16px;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  border: none;
+  border-radius: 14px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 52px;
+}
