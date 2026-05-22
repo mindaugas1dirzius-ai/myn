@@ -105,6 +105,28 @@ export default function App() {
 
   useEffect(() => () => cleanup(), [cleanup]);
 
+  // FIX #1: Ghost players - cleanup when tab closes
+  useEffect(() => {
+    const handleLeave = () => {
+      if (roomCode && playerId) {
+        fetch('/api/cleanup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ roomId: roomCode, playerId }),
+          keepalive: true
+        }).catch(() => {});
+      }
+    };
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) handleLeave();
+    });
+    window.addEventListener('beforeunload', handleLeave);
+    return () => {
+      document.removeEventListener('visibilitychange', handleLeave);
+      window.removeEventListener('beforeunload', handleLeave);
+    };
+  }, [roomCode, playerId]);
+
   // ── Voice chat helpers ───────────────────────────────────────────────────
   const startVoice = async () => {
     try {
@@ -177,11 +199,7 @@ export default function App() {
 
   // ── Subscribe to room data ───────────────────────────────────────────────
   const subscribeToRoom = useCallback((rId) => {
-    // FIX #2: Clear old subscriptions before creating new ones
-    subscriptionsRef.current.forEach(s => supabase.removeChannel(s));
-    subscriptionsRef.current = [];
-
-    const roomSub = supabase.channel(`room:${rId}:${Date.now()}`)
+    const roomSub = supabase.channel(`room:${rId}`)
       .on('postgres_changes', { event: '*', schema: 'public', table: 'rooms', filter: `id=eq.${rId}` },
         ({ new: r }) => { if (r) setRoom(r); })
       .on('postgres_changes', { event: '*', schema: 'public', table: 'players', filter: `room_id=eq.${rId}` },
@@ -370,16 +388,6 @@ export default function App() {
     if (room?.status === 'guessed' && screen === 'game') setScreen('guessed');
     if (room?.status === 'finished' && screen === 'game') setScreen('finished');
   }, [room?.status, screen]);
-
-  // FIX #2b: Poll room status every 2s in lobby (realtime fallback)
-  useEffect(() => {
-    if (screen !== 'lobby' || !roomCode) return;
-    const poll = setInterval(async () => {
-      const { data: r } = await supabase.from('rooms').select('status').eq('id', roomCode).single();
-      if (r && r.status !== room?.status) setRoom(prev => ({ ...prev, ...r }));
-    }, 2000);
-    return () => clearInterval(poll);
-  }, [screen, roomCode, room?.status]);
 
   if (screen === 'home') return <HomeScreen
     playerName={playerName} setPlayerName={setPlayerName}
