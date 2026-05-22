@@ -1041,18 +1041,6 @@ function GameScreen({
                 </span>}
               </div>
               <p className="q-text">{q.question}</p>
-              {!q.answer && iAmHost && (
-                <div className="answer-buttons">
-                  {ANSWERS.map(a => (
-                    <button key={a.key}
-                      className="answer-btn"
-                      style={{ '--answer-color': a.color }}
-                      onClick={() => onAnswer(a.key)}>
-                      {a.label}
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
           ))}
           <div ref={questionsEndRef} />
@@ -1117,15 +1105,27 @@ function GameScreen({
                 )}
               </>
             )}
-            {iAmHost && !pendingQuestion && (
-              <div className="host-waiting">
-                <span>{currentQuestioner?.name || '...'} klausinėja...</span>
+            {iAmHost && pendingQuestion && (
+              <div className="answer-buttons">
+                {ANSWERS.map(a => (
+                  <button key={a.key}
+                    className="answer-btn"
+                    style={{ '--answer-color': a.color }}
+                    onClick={() => onAnswer(a.key)}>
+                    {a.label}
+                  </button>
+                ))}
               </div>
             )}
-            {iAmHost && (
-              <button className="btn-guessed-big" onClick={onGuessed}>
-                Atspėta! 🎉
-              </button>
+            {iAmHost && !pendingQuestion && (
+              <>
+                <div className="host-waiting">
+                  <span>{currentQuestioner?.name || '...'} klausinėja...</span>
+                </div>
+                <button className="btn-guessed-big" onClick={onGuessed}>
+                  Atspėta! 🎉
+                </button>
+              </>
             )}
           </>
         ) : (
