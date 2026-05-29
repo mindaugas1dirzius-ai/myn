@@ -12,8 +12,8 @@
 
 | # | Žingsnis | Kam skirta (1 sakiniu) | Statusas |
 |---|----------|------------------------|----------|
-| **A** | Planas ir susitarimas dirbti | Kad žinotume, ką ir kokia tvarka darom | 🔄 |
-| **B** | Darbo aplinka (Flutter + įrankiai) | Kad kompiuteris galėtų kurti app | ⬜ |
+| **A** | Planas ir susitarimas dirbti | Kad žinotume, ką ir kokia tvarka darom | ✅ |
+| **B** | Darbo aplinka (Flutter + įrankiai) | Kad kompiuteris galėtų kurti app | 🔄 |
 | **C** | Tuščias Flutter projektas paleidžiamas | Patvirtinam, kad viskas veikia | ⬜ |
 | **D** | Firebase projektas + prijungimas | Serverio pamatas (DB, funkcijos) | ⬜ |
 | **E** | Google Play paskyra ($25) + testerių rinkimas | Pradeda 14 d. laikrodį, vėliau nesusistresuosim | ⬜ |
@@ -42,6 +42,12 @@
 - **Kodėl:** be plano klaidžiojam ir perdarinėjam. Su planu matom visą kelią.
 - **Kaip:** šita lentelė; einam iš eilės; žymim statusą; nieko nepraleidžiam.
 - **Kam skirta:** kad tu visada žinotum, kur esam ir kas toliau.
+
+### B — Darbo aplinka (Windows) 🔄
+- **Kodėl:** Windows „iš dėžės" nemoka kurti Android programėlių. Reikia įdiegti įrankius.
+- **Kaip:** 4 įrankiai — Git, Flutter SDK, Android Studio, VS Code. Pabaigoje `flutter doctor` patvirtina, kad viskas OK.
+- **Kam skirta:** kad galėtum rašyti kodą ir paleisti žaidimą emuliatoriuje/telefone.
+- **Užbaigimo sąlyga:** `flutter doctor` rodo ✓ ties Flutter, Android toolchain ir bent vienu įrenginiu.
 
 ### H — Serverio smegenys (anti-cheat) ✅
 - **Kodėl:** jei telefonas pats skaičiuotų taškus, bet kas galėtų pameluoti rezultatą.
