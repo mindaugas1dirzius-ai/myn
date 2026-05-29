@@ -7,10 +7,16 @@ service cloud.firestore {
       allow read: if request.auth != null;
       allow write: if request.auth != null
                    && request.auth.uid == userId
-                   // username validacija: string, 2–16 simbolių
-                   && request.resource.data.username is string
-                   && request.resource.data.username.size() >= 2
-                   && request.resource.data.username.size() <= 16;
+                   // username validuojam TIK jei jis keičiamas. Kitų laukų
+                   // (avataro, nustatymų) atnaujinimas nesiunčiant username veiks.
+                   && (
+                     !request.resource.data.diff(resource.data).affectedKeys().hasAny(['username'])
+                     || (
+                       request.resource.data.username is string
+                       && request.resource.data.username.size() >= 2
+                       && request.resource.data.username.size() <= 16
+                     )
+                   );
     }
 
     // Globali reitingų lentelė: žaidėjai gali TIK skaityti.

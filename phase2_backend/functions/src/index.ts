@@ -67,7 +67,9 @@ function sanitizeUsername(raw: unknown): string {
 // 1) startGame — pradeda žaidimą, generuoja klausimus serveryje
 // =================================================================
 export const startGame = onCall(
-  { enforceAppCheck: true, minInstances: 1, region: "europe-west1" },
+  // minInstances: 0 = nemokama, bet "cold start" (3-5s) pirmą kartą.
+  // Jei žaidimo pradžia stringa esant srautui -> perjunk į 1.
+  { enforceAppCheck: true, minInstances: 0, region: "europe-west1" },
   async (request) => {
     if (!request.auth) {
       throw new HttpsError("unauthenticated", "Prisijungimas privalomas.");
@@ -102,7 +104,7 @@ export const startGame = onCall(
 // 2) submitScore — patikrina, skaičiuoja taškus, rašo rekordą
 // =================================================================
 export const submitScore = onCall(
-  { enforceAppCheck: true, minInstances: 1, region: "europe-west1" },
+  { enforceAppCheck: true, minInstances: 0, region: "europe-west1" },
   async (request) => {
     if (!request.auth) {
       throw new HttpsError("unauthenticated", "Prisijungimas privalomas.");
@@ -144,10 +146,10 @@ export const submitScore = onCall(
       const leaderboardDoc = await transaction.get(leaderboardRef);
       // ---- skaitymai baigti, toliau galima rašyti ----
 
-      // Serveris PATS matuoja bendrą laiką (telefonu nepasitikim):
-      const createdAtMs = (game.createdAt as admin.firestore.Timestamp)
-        .toDate()
-        .getTime();
+      // Serveris PATS matuoja bendrą laiką (telefonu nepasitikim).
+      // Apsauga nuo null (jei serverTimestamp dar neišspręstas -> fail'ina saugiai):
+      const timestamp = game.createdAt as admin.firestore.Timestamp | null;
+      const createdAtMs = timestamp ? timestamp.toDate().getTime() : Date.now();
       const totalDurationMs = Date.now() - createdAtMs;
 
       // Botų filtras (priežastį tik į logus, klientui bendra klaida):
@@ -186,8 +188,9 @@ export const submitScore = onCall(
       }
 
       // --- RAŠYMAI ---
-      // 1. Pažymim žaidimą panaudotu (kad nebūtų pateiktas du kartus):
-      transaction.update(gameRef, { used: true });
+      // 1. Ištriname žaidimą iškart: apsauga nuo Replay Attack (exists=false)
+      //    + DB nesikaupia šiukšlės nuo užbaigtų žaidimų.
+      transaction.delete(gameRef);
 
       // 2. Įrašom rekordą TIK jei naujas geriausias:
       const username = sanitizeUsername(userDoc.data()?.username);

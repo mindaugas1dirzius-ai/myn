@@ -27,9 +27,20 @@ firebase deploy --only functions,firestore:rules
 Firebase Console → App Check → registruok Android app su **Play Integrity**.
 Flutter pusėje: `firebase_app_check` + aktyvuok prieš pirmą Cloud Function kvietimą.
 
-## active_games valymas
-Firestore Console → TTL policy laukui `createdAt` (pvz. 1 val.), kad seni
-nepanaudoti žaidimai nesikauptų. (Panaudoti pažymimi `used:true`.)
+## active_games valymas (SVARBU — dvi situacijos)
+1. **Užbaigti žaidimai** — ištrinami automatiškai `submitScore` metu
+   (`transaction.delete`). DB nesikaupia + apsauga nuo Replay Attack.
+2. **APLEISTI žaidimai** — žaidėjas pradėjo, bet uždarė app nesužaidęs.
+   `submitScore` neiškviečiamas, todėl `delete` NEĮVYKSTA ir dokumentas lieka.
+   👉 Todėl VIS TIEK reikia **Firestore TTL policy** laukui `createdAt`
+   (pvz. 2 val.): Firestore Console → Firestore → TTL → nauja policy ant
+   `active_games.createdAt`. Ji išvalys tik „pamestus" žaidimus.
+
+## Vėlesni patobulinimai (užsirašyta, ne dabar)
+- **Rate-limiting:** App Check įrodo app tapatybę, bet ne piktnaudžiavimą.
+  Vėliau pridėti limitą „ne daugiau X startGame per minutę vienam uid".
+- **Atsakymų tipai:** Flutter pusėje užtikrinti, kad `clientAnswers` siunčia
+  skaičius (ne tekstą), nes serveris lygina griežtai (`===`).
 
 ## Srautas
 ```

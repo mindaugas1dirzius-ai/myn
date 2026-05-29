@@ -47,7 +47,8 @@
 - **Kodėl:** jei telefonas pats skaičiuotų taškus, bet kas galėtų pameluoti rezultatą.
 - **Kaip:** `startGame` serveryje kuria klausimus (slepia atsakymus); `submitScore` serveryje tikrina ir skaičiuoja. Kodas: `phase2_backend/`.
 - **Kam skirta:** kad Top 10 lentelė būtų sąžininga ir nesugadinama.
-- **Statusas:** kodas parašytas, BET dar neįdiegtas (laukia D, I žingsnių).
+- **Statusas:** kodas parašytas ir patobulintas (delete=Replay apsauga, geresnės Rules), BET dar neįdiegtas (laukia D, I žingsnių).
+- **Liko prie H įdiegiant:** Firestore TTL policy apleistiems žaidimams; vėliau rate-limiting.
 
 ---
 
