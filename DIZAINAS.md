@@ -12,7 +12,8 @@
 | 4 | Atsakymų variantai (6, panašūs klaidingi) | ✅ |
 | 5 | Taškų skaičiavimas (server-authoritative) | ✅ |
 | 6 | Kas vyksta suklydus (švelnus 10; Rewarded A/B/C laukia) | ✅* |
-| 7 | Laikmatis (hibridinis neon juosta + skaitiklis) | ✅ |
+| 7 | Laikmatis (neoninis žiedas, žalia→geltona→raudona) | ✅ |
+| 8 | Vizualinis stilius (Cyber-Neumorphism) | ✅ |
 | 6 | Kas vyksta suklydus | ⬜ |
 | 7 | Laikmatis | ⬜ |
 | 8 | Vizualinis stilius (spalvos) | ⬜ |
@@ -128,3 +129,22 @@ Interstitial (po žaidimo, su cooldown) — pagrindinės pajamos, fairness netai
 - Šalia — minimalistiškas skaitiklis (pvz. `3.4s`).
 - < 1.5 s likus: juosta + skaitiklis pulsuoja raudonai (streso dozė).
 - Laikas pagal lygį (5 sprendimas): 3/4/5/6 s. Laikui baigusis = klaida (0 taškų), pereina prie kito langelio.
+- **Vizualas:** plonas neoninis ŽIEDAS aplink langelį, tuštėja pagal laikrodžio rodyklę; spalva žalia→geltona→raudona; < 1.5 s pulsuoja (ScaleTransition). Flutter: `AnimationController` + custom painter / `CircularProgressIndicator`.
+
+---
+
+## ✅ 8. Vizualinis stilius — Cyber-Neumorphism (tamsus + neon)
+| Rolė | Spalva |
+|------|--------|
+| Fonas | `#121214` (kiber-anglis) |
+| Langeliai | `#1A1A1E` + dvigubi šešėliai (tamsus `#0A0A0C` apačia-dešinė, šviesus `#232329` viršus-kairė) |
+| Skaičiai (tekstas) | `#F5F7FA` (aukštas kontrastas, NE neon) |
+| Antrinis tekstas | `#9AA0AD` |
+| 🟢 Lengvas | mint `#3DF5A0` |
+| 🟡 Vidutinis | elektrinė geltona `#FFE03D` |
+| 🔴 Sunkus | neon rožinė `#FF4D8D` |
+| 🔥 Ekstremalus | ultravioletinė `#B14EFF` |
+| Teisinga | žalias pulse `#2BD576` + ✓ |
+| Klaida | shake + raudonas blyksnis `#FF3B5C` |
+
+**Kokybės saugikliai:** (1) skaičiai aukšto kontrasto, neon tik briaunoms/žiedui; (2) sunkus lygis = rožinė (ne raudona), kad nesimaišytų su „klaida=raudona", kurią skiria judesys (shake); (3) langeliai aiškiai atrodo paspaudžiami (neon briauna); (4) švytėjimai subtilūs — testuoti 60fps ant pigių telefonų.
