@@ -10,7 +10,7 @@
 | 2 | Sunkumo lygiai (4 lygiai × 4 veiksmai = 16 režimų) | 🔄 |
 | 3 | Klausimų skaičius per žaidimą (10) | ✅ |
 | 4 | Atsakymų variantai (6, panašūs klaidingi) | ✅ |
-| 5 | Taškų skaičiavimas | ⬜ |
+| 5 | Taškų skaičiavimas (server-authoritative) | ✅ |
 | 6 | Kas vyksta suklydus | ⬜ |
 | 7 | Laikmatis | ⬜ |
 | 8 | Vizualinis stilius (spalvos) | ⬜ |
@@ -65,8 +65,10 @@ Viena žaidimo sesija = 10 užduočių. Pakanka azarto, neperkrauna.
 1. Joks klaidingas ≠ teisingam (jei sutampa — generuoti kitą).
 2. Skaitmenų sukeitimas tik kai ≥ 2 skaitmenys (kitaip atsarginis šablonas).
 3. Visi klaidingi variantai > 0 (jokių neigiamų / nulio).
-4. Visada 6 SKIRTINGI variantai; jei trūksta — pildyti atsarginiu (`±3, ±4`).
+4. Visada 6 SKIRTINGI variantai; jei trūksta — pildyti atsarginiu (`±3, ±4`, ir aukštyn, IR žemyn).
 5. Teisingas atsidūręs atsitiktinėje pozicijoje (shuffle).
+6. Maišymas — **TIKRAS Fisher-Yates**, NE `sort(()=>Math.random()-0.5)` (tas šališkas).
+7. Generatorius dengia **visus 4 veiksmus** (+ − × ÷): bendri klaidingi „pagal atsakymą" (`answer±1/±2/±10`, skaitmenų sukeitimas) + operacijos-specifiniai „kaimynai" tik ×/÷.
 
 **Generavimas vyksta SERVERYJE (Fazė 2):** `generateMathQuestion` sugeneruoja veiksmą + 5 klaidingus + sumaišo, ir siunčia telefonui gatavą masyvą `[35,44,42,13,24,48]`. Telefonas „kvailas" — tik nupiešia 6 mygtukus.
 
@@ -79,3 +81,26 @@ Viena žaidimo sesija = 10 užduočių. Pakanka azarto, neperkrauna.
 - `startGame` generuodamas tikrina sąrašą; jei klausimas jame — metam, generuojam kitą.
 - ⚠️ **Apsauga (kritinė):** atmintis negali viršyti (sandėlis − 10), kitaip neužteks 10 unikalių vienai sesijai → `N = min(30, sandėlis − 10)`. Pvz. Lengva × (sandėlis 25) → N ≤ 15.
 - Garantija: tas pats klausimas nepasirodo du žaidimus iš eilės.
+
+---
+
+## ✅ 5. Taškų skaičiavimas (server-authoritative)
+**Idėja:** teisingas atsakymas = BAZĖ + greičio bonusas. Klaida = 0.
+
+| Lygis | MAX laikas/langelį | BAZĖ | Maks. bonusas | Maks./langelį |
+|-------|--------------------|------|---------------|---------------|
+| 🟢 Lengvas | 3000 ms | 50 | +300 | 350 |
+| 🟡 Vidutinis | 4000 ms | 100 | +400 | 500 |
+| 🔴 Sunkus | 5000 ms | 150 | +500 | 650 |
+| 🔥 Ekstremalus | 6000 ms | 200 | +600 | 800 |
+
+**🔒 Saugi formulė (skaičiuojama SERVERYJE iš patikimų duomenų):**
+```
+score = teisingų × BAZĖ + max(0, (teisingų × MAX − serverioBendrasLaikas) / 10)
+```
+- `teisingų` ir `serverioBendrasLaikas` — abu iš serverio (telefonu NEpasitikim).
+- Greičio bonusas NEskaičiuojamas iš telefono per-langelį laikų (nes sukčius galėtų meluoti, kad atsakė greičiau). Formulė tiesinė → svarbu tik bendras laikas.
+- Telefonas gali RODYTI apytikslius „+280" (kosmetika), bet oficialų rezultatą sprendžia serveris.
+- `Math.floor` (sveiki taškai). Teisingas užskaitomas tik jei langelio laikas < MAX.
+
+**Lyderių lentelė:** atskira kiekvienam iš 16 režimų (`leaderboard/{uid}_{mode}`) — kad lygiai nesimaišytų.
