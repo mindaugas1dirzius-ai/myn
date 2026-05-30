@@ -33,6 +33,13 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  # Firebase (D žingsnis) — serverio pamatas
+  firebase_core: ^3.8.0
+  firebase_auth: ^5.3.4          # Anonymous Auth (žaidėjo ID be registracijos)
+  cloud_functions: ^5.1.5        # startGame / submitScore kvietimai
+  cloud_firestore: ^5.5.1        # leaderboard skaitymas
+  firebase_app_check: ^0.3.1+7   # Play Integrity (App Check)
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8

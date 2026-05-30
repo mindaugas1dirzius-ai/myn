@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'services/firebase_service.dart';
 import 'theme/app_theme.dart';
 import 'screens/home_screen.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Firebase init (saugu offline — praleidžiama, kol nėra tikros konfigūracijos).
+  await FirebaseService.init();
   runApp(const MathGameApp());
 }
 
