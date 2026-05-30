@@ -34,6 +34,8 @@ Taisant klaidą einam per principą: **KODĖL tai įvyko → KAIP ištaisyti.**
 | **A** | Planas ir susitarimas dirbti | Kad žinotume, ką ir kokia tvarka darom | ✅ |
 | **B** | Darbo aplinka (Flutter + įrankiai) | Kad būtų kuo kurti app | ✅ (debesyje) |
 | **C** | Tuščias Flutter projektas paleidžiamas | Patvirtinam, kad viskas veikia | ✅ (analyze 0 klaidų, testas praeina) |
+| **J** | Serverio pajungimas (startGame/submitScore) + offline fallback | Telefonas kalba su serveriu | ✅ |
+| **K** | Top 10 lyderių lentelė (Firestore stream + indeksas) | Žaidėjai mato reitingą | ✅ |
 | **D** | Firebase projektas + prijungimas | Serverio pamatas (DB, funkcijos) | ✅ projektas, Auth, Firestore(eur3), Blaze, funkcijos deploy'intos |
 | **E** | Google Play paskyra ($25) + testerių rinkimas | Pradeda 14 d. laikrodį, vėliau nesusistresuosim | ⬜ |
 | **F** | Žaidimo dizainas ant popieriaus (ekranai, spalvos) | Žinom, kaip atrodys, prieš programuojant | ✅ (8/8, žr. DIZAINAS.md) |
