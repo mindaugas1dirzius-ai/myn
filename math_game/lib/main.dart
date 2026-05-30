@@ -7,12 +7,15 @@ import 'screens/home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Firebase init (saugu offline — praleidžiama, kol nėra tikros konfigūracijos).
-  await FirebaseService.init();
-  // UMP sutikimas PIRMA (L žingsnis, GDPR) — tik tada reklamos.
-  await AdService.requestConsent();
-  // AdMob init (M) — vyksta tik jei sutikimas leidžia (adsAllowed).
-  await AdService.init();
+  // Visa inicializacija apgaubta — jei kas nepavyksta, app VIS TIEK paleidžiamas
+  // (offline). Ekranas niekada nelieka tuščias.
+  try {
+    await FirebaseService.init();
+    await AdService.requestConsent(); // UMP (L, GDPR) PIRMA
+    await AdService.init(); // AdMob (M) — tik jei sutikimas leidžia
+  } catch (_) {
+    // ignoruojam — žaidimas veiks offline
+  }
   runApp(const MathGameApp());
 }
 
