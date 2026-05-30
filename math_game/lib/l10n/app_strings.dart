@@ -41,4 +41,11 @@ class AppStrings {
   String get resultTitle => _pick('Rezultatas', 'Result');
   String get score => _pick('Taškai', 'Score');
   String get playAgain => _pick('Žaisti dar', 'Play again');
+  String get toMenu => _pick('Į meniu', 'To menu');
+
+  // --- Įvertinimai ---
+  String get ratingPerfect => _pick('Tobula! 🎉', 'Perfect! 🎉');
+  String get ratingGood => _pick('Puiku!', 'Great!');
+  String get ratingOk => _pick('Neblogai', 'Not bad');
+  String get ratingTryAgain => _pick('Bandyk dar', 'Try again');
 }

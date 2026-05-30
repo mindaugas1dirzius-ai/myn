@@ -83,6 +83,9 @@ class _GameScreenState extends State<GameScreen>
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => ResultScreen(
+            op: widget.op,
+            level: widget.level,
+            modeId: widget.modeId,
             correct: _game.correctCount,
             total: _game.total,
             score: _game.score,
