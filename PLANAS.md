@@ -36,9 +36,9 @@ Taisant klaidą einam per principą: **KODĖL tai įvyko → KAIP ištaisyti.**
 | **C** | Tuščias Flutter projektas paleidžiamas | Patvirtinam, kad viskas veikia | ⬜ |
 | **D** | Firebase projektas + prijungimas | Serverio pamatas (DB, funkcijos) | ⬜ |
 | **E** | Google Play paskyra ($25) + testerių rinkimas | Pradeda 14 d. laikrodį, vėliau nesusistresuosim | ⬜ |
-| **F** | Žaidimo dizainas ant popieriaus (ekranai, spalvos) | Žinom, kaip atrodys, prieš programuojant | ⬜ |
+| **F** | Žaidimo dizainas ant popieriaus (ekranai, spalvos) | Žinom, kaip atrodys, prieš programuojant | ✅ (8/8, žr. DIZAINAS.md) |
 | **G** | Žaidimo branduolys offline (be serverio, be reklamų) | Pagaminam patį žaidimą | ⬜ |
-| **H** | Serverio smegenys: anti-cheat (startGame/submitScore) | Niekas negali suklastoti rezultatų | ✅ kodas paruoštas |
+| **H** | Serverio smegenys: anti-cheat (startGame/submitScore) | Niekas negali suklastoti rezultatų | 🔧 skeletas (PERRAŠYTI pagal 16 režimų dizainą) |
 | **I** | Security Rules + App Check įjungimas | Užrakinam DB ir patvirtinam app tapatybę | ⬜ |
 | **J** | Flutter klientas jungiasi prie serverio | Telefonas „kalbasi" su smegenimis | ⬜ |
 | **K** | Top 10 lentelė (leaderboard) ekrane | Žaidėjai mato reitingą | ⬜ |
