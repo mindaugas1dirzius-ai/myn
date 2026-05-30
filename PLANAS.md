@@ -68,6 +68,13 @@ Taisant klaidą einam per principą: **KODĖL tai įvyko → KAIP ištaisyti.**
 - **Kam skirta:** kad galėtum rašyti kodą ir paleisti žaidimą emuliatoriuje/telefone.
 - **Užbaigimo sąlyga:** `flutter doctor` rodo ✓ ties Flutter, Android toolchain ir bent vienu įrenginiu.
 
+### ⚠️ SVARBU: APK build tik TAVO kompiuteryje
+Debesų aplinkos tinklo politika blokuoja Google Android SDK serverį
+(`dl.google.com` → „Host not in allowlist"). Todėl **APK/AAB build'as
+debesyje neįmanomas.** Galutinį paleidžiamą failą reikės sukurti TAVO
+kompiuteryje (Android Studio įdiegia SDK automatiškai) arba paleisti per
+`flutter run`. Visa kita (kodas, analyze, testai) — darau debesyje.
+
 ### H — Serverio smegenys (anti-cheat) ✅
 - **Kodėl:** jei telefonas pats skaičiuotų taškus, bet kas galėtų pameluoti rezultatą.
 - **Kaip:** `startGame` serveryje kuria klausimus (slepia atsakymus); `submitScore` serveryje tikrina ir skaičiuoja. Kodas: `phase2_backend/`.
