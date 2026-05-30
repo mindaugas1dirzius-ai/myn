@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../l10n/app_strings.dart';
+import '../l10n/language_controller.dart';
 import '../models/game_mode.dart';
 import '../theme/app_theme.dart';
 import '../widgets/banner_ad_widget.dart';
@@ -20,7 +21,21 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.all(24),
           child: Column(
             children: [
-              const SizedBox(height: 20),
+              // Kalbos perjungiklis (🌐 LT/EN) — viršuje dešinėje.
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton.icon(
+                  onPressed: () => languageController.toggle(s.lang),
+                  icon: const Icon(Icons.language,
+                      color: AppColors.textSecondary, size: 20),
+                  label: Text(
+                    s.lang == AppLang.lt ? 'LT' : 'EN',
+                    style: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
               Text(
                 'MATH GAME',
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(

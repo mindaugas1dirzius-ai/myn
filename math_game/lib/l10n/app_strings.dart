@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'language_controller.dart';
 
 /// Centralizuoti vertimai (LT + EN). 0 sprendimas DIZAINAS.md.
 ///
@@ -14,8 +15,8 @@ class AppStrings {
 
   /// Paima dabartinę kalbą iš medžio (kol nėra perjungiklio — pagal locale).
   static AppStrings of(BuildContext context) {
-    final code = Localizations.maybeLocaleOf(context)?.languageCode ?? 'lt';
-    return AppStrings(code == 'en' ? AppLang.en : AppLang.lt);
+    final system = Localizations.maybeLocaleOf(context) ?? const Locale('lt');
+    return AppStrings(languageController.resolve(system));
   }
 
   String _pick(String lt, String en) => lang == AppLang.lt ? lt : en;

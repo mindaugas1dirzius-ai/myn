@@ -15,6 +15,8 @@ class FirebaseService {
   /// - `debug`        — KŪRIMUI/TESTAVIMUI telefone (reikia debug token'o konsolėje).
   /// - `playIntegrity`— PALEIDIMUI iš Play Store (S žingsnis).
   /// Perjungti S žingsnyje TIK ČIA — viena vieta.
+  /// (Web'e nenaudojamas, nes Firebase praleidžiamas — todėl ignore.)
+  // ignore: unused_field
   static const AndroidProvider _appCheckProvider = AndroidProvider.debug;
 
   static bool _ready = false;
