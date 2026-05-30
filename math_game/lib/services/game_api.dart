@@ -25,12 +25,14 @@ class GameApi {
   static Future<GameResult> submitScore(
     String gameId,
     List<int> clientAnswers,
+    List<int> clientTimesMs,
   ) async {
     final result = await _functions
         .httpsCallable('submitScore')
         .call<Map<String, dynamic>>({
       'gameId': gameId,
       'clientAnswers': clientAnswers,
+      'clientTimesMs': clientTimesMs,
     });
     return GameResult.fromJson(Map<String, dynamic>.from(result.data));
   }

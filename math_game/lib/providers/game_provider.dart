@@ -40,6 +40,7 @@ class GameProvider extends ChangeNotifier {
   String? _gameId; // serverio žaidimo ID (null offline režime)
   Source _source = Source.offline;
   LoadState _loadState = LoadState.loading;
+  int _maxTimeMs = 30000; // langelio riba (V2: 30s); iš serverio arba default
 
   // Eiga
   int _index = 0;
@@ -49,6 +50,7 @@ class GameProvider extends ChangeNotifier {
   int? _pickedOption;
   bool _finished = false;
   final List<int> _clientAnswers = []; // ką žaidėjas atsakė (serveriui)
+  final List<int> _clientTimesMs = []; // kiek truko kiekvienas langelis (taškams)
 
   // --- Getter'iai UI ---
   LoadState get loadState => _loadState;
@@ -60,6 +62,7 @@ class GameProvider extends ChangeNotifier {
   CellState get state => _state;
   int? get pickedOption => _pickedOption;
   bool get finished => _finished;
+  int get maxTimeMs => _maxTimeMs; // langelio laikmačio riba (žiedui)
   LocalQuestion get current => _questions[_index];
   bool get isBusy => _state != CellState.idle;
 
@@ -72,6 +75,7 @@ class GameProvider extends ChangeNotifier {
       try {
         final session = await GameApi.startGame(modeId);
         _gameId = session.gameId;
+        _maxTimeMs = session.maxTimeMs; // 30s riba iš serverio
         _questions = session.questions
             .map((q) => LocalQuestion(
                   text: q.action,
@@ -101,6 +105,7 @@ class GameProvider extends ChangeNotifier {
     if (isBusy || _finished) return;
     _pickedOption = selected;
     _clientAnswers.add(selected);
+    _clientTimesMs.add(elapsedMs);
 
     if (selected == current.answer) {
       _state = CellState.correct;
@@ -112,12 +117,13 @@ class GameProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Laikas baigėsi — klaida (švelnus modelis). -1 = „neatsakyta" serveriui.
+  /// Laikas pasiekė 30s ribą — praleista (0 taškų). -1 = neatsakyta serveriui.
   void timeout() {
     if (isBusy || _finished) return;
     _state = CellState.wrong;
     _pickedOption = null;
     _clientAnswers.add(-1);
+    _clientTimesMs.add(maxTimeMs); // pilnas laikas (30s)
     notifyListeners();
   }
 
@@ -138,30 +144,33 @@ class GameProvider extends ChangeNotifier {
   Future<int?> submitToServer() async {
     if (_source != Source.server || _gameId == null) return null;
     try {
-      final result = await GameApi.submitScore(_gameId!, _clientAnswers);
+      final result =
+          await GameApi.submitScore(_gameId!, _clientAnswers, _clientTimesMs);
       return result.finalScore;
     } catch (_) {
       return null; // tinklo klaida — paliekam kosmetinį
     }
   }
 
+  /// Kosmetiniai taškai (vizualui) — atitinka serverio V2 formulę:
+  /// max(10, maxPoints − sekundės × 4). Oficialius sprendžia serveris.
   int _cosmeticPoints(int elapsedMs) {
-    final maxMs = level.maxTimeMs;
-    final clamped = elapsedMs.clamp(0, maxMs);
-    final bonus = ((maxMs - clamped) / 10).floor();
-    return _basePoints() + bonus;
+    final capped = elapsedMs.clamp(0, 30000);
+    final seconds = capped / 1000.0;
+    final score = _maxPoints() - seconds * 4;
+    return score < 10 ? 10 : score.floor();
   }
 
-  int _basePoints() {
+  int _maxPoints() {
     switch (level) {
       case GameLevel.lengvas:
-        return 50;
-      case GameLevel.vidutinis:
         return 100;
-      case GameLevel.sunkus:
+      case GameLevel.vidutinis:
         return 150;
-      case GameLevel.ekstremalus:
+      case GameLevel.sunkus:
         return 200;
+      case GameLevel.ekstremalus:
+        return 300;
     }
   }
 }

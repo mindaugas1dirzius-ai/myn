@@ -19,8 +19,11 @@ import * as admin from "firebase-admin";
 import {
   parseMode,
   SCORING,
+  pointsForAnswer,
   QUESTIONS_PER_GAME,
   MIN_TIME_PER_Q_MS,
+  MAX_TIME_PER_Q_MS,
+  TIME_TOLERANCE_MS,
 } from "./gameConfig";
 import { generateQuestion, Question } from "./generateQuestion";
 import { generateOptions } from "./generateOptions";
@@ -97,7 +100,7 @@ export const startGame = onCall(
     return {
       gameId: gameRef.id,
       level,
-      maxTimeMs: SCORING[level].maxTimeMs,
+      maxTimeMs: MAX_TIME_PER_Q_MS, // V2: 30s riba (žiedo pilnėjimui)
       questions: questions.map((q, i) => ({
         action: q.action,
         options: options[i],
@@ -118,12 +121,15 @@ export const submitScore = onCall(
     }
     const uid = request.auth.uid;
 
-    const { gameId, clientAnswers } = request.data ?? {};
+    const { gameId, clientAnswers, clientTimesMs } = request.data ?? {};
     // Švelnus modelis: žaidėjas visada atsako į 10 (klaida = 0 už langelį).
+    // clientTimesMs — per-langelį laikai (V2 taškų formulei).
     if (
       typeof gameId !== "string" ||
       !Array.isArray(clientAnswers) ||
-      clientAnswers.length !== QUESTIONS_PER_GAME
+      !Array.isArray(clientTimesMs) ||
+      clientAnswers.length !== QUESTIONS_PER_GAME ||
+      clientTimesMs.length !== QUESTIONS_PER_GAME
     ) {
       throw new HttpsError("invalid-argument", "Netinkami duomenys.");
     }
@@ -155,26 +161,40 @@ export const submitScore = onCall(
       const createdAtMs = ts ? ts.toDate().getTime() : Date.now();
       const totalDurationMs = Date.now() - createdAtMs;
 
-      // Botų filtras (priežastis tik į logus).
+      // Botų filtras: viso žaidimo laikas negali būti neįmanomai trumpas.
       const minPossible = QUESTIONS_PER_GAME * MIN_TIME_PER_Q_MS;
       if (totalDurationMs < minPossible) {
         logger.warn("Anti-cheat: per greitas žaidimas", { uid, totalDurationMs });
         throw new HttpsError("invalid-argument", "Neteisingi rezultatai.");
       }
 
-      // Teisingų skaičius pagal SERVERIO atsakymus.
-      const serverAnswers = game.answers as number[];
-      let correct = 0;
-      for (let i = 0; i < serverAnswers.length; i++) {
-        if (clientAnswers[i] === serverAnswers[i]) correct++;
+      // ANTI-CHEAT (V2): per-langelį laikai naudojami taškams, BET jų SUMA
+      // negali viršyti serverio matuoto bendro laiko (+ paklaida). Kitaip
+      // sukčius galėtų atsiųsti melagingai mažus laikus dideliems taškams.
+      const times = (clientTimesMs as unknown[]).map((t) =>
+        typeof t === "number" && t >= 0 ? t : MAX_TIME_PER_Q_MS
+      );
+      const sumClientTimes = times.reduce((s, t) => s + t, 0);
+      if (sumClientTimes > totalDurationMs + TIME_TOLERANCE_MS) {
+        logger.warn("Anti-cheat: laikų neatitikimas", {
+          uid, sumClientTimes, totalDurationMs,
+        });
+        throw new HttpsError("invalid-argument", "Neteisingi rezultatai.");
       }
 
-      // Taškai (5 sprendimas): server-authoritative, iš bendro laiko.
+      // Taškai (V2): kiekvienam teisingam — pagal to langelio laiką
+      // (greitas → ~maxPoints, lėtas iki 30s → minimumas). Klaida → 0.
+      const serverAnswers = game.answers as number[];
       const level = game.level as keyof typeof SCORING;
-      const { maxTimeMs, basePoints } = SCORING[level];
-      const allowedMs = correct * maxTimeMs;
-      const speedBonus = Math.max(0, Math.floor((allowedMs - totalDurationMs) / 10));
-      const score = correct * basePoints + speedBonus;
+      const { maxPoints } = SCORING[level];
+      let correct = 0;
+      let score = 0;
+      for (let i = 0; i < serverAnswers.length; i++) {
+        if (clientAnswers[i] === serverAnswers[i]) {
+          correct++;
+          score += pointsForAnswer(maxPoints, times[i]);
+        }
+      }
 
       // ---- RAŠYMAI ----
       transaction.delete(gameRef); // replay apsauga + švari DB

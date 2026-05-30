@@ -168,7 +168,7 @@ class _GameScreenState extends State<GameScreen>
         children: [
           NeonTimerRing(
             key: ValueKey(_ringKey),
-            durationMs: widget.level.maxTimeMs,
+            durationMs: _game.maxTimeMs,
             size: 240,
             running: !_game.isBusy,
             onTimeout: _onTimeout,

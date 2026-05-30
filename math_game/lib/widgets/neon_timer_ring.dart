@@ -60,11 +60,11 @@ class _NeonTimerRingState extends State<NeonTimerRing>
     super.dispose();
   }
 
-  /// Spalva pagal likusią dalį: žalia → geltona → raudona.
-  Color _colorFor(double remaining) {
-    if (remaining > 0.5) return AppColors.levelEasy; // žalia
-    if (remaining > 0.25) return AppColors.levelMedium; // geltona
-    return AppColors.wrong; // raudona
+  /// Spalva pagal praėjusią dalį: žalia → geltona → raudona (V2: tiksi aukštyn).
+  Color _colorFor(double elapsed) {
+    if (elapsed < 0.5) return AppColors.levelEasy; // žalia (greita)
+    if (elapsed < 0.8) return AppColors.levelMedium; // geltona
+    return AppColors.wrong; // raudona (artėja 30s riba)
   }
 
   @override
@@ -72,11 +72,11 @@ class _NeonTimerRingState extends State<NeonTimerRing>
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, _) {
-        final remaining = 1.0 - _controller.value; // 1 → 0
-        final color = _colorFor(remaining);
-        // Pulsavimas paskutinę ~1.5 s (kai liko mažai laiko).
-        final lowTime = remaining * widget.durationMs < 1500;
-        final pulse = lowTime
+        final elapsed = _controller.value; // 0 → 1 (žiedas PILNĖJA)
+        final color = _colorFor(elapsed);
+        // Pulsavimas artėjant 30s ribai (paskutinės ~5 s).
+        final nearLimit = elapsed > (1 - 5000 / widget.durationMs);
+        final pulse = nearLimit
             ? 1.0 + 0.06 * math.sin(_controller.value * math.pi * 16)
             : 1.0;
 
@@ -84,7 +84,7 @@ class _NeonTimerRingState extends State<NeonTimerRing>
           scale: pulse,
           child: CustomPaint(
             size: Size.square(widget.size),
-            painter: _RingPainter(progress: remaining, color: color),
+            painter: _RingPainter(progress: elapsed, color: color),
           ),
         );
       },
@@ -93,7 +93,7 @@ class _NeonTimerRingState extends State<NeonTimerRing>
 }
 
 class _RingPainter extends CustomPainter {
-  final double progress; // 1 → 0 (likusi dalis)
+  final double progress; // 0 → 1 (praėjusi dalis, žiedas pilnėja)
   final Color color;
 
   _RingPainter({required this.progress, required this.color});
