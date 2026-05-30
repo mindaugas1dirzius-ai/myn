@@ -37,6 +37,9 @@ Flutter pusėje: `firebase_app_check` + aktyvuok prieš pirmą Cloud Function kv
    `active_games.createdAt`. Ji išvalys tik „pamestus" žaidimus.
 
 ## Vėlesni patobulinimai (užsirašyta, ne dabar)
+- **Nuolatiniai testai:** `generateOptions`/`generateQuestion` patikrinti
+  vienkartiniu smoke testu (16 režimų × 3000 = 48k, 5 invariantai). Vėliau
+  įrašyti kaip nuolatinį `*.test.ts` (Jest/Vitest), kad CI metu pasileistų.
 - **Rate-limiting:** App Check įrodo app tapatybę, bet ne piktnaudžiavimą.
   Vėliau pridėti limitą „ne daugiau X startGame per minutę vienam uid".
 - **Atsakymų tipai:** Flutter pusėje užtikrinti, kad `clientAnswers` siunčia
