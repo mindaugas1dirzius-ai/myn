@@ -36,8 +36,4 @@ class AppStrings {
   String get levelMedium => _pick('Vidutinis', 'Medium');
   String get levelHard => _pick('Sunkus', 'Hard');
   String get levelExtreme => _pick('Ekstremalus', 'Extreme');
-
-  // --- Laikinas G1 pranešimas ---
-  String modeChosen(String mode) =>
-      _pick('Režimas: $mode (žaidimas — G4)', 'Mode: $mode (game — step G4)');
 }

@@ -3,6 +3,7 @@ import '../l10n/app_strings.dart';
 import '../models/game_mode.dart';
 import '../theme/app_theme.dart';
 import '../widgets/neumorphic_button.dart';
+import 'game_screen.dart';
 
 /// G1, 2-as žingsnis: pasirinkus veiksmą — renkamės sunkumo lygį.
 /// Lygiai generuojami dinamiškai iš GameLevel.values (jokio dubliavimo).
@@ -39,7 +40,7 @@ class LevelSelectScreen extends StatelessWidget {
                     final level = GameLevel.values[i];
                     return NeumorphicButton(
                       accent: level.color,
-                      onTap: () => _onLevelTap(context, level, s),
+                      onTap: () => _onLevelTap(context, level),
                       child: Text(
                         level.title(s),
                         style: TextStyle(
@@ -60,14 +61,11 @@ class LevelSelectScreen extends StatelessWidget {
     );
   }
 
-  void _onLevelTap(BuildContext context, GameLevel level, AppStrings s) {
+  void _onLevelTap(BuildContext context, GameLevel level) {
     final modeId = buildModeId(op, level); // pvz. "mul_sunkus" — serverio kalba
-    // G4 žingsnyje čia atidarysim žaidimo ekraną su modeId.
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(s.modeChosen(modeId)),
-        backgroundColor: level.color.withValues(alpha: 0.2),
-        duration: const Duration(seconds: 2),
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => GameScreen(modeId: modeId, level: level),
       ),
     );
   }
