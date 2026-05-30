@@ -8,10 +8,11 @@
 |---|-----------|----------|
 | 1 | Matematikos veiksmai | ✅ |
 | 2 | Sunkumo lygiai (4 lygiai × 4 veiksmai = 16 režimų) | 🔄 |
-| 3 | Klausimų skaičius per žaidimą (iki 10) | ✅ |
+| 3 | Klausimų skaičius per žaidimą (10 visada) | ✅ |
 | 4 | Atsakymų variantai (6, panašūs klaidingi) | ✅ |
 | 5 | Taškų skaičiavimas (server-authoritative) | ✅ |
-| 6 | Kas vyksta suklydus (staigi mirtis + 1 Rewarded) | ✅ |
+| 6 | Kas vyksta suklydus (švelnus 10; Rewarded A/B/C laukia) | ✅* |
+| 7 | Laikmatis (hibridinis neon juosta + skaitiklis) | ✅ |
 | 6 | Kas vyksta suklydus | ⬜ |
 | 7 | Laikmatis | ⬜ |
 | 8 | Vizualinis stilius (spalvos) | ⬜ |
@@ -46,8 +47,8 @@
 
 ---
 
-## ✅ 3. Užduočių per sesiją: **iki 10**
-Viena sesija = iki 10 užduočių. Staigi mirtis (žr. 6 sprendimą) gali nutraukti anksčiau. Maksimalus rekordas pasiekiamas teisingai ir greitai sužaidus visus 10.
+## ✅ 3. Užduočių per sesiją: **10 (visada)**
+Viena sesija = 10 užduočių. Suklydus žaidimas tęsiasi (švelnus modelis, žr. 6 sprendimą). Maksimalus rekordas = teisingai ir greitai visi 10.
 
 ---
 
@@ -108,8 +109,22 @@ score = teisingų × BAZĖ + max(0, (teisingų × MAX − serverioBendrasLaikas)
 
 ---
 
-## ✅ 6. Kas vyksta suklydus — Staigi mirtis + 1 Rewarded tęsimas
-- Klaida (neteisingas atsakymas ARBA pasibaigęs langelio laikas) → langelis raudonas (shake), 0 taškų, žaidimas **NUTRŪKSTA** → rezultatų ekranas.
-- **Rewarded „Continue":** nutrūkus gali žiūrėti reklamą → tęsia nuo kito langelio, surinkti taškai lieka. **TIK 1×/sesiją** (kad leaderboard „nenusipirktų").
-- **Anti-cheat:** telefonas siunčia tik tiek atsakymų, kiek atsakyta; serveris suskaičiuoja teisingus + pritaiko bendro laiko formulę (5 sprendimas). Nepameluosi.
-- ⚠️ **TUNABLE (retention saugiklis):** staigi mirtis = didžiausia įtampa, BET didžiausia churn rizika. Modelis valdomas per **Firebase Remote Config** (Fazė 6) — galėsim perjungti į „1 gyvybė" ar A/B testuoti BE naujo leidimo.
+## ✅ 6. Kas vyksta suklydus — Švelnus modelis (visada 10 langelių)
+- Klaida (neteisingas atsakymas ARBA pasibaigęs laikas) → langelis raudonas (shake), 0 taškų UŽ TĄ LANGELĮ, bet žaidimas **TĘSIASI** iki 10-to.
+- Rezultatų ekrane: „Atsakei 7/10" + taškai. Draugiška, motyvuoja bandyti vėl.
+- **Tunable per Remote Config** (Fazė 6): galėsim įjungti „staigią mirtį" ar „N gyvybių" be naujo leidimo.
+
+### 🔄 Rewarded reklama — mechanika LAUKIA sprendimo (leaderboard sąžiningumas)
+⚠️ „+2 langeliai už reklamą" leistų ad-žiūrovams surinkti daugiau taškų nei nežiūrintiems → „nusiperka" vietą lentelėje (prieštarauja prestižui). Variantai:
+- **(A)** Rewarded → monetos → temos/avatarai (NEliečia leaderboard) — sąžiningiausia ⭐
+- **(B)** „+2 langeliai" tik į asmeninį rezultatą, NE į globalų top
+- **(C)** Priimam „ad-boosted" lentelę (praranda prestižą)
+Interstitial (po žaidimo, su cooldown) — pagrindinės pajamos, fairness netaikoma.
+
+---
+
+## ✅ 7. Laikmatis — hibridinis (neoninė juosta + skaitiklis)
+- Ekrano viršuje tolygiai mažėja neoninė linija (lygio spalva: žalia/geltona/oranžinė/raudona).
+- Šalia — minimalistiškas skaitiklis (pvz. `3.4s`).
+- < 1.5 s likus: juosta + skaitiklis pulsuoja raudonai (streso dozė).
+- Laikas pagal lygį (5 sprendimas): 3/4/5/6 s. Laikui baigusis = klaida (0 taškų), pereina prie kito langelio.
