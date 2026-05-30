@@ -10,6 +10,12 @@ import '../firebase_options.dart';
 class FirebaseService {
   FirebaseService._();
 
+  /// App Check provideris (I žingsnis).
+  /// - `debug`        — KŪRIMUI/TESTAVIMUI telefone (reikia debug token'o konsolėje).
+  /// - `playIntegrity`— PALEIDIMUI iš Play Store (S žingsnis).
+  /// Perjungti S žingsnyje TIK ČIA — viena vieta.
+  static const AndroidProvider _appCheckProvider = AndroidProvider.debug;
+
   static bool _ready = false;
   static bool get ready => _ready;
 
@@ -22,10 +28,9 @@ class FirebaseService {
 
     await Firebase.initializeApp(options: DefaultFirebaseOptions.android);
 
-    // App Check (Play Integrity) — DIZAINAS.md saugumas.
-    // Debug provider kūrimui; gamyboje keisime į playIntegrity (J/I žingsnis).
+    // App Check — serveris (enforceAppCheck) priima tik tikrą, registruotą app.
     await FirebaseAppCheck.instance.activate(
-      androidProvider: AndroidProvider.debug,
+      androidProvider: _appCheckProvider,
     );
 
     // Anonymous Auth — kiekvienas žaidėjas gauna stabilų ID be registracijos.
