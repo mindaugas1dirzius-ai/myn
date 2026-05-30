@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart' show VoidCallback;
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -21,8 +22,10 @@ class AdService {
 
   static InterstitialAd? _interstitial;
 
-  /// L žingsnyje čia gražinsim UMP sutikimo rezultatą. Kol kas — leidžiam (test).
-  static bool adsAllowed = true;
+  /// Ar leidžiama rodyti reklamas. Nustatoma per requestConsent() (UMP, L žingsnis).
+  /// SVARBU: „atmetęs" ES vartotojas vis tiek mato NE-personalizuotas reklamas
+  /// (pajamos išlieka). false tik jei UMP reikalingas, bet negautas.
+  static bool adsAllowed = false;
 
   /// Test Ad Unit ID (Google oficialūs). S žingsnyje keisim į tikrus.
   static String get _bannerUnitId => Platform.isAndroid
@@ -33,9 +36,43 @@ class AdService {
       ? 'ca-app-pub-3940256099942544/1033173712'
       : 'ca-app-pub-3940256099942544/4411468910';
 
-  /// Inicializacija — kviečiama main() (po Firebase). Saugu kelis kartus.
+  /// UMP sutikimas (L žingsnis) — kviečiama main() PRIEŠ init().
+  /// Parodo GDPR sutikimo langą (ES) ar automatiškai praleidžia (ne-ES).
+  /// Po atsakymo leidžia reklamas (personalizuotas ar ne — sprendžia AdMob).
+  static Future<void> requestConsent() async {
+    try {
+      final params = ConsentRequestParameters();
+      // Atnaujinam sutikimo info; jei reikia formos — parodom.
+      await _updateAndShowConsent(params);
+    } catch (_) {
+      // UMP klaida — saugiausia NErodyti reklamų (privatumas pirma).
+      adsAllowed = false;
+      return;
+    }
+    // Formą parodėm/praleidom — reklamas leidžiam (AdMob pats personalizuoja).
+    adsAllowed = true;
+  }
+
+  static Future<void> _updateAndShowConsent(
+      ConsentRequestParameters params) async {
+    // requestConsentInfoUpdate naudoja callback'us — apvyniojam į Completer.
+    final updated = Completer<void>();
+    ConsentInformation.instance.requestConsentInfoUpdate(
+      params,
+      updated.complete,
+      (error) => updated.complete(),
+    );
+    await updated.future;
+
+    final shown = Completer<void>();
+    ConsentForm.loadAndShowConsentFormIfRequired((error) => shown.complete());
+    await shown.future;
+  }
+
+  /// Inicializacija — kviečiama main() (po requestConsent). Saugu kelis kartus.
+  /// Jei reklamos neleidžiamos — AdMob neinicijuojam (taupom bateriją/privatumą).
   static Future<void> init() async {
-    if (_initialized) return;
+    if (_initialized || !adsAllowed) return;
     await MobileAds.instance.initialize();
     _initialized = true;
     _preloadInterstitial();

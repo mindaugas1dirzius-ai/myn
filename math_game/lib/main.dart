@@ -9,7 +9,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Firebase init (saugu offline — praleidžiama, kol nėra tikros konfigūracijos).
   await FirebaseService.init();
-  // AdMob init (M žingsnis) — preload interstitial fone.
+  // UMP sutikimas PIRMA (L žingsnis, GDPR) — tik tada reklamos.
+  await AdService.requestConsent();
+  // AdMob init (M) — vyksta tik jei sutikimas leidžia (adsAllowed).
   await AdService.init();
   runApp(const MathGameApp());
 }
