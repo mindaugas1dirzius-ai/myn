@@ -6,9 +6,10 @@
 
 ## 📜 DARBO TAISYKLĖS (visada galioja)
 
-### 1. Planas virš visko (Plan Before Code)
+### 1. Planas virš visko (Plan Before Code) + Kokybė > greitis
 Niekada nerašom kodo, kol abu nepatvirtinam, kurioje tiksliai plano vietoje esam ir ką konkrečiai darysim.
-**Kaip veikia:** prieš kiekvieną naują žingsnį parodau atnaujintą `PLANAS.md` vaizdą. Tik kai parašai **„Darom"** — judam prie programavimo.
+**Kaip veikia:** prieš kiekvieną naują žingsnį parodau atnaujintą `PLANAS.md` vaizdą. Tik kai parašai **„Darom"** — judam toliau.
+**Auksinė taisyklė:** geriau **lėčiau, bet kokybiškai ir taip, kaip nori savininkas**, nei greitai ir „bele kaip". Po kiekvieno žingsnio parodau rezultatą — savininkas patikrina PRIEŠ einant toliau. Niekada nebėgam „kaip akis išdegę".
 
 ### 2. Griežtas kodo skaidymas (Single Responsibility)
 Jokių milžiniškų failų. Kodas skaidomas į mažus, nepriklausomus modulius.
