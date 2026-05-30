@@ -33,7 +33,7 @@ Taisant klaidą einam per principą: **KODĖL tai įvyko → KAIP ištaisyti.**
 |---|----------|------------------------|----------|
 | **A** | Planas ir susitarimas dirbti | Kad žinotume, ką ir kokia tvarka darom | ✅ |
 | **B** | Darbo aplinka (Flutter + įrankiai) | Kad būtų kuo kurti app | ✅ (debesyje) |
-| **C** | Tuščias Flutter projektas paleidžiamas | Patvirtinam, kad viskas veikia | ⬜ |
+| **C** | Tuščias Flutter projektas paleidžiamas | Patvirtinam, kad viskas veikia | ✅ (analyze 0 klaidų, testas praeina) |
 | **D** | Firebase projektas + prijungimas | Serverio pamatas (DB, funkcijos) | ⬜ |
 | **E** | Google Play paskyra ($25) + testerių rinkimas | Pradeda 14 d. laikrodį, vėliau nesusistresuosim | ⬜ |
 | **F** | Žaidimo dizainas ant popieriaus (ekranai, spalvos) | Žinom, kaip atrodys, prieš programuojant | ✅ (8/8, žr. DIZAINAS.md) |
