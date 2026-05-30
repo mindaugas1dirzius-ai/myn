@@ -11,14 +11,20 @@ library;
 class MathQuestion {
   final String action; // pvz. "6×7"
   final List<int> options; // 6 variantai, sumaišyti serveryje
+  final int answer; // teisingas (variantas C — UX žalia/raudona; taškus tikrina serveris)
 
-  const MathQuestion({required this.action, required this.options});
+  const MathQuestion({
+    required this.action,
+    required this.options,
+    required this.answer,
+  });
 
   factory MathQuestion.fromJson(Map<String, dynamic> json) {
     final rawOptions = (json['options'] as List<dynamic>?) ?? const [];
     return MathQuestion(
       action: json['action'] as String? ?? '',
       options: rawOptions.map((e) => (e as num).toInt()).toList(),
+      answer: (json['answer'] as num?)?.toInt() ?? -1,
     );
   }
 }

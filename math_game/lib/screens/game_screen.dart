@@ -36,12 +36,15 @@ class _GameScreenState extends State<GameScreen>
   @override
   void initState() {
     super.initState();
-    _game = GameProvider(op: widget.op, level: widget.level);
+    _game = GameProvider(
+      op: widget.op,
+      level: widget.level,
+      modeId: widget.modeId,
+    );
     _shake = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
-    _startQuestion();
   }
 
   void _startQuestion() {
@@ -80,6 +83,9 @@ class _GameScreenState extends State<GameScreen>
 
     _game.next();
     if (_game.finished) {
+      // Siunčiam rezultatą serveriui (jei server režimas); gaunam oficialų score.
+      final serverScore = await _game.submitToServer();
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => ResultScreen(
@@ -88,7 +94,7 @@ class _GameScreenState extends State<GameScreen>
             modeId: widget.modeId,
             correct: _game.correctCount,
             total: _game.total,
-            score: _game.score,
+            score: serverScore ?? _game.score, // serverio oficialus arba kosmetinis
           ),
         ),
       );
@@ -106,12 +112,23 @@ class _GameScreenState extends State<GameScreen>
         child: ListenableBuilder(
           listenable: _game,
           builder: (context, _) {
+            // Kraunasi — kol serveris generuoja klausimus.
+            if (_game.loadState == LoadState.loading) {
+              return Center(
+                child: CircularProgressIndicator(color: accent),
+              );
+            }
+            // Pirmas kadras po pakrovimo — paleidžiam langelio laikmatį.
+            if (!_stopwatch.isRunning && _game.state == CellState.idle) {
+              _startQuestion();
+            }
             final q = _game.current;
             return Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
                   _ProgressBar(index: _game.index, total: _game.total),
+                  if (_game.source == Source.offline) _offlineBadge(),
                   const Spacer(),
                   _buildBoxWithRing(q.text, accent),
                   const Spacer(),
@@ -122,6 +139,17 @@ class _GameScreenState extends State<GameScreen>
             );
           },
         ),
+      ),
+    );
+  }
+
+  /// Ženklas, kad žaidžiama offline (rezultatas neįrašomas į Top 10).
+  Widget _offlineBadge() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Text(
+        'Offline',
+        style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
       ),
     );
   }

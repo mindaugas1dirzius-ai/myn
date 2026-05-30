@@ -91,7 +91,9 @@ export const startGame = onCall(
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     });
 
-    // Klientui — TIK tekstai ir variantai, BE atsakymų:
+    // Klientui grąžinam ir `answer` (variantas C, DIZAINAS.md):
+    // saugu, nes taškus serveris skaičiuoja iš BENDRO LAIKO — atsakymo
+    // žinojimas sukčiui nieko neduoda, o UX gauna momentinį žalia/raudona.
     return {
       gameId: gameRef.id,
       level,
@@ -99,6 +101,7 @@ export const startGame = onCall(
       questions: questions.map((q, i) => ({
         action: q.action,
         options: options[i],
+        answer: q.answer,
       })),
     };
   }
