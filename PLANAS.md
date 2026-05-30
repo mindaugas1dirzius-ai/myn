@@ -36,6 +36,9 @@ Taisant klaidą einam per principą: **KODĖL tai įvyko → KAIP ištaisyti.**
 | **C** | Tuščias Flutter projektas paleidžiamas | Patvirtinam, kad viskas veikia | ✅ (analyze 0 klaidų, testas praeina) |
 | **J** | Serverio pajungimas (startGame/submitScore) + offline fallback | Telefonas kalba su serveriu | ✅ |
 | **K** | Top 10 lyderių lentelė (Firestore stream + indeksas) | Žaidėjai mato reitingą | ✅ |
+| **I** | App Check (kodo karkasas, single-switch) | Serveris priima tik tikrą app | ✅ kodas (debug token+enforce laukia paleidimo) |
+| **M** | AdMob (banner + interstitial, test ID) | Pajamų variklis | ✅ |
+| **L** | UMP privatumo sutikimas (GDPR) | Teisėtos reklamos ES | ✅ |
 | **D** | Firebase projektas + prijungimas | Serverio pamatas (DB, funkcijos) | ✅ projektas, Auth, Firestore(eur3), Blaze, funkcijos deploy'intos |
 | **E** | Google Play paskyra ($25) + testerių rinkimas | Pradeda 14 d. laikrodį, vėliau nesusistresuosim | ⬜ |
 | **F** | Žaidimo dizainas ant popieriaus (ekranai, spalvos) | Žinom, kaip atrodys, prieš programuojant | ✅ (8/8, žr. DIZAINAS.md) |
