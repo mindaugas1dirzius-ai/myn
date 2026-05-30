@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../l10n/app_strings.dart';
 import '../l10n/language_controller.dart';
 import '../models/game_mode.dart';
@@ -6,6 +7,7 @@ import '../theme/app_theme.dart';
 import '../widgets/banner_ad_widget.dart';
 import '../widgets/neumorphic_button.dart';
 import 'level_select_screen.dart';
+import 'profile_screen.dart';
 
 /// G1, 1-as žingsnis: pradinis ekranas — pasirenkam matematinį veiksmą.
 /// Veiksmai generuojami dinamiškai iš MathOp.values (jokio dubliavimo).
@@ -71,6 +73,14 @@ class HomeScreen extends StatelessWidget {
                   children:
                       MathOp.values.map((op) => _buildOpTile(op, s)).toList(),
                 ),
+              ),
+              // Išeiti iš žaidimo (uždaro programėlę).
+              TextButton.icon(
+                onPressed: () => SystemNavigator.pop(),
+                icon: const Icon(Icons.exit_to_app,
+                    color: AppColors.textSecondary, size: 18),
+                label: Text(s.exitApp,
+                    style: const TextStyle(color: AppColors.textSecondary)),
               ),
               // Banner meniu apačioje (leista; ne žaidimo metu)
               const SizedBox(height: 8),
