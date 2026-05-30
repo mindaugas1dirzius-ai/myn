@@ -48,4 +48,14 @@ class AppStrings {
   String get ratingGood => _pick('Puiku!', 'Great!');
   String get ratingOk => _pick('Neblogai', 'Not bad');
   String get ratingTryAgain => _pick('Bandyk dar', 'Try again');
+
+  // --- Lyderių lentelė ---
+  String get leaderboardTitle => _pick('Top 10', 'Top 10');
+  String get leaderboardEmpty =>
+      _pick('Dar nėra rezultatų — būk pirmas!', 'No scores yet — be the first!');
+  String get leaderboardError =>
+      _pick('Nepavyko įkelti lentelės', 'Could not load leaderboard');
+  String get leaderboardOffline => _pick(
+      'Prisijunk prie tinklo, kad varžytumeisi Top 10 lentelėje',
+      'Connect to the internet to compete on the Top 10');
 }

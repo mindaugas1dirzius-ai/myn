@@ -94,7 +94,8 @@ class _GameScreenState extends State<GameScreen>
             modeId: widget.modeId,
             correct: _game.correctCount,
             total: _game.total,
-            score: serverScore ?? _game.score, // serverio oficialus arba kosmetinis
+            score: serverScore ?? _game.score,
+            online: _game.source == Source.server,
           ),
         ),
       );

@@ -4,6 +4,7 @@ import '../models/game_mode.dart';
 import '../theme/app_theme.dart';
 import '../widgets/neumorphic_button.dart';
 import 'game_screen.dart';
+import 'leaderboard_screen.dart';
 
 /// G5: rezultatų ekranas po 10 klausimų (švelnus modelis — visada pasiekiamas).
 /// Taškai ČIA — kosmetiniai (oficialius J žingsnyje patvirtins serveris).
@@ -14,6 +15,7 @@ class ResultScreen extends StatelessWidget {
   final int correct;
   final int total;
   final int score;
+  final bool online; // ar žaista prisijungus (rodyti Top 10?)
 
   const ResultScreen({
     super.key,
@@ -23,6 +25,7 @@ class ResultScreen extends StatelessWidget {
     required this.correct,
     required this.total,
     required this.score,
+    this.online = false,
   });
 
   @override
@@ -32,11 +35,12 @@ class ResultScreen extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 24),
               Text(
                 s.resultTitle,
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -73,7 +77,12 @@ class ResultScreen extends StatelessWidget {
                 ),
               ),
 
-              const SizedBox(height: 48),
+              const SizedBox(height: 32),
+
+              // Top 10 lentelė (tik online; offline — kvietimas prisijungti)
+              LeaderboardView(mode: modeId, accent: accent, online: online),
+
+              const SizedBox(height: 32),
 
               // Žaisti dar — to paties režimo
               SizedBox(
