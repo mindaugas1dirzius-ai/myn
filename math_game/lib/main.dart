@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'services/ad_service.dart';
 import 'services/firebase_service.dart';
+import 'l10n/app_strings.dart';
 import 'l10n/language_controller.dart';
 import 'theme/app_theme.dart';
 import 'screens/home_screen.dart';
@@ -28,19 +29,27 @@ class MathGameApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListenableBuilder(
       listenable: languageController,
-      builder: (context, _) => MaterialApp(
-      title: 'Math Game',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
-      // Dvikalbystė (LT + EN) — DIZAINAS.md 0 sprendimas.
-      supportedLocales: const [Locale('lt'), Locale('en')],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      home: const HomeScreen(),
-      ),
+      builder: (context, _) {
+        // Žaidėjo pasirinkta kalba nustato MaterialApp locale (override).
+        // Jei dar nepasirinkta — null, tada sek sistemos/naršyklės kalbą.
+        final chosen = languageController.lang;
+        final locale = chosen == null
+            ? null
+            : Locale(chosen == AppLang.lt ? 'lt' : 'en');
+        return MaterialApp(
+          title: 'Math Game',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.dark,
+          locale: locale, // ← perjungimas veikia per čia
+          supportedLocales: const [Locale('lt'), Locale('en')],
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 }
