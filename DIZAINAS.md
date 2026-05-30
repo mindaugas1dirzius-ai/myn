@@ -201,3 +201,25 @@ Visas vartotojui matomas tekstas turi turėti **LT ir EN** versijas. Įgyvendina
 ### 12. Kalbos perjungiklis
 - Mygtukas meniu (🌐 LT/EN), pasirinkimas išsaugomas (shared_preferences).
 - `language_controller.dart` jau paruoštas — liko prijungti.
+
+---
+
+## 📝 V3 DARBAI (vėliau — sudėtingumo tobulinimas)
+**Problema:** Ekstremalus lygis per lengvas, ypač daugyba/dalyba (~189 variantų,
+kartojasi). Sudėtis/atimtis ten 90 000 — disbalansas.
+
+**Ką daryti (sutarta, ne dabar):**
+- Padidinti Ekstremalaus ×/÷ ribas (pvz. 15-50 × 6-15 → tūkstančiai variantų).
+- Apsvarstyti 5-tą lygį („Genijus"?) — dar sunkesnis.
+- Subalansuoti visus 16 režimų, kad kiekvienas turėtų pakankamai variantų.
+- Galbūt mišrūs veiksmai Ekstremaliame (pvz. `3+4×2`).
+- Tikslas: kiekvienas režimas ≥ 300 variantų, kad rotacija (30) veiktų gerai.
+
+**Priminimas (variantų skaičiai dabar):**
+| | Lengv | Vidut | Sunk | Ekstr |
+|-|-------|-------|------|-------|
+| + − | ~45 | ~900 | ~8100 | ~90000 |
+| × ÷ | ~16 | ~81 | ~121 | ~189 ← per mažai |
+
+**Sesija:** 10 unikalių/žaidimą; rotacija atsimena paskutinius N=min(30, sandėlis−10).
+**Rotacija veikia TIK online** (serveryje); offline (web) — atsitiktinai.
