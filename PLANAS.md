@@ -38,7 +38,7 @@ Taisant klaidą einam per principą: **KODĖL tai įvyko → KAIP ištaisyti.**
 | **E** | Google Play paskyra ($25) + testerių rinkimas | Pradeda 14 d. laikrodį, vėliau nesusistresuosim | ⬜ |
 | **F** | Žaidimo dizainas ant popieriaus (ekranai, spalvos) | Žinom, kaip atrodys, prieš programuojant | ✅ (8/8, žr. DIZAINAS.md) |
 | **G** | Žaidimo branduolys offline (be serverio, be reklamų) | Pagaminam patį žaidimą | ⬜ |
-| **H** | Serverio smegenys: anti-cheat (startGame/submitScore) | Niekas negali suklastoti rezultatų | 🔧 skeletas (PERRAŠYTI pagal 16 režimų dizainą) |
+| **H** | Serverio smegenys: anti-cheat (startGame/submitScore) | Niekas negali suklastoti rezultatų | ✅ perrašyta 16 režimų, kompiliuojasi (laukia diegimo D) |
 | **I** | Security Rules + App Check įjungimas | Užrakinam DB ir patvirtinam app tapatybę | ⬜ |
 | **J** | Flutter klientas jungiasi prie serverio | Telefonas „kalbasi" su smegenimis | ⬜ |
 | **K** | Top 10 lentelė (leaderboard) ekrane | Žaidėjai mato reitingą | ⬜ |
