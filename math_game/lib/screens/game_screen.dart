@@ -4,6 +4,7 @@ import '../models/game_mode.dart';
 import '../providers/game_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/exit_dialog.dart';
+import '../widgets/live_points.dart';
 import '../widgets/neon_timer_ring.dart';
 import '../widgets/neumorphic_box.dart';
 import '../widgets/neumorphic_button.dart';
@@ -137,14 +138,20 @@ class _GameScreenState extends State<GameScreen>
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  // ✕ Baigti (viršuje dešinėje) — su patvirtinimu.
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      icon: Icon(Icons.close,
-                          color: AppColors.textSecondary, size: 28),
-                      onPressed: _onQuitPressed,
-                    ),
+                  // Viršutinė juosta: gyvi taškai (kairėje) + ✕ Baigti (dešinėje).
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      LivePoints(
+                        running: _game.state == CellState.idle,
+                        resetKey: _ringKey,
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.close,
+                            color: AppColors.textSecondary, size: 28),
+                        onPressed: _onQuitPressed,
+                      ),
+                    ],
                   ),
                   _ProgressBar(index: _game.index, total: _game.total),
                   if (_game.source == Source.offline) _offlineBadge(),
