@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_strings.dart';
 
 /// Cyber-Neumorphism paletė ir tema (DIZAINAS.md, 8 sprendimas).
 /// Visos spalvos vienoje vietoje — niekur nehardcodinam (mūsų 2 ir 3 taisyklės).
@@ -44,17 +45,17 @@ extension GameLevelX on GameLevel {
     }
   }
 
-  /// Lietuviškas pavadinimas ekranui.
-  String get title {
+  /// Pavadinimas ekranui — paimamas iš AppStrings (LT/EN).
+  String title(AppStrings s) {
     switch (this) {
       case GameLevel.lengvas:
-        return 'Lengvas';
+        return s.levelEasy;
       case GameLevel.vidutinis:
-        return 'Vidutinis';
+        return s.levelMedium;
       case GameLevel.sunkus:
-        return 'Sunkus';
+        return s.levelHard;
       case GameLevel.ekstremalus:
-        return 'Ekstremalus';
+        return s.levelExtreme;
     }
   }
 }

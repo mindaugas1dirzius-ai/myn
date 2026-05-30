@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'theme/app_theme.dart';
 import 'screens/home_screen.dart';
 
@@ -15,6 +16,13 @@ class MathGameApp extends StatelessWidget {
       title: 'Math Game',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.dark,
+      // Dvikalbystė (LT + EN) — DIZAINAS.md 0 sprendimas.
+      supportedLocales: const [Locale('lt'), Locale('en')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       home: const HomeScreen(),
     );
   }

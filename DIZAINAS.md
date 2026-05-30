@@ -6,6 +6,7 @@
 
 | # | Sprendimas | Statusas |
 |---|-----------|----------|
+| 0 | **Kalbos: lietuvių + anglų (i18n nuo pradžių)** | ✅ |
 | 1 | Matematikos veiksmai (+ − × ÷) | ✅ |
 | 2 | Sunkumo lygiai (4 lygiai × 4 veiksmai = 16 režimų) | ✅ |
 | 3 | Klausimų skaičius per žaidimą (10 visada) | ✅ |
@@ -145,3 +146,11 @@ Interstitial (po žaidimo, su cooldown) — pagrindinės pajamos, fairness netai
 | Klaida | shake + raudonas blyksnis `#FF3B5C` |
 
 **Kokybės saugikliai:** (1) skaičiai aukšto kontrasto, neon tik briaunoms/žiedui; (2) sunkus lygis = rožinė (ne raudona), kad nesimaišytų su „klaida=raudona", kurią skiria judesys (shake); (3) langeliai aiškiai atrodo paspaudžiami (neon briauna); (4) švytėjimai subtilūs — testuoti 60fps ant pigių telefonų.
+
+---
+
+## ✅ 0. Kalbos — Lietuvių + Anglų (i18n nuo pradžių)
+Visas vartotojui matomas tekstas turi turėti **LT ir EN** versijas. Įgyvendinam centralizuotai (vienas `AppStrings`/`l10n` modulis), kad nereikėtų vėliau perrašinėti visų ekranų.
+- **Niekada nehardcodinam teksto** ekranuose — visada per vertimų raktą (mūsų 2 ir 3 taisyklės).
+- Kalbos perjungimas: pagal telefono kalbą + rankinis perjungiklis nustatymuose (vėliau).
+- Pradžioje statom su LT+EN paruošta struktūra, kitas kalbas galima pridėti vėliau be perrašymo.
