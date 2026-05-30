@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'services/ad_service.dart';
 import 'services/firebase_service.dart';
 import 'theme/app_theme.dart';
 import 'screens/home_screen.dart';
@@ -8,6 +9,8 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Firebase init (saugu offline — praleidžiama, kol nėra tikros konfigūracijos).
   await FirebaseService.init();
+  // AdMob init (M žingsnis) — preload interstitial fone.
+  await AdService.init();
   runApp(const MathGameApp());
 }
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../l10n/app_strings.dart';
 import '../models/game_mode.dart';
 import '../theme/app_theme.dart';
+import '../services/ad_service.dart';
+import '../widgets/banner_ad_widget.dart';
 import '../widgets/neumorphic_button.dart';
 import 'game_screen.dart';
 import 'leaderboard_screen.dart';
@@ -84,34 +86,43 @@ class ResultScreen extends StatelessWidget {
 
               const SizedBox(height: 32),
 
-              // Žaisti dar — to paties režimo
+              // Žaisti dar — to paties režimo (interstitial su cooldown PRIEŠ)
               SizedBox(
                 width: 240,
                 child: NeumorphicButton(
                   accent: accent,
-                  onTap: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (_) =>
-                          GameScreen(modeId: modeId, op: op, level: level),
-                    ),
-                  ),
+                  onTap: () {
+                    AdService.maybeShowInterstitial(); // tik po sesijos, su cooldown
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            GameScreen(modeId: modeId, op: op, level: level),
+                      ),
+                    );
+                  },
                   child: Text(s.playAgain, style: TextStyle(
                     color: accent, fontSize: 18, fontWeight: FontWeight.bold)),
                 ),
               ),
               const SizedBox(height: 16),
 
-              // Į meniu
+              // Į meniu (interstitial su cooldown PRIEŠ)
               SizedBox(
                 width: 240,
                 child: NeumorphicButton(
                   accent: AppColors.textSecondary,
-                  onTap: () =>
-                      Navigator.of(context).popUntil((route) => route.isFirst),
+                  onTap: () {
+                    AdService.maybeShowInterstitial();
+                    Navigator.of(context).popUntil((route) => route.isFirst);
+                  },
                   child: Text(s.toMenu, style: const TextStyle(
                     color: AppColors.textPrimary, fontSize: 16)),
                 ),
               ),
+
+              const SizedBox(height: 24),
+              // Banner — rezultatų ekrane (leista; ne žaidimo metu)
+              const BannerAdWidget(),
             ],
           ),
         ),

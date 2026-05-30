@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../l10n/app_strings.dart';
 import '../models/game_mode.dart';
 import '../theme/app_theme.dart';
+import '../widgets/banner_ad_widget.dart';
 import '../widgets/neumorphic_button.dart';
 import 'level_select_screen.dart';
 
@@ -43,6 +44,9 @@ class HomeScreen extends StatelessWidget {
                       MathOp.values.map((op) => _buildOpTile(op, s)).toList(),
                 ),
               ),
+              // Banner meniu apačioje (leista; ne žaidimo metu)
+              const SizedBox(height: 8),
+              const BannerAdWidget(),
             ],
           ),
         ),

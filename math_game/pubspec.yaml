@@ -40,6 +40,9 @@ dependencies:
   cloud_firestore: ^5.5.1        # leaderboard skaitymas
   firebase_app_check: ^0.3.1+7   # Play Integrity (App Check)
 
+  # Monetizacija (M žingsnis)
+  google_mobile_ads: ^5.2.0      # AdMob: banner + interstitial
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
