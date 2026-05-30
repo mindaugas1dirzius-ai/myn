@@ -6,11 +6,21 @@
 
 ## 📜 DARBO TAISYKLĖS (visada galioja)
 
-1. **Nuoseklumas** — einam griežtai pagal planą, vienas žingsnis po kito. Neperšokam.
-2. **Pirma planas, paskui vykdymas** — neprogramuojam, kol viskas neaišku.
-3. **Skaidom kodą į modulius** — maži, aiškūs failai, kad būtų lengva rasti, taisyti ir tobulinti. Ne vienas didelis failas.
-4. **Trinam seną / dubliuotą kodą** — kai keičiam ar tobulinam, seną versiją pašalinam. Kodas visada turi likti **kuo paprastesnis ir aiškesnis** (jokio dubliavimo).
-5. **Aiškumas svarbiau už gudrumą** — geriau paprastas, suprantamas kodas nei „protingas", bet painus.
+### 1. Planas virš visko (Plan Before Code)
+Niekada nerašom kodo, kol abu nepatvirtinam, kurioje tiksliai plano vietoje esam ir ką konkrečiai darysim.
+**Kaip veikia:** prieš kiekvieną naują žingsnį parodau atnaujintą `PLANAS.md` vaizdą. Tik kai parašai **„Darom"** — judam prie programavimo.
+
+### 2. Griežtas kodo skaidymas (Single Responsibility)
+Jokių milžiniškų failų. Kodas skaidomas į mažus, nepriklausomus modulius.
+**Kaip veikia:** dizainas (Widgets) gyvena atskirai nuo logikos (Services/Providers). Kiekviena serverio funkcija ar ekrano elementas turi **tik vieną aiškią užduotį** — kad pakeitimai nesugriautų likusio žaidimo.
+
+### 3. „Skauto taisyklė" ir nulinis dubliavimas (Zero Redundancy)
+Senas, nebenaudojamas ar pakeistas kodas **iškart ištrinamas**, ne komentuojamas ar paliekamas fone.
+**Kaip veikia:** nauja versija pilnai pakeičia senąją (kaip su `submitScore`). Jei kodas kartojasi dviejose vietose — iškeliam į bendrą pagalbinę funkciją (Utility).
+
+### 4. Dviejų žingsnių kodo keitimas (Refactor workflow)
+Taisant klaidą einam per principą: **KODĖL tai įvyko → KAIP ištaisyti.**
+**Kaip veikia:** visada aiškiai parodau, kurią vietą ištrinti ir ką įklijuoti vietoje jos — kad tavo failuose nekiltų chaosas.
 
 **Statuso ženklai:** ✅ padaryta · 🔄 dabar dirbam · ⬜ liko · ⏸️ laukia kitų
 
