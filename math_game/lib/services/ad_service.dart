@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:flutter/foundation.dart' show VoidCallback;
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show VoidCallback, kIsWeb, defaultTargetPlatform, TargetPlatform;
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 /// AdMob reklamų servisas (M žingsnis).
@@ -27,12 +27,20 @@ class AdService {
   /// (pajamos išlieka). false tik jei UMP reikalingas, bet negautas.
   static bool adsAllowed = false;
 
+  /// Ar platforma palaiko AdMob (tik Android/iOS; web — ne).
+  static bool get _adsSupported =>
+      !kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.android ||
+          defaultTargetPlatform == TargetPlatform.iOS);
+
+  static bool get _isAndroid => !kIsWeb && Platform.isAndroid;
+
   /// Test Ad Unit ID (Google oficialūs). S žingsnyje keisim į tikrus.
-  static String get _bannerUnitId => Platform.isAndroid
+  static String get _bannerUnitId => _isAndroid
       ? 'ca-app-pub-3940256099942544/6300978111'
       : 'ca-app-pub-3940256099942544/2934735716';
 
-  static String get _interstitialUnitId => Platform.isAndroid
+  static String get _interstitialUnitId => _isAndroid
       ? 'ca-app-pub-3940256099942544/1033173712'
       : 'ca-app-pub-3940256099942544/4411468910';
 
@@ -40,6 +48,7 @@ class AdService {
   /// Parodo GDPR sutikimo langą (ES) ar automatiškai praleidžia (ne-ES).
   /// Po atsakymo leidžia reklamas (personalizuotas ar ne — sprendžia AdMob).
   static Future<void> requestConsent() async {
+    if (!_adsSupported) return; // web — reklamų nėra, praleidžiam
     try {
       final params = ConsentRequestParameters();
       // Atnaujinam sutikimo info; jei reikia formos — parodom.
@@ -72,6 +81,7 @@ class AdService {
   /// Inicializacija — kviečiama main() (po requestConsent). Saugu kelis kartus.
   /// Jei reklamos neleidžiamos — AdMob neinicijuojam (taupom bateriją/privatumą).
   static Future<void> init() async {
+    if (!_adsSupported) return; // web — AdMob neinicijuojam
     if (_initialized || !adsAllowed) return;
     await MobileAds.instance.initialize();
     _initialized = true;
