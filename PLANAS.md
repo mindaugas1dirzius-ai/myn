@@ -31,7 +31,7 @@ Taisant klaidą einam per principą: **KODĖL tai įvyko → KAIP ištaisyti.**
 | # | Žingsnis | Kam skirta (1 sakiniu) | Statusas |
 |---|----------|------------------------|----------|
 | **A** | Planas ir susitarimas dirbti | Kad žinotume, ką ir kokia tvarka darom | ✅ |
-| **B** | Darbo aplinka (Flutter + įrankiai) | Kad kompiuteris galėtų kurti app | 🔄 |
+| **B** | Darbo aplinka (Flutter + įrankiai) | Kad būtų kuo kurti app | ✅ (debesyje) |
 | **C** | Tuščias Flutter projektas paleidžiamas | Patvirtinam, kad viskas veikia | ⬜ |
 | **D** | Firebase projektas + prijungimas | Serverio pamatas (DB, funkcijos) | ⬜ |
 | **E** | Google Play paskyra ($25) + testerių rinkimas | Pradeda 14 d. laikrodį, vėliau nesusistresuosim | ⬜ |
