@@ -161,3 +161,43 @@ Visas vartotojui matomas tekstas turi turėti **LT ir EN** versijas. Įgyvendina
 - **Niekada nehardcodinam teksto** ekranuose — visada per vertimų raktą (mūsų 2 ir 3 taisyklės).
 - Kalbos perjungimas: pagal telefono kalbą + rankinis perjungiklis nustatymuose (vėliau).
 - Pradžioje statom su LT+EN paruošta struktūra, kitas kalbas galima pridėti vėliau be perrašymo.
+
+---
+
+## 🔄 V2 PATOBULINIMAI (sutarta, programuojam rytoj)
+
+### 9. Laikmatis — keičiam į „skaičiuoja AUKŠTYN" + 30s riba
+**Senas modelis (atmestas):** laikas mažėja, baigėsi = klaida.
+**Naujas (sutarta):**
+- Laikas **tiksi aukštyn**, žiedas **pilnėja** (nuo tuščio iki pilno per 30s).
+- **NEsibaigia**, kol nepaspaudi atsakymo (be streso).
+- Taškai = pagal tai, per kiek laiko atsakei (greičiau = daugiau).
+- **Viršutinė riba: 30 s** — pasiekus, langelis automatiškai užskaitomas kaip
+  praleistas/minimumas (kad žaidimas nekabėtų, statistika nesugestų).
+
+**Nauja taškų formulė (serveris):**
+`score = max(10, MaxPoints − (sekundės × PenaltyMultiplier))`
+- Greitas atsakymas → ~MaxPoints; lėtas (iki 30s) → stabilus minimumas (~10).
+- Klaida = 0.
+- **Saugumas išlieka:** serveris matuoja bendrą laiką (dabar−createdAt);
+  lėtas atsakymas = mažiau taškų; laukti neapsimoka. Reikės perskaičiuoti
+  formulę serveryje + naujas deploy.
+
+### 10. Mygtukai: Baigti / Išeiti
+- **Žaidimo ekrane:** „✕ Baigti" → kiber-neumorfinis popup „Ar tikrai? Šios
+  sesijos taškai bus prarasti" → grįžta į meniu (rezultatas NEsiunčiamas).
+- **Meniu:** „Išeiti iš žaidimo" → `SystemNavigator.pop()`.
+- Saugumas: nebaigtas žaidimas nesiunčiamas; `active_games` valo TTL.
+
+### 11. Vartotojo profilis + getMyRank
+- Naujas **Profilio** ekranas (mygtukas meniu).
+- Rodo 16 režimų; prie kiekvieno — tavo geriausias rezultatas.
+- Paspaudus režimą → Top 10 + **tavo pozicija** („14-as iš 320").
+- **Nauja Cloud Function `getMyRank`** (serveris suskaičiuoja poziciją —
+  saugu + pigu, NE klientas skaito visus). Dera su „serveris=smegenys".
+- **Vardo įvedimas:** pirmą kartą profilyje — „Įvesk kiber-vardą"; rašom į
+  `users/{uid}`, serveris SANITIZUOJA (jau turim logiką).
+
+### 12. Kalbos perjungiklis
+- Mygtukas meniu (🌐 LT/EN), pasirinkimas išsaugomas (shared_preferences).
+- `language_controller.dart` jau paruoštas — liko prijungti.
