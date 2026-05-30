@@ -4,6 +4,14 @@
 > Einam **po vieną žingsnį**. Nepradedam naujo, kol esamas neaiškus ir nepažymėtas ✅.
 > Kiekvienai daliai atsakom į 3 klausimus: **KODĖL? KAIP? KAM SKIRTA?**
 
+## 📜 DARBO TAISYKLĖS (visada galioja)
+
+1. **Nuoseklumas** — einam griežtai pagal planą, vienas žingsnis po kito. Neperšokam.
+2. **Pirma planas, paskui vykdymas** — neprogramuojam, kol viskas neaišku.
+3. **Skaidom kodą į modulius** — maži, aiškūs failai, kad būtų lengva rasti, taisyti ir tobulinti. Ne vienas didelis failas.
+4. **Trinam seną / dubliuotą kodą** — kai keičiam ar tobulinam, seną versiją pašalinam. Kodas visada turi likti **kuo paprastesnis ir aiškesnis** (jokio dubliavimo).
+5. **Aiškumas svarbiau už gudrumą** — geriau paprastas, suprantamas kodas nei „protingas", bet painus.
+
 **Statuso ženklai:** ✅ padaryta · 🔄 dabar dirbam · ⬜ liko · ⏸️ laukia kitų
 
 ---
