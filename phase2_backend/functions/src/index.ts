@@ -21,7 +21,6 @@ import {
   SCORING,
   QUESTIONS_PER_GAME,
   MIN_TIME_PER_Q_MS,
-  TIME_TOLERANCE_MS,
 } from "./gameConfig";
 import { generateQuestion, Question } from "./generateQuestion";
 import { generateOptions } from "./generateOptions";
