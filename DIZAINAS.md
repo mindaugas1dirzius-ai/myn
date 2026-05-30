@@ -11,7 +11,7 @@
 | 3 | Klausimų skaičius per žaidimą (10 visada) | ✅ |
 | 4 | Atsakymų variantai (6, panašūs klaidingi) | ✅ |
 | 5 | Taškų skaičiavimas (server-authoritative) | ✅ |
-| 6 | Kas vyksta suklydus (švelnus 10; Rewarded A/B/C laukia) | ✅* |
+| 6 | Kas vyksta suklydus (ŠVELNUS — visada 10) | ✅ |
 | 7 | Laikmatis (neoninis žiedas, žalia→geltona→raudona) | ✅ |
 | 8 | Vizualinis stilius (Cyber-Neumorphism) | ✅ |
 | 6 | Kas vyksta suklydus | ⬜ |
