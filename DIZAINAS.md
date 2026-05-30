@@ -106,6 +106,13 @@ score = teisingų × BAZĖ + max(0, (teisingų × MAX − serverioBendrasLaikas)
 
 **Lyderių lentelė:** atskira kiekvienam iš 16 režimų (`leaderboard/{uid}_{mode}`) — kad lygiai nesimaišytų.
 
+### 🔑 Atsakymų matomumas telefone (sprendimas J žingsniui)
+**Sprendimas: serveris GRĄŽINA atsakymus su klausimais** (variantas C).
+- **Kodėl saugu:** taškus skaičiuoja serveris iš BENDRO LAIKO, ne iš „kiek teisingų telefonas sako". Net jei sukčius ištraukia atsakymus iš atminties — laimi 0 (laikas tikras, botų filtras veikia). Atsakymų slėpimas nieko negina.
+- **Kodėl gerai:** telefonas rodo momentinį žalia/raudona feedback (geras UX).
+- **Privaloma sąlyga:** `submitScore` serveryje PATS perskaičiuoja teisingus (jau daro). Telefono verdiktas — tik vizualas; oficialus — iš serverio.
+- **Migracija J:** `startGame` grąžina ir `answer` lauką (1 eil.); `GameProvider` ima atsakymą iš serverio duomenų (logika ta pati).
+
 ---
 
 ## ✅ 6. Kas vyksta suklydus — Švelnus modelis (visada 10 langelių)
