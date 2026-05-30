@@ -59,3 +59,34 @@ Bet TU sprendi. Tiesiog parašyk raidę (A/B/C/D) arba savo idėją.
 - Po pakeitimo perdeployinu web → pamatai telefone (inkognito)
 - Branch: `claude/android-app-monetization-ads-RORMZ`
 - Web testas: inkognito langas (kitaip sena versija)
+
+---
+
+## 🎨 D+. DIZAINO PATOBULINIMAS (naujas — pagal koncepcinį vaizdą)
+
+**Kryptis:** priartinti prie „CYBER BLITZ" mockup (ryškesnis neon, gražesni langeliai).
+
+**Spalvos — atnaujinti AppColors (priimta):**
+- bgDark: `#0F141C` (gilesnė nei dabar)
+- bgCard: `#161C26`
+- neonGreen `#00FF9D`, neonYellow `#FFD000`, neonPink `#FF2E93`,
+  neonPurple `#B026FF`, neonBlue `#00E5FF` (nauja!)
+
+**Ką daryti (BE dubliavimo — atnaujinti ESAMUS, ne kurti naujus):**
+- AppColors → naujos spalvos
+- NeumorphicButton → pridėti glow (išorinis švytėjimas + vidinis šešėlis)
+- Pridėti „CYBER BLITZ" paantraštę po MATH GAME
+- Didesnis taškų rodymas viršuje („+93 Correct!")
+- Gražesnis 3D klausimo langelis (glow border)
+
+**⚠️ Kodo klaidos iš pasiūlymo (NEnaudoti tiesiai):**
+- `padding: Offset(...)` → turi būti `EdgeInsets.symmetric(...)`
+- `withOpacity()` → mūsų projekte `withValues(alpha: ...)` (deprecated kitaip)
+- NEkurti `CyberStyles`/`CyberButton` — turim AppColors + NeumorphicButton (3 taisyklė)
+
+**AI promptai (ateičiai, NE v1):**
+- Fono circuit-board raštas — gali praversti
+- Miestai/Eiffelio bokštas/kiber-šefas — BŪSIMIEMS žaidimams, ne matematikai
+
+**Realybės pastaba:** Flutter pasieks ~90% to mockup (be foto-realistinio 3D).
+Pigūs telefonai: glow/blur saikingai (60fps).
