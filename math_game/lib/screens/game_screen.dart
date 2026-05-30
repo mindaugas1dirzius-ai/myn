@@ -1,84 +1,227 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import '../models/game_mode.dart';
+import '../providers/game_provider.dart';
 import '../theme/app_theme.dart';
 import '../widgets/neon_timer_ring.dart';
 import '../widgets/neumorphic_box.dart';
 import '../widgets/neumorphic_button.dart';
+import 'result_screen.dart';
 
-/// G2: žaidimo ekrano vizualas — klausimo langelis + 6 atsakymų mygtukai.
-///
-/// KOL KAS naudoja laikinus duomenis (placeholder klausimą ir variantus),
-/// kad pamatytume išvaizdą. G4 žingsnyje prijungsim tikrus serverio duomenis
-/// (GameSession), laikmatį (G3) ir teisinga/klaida animacijas.
-class GameScreen extends StatelessWidget {
-  final String modeId; // pvz. "mul_sunkus" — iš ko paimsim lygio spalvą
+/// G4: žaidimo ekranas — sujungia langelį, žiedą, atsakymus ir LOGIKĄ.
+/// Būseną valdo GameProvider (lokalūs klausimai; serveris — J žingsnyje).
+class GameScreen extends StatefulWidget {
+  final String modeId;
+  final MathOp op;
   final GameLevel level;
 
-  const GameScreen({super.key, required this.modeId, required this.level});
+  const GameScreen({
+    super.key,
+    required this.modeId,
+    required this.op,
+    required this.level,
+  });
 
-  // Laikini duomenys (G4 pakeis serverio atsakymais).
-  static const String _demoQuestion = '6 × 7';
-  static const List<int> _demoOptions = [35, 44, 42, 13, 24, 48];
+  @override
+  State<GameScreen> createState() => _GameScreenState();
+}
+
+class _GameScreenState extends State<GameScreen>
+    with SingleTickerProviderStateMixin {
+  late final GameProvider _game;
+  late final AnimationController _shake;
+  final Stopwatch _stopwatch = Stopwatch();
+  int _ringKey = 0; // perkrauna žiedą kiekvienam klausimui
+
+  @override
+  void initState() {
+    super.initState();
+    _game = GameProvider(op: widget.op, level: widget.level);
+    _shake = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
+    _startQuestion();
+  }
+
+  void _startQuestion() {
+    _stopwatch
+      ..reset()
+      ..start();
+  }
+
+  @override
+  void dispose() {
+    _shake.dispose();
+    super.dispose();
+  }
+
+  void _onAnswer(int value) {
+    if (_game.isBusy) return;
+    _stopwatch.stop();
+    _game.answer(value, _stopwatch.elapsedMilliseconds);
+    _afterResolve();
+  }
+
+  void _onTimeout() {
+    if (_game.isBusy) return;
+    _stopwatch.stop();
+    _game.timeout();
+    _afterResolve();
+  }
+
+  /// Po atsakymo: animacija, pauzė, tada kitas klausimas arba rezultatai.
+  Future<void> _afterResolve() async {
+    if (_game.state == CellState.wrong) {
+      await _shake.forward(from: 0);
+    }
+    await Future.delayed(const Duration(milliseconds: 700));
+    if (!mounted) return;
+
+    _game.next();
+    if (_game.finished) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => ResultScreen(
+            correct: _game.correctCount,
+            total: _game.total,
+            score: _game.score,
+          ),
+        ),
+      );
+    } else {
+      setState(() => _ringKey++); // naujas žiedas naujam klausimui
+      _startQuestion();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final accent = level.color;
+    final accent = widget.level.color;
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              const Spacer(),
-              // Klausimo langelis su jį apgaubiančiu neoniniu laikmačio žiedu.
-              Stack(
-                alignment: Alignment.center,
+        child: ListenableBuilder(
+          listenable: _game,
+          builder: (context, _) {
+            final q = _game.current;
+            return Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
                 children: [
-                  NeonTimerRing(
-                    durationMs: level.maxTimeMs,
-                    size: 240,
-                    onTimeout: () {
-                      // G4: laikas baigėsi = klaida, pereinam prie kito langelio.
-                    },
-                  ),
-                  NeumorphicBox(text: _demoQuestion, accent: accent),
+                  _ProgressBar(index: _game.index, total: _game.total),
+                  const Spacer(),
+                  _buildBoxWithRing(q.text, accent),
+                  const Spacer(),
+                  _buildAnswers(q.options, accent),
+                  const SizedBox(height: 12),
                 ],
               ),
-              const Spacer(),
-              // 6 atsakymai — 2×3 tinklelis
-              GridView.count(
-                crossAxisCount: 3,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                mainAxisSpacing: 14,
-                crossAxisSpacing: 14,
-                childAspectRatio: 1.3,
-                children: _demoOptions
-                    .map((value) => _buildAnswer(context, value, accent))
-                    .toList(),
-              ),
-              const SizedBox(height: 12),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _buildAnswer(BuildContext context, int value, Color accent) {
-    return NeumorphicButton(
-      accent: accent,
-      padding: const EdgeInsets.all(8),
-      onTap: () {
-        // G4: čia bus atsakymo tikrinimas + animacija. Kol kas tik vizualas.
+  Widget _buildBoxWithRing(String text, Color accent) {
+    // Shake animacija (klaida): langelis kruta į šonus.
+    return AnimatedBuilder(
+      animation: _shake,
+      builder: (context, child) {
+        final dx = math.sin(_shake.value * math.pi * 8) * 10 * (1 - _shake.value);
+        return Transform.translate(offset: Offset(dx, 0), child: child);
       },
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          NeonTimerRing(
+            key: ValueKey(_ringKey),
+            durationMs: widget.level.maxTimeMs,
+            size: 240,
+            running: !_game.isBusy,
+            onTimeout: _onTimeout,
+          ),
+          NeumorphicBox(text: text, accent: _boxAccent(accent)),
+        ],
+      ),
+    );
+  }
+
+  /// Langelio briaunos spalva pagal būseną (teisinga=žalia, klaida=raudona).
+  Color _boxAccent(Color accent) {
+    switch (_game.state) {
+      case CellState.correct:
+        return AppColors.correct;
+      case CellState.wrong:
+        return AppColors.wrong;
+      case CellState.idle:
+        return accent;
+    }
+  }
+
+  Widget _buildAnswers(List<int> options, Color accent) {
+    return GridView.count(
+      crossAxisCount: 3,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      mainAxisSpacing: 14,
+      crossAxisSpacing: 14,
+      childAspectRatio: 1.3,
+      children: options.map((v) => _answerButton(v, accent)).toList(),
+    );
+  }
+
+  Widget _answerButton(int value, Color accent) {
+    // Po atsakymo paryškinam: teisingą — žaliai, paspaustą klaidingą — raudonai.
+    Color c = accent;
+    if (_game.state != CellState.idle) {
+      if (value == _game.current.answer) {
+        c = AppColors.correct;
+      } else if (value == _game.pickedOption) {
+        c = AppColors.wrong;
+      }
+    }
+    return NeumorphicButton(
+      accent: c,
+      padding: const EdgeInsets.all(8),
+      onTap: () => _onAnswer(value),
       child: Text(
         '$value',
-        style: const TextStyle(
-          color: AppColors.textPrimary,
+        style: TextStyle(
+          color: c == accent ? AppColors.textPrimary : c,
           fontSize: 24,
           fontWeight: FontWeight.bold,
         ),
       ),
+    );
+  }
+}
+
+/// Progreso juosta viršuje (kelintas klausimas iš 10).
+class _ProgressBar extends StatelessWidget {
+  final int index;
+  final int total;
+  const _ProgressBar({required this.index, required this.total});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text('${index + 1} / $total',
+            style: const TextStyle(color: AppColors.textSecondary)),
+        const SizedBox(width: 12),
+        Expanded(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: (index + 1) / total,
+              backgroundColor: AppColors.shadowLight,
+              color: AppColors.levelEasy,
+              minHeight: 6,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

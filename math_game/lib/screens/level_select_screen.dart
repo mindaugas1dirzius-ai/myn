@@ -65,7 +65,7 @@ class LevelSelectScreen extends StatelessWidget {
     final modeId = buildModeId(op, level); // pvz. "mul_sunkus" — serverio kalba
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => GameScreen(modeId: modeId, level: level),
+        builder: (_) => GameScreen(modeId: modeId, op: op, level: level),
       ),
     );
   }

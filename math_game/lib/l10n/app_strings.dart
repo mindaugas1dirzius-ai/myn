@@ -36,4 +36,9 @@ class AppStrings {
   String get levelMedium => _pick('Vidutinis', 'Medium');
   String get levelHard => _pick('Sunkus', 'Hard');
   String get levelExtreme => _pick('Ekstremalus', 'Extreme');
+
+  // --- Rezultatai ---
+  String get resultTitle => _pick('Rezultatas', 'Result');
+  String get score => _pick('Taškai', 'Score');
+  String get playAgain => _pick('Žaisti dar', 'Play again');
 }
