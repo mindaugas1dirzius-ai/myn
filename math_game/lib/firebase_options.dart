@@ -14,10 +14,10 @@ class DefaultFirebaseOptions {
 
   // Android (kol kas vienintelė platforma; iOS pridėsim vėliau jei reikės).
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'TODO_API_KEY',
-    appId: 'TODO_APP_ID',
-    messagingSenderId: 'TODO_SENDER_ID',
-    projectId: 'TODO_PROJECT_ID',
-    storageBucket: 'TODO_STORAGE_BUCKET',
+    apiKey: 'AIzaSyAzEIR5dko4iJRyWhbb3_oxl1aZUhOUrVE',
+    appId: '1:140827271266:android:a55e35a97ca6e141e3313b',
+    messagingSenderId: '140827271266',
+    projectId: 'math-game-9862f',
+    storageBucket: 'math-game-9862f.firebasestorage.app',
   );
 }
