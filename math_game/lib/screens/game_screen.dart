@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import '../widgets/neon_timer_ring.dart';
 import '../widgets/neumorphic_box.dart';
 import '../widgets/neumorphic_button.dart';
 
@@ -28,8 +29,20 @@ class GameScreen extends StatelessWidget {
           child: Column(
             children: [
               const Spacer(),
-              // Klausimo langelis
-              NeumorphicBox(text: _demoQuestion, accent: accent),
+              // Klausimo langelis su jį apgaubiančiu neoniniu laikmačio žiedu.
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  NeonTimerRing(
+                    durationMs: level.maxTimeMs,
+                    size: 240,
+                    onTimeout: () {
+                      // G4: laikas baigėsi = klaida, pereinam prie kito langelio.
+                    },
+                  ),
+                  NeumorphicBox(text: _demoQuestion, accent: accent),
+                ],
+              ),
               const Spacer(),
               // 6 atsakymai — 2×3 tinklelis
               GridView.count(

@@ -31,6 +31,22 @@ class AppColors {
 enum GameLevel { lengvas, vidutinis, sunkus, ekstremalus }
 
 extension GameLevelX on GameLevel {
+  /// Laikmačio laikas (ms) pagal lygį — atitinka serverio SCORING lentelę
+  /// (DIZAINAS.md 5 sprendimas). Naudoja žiedas (G3). Galutinį laiką visada
+  /// patvirtina serveris (maxTimeMs iš startGame), tai tik vizualui.
+  int get maxTimeMs {
+    switch (this) {
+      case GameLevel.lengvas:
+        return 3000;
+      case GameLevel.vidutinis:
+        return 4000;
+      case GameLevel.sunkus:
+        return 5000;
+      case GameLevel.ekstremalus:
+        return 6000;
+    }
+  }
+
   /// Akcento spalva pagal lygį.
   Color get color {
     switch (this) {

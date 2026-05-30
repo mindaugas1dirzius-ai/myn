@@ -33,13 +33,22 @@ class NeumorphicBox extends StatelessWidget {
           ),
         ],
       ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          color: AppColors.textPrimary,
-          fontSize: 48,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 2,
+      // FittedBox saugiklis: ilgi klausimai (pvz. "124 + 58") nesulaužys dizaino —
+      // tekstas tiesiog proporcingai sumažės, o ne keliasi į kitą eilutę.
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            text,
+            maxLines: 1,
+            style: const TextStyle(
+              color: AppColors.textPrimary,
+              fontSize: 48,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2,
+            ),
+          ),
         ),
       ),
     );
