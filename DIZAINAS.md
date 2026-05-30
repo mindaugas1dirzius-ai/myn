@@ -6,17 +6,14 @@
 
 | # | Sprendimas | Statusas |
 |---|-----------|----------|
-| 1 | Matematikos veiksmai | ✅ |
-| 2 | Sunkumo lygiai (4 lygiai × 4 veiksmai = 16 režimų) | 🔄 |
+| 1 | Matematikos veiksmai (+ − × ÷) | ✅ |
+| 2 | Sunkumo lygiai (4 lygiai × 4 veiksmai = 16 režimų) | ✅ |
 | 3 | Klausimų skaičius per žaidimą (10 visada) | ✅ |
 | 4 | Atsakymų variantai (6, panašūs klaidingi) | ✅ |
 | 5 | Taškų skaičiavimas (server-authoritative) | ✅ |
 | 6 | Kas vyksta suklydus (ŠVELNUS — visada 10) | ✅ |
 | 7 | Laikmatis (neoninis žiedas, žalia→geltona→raudona) | ✅ |
 | 8 | Vizualinis stilius (Cyber-Neumorphism) | ✅ |
-| 6 | Kas vyksta suklydus | ⬜ |
-| 7 | Laikmatis | ⬜ |
-| 8 | Vizualinis stilius (spalvos) | ⬜ |
 
 ---
 
@@ -26,7 +23,7 @@
 
 ---
 
-## 🔄 2. Sunkumo lygiai — 4 lygiai × 4 veiksmai = 16 režimų (PASIŪLYMAS)
+## ✅ 2. Sunkumo lygiai — 4 lygiai × 4 veiksmai = 16 režimų
 **Struktūra:** 4 lygiai — 🟢 Lengvas, 🟡 Vidutinis, 🔴 Sunkus, 🔥 Ekstremalus. Kiekvienas su visais 4 veiksmais → **16 režimų**.
 
 | Veiksmas | 🟢 Lengvas (~50) | 🟡 Vidutinis (~150) | 🔴 Sunkus (~300) | 🔥 Ekstremalus (500+) |
