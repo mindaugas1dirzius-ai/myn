@@ -8,9 +8,10 @@
 |---|-----------|----------|
 | 1 | Matematikos veiksmai | ✅ |
 | 2 | Sunkumo lygiai (4 lygiai × 4 veiksmai = 16 režimų) | 🔄 |
-| 3 | Klausimų skaičius per žaidimą (10) | ✅ |
+| 3 | Klausimų skaičius per žaidimą (iki 10) | ✅ |
 | 4 | Atsakymų variantai (6, panašūs klaidingi) | ✅ |
 | 5 | Taškų skaičiavimas (server-authoritative) | ✅ |
+| 6 | Kas vyksta suklydus (staigi mirtis + 1 Rewarded) | ✅ |
 | 6 | Kas vyksta suklydus | ⬜ |
 | 7 | Laikmatis | ⬜ |
 | 8 | Vizualinis stilius (spalvos) | ⬜ |
@@ -45,8 +46,8 @@
 
 ---
 
-## ✅ 3. Užduočių per sesiją: **10**
-Viena žaidimo sesija = 10 užduočių. Pakanka azarto, neperkrauna.
+## ✅ 3. Užduočių per sesiją: **iki 10**
+Viena sesija = iki 10 užduočių. Staigi mirtis (žr. 6 sprendimą) gali nutraukti anksčiau. Maksimalus rekordas pasiekiamas teisingai ir greitai sužaidus visus 10.
 
 ---
 
@@ -104,3 +105,11 @@ score = teisingų × BAZĖ + max(0, (teisingų × MAX − serverioBendrasLaikas)
 - `Math.floor` (sveiki taškai). Teisingas užskaitomas tik jei langelio laikas < MAX.
 
 **Lyderių lentelė:** atskira kiekvienam iš 16 režimų (`leaderboard/{uid}_{mode}`) — kad lygiai nesimaišytų.
+
+---
+
+## ✅ 6. Kas vyksta suklydus — Staigi mirtis + 1 Rewarded tęsimas
+- Klaida (neteisingas atsakymas ARBA pasibaigęs langelio laikas) → langelis raudonas (shake), 0 taškų, žaidimas **NUTRŪKSTA** → rezultatų ekranas.
+- **Rewarded „Continue":** nutrūkus gali žiūrėti reklamą → tęsia nuo kito langelio, surinkti taškai lieka. **TIK 1×/sesiją** (kad leaderboard „nenusipirktų").
+- **Anti-cheat:** telefonas siunčia tik tiek atsakymų, kiek atsakyta; serveris suskaičiuoja teisingus + pritaiko bendro laiko formulę (5 sprendimas). Nepameluosi.
+- ⚠️ **TUNABLE (retention saugiklis):** staigi mirtis = didžiausia įtampa, BET didžiausia churn rizika. Modelis valdomas per **Firebase Remote Config** (Fazė 6) — galėsim perjungti į „1 gyvybė" ar A/B testuoti BE naujo leidimo.
