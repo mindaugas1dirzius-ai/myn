@@ -82,8 +82,11 @@ class HomeScreen extends StatelessWidget {
                 label: Text(s.exitApp,
                     style: const TextStyle(color: AppColors.textSecondary)),
               ),
+              // Versijos žymė (kad matytume, ar telefonas gauna naują versiją).
+              const Text('v2-timer30',
+                  style: TextStyle(color: AppColors.textSecondary, fontSize: 10)),
               // Banner meniu apačioje (leista; ne žaidimo metu)
-              const SizedBox(height: 8),
+              const SizedBox(height: 4),
               const BannerAdWidget(),
             ],
           ),
