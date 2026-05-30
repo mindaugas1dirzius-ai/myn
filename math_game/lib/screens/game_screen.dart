@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/game_mode.dart';
 import '../providers/game_provider.dart';
 import '../theme/app_theme.dart';
+import '../widgets/exit_dialog.dart';
 import '../widgets/neon_timer_ring.dart';
 import '../widgets/neumorphic_box.dart';
 import '../widgets/neumorphic_button.dart';
@@ -73,6 +74,14 @@ class _GameScreenState extends State<GameScreen>
     _afterResolve();
   }
 
+  /// ✕ paspaustas — patvirtinimas, tada grįžtam į meniu (nieko nesiunčiam).
+  Future<void> _onQuitPressed() async {
+    final quit = await showQuitDialog(context);
+    if (quit && mounted) {
+      Navigator.of(context).popUntil((route) => route.isFirst);
+    }
+  }
+
   /// Po atsakymo: animacija, pauzė, tada kitas klausimas arba rezultatai.
   Future<void> _afterResolve() async {
     if (_game.state == CellState.wrong) {
@@ -128,6 +137,15 @@ class _GameScreenState extends State<GameScreen>
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
+                  // ✕ Baigti (viršuje dešinėje) — su patvirtinimu.
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                      icon: Icon(Icons.close,
+                          color: AppColors.textSecondary, size: 28),
+                      onPressed: _onQuitPressed,
+                    ),
+                  ),
                   _ProgressBar(index: _game.index, total: _game.total),
                   if (_game.source == Source.offline) _offlineBadge(),
                   const Spacer(),

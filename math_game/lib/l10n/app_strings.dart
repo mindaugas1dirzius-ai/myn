@@ -59,4 +59,22 @@ class AppStrings {
   String get leaderboardOffline => _pick(
       'Prisijunk prie tinklo, kad varžytumeisi Top 10 lentelėje',
       'Connect to the internet to compete on the Top 10');
+
+  // --- Išėjimas / mygtukai ---
+  String get quitTitle => _pick('Nori pasiduoti?', 'Give up?');
+  String get quitBody => _pick(
+      'Šios sesijos taškai bus prarasti ir į Top 10 nepateksi.',
+      'This session\'s score will be lost and won\'t count for the Top 10.');
+  String get stayInGame => _pick('Likti žaidime', 'Stay in game');
+  String get quitYes => _pick('Taip, išeiti', 'Yes, quit');
+  String get exitApp => _pick('Išeiti iš žaidimo', 'Exit game');
+
+  // --- Profilis ---
+  String get profile => _pick('Profilis', 'Profile');
+  String get enterName => _pick('Įvesk savo vardą', 'Enter your name');
+  String get save => _pick('Išsaugoti', 'Save');
+  String get personalBest => _pick('Tavo rekordas', 'Personal best');
+  String get noRecord => _pick('Dar nežaista', 'Not played yet');
+  String yourRank(int pos, int total) =>
+      _pick('Tavo pozicija: $pos iš $total', 'Your rank: $pos of $total');
 }

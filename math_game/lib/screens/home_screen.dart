@@ -21,20 +21,33 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.all(24),
           child: Column(
             children: [
-              // Kalbos perjungiklis (🌐 LT/EN) — viršuje dešinėje.
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton.icon(
-                  onPressed: () => languageController.toggle(s.lang),
-                  icon: const Icon(Icons.language,
-                      color: AppColors.textSecondary, size: 20),
-                  label: Text(
-                    s.lang == AppLang.lt ? 'LT' : 'EN',
-                    style: const TextStyle(
-                        color: AppColors.textSecondary,
-                        fontWeight: FontWeight.bold),
+              // Viršutinė juosta: Profilis (kairėje) + kalbos jungiklis (dešinėje).
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton.icon(
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const ProfileScreen()),
+                    ),
+                    icon: const Icon(Icons.person,
+                        color: AppColors.textSecondary, size: 20),
+                    label: Text(s.profile,
+                        style: const TextStyle(
+                            color: AppColors.textSecondary,
+                            fontWeight: FontWeight.bold)),
                   ),
-                ),
+                  TextButton.icon(
+                    onPressed: () => languageController.toggle(s.lang),
+                    icon: const Icon(Icons.language,
+                        color: AppColors.textSecondary, size: 20),
+                    label: Text(
+                      s.lang == AppLang.lt ? 'LT' : 'EN',
+                      style: const TextStyle(
+                          color: AppColors.textSecondary,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
               ),
               Text(
                 'MATH GAME',

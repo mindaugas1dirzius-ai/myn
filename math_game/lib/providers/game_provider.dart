@@ -153,24 +153,11 @@ class GameProvider extends ChangeNotifier {
   }
 
   /// Kosmetiniai taškai (vizualui) — atitinka serverio V2 formulę:
-  /// max(10, maxPoints − sekundės × 4). Oficialius sprendžia serveris.
+  /// max(10, 100 − sekundės × 3). Oficialius sprendžia serveris.
   int _cosmeticPoints(int elapsedMs) {
     final capped = elapsedMs.clamp(0, 30000);
     final seconds = capped / 1000.0;
-    final score = _maxPoints() - seconds * 4;
+    final score = 100 - seconds * 3;
     return score < 10 ? 10 : score.floor();
-  }
-
-  int _maxPoints() {
-    switch (level) {
-      case GameLevel.lengvas:
-        return 100;
-      case GameLevel.vidutinis:
-        return 150;
-      case GameLevel.sunkus:
-        return 200;
-      case GameLevel.ekstremalus:
-        return 300;
-    }
   }
 }
