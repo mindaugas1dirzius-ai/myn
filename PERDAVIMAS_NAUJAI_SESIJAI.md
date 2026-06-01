@@ -52,6 +52,10 @@ aiškinti PAPRASTAI, lietuviškai, be žargono.
    PRIVALU jas pagauti ir sąžiningai pasakyti (jis tai vertina labiausiai).
 6. **Po kiekvieno žingsnio:** `flutter analyze` (0 klaidų) + testai + commit + push.
 7. **Sąžiningai apie web demo ribas** (žr. žemiau) — neapsimesti, kad veikia.
+8. **⚠️ NENAUDOTI patvirtinimo langų (AskUserQuestion)!** Savininką ERZINA tie
+   iššokantys „mygtukų" langai su variantais. Klausk PAPRASTU TEKSTU pokalbyje
+   (pvz. „Pasirink a/b/c" arba „Sutinki?"). Jokių interaktyvių mygtukų langų —
+   tik normalus tekstas. Savininkas atsako tekstu, tu tęsi.
 
 ---
 
@@ -213,6 +217,8 @@ Jei ne — savininkas turi parodyti šį failą + DIZAINAS.md + PLETROS_PLANAS.m
 - Mėgsta „šviesoforo" stilių, emoji, struktūruotus atsakymus.
 - Sako „OK, darom" kai patvirtina. Iki tol — tik kalbam/planuojam.
 - Nori matyti rezultatą (web deploy po kiekvieno pakeitimo).
+- ⚠️ **NEMĖGSTA patvirtinimo mygtukų langų (AskUserQuestion) — JŲ NENAUDOTI!**
+  Klausimus užduok PAPRASTU TEKSTU. Savininkas atsako tekstu.
 
 ---
 
