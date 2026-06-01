@@ -90,9 +90,9 @@ export const startGame = onCall(
       questions.push(q);
     }
 
-    // Kiekvienam klausimui — 6 variantai (su trap, jei yra).
+    // Kiekvienam klausimui — 6 variantai (su trap ir neighbors, jei yra).
     const options = questions.map((q) =>
-      generateOptions(q.answer, { trap: q.trap })
+      generateOptions(q.answer, { trap: q.trap, neighbors: q.neighbors })
     );
 
     const gameRef = db.collection("active_games").doc();

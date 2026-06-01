@@ -17,6 +17,7 @@ export interface GenQuestion {
   display: string;
   answer: number;
   trap?: number; // neprivalomas spąstas (Mix/skliaustai/algebra)
+  neighbors?: number[]; // papildomi „gundantys" variantai (pvz. kaimyniniai x)
 }
 
 function rnd(min: number, max: number): number {
@@ -84,9 +85,11 @@ function genMix(level: Level): GenQuestion {
           trap: (a + b) * c, // tipinė klaida
         };
       } else {
-        // A×B − C
-        const a = rnd(2, 12), b = rnd(2, 9), c = rnd(2, 30);
-        return { display: `${a}×${b}−${c}`, answer: a * b - c };
+        // A×B − C (C < A×B, kad rezultatas teigiamas)
+        const a = rnd(2, 12), b = rnd(2, 9);
+        const product = a * b;
+        const c = rnd(1, product - 1);
+        return { display: `${a}×${b}−${c}`, answer: product - c };
       }
     }
     case "ekstremalus": {
@@ -104,8 +107,101 @@ function genMix(level: Level): GenQuestion {
   }
 }
 
+// --- SKLIAUSTŲ LABIRINTAS (skliaustai keičia veiksmų eilę) ---
+function genBrackets(level: Level): GenQuestion {
+  switch (level) {
+    case "lengvas": {
+      // (A+B)×C arba (A−B)×C, maži skaičiai. Spąstas: standartinė eilė.
+      const a = rnd(2, 9), b = rnd(1, 5), c = rnd(2, 5);
+      if (Math.random() < 0.5) {
+        return { display: `(${a}+${b})×${c}`, answer: (a + b) * c, trap: a + b * c };
+      }
+      const big = a + b; // (big−b)×c, rezultatas teigiamas
+      return { display: `(${big}−${b})×${c}`, answer: a * c, trap: big - b * c };
+    }
+    case "vidutinis": {
+      // A×(B−C) arba A+(B÷C) (dalyba sveika). Spąstas: be skliaustų.
+      if (Math.random() < 0.5) {
+        const a = rnd(3, 9), c = rnd(2, 9), b = c + rnd(1, 9); // b>c
+        return { display: `${a}×(${b}−${c})`, answer: a * (b - c), trap: a * b - c };
+      }
+      const a = rnd(5, 30), c = rnd(2, 6), q = rnd(2, 9);
+      const b = c * q; // b÷c = q sveika
+      return { display: `${a}+(${b}÷${c})`, answer: a + q, trap: (a + b) / c };
+    }
+    case "sunkus": {
+      // (A+B)×(C−D)
+      const a = rnd(5, 20), b = rnd(2, 15);
+      const d = rnd(2, 10), c = d + rnd(1, 10); // c>d
+      return { display: `(${a}+${b})×(${c}−${d})`, answer: (a + b) * (c - d) };
+    }
+    case "ekstremalus": {
+      // A×(B−(C+D))  — skliaustai skliaustuose. B > C+D.
+      const c = rnd(2, 10), d = rnd(2, 10);
+      const inner = c + d;
+      const b = inner + rnd(2, 15);
+      const a = rnd(2, 9);
+      return {
+        display: `${a}×(${b}−(${c}+${d}))`,
+        answer: a * (b - inner),
+        trap: a * (b - c + d), // klaida su vidiniu skliaustu
+      };
+    }
+  }
+}
+
+// --- ALGEBRA X (rask x; mokykliniai spąstai) ---
+function genAlgebra(level: Level): GenQuestion {
+  switch (level) {
+    case "lengvas": {
+      // x+B=C arba B−x=C (x>0)
+      const x = rnd(1, 9);
+      if (Math.random() < 0.5) {
+        const b = rnd(1, 9);
+        return { display: `x+${b}=${x + b}`, answer: x, trap: x + b };
+      }
+      const b = x + rnd(1, 9); // b−x = b-x >0
+      return { display: `${b}−x=${b - x}`, answer: x, trap: b };
+    }
+    case "vidutinis": {
+      // A×x=C arba x÷A=C
+      const x = rnd(2, 12);
+      if (Math.random() < 0.5) {
+        const a = rnd(2, 9);
+        return { display: `${a}×x=${a * x}`, answer: x, trap: a * x };
+      }
+      const a = rnd(2, 9);
+      return { display: `x÷${a}=${x}`, answer: x * a, trap: x };
+    }
+    case "sunkus": {
+      // A×x+B=C. Mokyklinis spąstas: C+B arba C−B.
+      const a = rnd(2, 6), x = rnd(2, 12), b = rnd(2, 15);
+      const c = a * x + b;
+      return { display: `${a}x+${b}=${c}`, answer: x, trap: c + b };
+    }
+    case "ekstremalus": {
+      if (Math.random() < 0.5) {
+        // x²+A=B. Spąstai: kaimynai (x±1, x±2) IR x² (sumaišo x su x²).
+        const x = rnd(2, 12), a = rnd(1, 20);
+        return {
+          display: `x²+${a}=${x * x + a}`,
+          answer: x,
+          trap: x * x, // dažna klaida: pamiršo šaknį
+          neighbors: [x + 1, x - 1, x + 2, x - 2], // gretimi (visi >0 filtruoja later)
+        };
+      }
+      // A×(x−B)=C
+      const a = rnd(2, 5), b = rnd(2, 9), q = rnd(2, 12);
+      const x = b + q;
+      return { display: `${a}×(x−${b})=${a * q}`, answer: x, trap: a * q };
+    }
+  }
+}
+
 // --- REGISTRAS: šeima → generatorius ---
-export type Family = "add" | "sub" | "mul" | "div" | "mix";
+// (Kids — Grupė B, reikia ikonų piešimo; pridėsim vėliau su tekstiniu kontraktu.)
+export type Family =
+  | "add" | "sub" | "mul" | "div" | "mix" | "brackets" | "algebra";
 
 export const QUESTION_GENERATORS: Record<
   Family,
@@ -116,6 +212,8 @@ export const QUESTION_GENERATORS: Record<
   mul: genMul,
   div: genDiv,
   mix: genMix,
+  brackets: genBrackets,
+  algebra: genAlgebra,
 };
 
 export function isFamily(x: string): x is Family {

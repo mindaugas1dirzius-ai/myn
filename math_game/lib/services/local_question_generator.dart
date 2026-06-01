@@ -31,7 +31,10 @@ class LocalQuestionGenerator {
   }
 
   LocalQuestion _generateOne(MathOp op, GameLevel level) {
+    // Pažengę režimai turi specialų display — atskiri generatoriai.
     if (op == MathOp.mix) return _generateMix(level);
+    if (op == MathOp.brackets) return _generateBrackets(level);
+    if (op == MathOp.algebra) return _generateAlgebra(level);
     final (a, b, answer) = _operands(op, level);
     final symbol = op.symbol;
     final options = _options(answer, null);
@@ -40,6 +43,106 @@ class LocalQuestionGenerator {
       options: options,
       answer: answer,
     );
+  }
+
+  /// Skliaustai (atitinka serverio genBrackets).
+  LocalQuestion _generateBrackets(GameLevel level) {
+    final String text;
+    final int answer;
+    int? trap;
+    switch (level) {
+      case GameLevel.lengvas:
+        final a = _rnd(2, 9), b = _rnd(1, 5), c = _rnd(2, 5);
+        if (_rng.nextBool()) {
+          text = '($a+$b)×$c';
+          answer = (a + b) * c;
+          trap = a + b * c;
+        } else {
+          final big = a + b;
+          text = '($big−$b)×$c';
+          answer = a * c;
+          trap = big - b * c;
+        }
+      case GameLevel.vidutinis:
+        if (_rng.nextBool()) {
+          final a = _rnd(3, 9), c = _rnd(2, 9), b = c + _rnd(1, 9);
+          text = '$a×($b−$c)';
+          answer = a * (b - c);
+          trap = a * b - c;
+        } else {
+          final a = _rnd(5, 30), c = _rnd(2, 6), q = _rnd(2, 9);
+          final b = c * q;
+          text = '$a+($b÷$c)';
+          answer = a + q;
+          trap = (a + b) ~/ c;
+        }
+      case GameLevel.sunkus:
+        final a = _rnd(5, 20), b = _rnd(2, 15), d = _rnd(2, 10);
+        final c = d + _rnd(1, 10);
+        text = '($a+$b)×($c−$d)';
+        answer = (a + b) * (c - d);
+      case GameLevel.ekstremalus:
+        final c = _rnd(2, 10), d = _rnd(2, 10), inner = c + d;
+        final b = inner + _rnd(2, 15), a = _rnd(2, 9);
+        text = '$a×($b−($c+$d))';
+        answer = a * (b - inner);
+        trap = a * (b - c + d);
+    }
+    return LocalQuestion(text: text, options: _options(answer, trap), answer: answer);
+  }
+
+  /// Algebra (atitinka serverio genAlgebra).
+  LocalQuestion _generateAlgebra(GameLevel level) {
+    final String text;
+    final int answer;
+    int? trap;
+    switch (level) {
+      case GameLevel.lengvas:
+        final x = _rnd(1, 9);
+        if (_rng.nextBool()) {
+          final b = _rnd(1, 9);
+          text = 'x+$b=${x + b}';
+          answer = x;
+          trap = x + b;
+        } else {
+          final b = x + _rnd(1, 9);
+          text = '$b−x=${b - x}';
+          answer = x;
+          trap = b;
+        }
+      case GameLevel.vidutinis:
+        final x = _rnd(2, 12);
+        if (_rng.nextBool()) {
+          final a = _rnd(2, 9);
+          text = '$a×x=${a * x}';
+          answer = x;
+          trap = a * x;
+        } else {
+          final a = _rnd(2, 9);
+          text = 'x÷$a=$x';
+          answer = x * a;
+          trap = x;
+        }
+      case GameLevel.sunkus:
+        final a = _rnd(2, 6), x = _rnd(2, 12), b = _rnd(2, 15);
+        text = '${a}x+$b=${a * x + b}';
+        answer = x;
+        trap = a * x + b + b;
+      case GameLevel.ekstremalus:
+        if (_rng.nextBool()) {
+          final x = _rnd(2, 12), a = _rnd(1, 20);
+          text = 'x²+$a=${x * x + a}';
+          answer = x;
+          trap = x * x;
+        } else {
+          final a = _rnd(2, 5), b = _rnd(2, 9), q = _rnd(2, 12);
+          final x = b + q;
+          text = '$a×(x−$b)=${a * q}';
+          answer = x;
+          trap = a * q;
+        }
+    }
+    return LocalQuestion(text: text, options: _options(answer, trap), answer: answer);
   }
 
   /// Mix Blitz (atitinka serverio questionRegistry.genMix).
@@ -93,7 +196,9 @@ class LocalQuestionGenerator {
         final (x, y) = _mulRange(level);
         return (x * y, y, x); // sveikas rezultatas
       case MathOp.mix:
-        // Mix gaudomas _generateMix anksčiau — čia neturėtų patekti.
+      case MathOp.brackets:
+      case MathOp.algebra:
+        // Šie gaudomi atskirais generatoriais anksčiau — čia neturėtų patekti.
         final (x, y) = _addRange(level);
         return (x, y, x + y);
     }

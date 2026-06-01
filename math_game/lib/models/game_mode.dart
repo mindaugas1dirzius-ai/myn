@@ -1,12 +1,11 @@
 import '../l10n/app_strings.dart';
 import '../theme/app_theme.dart';
 
-/// Matematinis veiksmas/režimas. `id` SUTAMPA su serverio parseMode
-/// (add/sub/mul/div/mix). `label`/`symbol` — tik žaidėjui.
-enum MathOp { add, sub, mul, div, mix }
+/// Matematinis veiksmas/režimas. `id` SUTAMPA su serverio parseMode.
+/// (Kids — Grupė B, vėliau su ikonomis.)
+enum MathOp { add, sub, mul, div, mix, brackets, algebra }
 
 extension MathOpX on MathOp {
-  /// Serverio raktas (mode pradžia).
   String get id {
     switch (this) {
       case MathOp.add:
@@ -19,10 +18,13 @@ extension MathOpX on MathOp {
         return 'div';
       case MathOp.mix:
         return 'mix';
+      case MathOp.brackets:
+        return 'brackets';
+      case MathOp.algebra:
+        return 'algebra';
     }
   }
 
-  /// Žaidėjui rodomas pavadinimas — iš AppStrings (LT/EN).
   String label(AppStrings s) {
     switch (this) {
       case MathOp.add:
@@ -35,10 +37,13 @@ extension MathOpX on MathOp {
         return s.opDiv;
       case MathOp.mix:
         return s.opMix2;
+      case MathOp.brackets:
+        return s.opBrackets;
+      case MathOp.algebra:
+        return s.opAlgebra;
     }
   }
 
-  /// Simbolis ant mygtuko.
   String get symbol {
     switch (this) {
       case MathOp.add:
@@ -51,9 +56,13 @@ extension MathOpX on MathOp {
         return '÷';
       case MathOp.mix:
         return '🌪️';
+      case MathOp.brackets:
+        return '( )';
+      case MathOp.algebra:
+        return 'x';
     }
   }
 }
 
-/// Pilnas režimo ID serveriui, pvz. "mix_sunkus".
+/// Pilnas režimo ID serveriui, pvz. "brackets_sunkus".
 String buildModeId(MathOp op, GameLevel level) => '${op.id}_${level.name}';

@@ -83,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                     style: const TextStyle(color: AppColors.textSecondary)),
               ),
               // Versijos žymė (kad matytume, ar telefonas gauna naują versiją).
-              const Text('v7-mixblitz',
+              const Text('v8-mathpack',
                   style: TextStyle(color: AppColors.textSecondary, fontSize: 10)),
               // Banner meniu apačioje (leista; ne žaidimo metu)
               const SizedBox(height: 4),

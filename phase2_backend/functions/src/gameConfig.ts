@@ -46,7 +46,7 @@ export function parseMode(
 ): { family: string; level: Level } | null {
   if (typeof mode !== "string") return null;
   const [family, levelPart] = mode.split("_");
-  const families = ["add", "sub", "mul", "div", "mix"];
+  const families = ["add", "sub", "mul", "div", "mix", "brackets", "algebra"];
   const levels: Level[] = ["lengvas", "vidutinis", "sunkus", "ekstremalus"];
   if (!families.includes(family) || !levels.includes(levelPart as Level)) {
     return null;
