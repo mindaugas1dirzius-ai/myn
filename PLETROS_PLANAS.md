@@ -51,10 +51,23 @@
 ### Etapas 5 — IAP prenumerata (isPremium)
 - Google Play Billing; serveris validuoja kvitą; isPremium atrakina viską
 
-### Etapas 6 — Naujos TEMOS (sunkiausia)
-- Geografija, maistas, gyvūnai — reikia NUOTRAUKŲ (autorių teisės!)
-- Abstraktus `Question` modelis (display=tekstas ARBA paveikslėlis)
-- Duomenų bazė temų klausimams
+### Etapas 6 — Naujos TEMOS (sunkiausia, daug žaidimų)
+Tas pats variklis (6 mygtukai, laikmatis, coins, Top 10) — klausimas =
+paveikslėlis/tekstas vietoj skaičiaus. Žaidėjas renkasi iš 6 variantų.
+
+**Sugalvotos temos (žaidimai):**
+- 🗺️ Šalys/miestai pagal būdingą daiktą/objektą (Eiffelio bokštas → Prancūzija)
+- 🏛️ Objektai būdingi šaliai (Koliziejus → Italija)
+- 🍽️ Maistas pagal šalį (sušis → Japonija)
+- 🐾 Gyvūnai pagal vietą/žemyną (kengūra → Australija)
+- ➕ daugiau temų ateityje (lengva pridėti, kai veikia šablonas)
+
+**Techniškai:**
+- Abstraktus `Question` modelis (display = tekstas ARBA paveikslėlis URL)
+- Duomenų bazė temų klausimams (Firestore arba JSON)
+- ⚠️ NUOTRAUKOS — autorių teisės! Savos/licencijuotos/CC0 (Google Play tikrina)
+- Coins universalūs: žaidi matematiką → atrakini geografiją → ir t.t.
+- Kiekviena tema = atskiras "žaidimas", bet tas pats kodo karkasas (3 taisyklė)
 
 ---
 
