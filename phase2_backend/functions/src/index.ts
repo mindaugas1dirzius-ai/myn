@@ -41,6 +41,13 @@ function sanitizeUsername(raw: unknown): string {
   return cleaned.length >= 2 ? cleaned : "Žaidėjas";
 }
 
+/** Auto-vardas pirmam kartui: "Player_XXXX" (4 atsitiktiniai skaičiai).
+ *  Variantas C: jokios trinties starte, žaidėjas vėliau pats pasikeičia. */
+function generateAutoUsername(): string {
+  const n = Math.floor(1000 + Math.random() * 9000); // 1000–9999
+  return `Player_${n}`;
+}
+
 // =================================================================
 // 1) startGame — generuoja 10 klausimų + variantus, taiko rotaciją
 // =================================================================
@@ -188,24 +195,43 @@ export const submitScore = onCall(
       const level = game.level as keyof typeof SCORING;
       const { maxPoints } = SCORING[level];
       let correct = 0;
+      // Coins (DIZAINAS.md): 1 už teisingą + 1 bonusas jei atsakyta < 3s.
+      // Skaičiuojama SERVERYJE (sauga). Kaupiama users/{uid}.coins.
       let score = 0;
+      let coinsEarned = 0;
       for (let i = 0; i < serverAnswers.length; i++) {
         if (clientAnswers[i] === serverAnswers[i]) {
           correct++;
           score += pointsForAnswer(maxPoints, times[i]);
+          coinsEarned += 1;
+          if (times[i] < 3000) coinsEarned += 1; // greičio bonusas
         }
       }
 
       // ---- RAŠYMAI ----
       transaction.delete(gameRef); // replay apsauga + švari DB
 
-      // Rotacijos atnaujinimas (paskutiniai ROTATION_KEEP klausimų).
+      // Auto-vardas pirmam kartui (variantas C): jei dar nėra — sukuriam Player_XXXX.
+      const existingName = userDoc.data()?.username as string | undefined;
+      const username = existingName
+        ? sanitizeUsername(existingName)
+        : generateAutoUsername();
+      const hasCustomName = existingName !== undefined;
+
+      // Coins balansas (kaupiamas serveryje).
+      const prevCoins = (userDoc.data()?.coins as number) ?? 0;
+      const newCoins = prevCoins + coinsEarned;
+
+      // Rotacijos atnaujinimas + username + coins (vienas rašymas).
       const prevRecent: string[] = userDoc.data()?.recentQuestions ?? [];
       const newRecent = [...(game.actions as string[]), ...prevRecent].slice(0, ROTATION_KEEP);
-      transaction.set(userRef, { recentQuestions: newRecent }, { merge: true });
+      transaction.set(
+        userRef,
+        { recentQuestions: newRecent, username, coins: newCoins },
+        { merge: true }
+      );
 
       // Rekordas tik jei naujas geriausias.
-      const username = sanitizeUsername(userDoc.data()?.username);
       const prevBest = leaderboardDoc.exists
         ? (leaderboardDoc.data()!.score as number)
         : -1;
@@ -220,7 +246,57 @@ export const submitScore = onCall(
         });
       }
 
-      return { success: true, finalScore: score, correct, isNewRecord };
+      return {
+        success: true,
+        finalScore: score,
+        correct,
+        isNewRecord,
+        coinsEarned,
+        totalCoins: newCoins,
+        // Raginimas įvesti vardą (variantas C): rekordas + dar auto-vardas.
+        promptName: isNewRecord && !hasCustomName,
+      };
     });
+  }
+);
+
+// =================================================================
+// 3) getMyRank — žaidėjo pozicija konkrečiame režime (Etapas 1)
+// =================================================================
+export const getMyRank = onCall(
+  { enforceAppCheck: true, minInstances: 0, region: REGION },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Prisijungimas privalomas.");
+    }
+    const uid = request.auth.uid;
+    const mode = request.data?.mode;
+    if (typeof mode !== "string") {
+      throw new HttpsError("invalid-argument", "Nežinomas režimas.");
+    }
+
+    const col = db.collection("leaderboard");
+
+    // Mano geriausias šiame režime.
+    const myDoc = await col.doc(`${uid}_${mode}`).get();
+    if (!myDoc.exists) {
+      return { hasScore: false };
+    }
+    const myScore = myDoc.data()!.score as number;
+
+    // Pozicija = kiek žaidėjų turi DAUGIAU taškų + 1 (count query — pigu).
+    const higher = await col
+      .where("mode", "==", mode)
+      .where("score", ">", myScore)
+      .count()
+      .get();
+    const total = await col.where("mode", "==", mode).count().get();
+
+    return {
+      hasScore: true,
+      score: myScore,
+      rank: higher.data().count + 1,
+      total: total.data().count,
+    };
   }
 );

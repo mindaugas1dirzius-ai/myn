@@ -62,12 +62,18 @@ class GameResult {
   final int finalScore;
   final int correct;
   final bool isNewRecord;
+  final int coinsEarned; // šioje sesijoje uždirbtos monetos
+  final int totalCoins; // bendras balansas
+  final bool promptName; // raginti įvesti vardą (rekordas + dar auto-vardas)
 
   const GameResult({
     required this.success,
     required this.finalScore,
     required this.correct,
     required this.isNewRecord,
+    required this.coinsEarned,
+    required this.totalCoins,
+    required this.promptName,
   });
 
   factory GameResult.fromJson(Map<String, dynamic> json) {
@@ -76,6 +82,9 @@ class GameResult {
       finalScore: (json['finalScore'] as num?)?.toInt() ?? 0,
       correct: (json['correct'] as num?)?.toInt() ?? 0,
       isNewRecord: json['isNewRecord'] as bool? ?? false,
+      coinsEarned: (json['coinsEarned'] as num?)?.toInt() ?? 0,
+      totalCoins: (json['totalCoins'] as num?)?.toInt() ?? 0,
+      promptName: json['promptName'] as bool? ?? false,
     );
   }
 }
