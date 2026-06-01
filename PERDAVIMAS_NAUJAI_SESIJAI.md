@@ -3,6 +3,23 @@
 > Šis dokumentas perduoda VISKĄ naujai Claude sesijai, kad ji tęstų be
 > informacijos praradimo. Perskaityk VISĄ prieš pradedant.
 
+> ## ⚠️⚠️ DĖMESIO — KUR YRA PROJEKTAS ⚠️⚠️
+> **Projektas NĖRA savininko kompiuteryje (Desktop) ir NĖRA „MINA" iš MEMORY.md!**
+> MINA (React/Supabase žodžių žaidimas) — tai SENAS, KITAS projektas. IGNORUOK jį.
+>
+> **ŠIS projektas yra GitHub debesų repozitorijoje:**
+> - Repo: `mindaugas1dirzius-ai/myn`
+> - Branch: **`claude/android-app-monetization-ads-RORMZ`**
+> - Tai Flutter matematikos žaidimas (NE React, NE Supabase).
+>
+> **Pirmiausia paleisk:**
+> ```
+> git checkout claude/android-app-monetization-ads-RORMZ
+> git pull
+> ls   # pamatysi: math_game/, phase2_backend/, DIZAINAS.md, šį failą ir kt.
+> ```
+> Visi failai (kodas, dokumentai, tag v1.0-stable-math) — ČIA, ne Desktop'e.
+
 ---
 
 ## 1. KAS YRA PROJEKTAS
