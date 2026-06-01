@@ -3,6 +3,7 @@ import '../l10n/app_strings.dart';
 import '../models/game_mode.dart';
 import '../theme/app_theme.dart';
 import '../services/ad_service.dart';
+import '../services/profile_api.dart';
 import '../widgets/banner_ad_widget.dart';
 import '../widgets/neumorphic_button.dart';
 import 'game_screen.dart';
@@ -18,6 +19,8 @@ class ResultScreen extends StatelessWidget {
   final int total;
   final int score;
   final bool online; // ar žaista prisijungus (rodyti Top 10?)
+  final int coinsEarned; // šioje sesijoje uždirbtos monetos
+  final bool promptName; // raginti įvesti vardą (Top 10 + dar auto-vardas)
 
   const ResultScreen({
     super.key,
@@ -28,6 +31,8 @@ class ResultScreen extends StatelessWidget {
     required this.total,
     required this.score,
     this.online = false,
+    this.coinsEarned = 0,
+    this.promptName = false,
   });
 
   @override
@@ -78,6 +83,30 @@ class ResultScreen extends StatelessWidget {
                   ),
                 ),
               ),
+
+              // Uždirbtos monetos (jei online)
+              if (online && coinsEarned > 0) ...[
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.monetization_on,
+                        color: AppColors.levelMedium, size: 20),
+                    const SizedBox(width: 6),
+                    Text('+$coinsEarned ${s.coinsEarned}',
+                        style: const TextStyle(
+                            color: AppColors.levelMedium,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ),
+              ],
+
+              // 🏆 Raginimas įvesti vardą (variantas C: Top 10 + dar auto-vardas)
+              if (promptName) ...[
+                const SizedBox(height: 20),
+                _Top10Prompt(accent: accent),
+              ],
 
               const SizedBox(height: 32),
 
@@ -136,5 +165,102 @@ class ResultScreen extends StatelessWidget {
     if (correct >= total * 0.7) return s.ratingGood;
     if (correct >= total * 0.4) return s.ratingOk;
     return s.ratingTryAgain;
+  }
+}
+
+/// Raginimas įvesti vardą patekus į Top 10 (variantas C).
+/// Dingsta po sėkmingo įvedimo (todėl Stateful).
+class _Top10Prompt extends StatefulWidget {
+  final Color accent;
+  const _Top10Prompt({required this.accent});
+
+  @override
+  State<_Top10Prompt> createState() => _Top10PromptState();
+}
+
+class _Top10PromptState extends State<_Top10Prompt> {
+  bool _done = false;
+
+  Future<void> _enterName() async {
+    final s = AppStrings.of(context);
+    final controller = TextEditingController();
+    final name = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppColors.surface,
+        title: Text(s.enterName,
+            style: const TextStyle(color: AppColors.textPrimary)),
+        content: TextField(
+          controller: controller,
+          maxLength: 16,
+          autofocus: true,
+          style: const TextStyle(color: AppColors.textPrimary),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, controller.text.trim()),
+            child: Text(s.save,
+                style: const TextStyle(color: AppColors.levelEasy)),
+          ),
+        ],
+      ),
+    );
+    if (name != null && name.length >= 2) {
+      await ProfileApi.saveUsername(name);
+      if (mounted) setState(() => _done = true);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_done) return const SizedBox.shrink();
+    final s = AppStrings.of(context);
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: widget.accent.withValues(alpha: 0.6)),
+        boxShadow: [
+          BoxShadow(
+              color: widget.accent.withValues(alpha: 0.2),
+              blurRadius: 12,
+              spreadRadius: 1),
+        ],
+      ),
+      child: Column(
+        children: [
+          Text(s.top10Title,
+              style: TextStyle(
+                  color: widget.accent,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold)),
+          const SizedBox(height: 6),
+          Text(s.top10Body,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: AppColors.textSecondary, fontSize: 13)),
+          const SizedBox(height: 14),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () => setState(() => _done = true),
+                child: Text(s.later,
+                    style: const TextStyle(color: AppColors.textSecondary)),
+              ),
+              const SizedBox(width: 8),
+              ElevatedButton(
+                onPressed: _enterName,
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: widget.accent.withValues(alpha: 0.2)),
+                child: Text(s.enterNameBtn,
+                    style: TextStyle(color: widget.accent)),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

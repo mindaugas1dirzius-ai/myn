@@ -93,8 +93,8 @@ class _GameScreenState extends State<GameScreen>
 
     _game.next();
     if (_game.finished) {
-      // Siunčiam rezultatą serveriui (jei server režimas); gaunam oficialų score.
-      final serverScore = await _game.submitToServer();
+      // Siunčiam rezultatą serveriui (jei server režimas); gaunam pilną rezultatą.
+      final result = await _game.submitToServer();
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
@@ -104,8 +104,10 @@ class _GameScreenState extends State<GameScreen>
             modeId: widget.modeId,
             correct: _game.correctCount,
             total: _game.total,
-            score: serverScore ?? _game.score,
+            score: result?.finalScore ?? _game.score,
             online: _game.source == Source.server,
+            coinsEarned: result?.coinsEarned ?? 0,
+            promptName: result?.promptName ?? false,
           ),
         ),
       );

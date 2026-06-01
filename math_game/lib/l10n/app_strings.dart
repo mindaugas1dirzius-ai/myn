@@ -77,4 +77,13 @@ class AppStrings {
   String get noRecord => _pick('Dar nežaista', 'Not played yet');
   String yourRank(int pos, int total) =>
       _pick('Tavo pozicija: $pos iš $total', 'Your rank: $pos of $total');
+
+  // --- Top 10 raginimas įvesti vardą (variantas C) ---
+  String get top10Title => _pick('🏆 Patekai į Top 10!', '🏆 You made the Top 10!');
+  String get top10Body => _pick(
+      'Įrašyk savo vardą, kad visi matytų tavo rezultatą!',
+      'Enter your name so everyone sees your score!');
+  String get enterNameBtn => _pick('Įvesti vardą ✏️', 'Enter name ✏️');
+  String get later => _pick('Vėliau', 'Later');
+  String get coinsEarned => _pick('Monetos', 'Coins');
 }

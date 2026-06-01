@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../models/game_mode.dart';
+import '../models/game_models.dart';
 import '../models/local_question.dart';
 import '../services/firebase_service.dart';
 import '../services/game_api.dart';
@@ -140,13 +141,11 @@ class GameProvider extends ChangeNotifier {
   }
 
   /// Pabaigus žaidimą — siunčia rezultatą serveriui (jei server režimas).
-  /// Grąžina oficialų serverio rezultatą arba null (offline / klaida).
-  Future<int?> submitToServer() async {
+  /// Grąžina pilną GameResult (su coins, promptName) arba null (offline/klaida).
+  Future<GameResult?> submitToServer() async {
     if (_source != Source.server || _gameId == null) return null;
     try {
-      final result =
-          await GameApi.submitScore(_gameId!, _clientAnswers, _clientTimesMs);
-      return result.finalScore;
+      return await GameApi.submitScore(_gameId!, _clientAnswers, _clientTimesMs);
     } catch (_) {
       return null; // tinklo klaida — paliekam kosmetinį
     }
