@@ -29,18 +29,26 @@
 - Serveris: coins skaičiavimas + auto `Player_XXXX` + promptName
 - Klientas: profilis (ExpansionTile, Personal Best), rank popup
 - Klientas: coins rodymas + Top10 vardo raginimas rezultatų ekrane
-- ✅ analyze 0, 7 testai, deployinta
+
+### ✅ V3 — Sudėtingumo balansas (BAIGTA)
+- Ekstremalus ×/÷: 13-25×3-9 (~189) → 12-50×6-19 (~546 variantų)
+
+### ✅ ETAPAS 2 — Registro architektūra + Mix Blitz (BAIGTA)
+- `questionRegistry.ts`: vienas registras, pridėti temą = 1 funkcija
+- `generateOptions` universalus (answer + trap + neighbors), jokio eval
+- 🌪️ Mix Blitz (4 lygiai, veiksmų eilės spąstai)
+
+### ✅ GRUPĖ A — Skliaustai + Algebra (BAIGTA)
+- 🧱 Skliaustai (4 lvl, nested, eilės spąstai)
+- 🧬 Algebra X (4 lvl, mokykliniai spąstai, x² su kaimyniniais kvadratais)
+- **MATEMATIKOS PAKETAS = 7 režimai, 28 lygiai. Su skaičiais BAIGTA.**
+- Visi: 7 šeimos × 4 lvl × 5000 testų = 0 klaidų
 
 ---
 
 ## ⬜ KAS LIKO (eilės tvarka)
 
-### Etapas 2 — Nauji MATEMATIKOS režimai (lengviausi, saugu)
-- Mix (+−×÷ viename), 3 skaitmenų veiksmai (`12+5−4`), šaknys/kvadratai
-- Tik nauja generavimo logika; variklis nesikeičia
-- ⚠️ Pirma apsvarstyti: V3 sudėtingumas (Ekstremalus ×/÷ per lengvas)
-
-### Etapas 3 — Coins PANAUDOJIMAS (užrakinti langeliai)
+### Etapas 3 — Coins PANAUDOJIMAS (užrakinti langeliai) ← KITAS
 - `users/{uid}.unlockedModes[]` masyvas
 - Nauja Cloud Function `unlockMode` (atima coins serveryje, prideda ID)
 - UI: užrakinti langeliai su 🔒 + kaina; atrakinus — atsidaro
@@ -51,16 +59,14 @@
 ### Etapas 5 — IAP prenumerata (isPremium)
 - Google Play Billing; serveris validuoja kvitą; isPremium atrakina viską
 
-### Etapas 6 — Naujos TEMOS (sunkiausia, daug žaidimų)
-Tas pats variklis (6 mygtukai, laikmatis, coins, Top 10) — klausimas =
-paveikslėlis/tekstas vietoj skaičiaus. Žaidėjas renkasi iš 6 variantų.
-
-**Sugalvotos temos (žaidimai):**
-- 🗺️ Šalys/miestai pagal būdingą daiktą/objektą (Eiffelio bokštas → Prancūzija)
-- 🏛️ Objektai būdingi šaliai (Koliziejus → Italija)
-- 🍽️ Maistas pagal šalį (sušis → Japonija)
-- 🐾 Gyvūnai pagal vietą/žemyną (kengūra → Australija)
-- ➕ daugiau temų ateityje (lengva pridėti, kai veikia šablonas)
+### Grupė B / Etapas 6 — KONTRAKTO IŠPLĖTIMAS + nauji žaidimai
+⚠️ Šie reikia, kad variantai/klausimai būtų NE TIK skaičiai (tekstas/ikona/foto).
+Vienas pamato darbas (kontraktas) → visi šie atsirakina:
+- 🎯 Ženklų medžioklė (atsakymas = ženklas +−×÷)
+- 🧸 Kids su ikonomis (🧸🧸+🧸 — vaikams, kurie skaičių nepažįsta)
+- 🗺️ Šalys pagal objektą (Eiffelis → Prancūzija) — nuotrauka
+- 🏛️ Objektai pagal šalį · 🍽️ Maistas · 🐾 Gyvūnai — nuotraukos
+- ⚠️ NUOTRAUKOS — autorių teisės (savos/CC0/licencijuotos)
 
 **Techniškai:**
 - Abstraktus `Question` modelis (display = tekstas ARBA paveikslėlis URL)
