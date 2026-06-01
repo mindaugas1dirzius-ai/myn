@@ -14,8 +14,20 @@ class LocalQuestionGenerator {
   int _rnd(int min, int max) => min + _rng.nextInt(max - min + 1);
 
   /// Sugeneruoja 10 klausimų pasirinktam veiksmui ir lygiui.
+  /// Vengia pasikartojimo sesijoje (kaip serveryje). Saugiklis nuo begalinio
+  /// ciklo: po 200 bandymų atsileidžia (lengvi režimai turi mažai variantų).
   List<LocalQuestion> generateGame(MathOp op, GameLevel level) {
-    return List.generate(10, (_) => _generateOne(op, level));
+    final questions = <LocalQuestion>[];
+    final usedActions = <String>{};
+    var guard = 0;
+    while (questions.length < 10 && guard < 500) {
+      guard++;
+      final q = _generateOne(op, level);
+      if (usedActions.contains(q.text) && guard < 200) continue;
+      usedActions.add(q.text);
+      questions.add(q);
+    }
+    return questions;
   }
 
   LocalQuestion _generateOne(MathOp op, GameLevel level) {
