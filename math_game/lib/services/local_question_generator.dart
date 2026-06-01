@@ -82,7 +82,7 @@ class LocalQuestionGenerator {
       case GameLevel.sunkus:
         return (_rnd(2, 12), _rnd(2, 12));
       case GameLevel.ekstremalus:
-        return (_rnd(13, 25), _rnd(3, 9));
+        return (_rnd(12, 50), _rnd(6, 19)); // V3: praplėstas (atitinka serverį)
     }
   }
 

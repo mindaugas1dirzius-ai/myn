@@ -30,13 +30,15 @@ function addOperands(level: Level): [number, number] {
   }
 }
 
-/** Daugybos operandai pagal lygį. */
+/** Daugybos operandai pagal lygį. (V3: Ekstremalus praplėstas — buvo
+ *  13-25×3-9 ~189 variantų, dabar 12-50×6-19 → tūkstančiai, bet vis tiek
+ *  skaičiuojama galvoje: 23×8 = 20×8+3×8.) */
 function mulOperands(level: Level): [number, number] {
   switch (level) {
     case "lengvas": return [rnd(2, 5), rnd(2, 5)];
     case "vidutinis": return [rnd(2, 10), rnd(2, 10)];
     case "sunkus": return [rnd(2, 12), rnd(2, 12)];
-    case "ekstremalus": return [rnd(13, 25), rnd(3, 9)];
+    case "ekstremalus": return [rnd(12, 50), rnd(6, 19)];
   }
 }
 
