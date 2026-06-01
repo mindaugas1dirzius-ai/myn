@@ -31,6 +31,11 @@ import {
   isFamily,
 } from "./questionRegistry";
 import { generateOptions } from "./generateOptions";
+import {
+  UNLOCK_COST_COINS,
+  ADS_TO_UNLOCK,
+  isLockedByDefault,
+} from "./unlockConfig";
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -69,12 +74,22 @@ export const startGame = onCall(
     }
     const { family, level } = parsed;
     const generator = QUESTION_GENERATORS[family];
+    const mode = request.data.mode as string;
 
-    // Rotacija: paimam paskutinių klausimų sąrašą iš profilio
+    // Profilis: rotacija + UŽRAKTO patikra (sukčius negali žaisti užrakinto).
     const userSnap = await db.collection("users").doc(uid).get();
-    const recent: string[] = userSnap.exists
-      ? (userSnap.data()?.recentQuestions ?? [])
-      : [];
+    const userData = userSnap.data() ?? {};
+
+    if (isLockedByDefault(family, level)) {
+      const unlocked: string[] = userData.unlockedModes ?? [];
+      const premiumUntil = (userData.premiumUntil as number) ?? 0;
+      const isPremium = premiumUntil > Date.now();
+      if (!unlocked.includes(mode) && !isPremium) {
+        throw new HttpsError("permission-denied", "Lygis užrakintas.");
+      }
+    }
+
+    const recent: string[] = userData.recentQuestions ?? [];
     const seen = new Set<string>(recent);
 
     // Generuojam 10 UNIKALIŲ klausimų (vengiam pasikartojimo + paskutinių).
@@ -302,5 +317,110 @@ export const getMyRank = onCall(
       rank: higher.data().count + 1,
       total: total.data().count,
     };
+  }
+);
+
+// =================================================================
+// 4) unlockMode — atrakina vieną lygį už COINS (Etapas 3)
+// =================================================================
+export const unlockMode = onCall(
+  { enforceAppCheck: true, minInstances: 0, region: REGION },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Prisijungimas privalomas.");
+    }
+    const uid = request.auth.uid;
+    const parsed = parseMode(request.data?.mode);
+    if (!parsed) {
+      throw new HttpsError("invalid-argument", "Nežinomas režimas.");
+    }
+    const mode = request.data.mode as string;
+
+    // Negalima pirkti nemokamo lygio.
+    if (!isLockedByDefault(parsed.family, parsed.level)) {
+      throw new HttpsError("failed-precondition", "Šis lygis nemokamas.");
+    }
+
+    const userRef = db.collection("users").doc(uid);
+    return await db.runTransaction(async (transaction) => {
+      const userDoc = await transaction.get(userRef);
+      const data = userDoc.data() ?? {};
+      const unlocked: string[] = data.unlockedModes ?? [];
+      if (unlocked.includes(mode)) {
+        return { success: true, alreadyUnlocked: true, coins: data.coins ?? 0 };
+      }
+      const coins = (data.coins as number) ?? 0;
+      if (coins < UNLOCK_COST_COINS) {
+        throw new HttpsError("failed-precondition", "Per mažai monetų.");
+      }
+      // Atominė transakcija: nurašom coins + pridedam į unlockedModes.
+      transaction.set(
+        userRef,
+        {
+          coins: coins - UNLOCK_COST_COINS,
+          unlockedModes: [...unlocked, mode],
+        },
+        { merge: true }
+      );
+      return {
+        success: true,
+        alreadyUnlocked: false,
+        coins: coins - UNLOCK_COST_COINS,
+      };
+    });
+  }
+);
+
+// =================================================================
+// 5) unlockByAds — atrakina vieną lygį už 2 reklamas (Etapas 3)
+// =================================================================
+export const unlockByAds = onCall(
+  { enforceAppCheck: true, minInstances: 0, region: REGION },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Prisijungimas privalomas.");
+    }
+    const uid = request.auth.uid;
+    const parsed = parseMode(request.data?.mode);
+    if (!parsed) {
+      throw new HttpsError("invalid-argument", "Nežinomas režimas.");
+    }
+    const mode = request.data.mode as string;
+    if (!isLockedByDefault(parsed.family, parsed.level)) {
+      throw new HttpsError("failed-precondition", "Šis lygis nemokamas.");
+    }
+
+    const userRef = db.collection("users").doc(uid);
+    return await db.runTransaction(async (transaction) => {
+      const userDoc = await transaction.get(userRef);
+      const data = userDoc.data() ?? {};
+      const unlocked: string[] = data.unlockedModes ?? [];
+      if (unlocked.includes(mode)) {
+        return { success: true, alreadyUnlocked: true, adsWatched: 0 };
+      }
+      // Skaičiuojam šio režimo peržiūrėtas reklamas. +1 už šį kvietimą.
+      const adProgress: Record<string, number> = data.adProgress ?? {};
+      const watched = (adProgress[mode] ?? 0) + 1;
+
+      if (watched >= ADS_TO_UNLOCK) {
+        // Pasiekta — atrakinam, išvalom progresą.
+        delete adProgress[mode];
+        transaction.set(
+          userRef,
+          { unlockedModes: [...unlocked, mode], adProgress },
+          { merge: true }
+        );
+        return { success: true, unlockedNow: true, adsWatched: watched };
+      }
+      // Dar ne — fiksuojam progresą.
+      adProgress[mode] = watched;
+      transaction.set(userRef, { adProgress }, { merge: true });
+      return {
+        success: true,
+        unlockedNow: false,
+        adsWatched: watched,
+        adsNeeded: ADS_TO_UNLOCK,
+      };
+    });
   }
 );
