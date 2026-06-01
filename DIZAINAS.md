@@ -223,3 +223,24 @@ kartojasi). Sudėtis/atimtis ten 90 000 — disbalansas.
 
 **Sesija:** 10 unikalių/žaidimą; rotacija atsimena paskutinius N=min(30, sandėlis−10).
 **Rotacija veikia TIK online** (serveryje); offline (web) — atsitiktinai.
+
+---
+
+## 💰 COINS SISTEMA (išdirbta, NE dabar — po profilio)
+**Score ≠ Coins (variantas a):** Score = leaderboard prestižas (nesikeičia perkant);
+Coins = atskira valiuta atrakinimui.
+
+**Kiek coins/sesiją:** 1 teisingas = 1 coin + greičio bonusas (<3s = +1 coin).
+Maks. idealus = 20/sesiją; vidutinis ~10-12. (NE fiksuotai — kitaip aklai spaudžia.)
+
+**Kur saugomi:** SERVERYJE `users/{uid}.coins` (NIEKADA telefone — sukčiai).
+Pridedami serverio submitScore metu (kartu su score skaičiavimu).
+
+**Už ką:** universali piniginė — VISI žaidimai (matematika, geografija...) renka
+į tą patį balansą. Apjungia ekosistemą.
+
+**Kainos:** lygio atrakinimas ~150 coins (~10-15 sesijų); pilnos temos ~500 coins
+(arba rewarded reklamos / IAP prenumerata).
+
+**Sauga (Google Play):** atrakinimas/coins keitimas TIK per serverį (Cloud Function),
+klientas negali pats pridėti. IAP validuojami serveryje.
