@@ -31,14 +31,49 @@ class LocalQuestionGenerator {
   }
 
   LocalQuestion _generateOne(MathOp op, GameLevel level) {
+    if (op == MathOp.mix) return _generateMix(level);
     final (a, b, answer) = _operands(op, level);
     final symbol = op.symbol;
-    final options = _options(a, b, answer, op);
+    final options = _options(answer, null);
     return LocalQuestion(
       text: '$a $symbol $b',
       options: options,
       answer: answer,
     );
+  }
+
+  /// Mix Blitz (atitinka serverio questionRegistry.genMix).
+  LocalQuestion _generateMix(GameLevel level) {
+    String text;
+    int answer;
+    int? trap;
+    switch (level) {
+      case GameLevel.lengvas:
+      case GameLevel.vidutinis:
+        // vieno veiksmo miksas (atsitiktinis veiksmas)
+        final ops = [MathOp.add, MathOp.sub, MathOp.mul, MathOp.div];
+        return _generateOne(ops[_rnd(0, 3)], level);
+      case GameLevel.sunkus:
+        if (_rng.nextBool()) {
+          final a = _rnd(10, 50), b = _rnd(2, 9), c = _rnd(2, 9);
+          text = '$a + $b × $c';
+          answer = a + b * c;
+          trap = (a + b) * c;
+        } else {
+          final a = _rnd(2, 12), b = _rnd(2, 9), c = _rnd(2, 30);
+          text = '$a × $b − $c';
+          answer = a * b - c;
+        }
+        break;
+      case GameLevel.ekstremalus:
+        final a = _rnd(3, 12), b = _rnd(2, 9), d = _rnd(2, 9), q = _rnd(2, 12);
+        final c = d * q;
+        text = '$a × $b + $c ÷ $d';
+        answer = a * b + q;
+        trap = a * b + c;
+        break;
+    }
+    return LocalQuestion(text: text, options: _options(answer, trap), answer: answer);
   }
 
   /// Operandai pagal veiksmą ir lygį (atitinka serverio ribas).
@@ -57,6 +92,10 @@ class LocalQuestionGenerator {
       case MathOp.div:
         final (x, y) = _mulRange(level);
         return (x * y, y, x); // sveikas rezultatas
+      case MathOp.mix:
+        // Mix gaudomas _generateMix anksčiau — čia neturėtų patekti.
+        final (x, y) = _addRange(level);
+        return (x, y, x + y);
     }
   }
 
@@ -86,17 +125,13 @@ class LocalQuestionGenerator {
     }
   }
 
-  /// 6 variantai: 1 teisingas + 5 panašūs klaidingi (Fisher-Yates).
-  List<int> _options(int a, int b, int answer, MathOp op) {
+  /// 6 variantai: 1 teisingas + spąstas (jei yra) + panašūs (Fisher-Yates).
+  /// Atitinka serverio generateOptions (universalus — pagal answer + trap).
+  List<int> _options(int answer, int? trap) {
     final set = <int>{answer};
     final candidates = <int>[];
 
-    if (op == MathOp.mul) {
-      candidates.addAll([(a + 1) * b, (a - 1) * b, a * (b + 1), a * (b - 1)]);
-    }
-    if (op == MathOp.div) {
-      candidates.addAll([b, answer + 2]);
-    }
+    if (trap != null) candidates.add(trap); // spąstas pirmas (garantuotai tarp 6)
     if (answer >= 10) {
       candidates.add(int.parse(answer.toString().split('').reversed.join()));
     }

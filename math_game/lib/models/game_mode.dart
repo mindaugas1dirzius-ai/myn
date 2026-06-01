@@ -1,12 +1,12 @@
 import '../l10n/app_strings.dart';
 import '../theme/app_theme.dart';
 
-/// Matematinis veiksmas. `id` SUTAMPA su serverio parseMode (add/sub/mul/div),
-/// o `label`/`symbol` — tik žaidėjui rodyti. Niekada nesumaišom šitų dviejų.
-enum MathOp { add, sub, mul, div }
+/// Matematinis veiksmas/režimas. `id` SUTAMPA su serverio parseMode
+/// (add/sub/mul/div/mix). `label`/`symbol` — tik žaidėjui.
+enum MathOp { add, sub, mul, div, mix }
 
 extension MathOpX on MathOp {
-  /// Serverio raktas (siunčiamas į startGame kaip mode pradžia).
+  /// Serverio raktas (mode pradžia).
   String get id {
     switch (this) {
       case MathOp.add:
@@ -17,6 +17,8 @@ extension MathOpX on MathOp {
         return 'mul';
       case MathOp.div:
         return 'div';
+      case MathOp.mix:
+        return 'mix';
     }
   }
 
@@ -31,6 +33,8 @@ extension MathOpX on MathOp {
         return s.opMul;
       case MathOp.div:
         return s.opDiv;
+      case MathOp.mix:
+        return s.opMix2;
     }
   }
 
@@ -45,10 +49,11 @@ extension MathOpX on MathOp {
         return '×';
       case MathOp.div:
         return '÷';
+      case MathOp.mix:
+        return '🌪️';
     }
   }
 }
 
-/// Pilnas režimo identifikatorius serveriui, pvz. "mul_sunkus".
-/// Sujungia veiksmą + lygį taip, kaip laukia backend parseMode.
+/// Pilnas režimo ID serveriui, pvz. "mix_sunkus".
 String buildModeId(MathOp op, GameLevel level) => '${op.id}_${level.name}';

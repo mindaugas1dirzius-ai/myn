@@ -25,7 +25,11 @@ import {
   MAX_TIME_PER_Q_MS,
   TIME_TOLERANCE_MS,
 } from "./gameConfig";
-import { generateQuestion, Question } from "./generateQuestion";
+import {
+  QUESTION_GENERATORS,
+  GenQuestion,
+  isFamily,
+} from "./questionRegistry";
 import { generateOptions } from "./generateOptions";
 
 admin.initializeApp();
@@ -60,10 +64,11 @@ export const startGame = onCall(
     const uid = request.auth.uid;
 
     const parsed = parseMode(request.data?.mode);
-    if (!parsed) {
+    if (!parsed || !isFamily(parsed.family)) {
       throw new HttpsError("invalid-argument", "Nežinomas režimas.");
     }
-    const { op, level } = parsed;
+    const { family, level } = parsed;
+    const generator = QUESTION_GENERATORS[family];
 
     // Rotacija: paimam paskutinių klausimų sąrašą iš profilio
     const userSnap = await db.collection("users").doc(uid).get();
@@ -72,23 +77,22 @@ export const startGame = onCall(
       : [];
     const seen = new Set<string>(recent);
 
-    // Generuojam 10 UNIKALIŲ klausimų (vengiam pasikartojimo šioje sesijoje
-    // ir paskutinių parodytų). Saugiklis nuo begalinio ciklo: maks. bandymų.
-    const questions: Question[] = [];
+    // Generuojam 10 UNIKALIŲ klausimų (vengiam pasikartojimo + paskutinių).
+    const questions: GenQuestion[] = [];
     const usedThisGame = new Set<string>();
     let guard = 0;
     while (questions.length < QUESTIONS_PER_GAME && guard < 500) {
       guard++;
-      const q = generateQuestion(op, level);
-      if (usedThisGame.has(q.action)) continue;
-      if (seen.has(q.action) && guard < 200) continue; // po 200 bandymų atsileidžiam
-      usedThisGame.add(q.action);
+      const q = generator(level);
+      if (usedThisGame.has(q.display)) continue;
+      if (seen.has(q.display) && guard < 200) continue;
+      usedThisGame.add(q.display);
       questions.push(q);
     }
 
-    // Kiekvienam klausimui — 6 variantai (1 teisingas + 5 panašūs klaidingi)
+    // Kiekvienam klausimui — 6 variantai (su trap, jei yra).
     const options = questions.map((q) =>
-      generateOptions(q.a, q.b, q.answer, q.op)
+      generateOptions(q.answer, { trap: q.trap })
     );
 
     const gameRef = db.collection("active_games").doc();
@@ -97,7 +101,7 @@ export const startGame = onCall(
       mode: request.data.mode,
       level,
       answers: questions.map((q) => q.answer), // slapta
-      actions: questions.map((q) => q.action),
+      actions: questions.map((q) => q.display),
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     });
 
@@ -109,7 +113,7 @@ export const startGame = onCall(
       level,
       maxTimeMs: MAX_TIME_PER_Q_MS, // V2: 30s riba (žiedo pilnėjimui)
       questions: questions.map((q, i) => ({
-        action: q.action,
+        action: q.display,
         options: options[i],
         answer: q.answer,
       })),

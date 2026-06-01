@@ -21,6 +21,7 @@ class AppColors {
   static const Color levelMedium = Color(0xFFFFE03D); // elektrinė geltona
   static const Color levelHard = Color(0xFFFF4D8D); // neon rožinė
   static const Color levelExtreme = Color(0xFFB14EFF); // ultravioletinė
+  static const Color neonBlue = Color(0xFF00E5FF); // mix režimas
 
   // Būsenos
   static const Color correct = Color(0xFF2BD576); // teisinga (pulse)

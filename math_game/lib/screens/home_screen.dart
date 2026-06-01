@@ -83,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                     style: const TextStyle(color: AppColors.textSecondary)),
               ),
               // Versijos žymė (kad matytume, ar telefonas gauna naują versiją).
-              const Text('v6-harder',
+              const Text('v7-mixblitz',
                   style: TextStyle(color: AppColors.textSecondary, fontSize: 10)),
               // Banner meniu apačioje (leista; ne žaidimo metu)
               const SizedBox(height: 4),
@@ -96,14 +96,15 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildOpTile(MathOp op, AppStrings s) {
-    // Kiekvienam veiksmui parenkam akcentą iš lygių paletės (vizualinė įvairovė).
+    // Kiekvienam veiksmui parenkam akcentą iš paletės (mix = mėlyna).
     const accents = [
       AppColors.levelEasy,
       AppColors.levelMedium,
       AppColors.levelHard,
       AppColors.levelExtreme,
+      AppColors.neonBlue, // mix
     ];
-    final accent = accents[op.index];
+    final accent = accents[op.index % accents.length];
 
     return Builder(
       builder: (context) => NeumorphicButton(

@@ -31,6 +31,7 @@ class AppStrings {
   String get opSub => _pick('Atimtis', 'Subtraction');
   String get opMul => _pick('Daugyba', 'Multiplication');
   String get opDiv => _pick('Dalyba', 'Division');
+  String get opMix2 => _pick('Mix Blitz', 'Mix Blitz');
 
   // --- Lygiai ---
   String get levelEasy => _pick('Lengvas', 'Easy');

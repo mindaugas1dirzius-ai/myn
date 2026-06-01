@@ -1,15 +1,19 @@
 /**
- * generateOptions — 6 atsakymų variantų generatorius (1 teisingas + 5 panašūs klaidingi).
+ * generateOptions — 6 atsakymų variantų generatorius (1 teisingas + 5 klaidingi).
  *
- * Naudojamas SERVERYJE (startGame metu). Telefonas gauna gatavą sumaišytą masyvą.
- * Veikia visiems 4 veiksmams (+, −, ×, ÷).
+ * Naudojamas SERVERYJE (startGame). Telefonas gauna gatavą sumaišytą masyvą.
+ * Universalus VISIEMS režimams (Etapas 2): dirba pagal `answer`.
  *
- * Apsaugos (sutarta dizaine, žr. DIZAINAS.md, 4 sprendimas):
- *  - jokio dublikato ir jokio klaidingo == teisingam (Set + filtras)
- *  - tik teigiami sveiki skaičiai (c > 0, Number.isInteger)
- *  - skaitmenų sukeitimas tik kai answer >= 10
- *  - visada lygiai 6 variantai (saugus užpildymas, garantuotai baigiasi)
- *  - tikras Fisher-Yates maišymas (NE sort(()=>Math.random()-0.5))
+ * Parametrai:
+ *  - answer: teisingas atsakymas
+ *  - trap?:  viliojantis klaidingas (veiksmų eilės klaida) — jei yra,
+ *            GARANTUOTAI įdedamas tarp 6 (Mix/skliaustai/algebra spąstai)
+ *  - neighbors?: operacijos-specifiniai „kaimynai" (tik grynam ×/÷)
+ *
+ * Apsaugos (DIZAINAS.md, 4 sprendimas):
+ *  - jokio dublikato, jokio klaidingo == teisingam
+ *  - tik teigiami sveiki, skaitmenų sukeitimas tik kai answer >= 10
+ *  - visada lygiai 6, tikras Fisher-Yates
  */
 
 export function shuffle<T>(arr: T[]): T[] {
@@ -21,38 +25,32 @@ export function shuffle<T>(arr: T[]): T[] {
 }
 
 export function generateOptions(
-  a: number,
-  b: number,
   answer: number,
-  op: "+" | "-" | "*" | "/"
+  opts?: { trap?: number; neighbors?: number[] }
 ): number[] {
-  const set = new Set<number>([answer]); // 1. teisingas atsakymas
+  const set = new Set<number>([answer]); // 1. teisingas
   const candidates: number[] = [];
 
-  // Operacijos-specifiniai „kaimyniniai" klaidingi (artimi, tikroviški)
-  if (op === "*") {
-    candidates.push((a + 1) * b, (a - 1) * b, a * (b + 1), a * (b - 1));
-  }
-  if (op === "/") {
-    candidates.push(b);          // painioja daliklį su rezultatu (artima)
-    candidates.push(answer + 2); // dar vienas artimas
-  }
+  // SPĄSTAS pirmas — kad garantuotai patektų tarp 6 (jei tinkamas).
+  if (opts?.trap !== undefined) candidates.push(opts.trap);
+
+  // Operacijos-specifiniai kaimynai (tik ×/÷ — paduoda kviečiantis).
+  if (opts?.neighbors) candidates.push(...opts.neighbors);
 
   // Skaitmenų sukeitimas — tik kai answer >= 10
   if (answer >= 10) {
     candidates.push(parseInt(String(answer).split("").reverse().join(""), 10));
   }
 
-  // Bendros žmogiškos paklaidos — visiems veiksmams
+  // Bendros žmogiškos paklaidos — visiems režimams
   candidates.push(answer + 1, answer - 1, answer + 10, answer - 10, answer + 2, answer - 2);
 
-  // Pildom Set unikaliais, teigiamais, sveikais, ne teisingais
   for (const c of candidates) {
     if (set.size === 6) break;
     if (c > 0 && c !== answer && Number.isInteger(c)) set.add(c);
   }
 
-  // Saugus užpildymas (garantuotai baigiasi: answer+fallback auga be galo)
+  // Saugus užpildymas (garantuotai baigiasi)
   let fallback = 1;
   while (set.size < 6) {
     set.add(answer + fallback);
@@ -60,5 +58,5 @@ export function generateOptions(
     fallback++;
   }
 
-  return shuffle(Array.from(set)); // tikras Fisher-Yates
+  return shuffle(Array.from(set));
 }

@@ -39,12 +39,17 @@ export const OPTIONS_PER_QUESTION = 6;
 export const MIN_TIME_PER_Q_MS = 200; // greičiau = botas
 export const TIME_TOLERANCE_MS = 3000; // tinklo/latency paklaida lyginant laikus
 
-/** Patikrina, ar mode eilutė yra leistina (pvz. "*_sunkus"). */
-export function parseMode(mode: unknown): { op: Op; level: Level } | null {
+/** Patikrina mode eilutę (pvz. "mul_sunkus", "mix_lengvas").
+ *  Grąžina šeimą (add/sub/mul/div/mix) ir lygį. Validuoja prieš registrą. */
+export function parseMode(
+  mode: unknown
+): { family: string; level: Level } | null {
   if (typeof mode !== "string") return null;
-  const [opPart, levelPart] = mode.split("_");
-  const ops: Record<string, Op> = { add: "+", sub: "-", mul: "*", div: "/" };
+  const [family, levelPart] = mode.split("_");
+  const families = ["add", "sub", "mul", "div", "mix"];
   const levels: Level[] = ["lengvas", "vidutinis", "sunkus", "ekstremalus"];
-  if (!(opPart in ops) || !levels.includes(levelPart as Level)) return null;
-  return { op: ops[opPart], level: levelPart as Level };
+  if (!families.includes(family) || !levels.includes(levelPart as Level)) {
+    return null;
+  }
+  return { family, level: levelPart as Level };
 }
