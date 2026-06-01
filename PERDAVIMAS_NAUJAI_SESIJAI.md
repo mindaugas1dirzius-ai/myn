@@ -174,3 +174,125 @@ Nauja sesija, atsakyk SAU (ar savininkui), kad patvirtintum supratimą:
 
 Jei naujai sesijai šie atsakymai aiškūs iš dokumentų — perdavimas pavyko.
 Jei ne — savininkas turi parodyti šį failą + DIZAINAS.md + PLETROS_PLANAS.md.
+
+---
+
+## 11. 🚀 GREITO STARTO INSTRUKCIJA NAUJAI SESIJAI
+
+**Pirmos minutės (ką daryti iškart):**
+1. Perskaityk šį failą + `DIZAINAS.md` + `PLETROS_PLANAS.md` (3 svarbiausi).
+2. Patikrink būseną:
+   ```
+   git log --oneline -5
+   git tag -l                          # turi būti v1.0-stable-math
+   cd math_game && flutter analyze     # turi būti 0 klaidų
+   ```
+3. Pasisveikink lietuviškai, paprastai. NEsileisk į kodą iš karto.
+4. Paklausk savininko, ką tęsiam (greičiausiai: Flutter diegimas arba streak).
+5. Laikykis geležinės taisyklės: jokio kodo be „OK, darom".
+
+**Kaip savininkas dirba:**
+- Duoda detalius pasiūlymus (dažnai su klaidomis) → TU pagauni klaidas, siūlai pataisymus.
+- Mėgsta „šviesoforo" stilių, emoji, struktūruotus atsakymus.
+- Sako „OK, darom" kai patvirtina. Iki tol — tik kalbam/planuojam.
+- Nori matyti rezultatą (web deploy po kiekvieno pakeitimo).
+
+---
+
+## 12. 📐 SERVERIO KONTRAKTAS (tikslūs duomenų formatai)
+
+**startGame(mode) grąžina:**
+```json
+{
+  "gameId": "abc123",
+  "level": "sunkus",
+  "maxTimeMs": 30000,
+  "questions": [
+    { "action": "6×7", "options": [35,44,42,13,24,48], "answer": 42 }
+  ]
+}
+```
+(answer siunčiamas — variantas C; saugu, nes taškus skaičiuoja serveris iš laiko)
+
+**submitScore(gameId, clientAnswers[], clientTimesMs[]) grąžina:**
+```json
+{ "success": true, "finalScore": 850, "correct": 9, "isNewRecord": true,
+  "coinsEarned": 16, "totalCoins": 120, "promptName": true }
+```
+Anti-cheat: `sum(clientTimesMs) <= serverioBendrasLaikas + tolerance`.
+
+**getMyRank(mode):** `{ hasScore, rank, total, score }`
+**unlockMode(mode):** `{ success, coins }` (nurašo 150) — meta jei per mažai
+**unlockByAds(mode):** `{ success, unlockedNow, adsWatched, adsNeeded }`
+
+**Firestore struktūra:**
+- `users/{uid}`: username, coins, unlockedModes[], adProgress{}, recentQuestions[],
+  premiumUntil (ms)
+- `leaderboard/{uid}_{mode}`: uid, username, mode, score, timestamp
+- `active_games/{gameId}`: uid, mode, level, answers[], actions[], createdAt
+  (trinamas submitScore metu; TTL apleistiems — dar NEnustatytas, užsirašyta)
+
+---
+
+## 13. 🎮 REŽIMŲ ID (parseMode formatas)
+
+`{family}_{level}` — pvz. `mul_sunkus`, `mix_lengvas`, `algebra_ekstremalus`.
+- families: add, sub, mul, div, mix, brackets, algebra (+kids paruoštas serveryje, NEprijungtas kliente)
+- levels: lengvas, vidutinis, sunkus, ekstremalus
+
+⚠️ Klientas `MathOp` enum turi: add, sub, mul, div, mix, brackets, algebra, kids
+(kids — enume yra, bet kaip žaidimas dar nenaudojamas; serveris turi genKids,
+bet sutarta: paprasta aritmetika dubliuoja → Kids su IKONOMIS bus Grupė B).
+
+---
+
+## 14. 📦 FLUTTER FAILŲ ŽEMĖLAPIS (30 failų)
+
+```
+main.dart                  — startas, init (Firebase→consent→ads), MaterialApp+locale
+firebase_options.dart      — Firebase config (math-game-9862f, tikros reikšmės)
+l10n/
+  app_strings.dart         — VISI tekstai LT/EN (per _pick)
+  language_controller.dart — LT/EN jungiklis + shared_preferences
+theme/app_theme.dart       — AppColors (Cyber-Neumorphism), GameLevel enum+maxTimeMs
+models/
+  game_mode.dart           — MathOp enum, buildModeId
+  game_models.dart         — GameSession, MathQuestion, GameResult (fromJson)
+  local_question.dart      — offline klausimas
+providers/game_provider.dart — sesijos būsena (ChangeNotifier), server+offline fallback
+services/
+  firebase_service.dart    — init + App Check (debug) + anon auth (kIsWeb skip)
+  game_api.dart            — startGame/submitScore kvietimai
+  leaderboard_api.dart     — Top10 stream
+  profile_api.dart         — Personal Best, username, getMyRank
+  unlock_api.dart          — coins, unlock state, unlockWithCoins/Ad
+  ad_service.dart          — AdMob (banner/interstitial/rewarded) + UMP, kIsWeb guard
+  local_question_generator.dart — offline generatorius (atitinka serverį)
+screens/
+  home_screen.dart         — meniu (7 veiksmai grid, profilis, kalba, išeiti)
+  level_select_screen.dart — lygiai + UŽRAKTAI (🔒)
+  game_screen.dart         — žaidimas (langelis+žiedas+6 atsakymai+live points)
+  result_screen.dart       — rezultatai (coins, Top10, vardo raginimas)
+  profile_screen.dart      — ExpansionTile (rekordai), vardas
+  leaderboard_screen.dart  — Top10 widget (LeaderboardView)
+widgets/
+  neumorphic_button.dart   — daugkartinis mygtukas (naudojamas visur)
+  neumorphic_box.dart      — klausimo langelis (FittedBox saugiklis)
+  neon_timer_ring.dart     — laikmačio žiedas (pilnėja, spalvos)
+  live_points.dart         — gyvi mažėjantys taškai
+  banner_ad_widget.dart    — banner (0 vietos jei nėra)
+  exit_dialog.dart         — „pasiduoti?" patvirtinimas
+  rank_dialog.dart         — getMyRank popup + Top10
+  unlock_dialog.dart       — atrakinimo dialogas (coins/reklama)
+```
+
+---
+
+## 15. ⏳ UŽSIRAŠYTA „VĖLIAU" (nepamiršti)
+
+- Firestore TTL policy `active_games.createdAt` (apleistiems žaidimams) — NEnustatyta
+- Rate-limiting startGame (vienam uid per minutę)
+- Nuolatiniai testai serveryje (Jest/Vitest) — dabar tik smoke
+- D+ dizaino patobulinimas (CYBER BLITZ neon glow) — RYTOJAUS_PLANAS.md
+- V3+ sudėtingumas: gal 5-tas lygis, mišrūs veiksmai
+- Algebros „psichologinė klaida" jau įgyvendinta (mokyklinis trap)
