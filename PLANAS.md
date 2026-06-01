@@ -4,6 +4,15 @@
 > Einam **po vieną žingsnį**. Nepradedam naujo, kol esamas neaiškus ir nepažymėtas ✅.
 > Kiekvienai daliai atsakom į 3 klausimus: **KODĖL? KAIP? KAM SKIRTA?**
 
+## 🛑 SVARBIAUSIA TAISYKLĖ (virš visų kitų)
+
+**Be aiškaus „OK, darom" — Claude NIEKO nekuria/nekeičia kode.**
+Pirma kartu IŠDIRBAM kiekvieną pakeitimą (kaip veiks, sauga, ar nepažeidžia
+principų ir Google Play), SUDERINAM, ir TIK tada, kai savininkas pasako
+**„OK išdirbom, darom"** — programuojam. Jokio kodo „iš anksto".
+
+---
+
 ## 📜 DARBO TAISYKLĖS (visada galioja)
 
 ### 1. Planas virš visko (Plan Before Code) + Kokybė > greitis
