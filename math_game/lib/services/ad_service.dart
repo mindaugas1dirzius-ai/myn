@@ -44,6 +44,41 @@ class AdService {
       ? 'ca-app-pub-3940256099942544/1033173712'
       : 'ca-app-pub-3940256099942544/4411468910';
 
+  static String get _rewardedUnitId => _isAndroid
+      ? 'ca-app-pub-3940256099942544/5224354917'
+      : 'ca-app-pub-3940256099942544/1712485313';
+
+  /// Parodo Rewarded reklamą (Etapas 3/4). Grąžina true, jei žaidėjas
+  /// pažiūrėjo iki galo (užsidirbo). Web/ne-palaikoma — grąžina true (demo).
+  static Future<bool> showRewarded() async {
+    if (!_adsSupported) return true; // web demo — leidžiam praeiti
+    final completer = Completer<bool>();
+    RewardedAd.load(
+      adUnitId: _rewardedUnitId,
+      request: const AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (ad) {
+          var earned = false;
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              ad.dispose();
+              if (!completer.isCompleted) completer.complete(earned);
+            },
+            onAdFailedToShowFullScreenContent: (ad, _) {
+              ad.dispose();
+              if (!completer.isCompleted) completer.complete(false);
+            },
+          );
+          ad.show(onUserEarnedReward: (ad, reward) => earned = true);
+        },
+        onAdFailedToLoad: (_) {
+          if (!completer.isCompleted) completer.complete(false);
+        },
+      ),
+    );
+    return completer.future;
+  }
+
   /// UMP sutikimas (L žingsnis) — kviečiama main() PRIEŠ init().
   /// Parodo GDPR sutikimo langą (ES) ar automatiškai praleidžia (ne-ES).
   /// Po atsakymo leidžia reklamas (personalizuotas ar ne — sprendžia AdMob).

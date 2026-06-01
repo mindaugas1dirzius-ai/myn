@@ -72,6 +72,20 @@ class AppStrings {
   String get quitYes => _pick('Taip, išeiti', 'Yes, quit');
   String get exitApp => _pick('Išeiti iš žaidimo', 'Exit game');
 
+  // --- Užraktai (Etapas 3) ---
+  String get unlockTitle => _pick('Atrakinti lygį', 'Unlock level');
+  String unlockWithCoins(int cost) =>
+      _pick('Atrakinti už $cost 🪙', 'Unlock for $cost 🪙');
+  String unlockWithAds(int n) =>
+      _pick('Žiūrėti $n reklamas', 'Watch $n ads');
+  String get notEnoughCoins =>
+      _pick('Per mažai monetų — pažaisk dar!', 'Not enough coins — play more!');
+  String get unlockedForever =>
+      _pick('Atrakinta amžinai! 🎉', 'Unlocked forever! 🎉');
+  String adProgress(int w, int n) =>
+      _pick('Reklamų: $w/$n', 'Ads: $w/$n');
+  String get yourCoins => _pick('Tavo monetos', 'Your coins');
+
   // --- Profilis ---
   String get profile => _pick('Profilis', 'Profile');
   String get enterName => _pick('Įvesk savo vardą', 'Enter your name');
