@@ -244,3 +244,23 @@ Pridedami serverio submitScore metu (kartu su score skaičiavimu).
 
 **Sauga (Google Play):** atrakinimas/coins keitimas TIK per serverį (Cloud Function),
 klientas negali pats pridėti. IAP validuojami serveryje.
+
+---
+
+## 👤 PROFILIS + getMyRank (IŠDIRBTA — Etapas 1)
+**1. Vardas — NEprivalomas:** pirmą kartą auto `Player_XXXX` (4 atsitiktiniai skaičiai)
+→ `users/{uid}.username`. Redaguojamas ✏️ (serveris sanitizuoja). Jokios „trinties".
+
+**2. Vaizdas — GRUPUOTA (ExpansionTile):** 4 sekcijos (Sudėtis/Atimtis/Daugyba/Dalyba),
+paspaudus išsiskleidžia 4 lygiai su Personal Best. Be skrolinimo.
+
+**3. getMyRank — TIK paspaudus režimą:**
+- Profilis rodo Personal Best (pigus skaitymas iš `leaderboard/{uid}_{mode}`).
+- Paspaudus režimą → popup → TADA getMyRank Cloud Function: „pozicija 14 iš 320" + Top10.
+- Taupo 90% serverio resursų (NE 16 kvietimų iškart).
+
+**getMyRank logika:** `count(score > tavo_score) + 1` (Firestore count query — pigu).
+enforceAppCheck + Auth (kaip kitos funkcijos).
+
+**Web/offline:** jei Firebase nepasiekiamas → „Offline" vietoj „Dar nežaista".
+Tikri duomenys — tikroje Android app.
