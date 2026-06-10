@@ -31,6 +31,7 @@ import {
   QUESTION_GENERATORS,
   GenQuestion,
   isFamily,
+  pickGenerated,
 } from "./questionRegistry";
 import { generateOptions } from "./generateOptions";
 import {
@@ -100,20 +101,17 @@ export const startGame = onCall(
     // Atmintis PER REŽIMĄ: šio mode istorija neliečia kitų lygių/temų.
     const recentByMode = (userData.recentByMode as Record<string, string[]>) ?? {};
     const recent: string[] = recentByMode[mode] ?? [];
-    const seen = new Set<string>(recent);
 
-    // Generuojam 10 UNIKALIŲ klausimų (vengiam pasikartojimo + paskutinių).
-    const questions: GenQuestion[] = [];
-    const usedThisGame = new Set<string>();
-    let guard = 0;
-    while (questions.length < QUESTIONS_PER_GAME && guard < 500) {
-      guard++;
-      const q = generator(level);
-      if (usedThisGame.has(q.display)) continue;
-      if (seen.has(q.display) && guard < 200) continue;
-      usedThisGame.add(q.display);
-      questions.push(q);
-    }
+    // Parenkam 10 klausimų su LANKSTAU atminties langu (kaip Gamtoj): surenkam
+    // fondą, vengiam tik tiek neseniai matytų, kad visada liktų šviežių, ir
+    // dalinam SUMAIŠYTUS. Viename žaidime — niekada nesikartoja; mažam fondui
+    // (pvz. lengva ×/÷ = 64) žaidėjas pamato VISUS prieš bet kuriam pasikartojant.
+    const questions: GenQuestion[] = pickGenerated(
+      generator,
+      level,
+      recent,
+      QUESTIONS_PER_GAME
+    );
 
     // Kiekvienam klausimui — 6 variantai (su trap ir neighbors, jei yra).
     const options = questions.map((q) =>

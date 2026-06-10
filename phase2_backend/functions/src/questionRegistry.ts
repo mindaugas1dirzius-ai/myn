@@ -226,3 +226,87 @@ export const QUESTION_GENERATORS: Record<
 export function isFamily(x: string): x is Family {
   return x in QUESTION_GENERATORS;
 }
+
+// =================================================================
+// PASIKARTOJIMŲ VENGIMAS (generuojamiems klausimams)
+// -----------------------------------------------------------------
+// Matematika generuojama, tad nėra „sąrašo" kaip Gamtoj. Anksčiau buvo
+// „atsitiktinis + atmesk neseniai matytą", bet mažam fondui (pvz. lengva
+// daugyba/dalyba = 64 deriniai) atmintis (150) viršija fondą → po kelių
+// žaidimų kone viskas „matyta" ir tekdavo kartoti.
+//
+// Sprendimas — tas pats principas kaip Gamtoj (`pickQuestions`):
+//   1) surenkam fondą (unikalūs display'ai), mažam fondui sustojam kai
+//      prisotinama (nebėra naujų);
+//   2) LANKSTUS atminties langas: vengiam tik tiek neseniai matytų, kad
+//      visada liktų bent `count` + atsarga ŠVIEŽIŲ;
+//   3) sumaišom ir dalinam — šviežius pirma.
+// Mažam fondui tai reiškia: išdalinami VISI prieš bet kuriam pasikartojant.
+// Dideliam fondui elgesys nepablogėja (vengiam visus ~150 neseniai matytų).
+// =================================================================
+
+/** Šviežių atsarga virš `count`, kad būtų iš ko maišyti (kaip Gamtoj). */
+const FRESH_MARGIN = 5;
+/** Tiek bandymų iš eilės be naujo display'o → laikom, kad fondas išsemtas. */
+const SATURATION_LIMIT = 500;
+/** Absoliuti bandymų riba (saugiklis nuo begalinio ciklo). */
+const MAX_ATTEMPTS = 6000;
+
+function shuffleGen<T>(arr: T[]): T[] {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+export function pickGenerated(
+  generator: (level: Level) => GenQuestion,
+  level: Level,
+  recentIds: string[],
+  count: number
+): GenQuestion[] {
+  // 1) Surenkam fondą (display → GenQuestion). display vienareikšmiškai
+  //    nusako klausimą (atsakymą/spąstą), tad dedup pagal display saugu.
+  const byDisplay = new Map<string, GenQuestion>();
+  const target = count + Math.min(recentIds.length, 150) + FRESH_MARGIN;
+  let attempts = 0;
+  let sinceNew = 0;
+  while (
+    byDisplay.size < target &&
+    sinceNew < SATURATION_LIMIT &&
+    attempts < MAX_ATTEMPTS
+  ) {
+    attempts++;
+    const q = generator(level);
+    if (byDisplay.has(q.display)) {
+      sinceNew++;
+      continue;
+    }
+    byDisplay.set(q.display, q);
+    sinceNew = 0;
+  }
+
+  // 2) Lankstus atminties langas — niekada nevengiam tiek, kad neliktų
+  //    bent count + atsarga šviežių (mažam fondui langas susitraukia).
+  const poolSize = byDisplay.size;
+  const maxAvoid = Math.max(0, poolSize - count - FRESH_MARGIN);
+  const avoid = new Set(recentIds.slice(0, maxAvoid));
+
+  const keys = Array.from(byDisplay.keys());
+  const fresh = shuffleGen(keys.filter((d) => !avoid.has(d)));
+  const stale = shuffleGen(keys.filter((d) => avoid.has(d)));
+  const ordered = [...fresh, ...stale]; // šviežius pirma
+
+  // 3) Dalinam be pasikartojimo; jei fondas < count (teoriškai ne) — papildom.
+  const out: GenQuestion[] = [];
+  for (const d of ordered) {
+    if (out.length >= count) break;
+    out.push(byDisplay.get(d)!);
+  }
+  while (out.length < count && ordered.length > 0) {
+    out.push(byDisplay.get(ordered[out.length % ordered.length])!);
+  }
+  return out;
+}
