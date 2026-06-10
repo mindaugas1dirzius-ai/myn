@@ -4596,7 +4596,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "The horseshoe crab has blue blood that humans use in medicine. Why is it valuable?",
-        correct: "It detects bacterial contamination in drugs",
+        correct: "It detects bacterial contamination",
         distractors: [
           "It cures infections directly",
           "It is used as a blue food dye",
