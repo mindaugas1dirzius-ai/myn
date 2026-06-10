@@ -134,3 +134,70 @@ Paleidimas: Flutter→AAB→Play Console→12 testerių 14d→Production (launch
 
 Jei atsakai teisingai → perdavimas pavyko, gali tęsti.
 PIRMAS DARBAS: sujungti du git medžius (saugiai, su backup), TADA nested-map fix.
+
+---
+
+## 🎓 PRINCIPAI, KURIE SUSIFORMAVO (svarbu — perskaityk!)
+
+> Šie principai išmokti per darbą su savininku. Laikytis VISŲ.
+
+### 🔒 SAUGUMO principai (Google Play + anti-cheat)
+- **Server-authoritative VISKAS:** serveris generuoja klausimus, tikrina
+  atsakymus, skaičiuoja taškus/coins, atrakina lygius. Klientas — „kvailas".
+- **Jokio `eval()`** — serveris pats apskaičiuoja (a,b,op → answer).
+- **App Check (enforceAppCheck:true)** ant visų funkcijų. Po debug testų —
+  VISADA grąžinti į true. Prieš Play → playIntegrity.
+- **Coins/unlock/IAP — TIK serveryje**, atominėmis transakcijomis. Klientas
+  negali pats pridėti coins ar atrakinti.
+- **Anti-cheat laikui:** sum(clientTimesMs) ≤ serverioBendrasLaikas + tolerance.
+- **Cloud Run:** onCall funkcijoms allUsers invoker BŪTINAS (saugu — App Check
+  tikrina viduje). Tai NE saugumo skylė.
+- **Atsakymai grąžinami klientui (variantas C)** — saugu, nes taškus skaičiuoja
+  serveris iš laiko, ne iš „kiek teisingų telefonas sako".
+
+### 💻 PROGRAMAVIMO principai
+- **Moduliai (SRP):** maži failai, viena atsakomybė. Dizainas (widgets) atskirai
+  nuo logikos (services/providers). Didžiausias failas ~280-426 eil.
+- **Jokio dubliavimo (DRY):** seną/pakeistą kodą TRINAM (ne komentuojam).
+  Kartojimąsi keliam į bendrą funkciją (pvz. NeumorphicButton naudojamas visur).
+- **Registro pattern:** nauja žaidimo tema = 1 funkcija questionRegistry.ts,
+  ne išbarstytas kodas.
+- **Fisher-Yates** maišymui (NE sort(()=>Math.random()-0.5) — šališkas).
+- **fromJson su atsargom** (?? default) — kad trūkstamas laukas nelaužtų app.
+- **Nested-map:** Cloud Functions atsakymą skaityti per jsonDecode(jsonEncode())
+  kai yra įdėtų objektų (kitaip Map<Object?,Object?> lūžta).
+- **Po kiekvieno žingsnio:** flutter analyze (0 klaidų) + testai + commit + PUSH.
+
+### 🧪 KOKYBĖS principai
+- **Smoke testai** generatoriams (pvz. 16 režimų × 5000 — tikrini invariantus:
+  6 variantai, jokių dublikatų, teisingas tarp jų, >0, sveiki).
+- **Patikrinti faktais, ne spėti** — perskaityti kodą/logą prieš teigiant.
+- **Offline fallback:** jei serveris nepasiekiamas → lokalus generatorius
+  (žaidimas niekada nelūžta, tik „offline" — rezultatas neįskaitomas).
+
+### 🎮 ŽAIDIMO DIZAINO principai (sutarti su savininku)
+- **30s laikmatis/klausimui** (tiksi aukštyn, be streso), taškai pagal greitį.
+- **Švelnus modelis:** klaida = 0, žaidimas tęsiasi 10 klausimų.
+- **Spąstai (trap):** klaidingi atsakymai = realios žmogiškos klaidos (veiksmų
+  eilė, mokyklinės), garantuotai tarp 6 variantų — kad reikėtų galvoti.
+- **Rotacija:** klausimai nesikartoja (sesijoje + tarp sesijų).
+- **SCORE = prestižas** (nedingsta) · **COINS = valiuta** (nusirašo atrakinant).
+- **Coins teisingiau nei „20 sužaistų":** tinginys spaudžiantis bet ką negauna
+  coins → atrakina tik tas, kas stengiasi.
+- **Reklamos saikingai:** interstitial kas 3 partijas + cooldown (ne per dažnai).
+- **Atrakinimas amžinas** (coins/reklama) · prenumerata = 30 dienų.
+
+### 🤝 BENDRAVIMO principai (su savininku)
+- Aiškinti PAPRASTAI, lietuviškai, be žargono (savininkas NE programuotojas).
+- KODĖL → KAIP struktūra. Emoji, „šviesoforo" stilius.
+- Jokio kodo be „OK, darom". Jokių AskUserQuestion popup langų.
+- Savininkas siūlo idėjas su klaidomis → pagauti ir sąžiningai pasakyti.
+- Sąžiningai apie ribas (web demo, debesų aplinka) — neapsimesti.
+
+### 📚 KUR IEŠKOTI DETALIŲ (kiti dokumentai)
+- `DIZAINAS.md` — VISI žaidimo sprendimai (laikmatis, taškai, spąstai, spalvos)
+- `PLETROS_PLANAS.md` — etapai (kas padaryta/liko)
+- `PERDAVIMAS_NAUJAI_SESIJAI.md` — pilnas kontraktas, failų žemėlapis
+- `STRATEGIJA.md` — retention/monetizacija/ASO
+- `PLANAS.md` — A→Z bendras planas
+- `launch/` — paleidimo dokumentai
