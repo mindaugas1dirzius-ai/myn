@@ -1,329 +1,302 @@
-# 🔄 PERDAVIMAS NAUJAI SESIJAI (Handoff)
+# 🔄 PERDAVIMAS NAUJAI SESIJAI (Handoff) — v2 (2026-06)
 
-> Šis dokumentas perduoda VISKĄ naujai Claude sesijai, kad ji tęstų be
-> informacijos praradimo. Perskaityk VISĄ prieš pradedant.
-
-> ## ⚠️⚠️ DĖMESIO — KUR YRA PROJEKTAS ⚠️⚠️
-> **Projektas NĖRA savininko kompiuteryje (Desktop) ir NĖRA „MINA" iš MEMORY.md!**
-> MINA (React/Supabase žodžių žaidimas) — tai SENAS, KITAS projektas. IGNORUOK jį.
->
-> **ŠIS projektas yra GitHub debesų repozitorijoje:**
-> - Repo: `mindaugas1dirzius-ai/myn`
-> - Branch: **`claude/android-app-monetization-ads-RORMZ`**
-> - Tai Flutter matematikos žaidimas (NE React, NE Supabase).
->
-> **Pirmiausia paleisk:**
-> ```
-> git checkout claude/android-app-monetization-ads-RORMZ
-> git pull
-> ls   # pamatysi: math_game/, phase2_backend/, DIZAINAS.md, šį failą ir kt.
-> ```
-> Visi failai (kodas, dokumentai, tag v1.0-stable-math) — ČIA, ne Desktop'e.
-
-> ## 🔄🔄 PRIVALOMA — SINCHRONIZACIJA (kad medžiai neišsiskirtų!) 🔄🔄
-> **PRIEŠ bet kokį darbą — VISADA:** `git pull` (gauni naujausią versiją).
-> **PO kiekvieno žingsnio — VISADA:** `git add -A && git commit && git push`.
-> **NEDIRBK su dviem sesijomis vienu metu** ant to paties projekto.
-> **NEKAUPK pakeitimų lokaliai** — push'ink iškart, kad GitHub = tavo realus kodas.
-> Jei `git log` NErodo naujausių commit'ų — tu ant SENO pamato, PIRMA `git pull`,
-> NE push (kitaip perrašysi/prarasi darbą).
+> Šis dokumentas perduoda VISKĄ naujai Claude sesijai, kad ji tęstų be klaidų ir be
+> informacijos praradimo. **Perskaityk VISĄ prieš pradedant dirbti.**
+> Ankstesnė versija buvo pasenusi → sukėlė didelę painiavą (žr. 1 skyrių). Nepakartok.
 
 ---
 
-## 1. KAS YRA PROJEKTAS
+## ⚡ 0. SANTRAUKA (30 sekundžių)
 
-**Matematikos žaidimas** (Android, vėliau žaidimų platforma), kuriamas kaip
-verslo produktas JAV/Vakarų rinkoms.
-
-- **Stack:** Flutter (Dart) klientas + Firebase (Firestore, Cloud Functions
-  TypeScript 2nd Gen, Auth, App Check) + Google AdMob.
-- **Repo:** `mindaugas1dirzius-ai/myn`
-- **Branch:** `claude/android-app-monetization-ads-RORMZ`
-- **Firebase projektas:** `math-game-9862f` (regionas `europe-west1`, Blaze planas)
-- **Web demo:** https://math-game-9862f.web.app (TIK peržiūrai — žr. apribojimus)
-- **Saugus grįžimo taškas:** git tag `v1.0-stable-math`
-
-**Savininkas:** Mindaugas (mindaugas1.dirzius@gmail.com). NE programuotojas —
-aiškinti PAPRASTAI, lietuviškai, be žargono.
+- **Projektas:** „BRAIN ARENA" — Flutter (Android) + Firebase protų žaidimas vakarų rinkoms.
+- **Turinys:** 3 kategorijos — 🧮 Matematika (veikia pilnai), 🌿 Gamta (pildom), 🔍 Mistika (veikia).
+- **Repo:** `mindaugas1dirzius-ai/myn`, branch **`claude/android-app-monetization-ads-RORMZ`**.
+- **Kur baigėm:** sujungėm išsiskyrusius git medžius; viskas įkelta (commit `f41fb3d`).
+- **Dabartinis tikslas:** prikrauti VISUS gamtos lygius iki **≥150 klausimų** (dabar 79/96/100/68).
+- **Po to:** subalansuoti mįsles, tada kiti darbai (žr. 9 skyrių).
+- **4 ramsčiai (svarbos eilė):** 1) Sauga 2) Faktų/matematikos teisingumas 3) Įvairovė (jokio kartojimosi) 4) Uždarbis.
 
 ---
 
-## 2. 🛑 GELEŽINĖS DARBO TAISYKLĖS (privaloma laikytis!)
+## 🛑 1. SVARBIAUSIA PAMOKA — NEPAKARTOK ŠIŲ KLAIDŲ
 
-1. **JOKIO KODO be aiškaus „OK, darom".** Pirma IŠDIRBAM kiekvieną pakeitimą
-   (kaip veiks, sauga, ar nepažeidžia principų/Google Play), SUDERINAM, tik
-   tada — kodas. Visada paaiškinti KODĖL/KAIP.
-2. **Po vieną žingsnį.** Neperšokti. Kokybė > greitis.
-3. **Moduliai (SRP):** maži failai, viena atsakomybė. Dizainas atskirai nuo logikos.
-4. **Jokio dubliavimo:** seną/pakeistą kodą TRINAM iškart (ne komentuojam).
-5. **Patikrinti, ne tik pritarti:** savininkas dažnai siūlo idėjas su klaidomis —
-   PRIVALU jas pagauti ir sąžiningai pasakyti (jis tai vertina labiausiai).
-6. **Po kiekvieno žingsnio:** `flutter analyze` (0 klaidų) + testai + commit + push.
-7. **Sąžiningai apie web demo ribas** (žr. žemiau) — neapsimesti, kad veikia.
-8. **⚠️ NENAUDOTI patvirtinimo langų (AskUserQuestion)!** Savininką ERZINA tie
-   iššokantys „mygtukų" langai su variantais. Klausk PAPRASTU TEKSTU pokalbyje
-   (pvz. „Pasirink a/b/c" arba „Sutinki?"). Jokių interaktyvių mygtukų langų —
-   tik normalus tekstas. Savininkas atsako tekstu, tu tęsi.
+**Kas nutiko (2026-06):** veikė DVI Claude sesijos vienu metu ant to paties repo.
+Viena turėjo pilną kopiją (gamta/mystery), kita — seną kopiją be jų. Antra sesija
+įkėlė commit'ą ant seno pamato → git medžiai „išsiskyrė" → kilo panika „prarasim darbą".
+Realiai niekas nedingo (sujungėm per `merge`), bet sugaišom laiko.
 
----
-
-## 3. 🔒 ARCHITEKTŪROS PRINCIPAI (NEKEISTI)
-
-- **Server-authoritative:** serveris generuoja klausimus, tikrina atsakymus,
-  skaičiuoja taškus/coins, atrakina lygius. Klientas NIEKO svarbaus nesprendžia.
-- **App Check (enforceAppCheck)** ant visų funkcijų — tik tikra app prisijungia.
-- **Jokio eval()** — serveris pats skaičiuoja (sauga).
-- **Coins/unlock/IAP — TIK serveryje** (atominės transakcijos).
+**Taisyklės (PRIVALOMA):**
+1. **VIENA sesija vienu metu.** Niekada nedirbk lygiagrečiai su kita Claude sesija ant šio repo.
+2. **Periodiškai kelk į GitHub** (po kiekvieno užbaigto gabalo, sesijos pabaigoje):
+   `git add <konkretūs failai>` → `git commit` → `git push`. **NEKAUPK darbo tik lokaliai.**
+3. **PRIEŠ push — VISADA `git fetch`** ir patikrink ahead/behind:
+   - jei **behind** (nuotolinis turi naujesnių) → PIRMA `merge`/`pull`, NE `push --force`;
+   - paprastas `push` saugus: jei non-fast-forward, git atmeta, nieko neperrašo.
+4. **NENAUDOK `git add -A` ar `git add .`** — šaknyje guli senas `android/` (MINA Capacitor
+   build su tūkstančiais šiukšlių + `local.properties`). Pridėk TIK konkrečius kelius
+   (`math_game/`, `phase2_backend/...`). `android/` praleidžiam visada.
+5. **Atnaujink ŠĮ dokumentą prieš perduodamas** — pasenęs handoff = pagrindinė šios painiavos priežastis.
 
 ---
 
-## 4. ✅ KAS PADARYTA (pilnai veikia, deployinta)
+## 👤 2. KAS SAVININKAS (su kuo dirbi)
 
-### Bazinis žaidimas
-- 30s laikmatis (tiksi AUKŠTYN, žiedas pilnėja), taškai `max(10, 100−sek×3)`
-  VISIEMS lygiams vienodai, gyvi mažėjantys taškai kampe (+100→10)
-- Švelnus modelis (klaida=0, žaidimas tęsiasi 10 klausimų)
-- Cyber-Neumorphism dizainas (tamsus + neon)
-- Kalbos LT/EN (jungiklis veikia), mygtukai (✕ Baigti + Išeiti)
-
-### Režimai (7, visi atsakymai = SKAIČIAI)
-- ➕➖✖️➗ baziniai (4 lygiai each) + 🌪️ Mix + 🧱 Skliaustai + 🧬 Algebra
-- Architektūra: `questionRegistry.ts` — VIENAS registras, pridėti temą = 1 funkcija
-- `generateOptions` universalus (answer + trap + neighbors), Fisher-Yates
-- Spąstai (trap): veiksmų eilės klaidos, mokykliniai (algebroj), garantuotai tarp 6
-- Rotacija: paskutiniai N nesikartoja; offline irgi no-dup
-
-### Serveris (5 Cloud Functions, GYVOS):
-- `startGame` — generuoja 10 klausimų + variantus, tikrina užraktą, rotacija
-- `submitScore` — tikrina atsakymus, taškai, coins (1/teisingą +1 jei <3s),
-  auto Player_XXXX, promptName, leaderboard rekordas
-- `getMyRank` — pozicija = count(score>mano)+1
-- `unlockMode` — atrakina lygį už 150 coins (atominė)
-- `unlockByAds` — atrakina už 2 reklamas
-
-### Etapas 1: Profilis + getMyRank
-- ExpansionTile (4 veiksmai → lygiai su Personal Best), vardas+✏️, rank popup
-- Top10 vardo raginimas (variantas C), coins rodymas rezultatuose
-
-### Etapas 3: Užraktai (PILNAS)
-- Mix/Skliaustai/Algebra: Vidutinis=nemokamas demo, kiti 3 lygiai užrakinti (150🪙)
-- 3 keliai: 150 coins ARBA 2 reklamos (amžinai) · $2.99 viskas/mėn (Etapas 5)
-- Kliente: 🔒 langeliai, unlock_dialog (coins/reklama), showRewarded
+- **Mindaugas** (mindaugas1.dirzius@gmail.com). Kalbam **lietuviškai**.
+- **NE programuotojas.** Aiškinti PAPRASTAI, be žargono, žingsnis po žingsnio.
+- Mėgsta: struktūruotus atsakymus, „šviesoforo" stilių (✅⚠️🔴), emoji, lenteles.
+- **Vertina sąžiningumą labiausiai:** dažnai pasiūlo idėjų su klaidomis — TU privalai
+  jas pagauti ir tiesiai pasakyti, ne aklai pritarti.
+- **NEMĖGSTA patvirtinimo mygtukų langų** (`AskUserQuestion`) — JŲ NENAUDOTI. Klausk
+  paprastu tekstu („Sutinki? a/b/c"), jis atsako tekstu.
+- **Geležinė taisyklė:** be aiškaus **„OK, darom"** Claude NIEKO nekuria/nekeičia kode.
+  Pirma išdiskutuojam (kaip veiks, sauga, ar nepažeidžia principų), tada — kodas.
+- Sprendimus dėl IAM/Google konsolės **daro pats** (žr. 4 skyrių). Tu jam paaiškini, ką paspausti.
 
 ---
 
-## 5. ⬜ KAS LIKO (eilės tvarka)
+## 🖥️ 3. PER KĄ IR KAIP DIRBI (aplinka) — ATIDŽIAI, čia pirmas dokumentas KLYDO
 
+Dirbi **TIESIOGIAI savininko Windows kompiuteryje** (NE debesų Linux!). Detalės:
+
+- **OS:** Windows. Repo kelias: `C:\Users\minda\OneDrive\Desktop\minda myn zaidimas\myn`
+  (⚠️ default darbinis katalogas gali būti `...\Desktop` — naudok PILNUS kelius arba `cd` į repo).
+- **PowerShell 5.1** — NĖRA `&&` (naudok `;`). Nėra ternary/`??`. `git` komandos — be `cd` prefikso.
+- **Bash įrankis (Git Bash)** — tinka `git`, `npm`, `tsc`, `node`, `grep`. Pavyzdys aukščiau veikia.
+- **Flutter:** NĖRA Bash PATH'e. Yra čia: `C:\Users\minda\flutter\bin\flutter.bat`.
+  Kviesk per PowerShell: `& "C:\Users\minda\flutter\bin\flutter.bat" ...`
+- **Python NĖRA** įdiegtas — generatoriams naudok **node** (`.js` skriptą), ne python.
+- ⚠️ **Node regex su backslash per `node -e` LŪŽTA** Windows'e („Unterminated regexp").
+  Sprendimas: rašyk laikiną `.js` failą ir paleisk `node failas.js`, po to ištrink.
+- **APK build:** `& "C:\Users\minda\flutter\bin\flutter.bat" build apk --release`
+  → rezultatas `math_game/build/app/outputs/flutter-apk/app-release.apk` (~55 MB).
+  Savininkas pats persimeta į telefoną (Samsung Android) ir įdiegia.
+- **Deploy serveris:** iš `phase2_backend/`: `npx firebase-tools deploy --only "functions:VARDAS"`
+  (NE `firebase deploy --token`). Vienos funkcijos deploy greitesnis.
+- **SVARBU dėl turinio:** klausimų turinys gyvena SERVERYJE — klientas traukia per runtime.
+  Tad **turinio pakeitimas (klausimai) NEReikalauja APK perbudavojimo** — tik `npm run build` + deploy.
+  **UI pakeitimas (Dart) REIKALAUJA** APK perbudavojimo + įdiegimo iš naujo.
+
+---
+
+## 🔒 4. SAUGUMO PRINCIPAI (#1 PRIORITETAS — niekada nepažeisti)
+
+- **Server-authoritative:** serveris generuoja klausimus, tikrina atsakymus, skaičiuoja
+  taškus/monetas, atrakina lygius. **Klientas NIEKO svarbaus nesprendžia** (sukčius negali apgauti).
+- **`enforceAppCheck: true` ant VISŲ Cloud Functions** (patikrinta: 12 funkcijų, visos true).
+  Niekada nestatyk `false`.
+- **Monetos/unlock/IAP — TIK serveryje**, atominėmis transakcijomis.
+- **`rewardAdCoins` funkcija — IŠTRINTA, palikti ištrintą.**
+- **Taškai skaičiuojami iš LAIKO serveryje** → atsakymo siuntimas klientui saugus (sukčiui nieko neduoda).
+- ⚠️ **Cloud Run niuansas:** jei funkcija meta 401 / „offline" — tai NE App Check problema, o
+  trūksta **allUsers / Cloud Run Invoker** leidimo. **Savininkas tai daro pats konsolėje.**
+  **NEDARYK `gcloud` IAM / allUsers pakeitimų** ir **NEjunk Firestore „Enforce" rankiniu būdu.**
+- **AdMob:** laikyti TEST ID'us, kol savininkas aiškiai pasakys keisti į realius.
+- **App Check provideris:** dabar `debug`; prieš tikrą paleidimą → `playIntegrity`.
+
+---
+
+## 🧩 5. PROGRAMAVIMO PRINCIPAI (kaip mes dirbam)
+
+1. **Jokio kodo be „OK, darom".** Pirma planas + sauga, tada kodas.
+2. **Maži, sufokusuoti failai (SRP):** viena atsakomybė viename faile. Dizainas atskirai nuo logikos.
+   Naują temą pridėti = kuo mažiau pakeitimų. NEKURTI monolitų.
+3. **Maži dokumentai, ne vienas didelis:** info skaidom į atskirus `.md` (PLANAS, DIZAINAS, ...).
+   Atmintis (memory) — irgi maži temų failai (žr. 13 skyrių).
+4. **Jokio dubliavimo:** seną/pakeistą kodą TRINAM iškart, ne komentuojam.
+5. **Komentarai paaiškina KODĖL** (lietuviškai), ne tik ką.
+6. **Po kiekvieno žingsnio:** `flutter analyze` (0 klaidų) + serverio `npm run build` (tsc 0 klaidų).
+7. **Faktai 100% patikrinti** (gamtos klausimai) — jokių prasimanymų. Klaida turiny = pasitikėjimo praradimas.
+8. **Turinys tinka VISOMS kalboms ir mentalitetams** — nieko neįžeisti.
+9. **Niekada nepridėk klausimo netikrinęs dublikatų** (tas pats faktas tame pačiame lygyje — DRAUDŽIAMA).
+10. **Vengti tool-permission popup'ų:** pirma papildyk `.claude/settings.json` allowlist'ą, tada vykdyk.
+
+---
+
+## 🎯 6. TIKSLAS (kas tai per projektas)
+
+**Saugiai paleisti į Google Play** Flutter+Firebase protų žaidimą („BRAIN ARENA"), kuriame
+3 kategorijos (matematika / gamta / mistika), 4 sunkumo lygiai, Top 10 lentelės, monetų ekonomika,
+reklamų uždarbis. Rinka — JAV/Vakarai (daugiakalbis). Google Play dar TOLI — nestumti Play žingsnių.
+
+**Kodėl 3 kategorijos viename:** matematika generuojama (skaičiai), gamta/mistika — patikrinti faktai.
+BET visos rašo į `active_games` TUO PAČIU formatu → taškus/monetas/Top10/rotaciją skaičiuoja
+TAS PATS `submitScore` (App Check apsaugotas). Nulis regresijos.
+
+---
+
+## ✅ 7. KAS PADARYTA (veikia, deployinta)
+
+### 🧮 Matematika (pilnai)
+- 7 režimai (➕➖✖️➗ + 🌪️Mix + 🧱Skliaustai + 🧬Algebra), 4 lygiai kiekvienam.
+- 30s laikmatis, taškai `max(10, 100−sek×3)`, švelnus modelis (klaida=0, tęsia 10 klausimų).
+- Spąstai (trap) garantuotai tarp 6 variantų, Fisher-Yates maišymas, rotacija (no-dup).
+- Užraktai: Mix/Skliaustai/Algebra — Vidutinis nemokamas, kiti 3 lygiai už 150🪙 arba 2 reklamas.
+
+### 🌿 Gamta (veikia, turinys pildomas)
+- `startNatureGame` funkcija; potemės: faktai / išnykę / augalai / mix; 4 lygiai.
+- 6 variantai (1 teisingas + 5 klaidingi), paaiškinimas, emoji.
+- Mode formatas: `nature_<potemė>_<lygis>` arba senas `nature_<lygis>`.
+
+### 🔍 Mistika (veikia)
+- `startMystery`/`revealLetters`/`guessMystery`/`mysteryPowerup`/`getMysteryStatus`/`resetMystery`.
+- Atskleidžiamos raidės, spėjimas, power-up'ai, statusas. Kategorijos: klausimas/patarlė/citata/faktas/istorija.
+
+### Bendra infrastruktūra
+- Cyber-Neumorphism dizainas (tamsus + neon), garsai, avatarai, fonai.
+- Kalbos LT/EN (+ serveris palaiko en/lt/es/it/pl/de/fr/uk/pt/ar).
+- Profilis, Top10, getMyRank, monetos, vardo raginimas.
+- **UI mygtukų teksto saugiklis:** `FittedBox(scaleDown)` + `LayoutBuilder` — tekstas niekada nenukerpamas.
+
+---
+
+## 📊 8. KUR BAIGĖM (dabartinė būsena)
+
+- **Paskutinis commit:** `f41fb3d` (merge), prieš jį `b05ff61` (nature/mystery darbas).
+- **Git:** branch sinchronizuotas su `origin` (`0/0`). Yra atsarginė šaka `backup-local-darbas`.
+- **Darbo medis švarus**, išskyrus `android/` (senas MINA, sąmoningai nekeliam).
+
+**Gamtos klausimų skaičiai (tikslas ≥150 kiekvienam):**
+
+| Lygis | Dabar | Trūksta iki 150 |
+|---|---|---|
+| Lengvas | 79 | +71 |
+| Vidutinis | 96 | +54 |
+| Sunkus | 100 | +50 |
+| Ekstremalus | 68 | +82 |
+
+**Mįslių skaičiai (subalansuoti — istorija/faktas/citata atsilieka):**
+klausimas 28 · patarlė 15 · citata 13 · faktas 11 · istorija 9.
+
+---
+
+## ⬜ 9. KĄ TĘSTI (planas, eilės tvarka)
+
+1. **🎯 DABARTINIS: prikrauti gamtos lygius iki ≥150** (žr. 8 sk. trūkumus).
+   Partijos po ~15 klausimų: nauji faktai → validuoti → `npm run build` → deploy → atsiskaityti.
+2. **Subalansuoti mįsles** — pakelti istorija/faktas/citata link klausimas/patarlė lygio.
+3. **Ištrinti `gen.js`** prieš galutinį „švarų" commit'ą (tai laikinas įrankis).
+4. Vėliau: dienos serija (streak), rewarded ×2 monetos, IAP $2.99 prenumerata, naujos kategorijos.
+
+**Užsirašyta „vėliau":** Firestore TTL `active_games`; rate-limiting `startGame`; nuolatiniai testai;
+lengvame yra 1 dublis („Ostrich" 2×) — sutvarkyti progai.
+
+---
+
+## 🛠️ 10. KONKRETŪS RECEPTAI
+
+### Kaip pridėti gamtos klausimų (su `gen.js`)
+`phase2_backend/functions/gen.js` — daugkartinis generatorius. CONFIG: `LEVEL` + `PREFIX`;
+`DATA` masyvas `{sub, emoji, enQ, enC, enD[5], enE, ltQ, ltC, ltD[5], ltE}`.
+Auto-tikrina: 5 klaidingi variantai, VISI variantai **≤46 simbolių**, LT be ASCII `"`,
+EN teisingo atsakymo dublių (lygyje + partijoje). Auto-priskiria ID `<PREFIX><max+1>`.
+Įterpia prieš paskutinį `\n];`. **Jei klaida — nieko nerašo** (saugu). Paleidi: `node gen.js`.
+- Prefiksai: lengvas `nat_le_`, sunkus `nat_hard_`, ekstremalus `nat_ext_`;
+  vidutinis — mišrūs prefiksai (pirma patikrink max ID).
+
+### ⚠️ Turinio taisyklės (kritinės)
+- **Kiekvienas variantas (teisingas + 5 klaidingi) VISOSE kalbose ≤46 simbolių** (LT ilgesni už EN
+  — tikrink LT atskirai). Detales dėk į `explanation`, ne į variantą. Kitaip UI nukerpa.
+- **LT vidinės kabutės — TIK „..." (U+201E/U+201C), NIEKADA ASCII `"`** (lūžta JS string → build error).
+- **Sunkumo gradacija:** lengvas=kasdienis (vaikas žino); vidutinis=bendros žinios; sunkus=specifinis
+  faktas; ekstremalus=retas/ekspertinis, tikslūs skaičiai. Tas pats gyvūnas kitame lygyje OK tik su KITU faktu.
+
+### Rotacija (kodėl reikia 150)
+`pickQuestions` vengia neseniai matytų (`recentByMode[mode]`, serveryje, per vartotoją — išlieka net
+išjungus telefoną). `ROTATION_KEEP=150`, `QUESTIONS_PER_GAME=10`. Simuliacija: krepšys 150 → tas pats
+klausimas nesikartoja ~14 žaidimų. Tad **150 = tikslas; kodo keisti NEREIKIA**, tik prikrauti.
+
+### Build + deploy
+- Serveris: `cd phase2_backend/functions; npm run build` (tsc), tada `cd ..; npx firebase-tools deploy --only "functions:startNatureGame"`.
+- Klientas (tik jei keitei Dart UI): `& "C:\Users\minda\flutter\bin\flutter.bat" build apk --release`.
+
+---
+
+## 📁 11. FAILŲ ŽEMĖLAPIS
+
+### Serveris — `phase2_backend/functions/src/` (13 failų)
 ```
-🔄 SEKANTIS: Flutter diegimas TAVO Windows kompiuteryje
-   → kad savininkas pamatytų TIKRĄ app telefone (web demo nerodo serverio dalies)
-   → flutter run + App Check debug token
-
-(B) Dienos serija (streak) — retention (sutarta daryti po A)
-Etapas 4: Rewarded tobulinimas (×2 coins po sesijos)
-Etapas 5: IAP $2.99 prenumerata (Google Play Billing, isPremium)
-Grupė B / Etapas 6: KONTRAKTO IŠPLĖTIMAS (variantai=tekstas/ikona/foto), tada:
-   🎯 Ženklų medžioklė, 🧸 Kids su ikonomis, 🗺️ Geografija, 🍽️ Maistas, 🐾 Gyvūnai
-   ⚠️ Nuotraukos = autorių teisės (savos/CC0)
-Paleidimas: Flutter→AAB→Play Console→12 testerių 14d→Production (dokumentai launch/)
+index.ts            — startGame, submitScore, getMyRank, unlockMode, unlockByAd (5 funkcijos)
+gameConfig.ts       — ROTATION_KEEP=150, QUESTIONS_PER_GAME=10, MAX_TIME_PER_Q_MS=30000, Level
+generateOptions.ts  — universalus variantų generatorius (answer+trap+neighbors)
+questionRegistry.ts — matematikos temų registras (pridėti temą = 1 funkcija)
+unlockConfig.ts     — lygių užraktų / kainų konstantos
+triviaTypes.ts      — gamtos/trivijos tipai (Lang, NatureTopic)
+triviaEngine.ts     — pickQuestions, assembleOptions, mergeRecent (rotacija)
+natureContent.ts    — GAMTOS KLAUSIMAI (didelis; čia pildom iki 150/lygiui)
+natureEmoji.ts      — gamtos emoji pagalbinis
+triviaFunctions.ts  — startNatureGame (1 funkcija)
+mysteryTypes.ts     — mistikos tipai + helperiai
+mysteryContent.ts   — MISTIKOS turinys (klausimas/patarlė/citata/faktas/istorija)
+mysteryFunctions.ts — startMystery/revealLetters/guessMystery/mysteryPowerup/getMysteryStatus/resetMystery
 ```
+Laikinas: `phase2_backend/functions/gen.js` (klausimų generatorius — ištrinti prieš galutinį commit).
 
----
-
-## 6. ⚠️ WEB DEMO APRIBOJIMAI (svarbu suprasti!)
-
-Web'e Firebase IŠJUNGTAS (`if (kIsWeb) return`). Todėl web demo:
-- ✅ Rodo: žaidimą, laikmatį, 7 režimus, dizainą (lokaliai)
-- ❌ NErodo: užraktų, coins, Top10, profilio, reklamų (visa serverio dalis)
-- Pilną funkcionalumą matysi TIK tikroje Android app (Flutter + App Check token)
-
-**Web build/deploy:** `cd math_game && ./deploy_web.sh` (turi FIREBASE_TOKEN env).
-Cache-busting jau sutvarkytas. Testuoti telefone — INKOGNITO langas.
-
----
-
-## 7. 💰 EKONOMIKA (sutarta)
-
-- **SCORE** = reitingo prestižas. Geriausias rezultatas FIKSUOJASI, NEdingsta.
-  Top 10 + getMyRank pozicija.
-- **COINS** = valiuta. Renkami TIK už teisingus (1 + 1 jei <3s, ~15/sesija).
-  NUSIRAŠO atrakinant. ~150 = vienas lygis (≈10-20 gerų sesijų).
-  Argumentas (savininko): coins teisingesni nei „20 sužaistų", nes tinginys
-  spaudžiantis bet ką negauna coins → sąžininga stengiantiems.
-- Atrakinimas AMŽINAS (coins/reklama). Tik $2.99 prenumerata = 30 dienų.
-
----
-
-## 8. 📁 SVARBŪS FAILAI
-
-**Dokumentai (perskaityti!):**
-- `PLANAS.md` — pagrindinis A→Z + taisyklės
-- `DIZAINAS.md` — VISI žaidimo sprendimai (8 + papildomi)
-- `PLETROS_PLANAS.md` — etapai, kas padaryta/liko
-- `STRATEGIJA.md` — retention/monetizacija/ASO gairės
-- `launch/` — paleidimo dokumentai (Privacy, Data Safety, Store listing)
-
-**Kodas:**
-- Serveris: `phase2_backend/functions/src/` (index, gameConfig, questionRegistry,
-  generateOptions, unlockConfig)
-- Klientas: `math_game/lib/` (screens, widgets, services, models, l10n, theme)
-
-**Deploy:**
-- Serveris: `cd phase2_backend && firebase deploy --only functions --token "$FIREBASE_TOKEN"`
-- Web: `cd math_game && ./deploy_web.sh`
-- FIREBASE_TOKEN reikia env (savininkas turi; generuoja `firebase login:ci`)
-
----
-
-## 9. 🔑 TECHNINĖS DETALĖS
-
-- Aplinka: debesų Linux. Flutter įdiegtas `/opt/flutter` (PATH).
-- ⚠️ Android SDK debesyje BLOKUOJAMAS (dl.google.com) → APK/AAB build TIK
-  savininko kompiuteryje. Web build veikia debesyje.
-- App Check: dabar `AndroidProvider.debug` (firebase_service.dart, viena konstanta).
-  Prieš paleidimą → `playIntegrity`.
-- Firestore indeksas: `mode ASC + score DESC` (deployintas).
-- Savininko telefonas: Samsung (Android), naršyklė Samsung Internet/Chrome.
-- Savininko kompiuteris: Windows, turi Git + Node, NETURI Flutter (reikės diegti).
-
----
-
-## 10. ❓ KLAUSIMAI NAUJAI SESIJAI (patikrinimui ar supranta)
-
-Nauja sesija, atsakyk SAU (ar savininkui), kad patvirtintum supratimą:
-
-1. Kodėl coins atrakinimas yra teisingesnis nei „20 sužaistų sesijų"?
-2. Kodėl web demo nerodo užraktų ir Top 10?
-3. Kur skaičiuojami taškai/coins — kliente ar serveryje? Kodėl?
-4. Kas yra `questionRegistry.ts` ir kaip pridėti naują žaidimo temą?
-5. Kuo skiriasi SCORE nuo COINS (ar abu dingsta perkant)?
-6. Kokia geležinė taisyklė dėl kodo rašymo?
-7. Kodėl naujos temos (geografija) reikalauja „kontrakto išplėtimo"?
-8. Koks SEKANTIS žingsnis ir kodėl (kas atrakina pilną testavimą)?
-
-Jei naujai sesijai šie atsakymai aiškūs iš dokumentų — perdavimas pavyko.
-Jei ne — savininkas turi parodyti šį failą + DIZAINAS.md + PLETROS_PLANAS.md.
-
----
-
-## 11. 🚀 GREITO STARTO INSTRUKCIJA NAUJAI SESIJAI
-
-**Pirmos minutės (ką daryti iškart):**
-1. Perskaityk šį failą + `DIZAINAS.md` + `PLETROS_PLANAS.md` (3 svarbiausi).
-2. Patikrink būseną:
-   ```
-   git log --oneline -5
-   git tag -l                          # turi būti v1.0-stable-math
-   cd math_game && flutter analyze     # turi būti 0 klaidų
-   ```
-3. Pasisveikink lietuviškai, paprastai. NEsileisk į kodą iš karto.
-4. Paklausk savininko, ką tęsiam (greičiausiai: Flutter diegimas arba streak).
-5. Laikykis geležinės taisyklės: jokio kodo be „OK, darom".
-
-**Kaip savininkas dirba:**
-- Duoda detalius pasiūlymus (dažnai su klaidomis) → TU pagauni klaidas, siūlai pataisymus.
-- Mėgsta „šviesoforo" stilių, emoji, struktūruotus atsakymus.
-- Sako „OK, darom" kai patvirtina. Iki tol — tik kalbam/planuojam.
-- Nori matyti rezultatą (web deploy po kiekvieno pakeitimo).
-- ⚠️ **NEMĖGSTA patvirtinimo mygtukų langų (AskUserQuestion) — JŲ NENAUDOTI!**
-  Klausimus užduok PAPRASTU TEKSTU. Savininkas atsako tekstu.
-
----
-
-## 12. 📐 SERVERIO KONTRAKTAS (tikslūs duomenų formatai)
-
-**startGame(mode) grąžina:**
-```json
-{
-  "gameId": "abc123",
-  "level": "sunkus",
-  "maxTimeMs": 30000,
-  "questions": [
-    { "action": "6×7", "options": [35,44,42,13,24,48], "answer": 42 }
-  ]
-}
+### Klientas — `math_game/lib/`
 ```
-(answer siunčiamas — variantas C; saugu, nes taškus skaičiuoja serveris iš laiko)
-
-**submitScore(gameId, clientAnswers[], clientTimesMs[]) grąžina:**
-```json
-{ "success": true, "finalScore": 850, "correct": 9, "isNewRecord": true,
-  "coinsEarned": 16, "totalCoins": 120, "promptName": true }
-```
-Anti-cheat: `sum(clientTimesMs) <= serverioBendrasLaikas + tolerance`.
-
-**getMyRank(mode):** `{ hasScore, rank, total, score }`
-**unlockMode(mode):** `{ success, coins }` (nurašo 150) — meta jei per mažai
-**unlockByAds(mode):** `{ success, unlockedNow, adsWatched, adsNeeded }`
-
-**Firestore struktūra:**
-- `users/{uid}`: username, coins, unlockedModes[], adProgress{}, recentQuestions[],
-  premiumUntil (ms)
-- `leaderboard/{uid}_{mode}`: uid, username, mode, score, timestamp
-- `active_games/{gameId}`: uid, mode, level, answers[], actions[], createdAt
-  (trinamas submitScore metu; TTL apleistiems — dar NEnustatytas, užsirašyta)
-
----
-
-## 13. 🎮 REŽIMŲ ID (parseMode formatas)
-
-`{family}_{level}` — pvz. `mul_sunkus`, `mix_lengvas`, `algebra_ekstremalus`.
-- families: add, sub, mul, div, mix, brackets, algebra (+kids paruoštas serveryje, NEprijungtas kliente)
-- levels: lengvas, vidutinis, sunkus, ekstremalus
-
-⚠️ Klientas `MathOp` enum turi: add, sub, mul, div, mix, brackets, algebra, kids
-(kids — enume yra, bet kaip žaidimas dar nenaudojamas; serveris turi genKids,
-bet sutarta: paprasta aritmetika dubliuoja → Kids su IKONOMIS bus Grupė B).
-
----
-
-## 14. 📦 FLUTTER FAILŲ ŽEMĖLAPIS (30 failų)
-
-```
-main.dart                  — startas, init (Firebase→consent→ads), MaterialApp+locale
-firebase_options.dart      — Firebase config (math-game-9862f, tikros reikšmės)
-l10n/
-  app_strings.dart         — VISI tekstai LT/EN (per _pick)
-  language_controller.dart — LT/EN jungiklis + shared_preferences
-theme/app_theme.dart       — AppColors (Cyber-Neumorphism), GameLevel enum+maxTimeMs
-models/
-  game_mode.dart           — MathOp enum, buildModeId
-  game_models.dart         — GameSession, MathQuestion, GameResult (fromJson)
-  local_question.dart      — offline klausimas
-providers/game_provider.dart — sesijos būsena (ChangeNotifier), server+offline fallback
-services/
-  firebase_service.dart    — init + App Check (debug) + anon auth (kIsWeb skip)
-  game_api.dart            — startGame/submitScore kvietimai
-  leaderboard_api.dart     — Top10 stream
-  profile_api.dart         — Personal Best, username, getMyRank
-  unlock_api.dart          — coins, unlock state, unlockWithCoins/Ad
-  ad_service.dart          — AdMob (banner/interstitial/rewarded) + UMP, kIsWeb guard
-  local_question_generator.dart — offline generatorius (atitinka serverį)
-screens/
-  home_screen.dart         — meniu (7 veiksmai grid, profilis, kalba, išeiti)
-  level_select_screen.dart — lygiai + UŽRAKTAI (🔒)
-  game_screen.dart         — žaidimas (langelis+žiedas+6 atsakymai+live points)
-  result_screen.dart       — rezultatai (coins, Top10, vardo raginimas)
-  profile_screen.dart      — ExpansionTile (rekordai), vardas
-  leaderboard_screen.dart  — Top10 widget (LeaderboardView)
-widgets/
-  neumorphic_button.dart   — daugkartinis mygtukas (naudojamas visur)
-  neumorphic_box.dart      — klausimo langelis (FittedBox saugiklis)
-  neon_timer_ring.dart     — laikmačio žiedas (pilnėja, spalvos)
-  live_points.dart         — gyvi mažėjantys taškai
-  banner_ad_widget.dart    — banner (0 vietos jei nėra)
-  exit_dialog.dart         — „pasiduoti?" patvirtinimas
-  rank_dialog.dart         — getMyRank popup + Top10
-  unlock_dialog.dart       — atrakinimo dialogas (coins/reklama)
+main.dart · firebase_options.dart
+l10n/app_strings.dart (LT/EN tekstai) · language_controller.dart
+theme/app_theme.dart
+models/  game_models.dart, game_mode.dart, trivia_models.dart, mystery_models.dart, avatar_catalog.dart
+providers/ game_provider.dart, nature_game_provider.dart
+services/ firebase_service, game_api, profile_api, unlock_api, leaderboard_api, ad_service,
+          mystery_api, player_profile_api, sound_service
+screens/ home_screen, category_home_screen, level_select_screen, game_screen, result_screen,
+         profile_screen, leaderboard_screen, nature_topic_screen, nature_level_screen,
+         nature_game_screen, mystery_screen
+widgets/ neumorphic_button (FittedBox saugiklis), neumorphic_box, neon_timer_ring, live_points,
+         banner_ad_widget, exit_dialog, rank_dialog, unlock_dialog, app_background,
+         avatar_collection, sound_toggle_button
+assets/ fonts/Orbitron.ttf, sounds/*.wav
+tools/gen_sounds.py (garsų generatorius — istoriškai; python nėra šiame PC, jei reikės — node)
 ```
 
+### Dokumentai (skaityti!)
+`PLANAS.md` (A→Z + taisyklės) · `DIZAINAS.md` (sprendimai) · `PLETROS_PLANAS.md` (etapai) ·
+`STRATEGIJA.md` (retention/ASO) · `launch/` (Privacy, Data Safety, Store listing).
+
 ---
 
-## 15. ⏳ UŽSIRAŠYTA „VĖLIAU" (nepamiršti)
+## 🔑 12. SERVERIO KONTRAKTAS + Firestore
 
-- Firestore TTL policy `active_games.createdAt` (apleistiems žaidimams) — NEnustatyta
-- Rate-limiting startGame (vienam uid per minutę)
-- Nuolatiniai testai serveryje (Jest/Vitest) — dabar tik smoke
-- D+ dizaino patobulinimas (CYBER BLITZ neon glow) — RYTOJAUS_PLANAS.md
-- V3+ sudėtingumas: gal 5-tas lygis, mišrūs veiksmai
-- Algebros „psichologinė klaida" jau įgyvendinta (mokyklinis trap)
+**startGame / startNatureGame grąžina:** `{ gameId, level, maxTimeMs, questions:[{action, options[6], answer, ...}] }`
+(answer siunčiamas — saugu, taškus skaičiuoja serveris iš laiko).
+
+**submitScore(gameId, clientAnswers[], clientTimesMs[]):**
+`{ success, finalScore, correct, isNewRecord, coinsEarned, totalCoins, promptName }`.
+Anti-cheat: `sum(clientTimesMs) <= serverioLaikas + tolerance`.
+
+**Firestore:**
+- `users/{uid}`: username, coins, unlockedModes[], adProgress{}, **recentByMode{mode:[ids]}** (rotacija), premiumUntil.
+- `leaderboard/{uid}_{mode}` (arba per mode): score, username, timestamp. Indeksas `mode ASC + score DESC`.
+- `active_games/{gameId}`: uid, mode, level, answers[], actions[](ID rotacijai), createdAt (trinamas submitScore metu).
+
+**Ekonomika:** SCORE = prestižas (geriausias fiksuojasi, Top10). COINS = valiuta (1/teisingą +1 jei <3s,
+~15/sesija; nusirašo atrakinant; ~150 = lygis). Atrakinimas amžinas; $2.99 prenumerata = 30 d.
+
+---
+
+## 🧠 13. ATMINTIS (memory) — kur Claude laiko ilgalaikę info
+
+Failai: `C:\Users\minda\.claude\projects\C--Users-minda-OneDrive-Desktop\memory\`
+- `MEMORY.md` — indeksas su nuorodomis į temų failus (maži, sufokusuoti).
+- Svarbiausi: `project_math_game.md` (šio projekto būsena), `feedback_git_sync_rhythm.md`
+  (sinchronizavimo taisyklė), `feedback_coding_rules.md`, `user_role.md`.
+- Po reikšmingo darbo — atnaujink atitinkamą memory failą (būsena, skaičiai, pamokos).
+
+---
+
+## ❓ 14. PASITIKRINIMO KLAUSIMAI (ar nauja sesija suprato)
+
+1. Kodėl negalima dirbti dviem Claude sesijom vienu metu?
+2. Kodėl `git add -A` čia pavojinga (kas yra šakninis `android/`)?
+3. Kur skaičiuojami taškai/monetos — kliente ar serveryje? Kodėl?
+4. Kodėl gamtos klausimų variantai turi būti ≤46 simbolių?
+5. Kodėl tikslas yra būtent 150 klausimų lygiui (kas tai duoda)?
+6. Ką reiškia „401/offline" funkcijoje — App Check ar Cloud Run Invoker? Ką daro savininkas?
+7. Kokia geležinė taisyklė dėl kodo rašymo?
+8. Kuo skiriasi turinio pakeitimas nuo UI pakeitimo (kada reikia perbudavoti APK)?
+9. Kodėl LT kabutės turi būti „..." o ne `"`?
+10. Koks dabartinis tikslas ir kur tiksliai baigėm?
+
+Jei šie atsakymai aiškūs iš dokumento — perdavimas pavyko. Pasisveikink lietuviškai, paprastai,
+ir paklausk savininko, ką tęsiam (greičiausiai: gamtos klausimų pildymas iki 150). Jokio kodo be „OK".
