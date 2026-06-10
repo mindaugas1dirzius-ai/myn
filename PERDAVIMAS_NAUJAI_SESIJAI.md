@@ -20,6 +20,14 @@
 > ```
 > Visi failai (kodas, dokumentai, tag v1.0-stable-math) — ČIA, ne Desktop'e.
 
+> ## 🔄🔄 PRIVALOMA — SINCHRONIZACIJA (kad medžiai neišsiskirtų!) 🔄🔄
+> **PRIEŠ bet kokį darbą — VISADA:** `git pull` (gauni naujausią versiją).
+> **PO kiekvieno žingsnio — VISADA:** `git add -A && git commit && git push`.
+> **NEDIRBK su dviem sesijomis vienu metu** ant to paties projekto.
+> **NEKAUPK pakeitimų lokaliai** — push'ink iškart, kad GitHub = tavo realus kodas.
+> Jei `git log` NErodo naujausių commit'ų — tu ant SENO pamato, PIRMA `git pull`,
+> NE push (kitaip perrašysi/prarasi darbą).
+
 ---
 
 ## 1. KAS YRA PROJEKTAS
