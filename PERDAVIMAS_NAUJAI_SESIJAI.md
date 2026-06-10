@@ -11,7 +11,7 @@
 - **Projektas:** „BRAIN ARENA" — Flutter (Android) + Firebase protų žaidimas vakarų rinkoms.
 - **Turinys:** 3 kategorijos — 🧮 Matematika (veikia pilnai), 🌿 Gamta (pildom), 🔍 Mistika (veikia).
 - **Repo:** `mindaugas1dirzius-ai/myn`, branch **`claude/android-app-monetization-ads-RORMZ`**.
-- **Kur baigėm:** sujungėm išsiskyrusius git medžius; viskas įkelta (commit `f41fb3d`).
+- **Kur baigėm:** sujungėm išsiskyrusius git medžius; viskas įkelta į GitHub (branch sinchronizuotas su `origin`).
 - **Dabartinis tikslas:** prikrauti VISUS gamtos lygius iki **≥150 klausimų** (dabar 79/96/100/68).
 - **Po to:** subalansuoti mįsles, tada kiti darbai (žr. 9 skyrių).
 - **4 ramsčiai (svarbos eilė):** 1) Sauga 2) Faktų/matematikos teisingumas 3) Įvairovė (jokio kartojimosi) 4) Uždarbis.
@@ -61,7 +61,10 @@ Dirbi **TIESIOGIAI savininko Windows kompiuteryje** (NE debesų Linux!). Detalė
 - **OS:** Windows. Repo kelias: `C:\Users\minda\OneDrive\Desktop\minda myn zaidimas\myn`
   (⚠️ default darbinis katalogas gali būti `...\Desktop` — naudok PILNUS kelius arba `cd` į repo).
 - **PowerShell 5.1** — NĖRA `&&` (naudok `;`). Nėra ternary/`??`. `git` komandos — be `cd` prefikso.
-- **Bash įrankis (Git Bash)** — tinka `git`, `npm`, `tsc`, `node`, `grep`. Pavyzdys aukščiau veikia.
+- **Bash įrankis = Git Bash (MSYS/MINGW64)** — tinka `git`, `npm`, `tsc`, `node`, `grep`.
+  ⚠️ **APGAULĖ (lengva suklysti):** `uname`, `grep`, `head`, keliai `/c/Users/...` veikia kaip Linux'e —
+  BET tai VIS TIEK Windows, **NE debesų Linux.** Jei `uname` rodo `MINGW64_NT…Msys` ir `Windows_NT` —
+  tu savininko kompiuteryje. (Praeita sesija dėl to suklydo manydama, kad veikia debesyje.)
 - **Flutter:** NĖRA Bash PATH'e. Yra čia: `C:\Users\minda\flutter\bin\flutter.bat`.
   Kviesk per PowerShell: `& "C:\Users\minda\flutter\bin\flutter.bat" ...`
 - **Python NĖRA** įdiegtas — generatoriams naudok **node** (`.js` skriptą), ne python.
@@ -264,7 +267,8 @@ TAS PATS `submitScore` (App Check apsaugotas). Nulis regresijos.
 
 ## 📊 8. KUR BAIGĖM (dabartinė būsena)
 
-- **Paskutinis commit:** `f41fb3d` (merge), prieš jį `b05ff61` (nature/mystery darbas).
+- **Naujausias commit keičiasi kas push'ą — netikrink iš čia, tikrink GYVAI:** `git log --oneline -5`.
+  Paskutinis ESMINIS turinio darbas — gamta/mystery; po jo eina tik šio perdavimo dokumento commit'ai.
 - **Git:** branch sinchronizuotas su `origin` (`0/0`). Yra atsarginė šaka `backup-local-darbas`.
 - **Darbo medis švarus**, išskyrus `android/` (senas MINA, sąmoningai nekeliam).
 
