@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import '../l10n/app_strings.dart';
 import '../models/trivia_models.dart';
@@ -267,11 +268,16 @@ class _NatureGameScreenState extends State<NatureGameScreen>
     final longAnswers = longest > 22;
     final card = _questionCard(q.action, _sceneFor(_game.index), accent);
 
+    // VIENA bendra dydžio grupė šio klausimo atsakymams: auto_size_text
+    // sinchronizuoja VISUS grupės tekstus į tą patį šriftą → langeliai atrodo
+    // vienodai, o žodžiai (wrapWords:false) niekada nelaužomi per vidurį.
+    final group = AutoSizeGroup();
+
     if (!longAnswers) {
       return [
         Expanded(child: card),
         const SizedBox(height: 16),
-        _buildAnswers(q.options, accent),
+        _buildAnswers(q.options, accent, group),
         const SizedBox(height: 12),
       ];
     }
@@ -279,8 +285,11 @@ class _NatureGameScreenState extends State<NatureGameScreen>
     // Ilgi atsakymai: klausimo kortelė susitraukia PAGAL TURINĮ (be tuščios
     // vietos, klausimo šriftas NEmažinamas — nebent klausimas labai ilgas, tada
     // FittedBox jį sumažina, kad neviršytų ~34% ekrano). Visa likusi vieta —
-    // atsakymams: 6 platūs mygtukai dalijasi ją po lygiai (didesnis šriftas).
+    // atsakymams: 6 platūs mygtukai dalijasi ją po lygiai. Šriftą parenka
+    // AutoSizeText (grupė) — vienodas visiems, su apatine riba (minFontSize).
     final maxCardH = MediaQuery.of(context).size.height * 0.34;
+    const gap = 8.0;
+    final n = q.options.length;
     return [
       ConstrainedBox(
         constraints: BoxConstraints(maxHeight: maxCardH),
@@ -288,32 +297,16 @@ class _NatureGameScreenState extends State<NatureGameScreen>
       ),
       const SizedBox(height: 12),
       Expanded(
-        // VIENODAS ŠRIFTAS visiems 6 mygtukams: apskaičiuojame VIENĄ bendrą font
-        // dydį (pagal ILGIAUSIĄ atsakymą), kad visi langeliai atrodytų vienodai.
-        // NIEKADA ne per-mygtuko FittedBox — tai duotų skirtingus dydžius.
-        child: LayoutBuilder(
-          builder: (context, cons) {
-            const gap = 8.0;
-            final n = q.options.length;
-            // Vieno mygtuko aukštis (lygiai pasidalinta) ir teksto plotas.
-            final btnH = (cons.maxHeight - gap * (n - 1)) / n;
-            // Mygtuko vidus: − emoji(30) − tarpas(4) − horiz. padding(20) − atsarga(8).
-            final textW = cons.maxWidth - 30 - 4 - 20 - 8;
-            // Teksto aukštis: − vert. padding(16) − atsarga(6).
-            final textH = btnH - 16 - 6;
-            final fs = _uniformFont(q.options, textW, textH, maxFont: 20);
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                for (var i = 0; i < n; i++) ...[
-                  Expanded(
-                      child: _answerButton(q.options[i], accent,
-                          fullWidth: true, fontSize: fs)),
-                  if (i < n - 1) const SizedBox(height: gap),
-                ],
-              ],
-            );
-          },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (var i = 0; i < n; i++) ...[
+              Expanded(
+                  child: _answerButton(q.options[i], accent,
+                      group: group, maxLines: 3)),
+              if (i < n - 1) const SizedBox(height: gap),
+            ],
+          ],
         ),
       ),
       const SizedBox(height: 12),
@@ -393,65 +386,24 @@ class _NatureGameScreenState extends State<NatureGameScreen>
   /// TRUMPŲ atsakymų tinklelis (2 stulpeliai). Ilgi sakiniai tvarkomi atskirai
   /// (žr. _questionAndAnswers — 1 platus stulpelis su lygiai pasidalintais
   /// mygtukais), todėl čia visada 2 stulpeliai.
-  Widget _buildAnswers(List<String> options, Color accent) {
+  Widget _buildAnswers(List<String> options, Color accent, AutoSizeGroup group) {
     const crossSpacing = 12.0;
     const aspect = 1.8; // platūs mygtukai; vietos kelioms eilutėms
-    return LayoutBuilder(
-      builder: (context, cons) {
-        // Vienos kortelės matmenys → VIENAS bendras šriftas visiems (kaip ir
-        // ilgų atsakymų atveju: niekada ne per-mygtuko FittedBox).
-        final cellW = (cons.maxWidth - crossSpacing) / 2;
-        final cellH = cellW / aspect;
-        final textW = cellW - 30 - 4 - 20 - 8;
-        final textH = cellH - 16 - 6;
-        final fs = _uniformFont(options, textW, textH, maxFont: 18);
-        return GridView.count(
-          crossAxisCount: 2,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          mainAxisSpacing: 12,
-          crossAxisSpacing: crossSpacing,
-          childAspectRatio: aspect,
-          children:
-              options.map((v) => _answerButton(v, accent, fontSize: fs)).toList(),
-        );
-      },
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      mainAxisSpacing: 12,
+      crossAxisSpacing: crossSpacing,
+      childAspectRatio: aspect,
+      children: options
+          .map((v) => _answerButton(v, accent, group: group, maxLines: 2))
+          .toList(),
     );
   }
 
-  /// Apskaičiuoja VIENĄ font dydį, tinkantį VISIEMS pateiktiems atsakymams į
-  /// duotą plotą (plotis × aukštis). Imame didžiausią dydį (nuo `maxFont` žemyn),
-  /// prie kurio ILGIAUSIAS atsakymas dar telpa be nukirpimo. Tas pats dydis
-  /// taikomas visiems variantams → langeliai atrodo vienodai (jokio skirtingo
-  /// šrifto). Naudoja TextPainter (tikras teksto matavimas).
-  double _uniformFont(List<String> options, double maxW, double maxH,
-      {double maxFont = 16, double minFont = 9}) {
-    if (maxW <= 0 || maxH <= 0) return minFont;
-    for (double fs = maxFont; fs >= minFont; fs -= 0.5) {
-      var allFit = true;
-      for (final o in options) {
-        final tp = TextPainter(
-          text: TextSpan(
-            text: o,
-            style: TextStyle(
-                fontSize: fs, fontWeight: FontWeight.bold, height: 1.15),
-          ),
-          textAlign: TextAlign.center,
-          textDirection: TextDirection.ltr,
-          maxLines: 100,
-        )..layout(maxWidth: maxW);
-        if (tp.height > maxH) {
-          allFit = false;
-          break;
-        }
-      }
-      if (allFit) return fs;
-    }
-    return minFont;
-  }
-
   Widget _answerButton(String value, Color accent,
-      {bool fullWidth = false, double? fontSize}) {
+      {AutoSizeGroup? group, int maxLines = 2}) {
     Color c = accent;
     if (_game.state != NatureCellState.idle) {
       if (value == _game.current.answer) {
@@ -487,34 +439,30 @@ class _NatureGameScreenState extends State<NatureGameScreen>
           ),
           const SizedBox(width: 4),
           Expanded(
-            // VIENODAS šriftas: bazinis dydis ateina iš tėvo (_uniformFont) —
-            // vienas visiems 6 variantams. Tekstas susilanksto į kelias eilutes.
-            //
-            // SAUGIKLIS (kad tekstas NIEKADA nebūtų nukerpamas): FittedBox su
-            // scaleDown. _uniformFont prognozė kartais būna per optimistinė
-            // (mygtuko vidinė padding + briauna suvalgo kelis px → 2-a eilutė
-            // nupjaunama). FittedBox sumažina TIK jei vis tiek netelpa — tad
-            // įprastu atveju visi lieka vienodi, o kraštutiniu atveju tekstas
-            // niekada nedingsta. Plotis ribojamas c.maxWidth → teisingas
-            // perkėlimas į eilutes prieš mažinant.
-            child: LayoutBuilder(
-              builder: (context, c) => FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.center,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: c.maxWidth),
-                  child: Text(
-                    value,
-                    textAlign: TextAlign.center,
-                    softWrap: true,
-                    style: TextStyle(
-                      color: textColor,
-                      fontSize: fontSize ?? (fullWidth ? 16 : 15),
-                      fontWeight: FontWeight.bold,
-                      height: 1.15,
-                    ),
-                  ),
-                ),
+            // VIENODAS šriftas visiems grupės atsakymams: AutoSizeText su bendra
+            // `group` parenka VIENĄ dydį (didžiausią, prie kurio telpa visi).
+            //  - wrapWords:false → žodis NIEKADA nelaužomas per vidurį (jokios
+            //    vienišų raidžių, pvz. „Bušmeisteris" liks sveikas, šriftas tik
+            //    truputį sumažės);
+            //  - minFontSize:13 → apatinė riba, kad raidės niekada nebūtų per
+            //    mažos;
+            //  - maxLines → kiek eilučių leidžiama prieš mažinant.
+            child: AutoSizeText(
+              value,
+              textAlign: TextAlign.center,
+              group: group,
+              maxLines: maxLines,
+              wrapWords: false,
+              minFontSize: 13,
+              stepGranularity: 0.5,
+              style: TextStyle(
+                color: textColor,
+                // Maksimalus (pradinis) dydis — vienodas abiem išdėstymams, kad
+                // ekranai tarpusavyje atrodytų nuosekliai; AutoSizeText sumažina
+                // tik tiek, kiek reikia, ir ne žemiau minFontSize.
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                height: 1.15,
               ),
             ),
           ),

@@ -54,6 +54,13 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # Atsakymų teksto AUTOMATINIS dydis — pramonės standartas (naudoja tūkstančiai
+  # quiz/trivia app'ų). Sprendžia 3 mūsų problemas vienu ypu:
+  #  - wrapWords:false → žodis NIEKADA nelaužomas per vidurį (jokios vienišos „s");
+  #  - AutoSizeGroup → visi vieno ekrano atsakymai = VIENODAS šriftas;
+  #  - minFontSize → riba, žemiau kurios šriftas nenukrenta (niekada „per mažas").
+  auto_size_text: ^3.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
