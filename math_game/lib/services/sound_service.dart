@@ -46,6 +46,37 @@ class SoundService extends ChangeNotifier {
       _enabled = true;
     }
 
+    // SVARBU: garso „kontekstą" nustatom PRIEŠ kuriant grotuvus — tada kiekvienas
+    // grotuvas (ir SoundPool po juo) paveldi šiuos atributus. Sprendžia problemą
+    // „telefono šoniniai garsumo mygtukai nevaldo žaidimo garso":
+    //  - Android: usage=game + sonification → garsas eina per MEDIJOS (žaidimo)
+    //    kanalą, todėl šoniniai mygtukai valdo būtent žaidimo garsumą;
+    //    audioFocus.none → garsai SUMAIŠOMI su fone grojančia muzika (Spotify),
+    //    BE „pumpavimo" (kitaip nei gainTransientMayDuck, kuris tildytų muziką
+    //    kas garsą).
+    //  - iOS: ambient → gerbia šoninį „tylos" jungiklį, automatiškai maišosi su
+    //    kitu garsu, o garsumo mygtukai valdo medijos garsumą (App Store
+    //    versijai jokio atskiro lopo nereikės).
+    // VIENAS sprendimas — abi platformos (cross-platform), be Android-specifinio
+    // MainActivity lopo. Apgaubta try/catch, kad garsas niekada nesugriautų app'o.
+    try {
+      await AudioPlayer.global.setAudioContext(AudioContext(
+        android: const AudioContextAndroid(
+          contentType: AndroidContentType.sonification, // trumpi garso efektai
+          usageType: AndroidUsageType.game, // žaidimo garsas → medijos kanalas
+          audioFocus: AndroidAudioFocus.none, // mix su muzika, be pumpavimo
+        ),
+        iOS: AudioContextIOS(
+          category: AVAudioSessionCategory.ambient, // gerbia tylos jungiklį
+          // JOKIŲ options: `mixWithOthers` ambient režime įsijungia automatiškai,
+          // o jį (ar `defaultToSpeaker`) nurodyti rankiniu paketas DRAUDŽIA
+          // (assert → app'as kristų). Todėl paliekam tuščią.
+        ),
+      ));
+    } catch (_) {
+      // Jei nepavyko — garsas vis tiek gros (tik su numatytuoju kontekstu).
+    }
+
     for (final entry in _effects.entries) {
       try {
         final p = AudioPlayer(playerId: 'sfx_${entry.key}');

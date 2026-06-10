@@ -415,10 +415,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return '${d.year}-${two(d.month)}-${two(d.day)}';
   }
 
-  /// Atviri gamtos lygiai (turi patvirtintą turinį serveryje).
+  /// Atviri gamtos lygiai (visi 4 jau turi patvirtintą turinį serveryje).
   static const List<GameLevel> _natureLevels = [
     GameLevel.lengvas,
     GameLevel.vidutinis,
+    GameLevel.sunkus,
+    GameLevel.ekstremalus,
   ];
 
   /// Temos (kategorijos) grupė — kad temos nesimaišytų.

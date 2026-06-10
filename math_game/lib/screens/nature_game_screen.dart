@@ -50,6 +50,13 @@ class _NatureGameScreenState extends State<NatureGameScreen>
   final Stopwatch _stopwatch = Stopwatch();
   int _ringKey = 0;
 
+  /// VIENA bendra dydžio grupė šio klausimo atsakymams. SVARBU: laikoma
+  /// būsenoje (NE kuriama build() viduje) — kitaip ji būtų atkuriama per kiekvieną
+  /// perpiešimą ir auto_size_text sinchronizacija NEVEIKTŲ (kaip tik dėl to
+  /// vienas ilgesnis atsakymas susitraukdavo, o trumpi likdavo dideli → nevienodi
+  /// šriftai). Atnaujinama tik PEREINANT prie kito klausimo.
+  AutoSizeGroup _answerGroup = AutoSizeGroup();
+
   /// Neutralūs gamtos „vaizdai" klausimui (NEatskleidžia atsakymo).
   /// Sumaišomi kartą per partiją → per 10 klausimų nesikartoja (pool > 10).
   late final List<String> _scenes;
@@ -162,7 +169,12 @@ class _NatureGameScreenState extends State<NatureGameScreen>
       );
     } else {
       SoundService.instance.swoosh(); // naujo klausimo atsiradimas
-      setState(() => _ringKey++);
+      // Naujam klausimui — NAUJA dydžio grupė: atsakymai sinchronizuojami tik
+      // tarpusavyje (šio klausimo), o ne su praeitų klausimų tekstais.
+      setState(() {
+        _ringKey++;
+        _answerGroup = AutoSizeGroup();
+      });
       _startQuestion();
     }
   }
@@ -268,10 +280,10 @@ class _NatureGameScreenState extends State<NatureGameScreen>
     final longAnswers = longest > 22;
     final card = _questionCard(q.action, _sceneFor(_game.index), accent);
 
-    // VIENA bendra dydžio grupė šio klausimo atsakymams: auto_size_text
-    // sinchronizuoja VISUS grupės tekstus į tą patį šriftą → langeliai atrodo
-    // vienodai, o žodžiai (wrapWords:false) niekada nelaužomi per vidurį.
-    final group = AutoSizeGroup();
+    // Bendra dydžio grupė (laikoma būsenoje) — auto_size_text sinchronizuoja
+    // VISUS grupės tekstus į tą patį šriftą → langeliai atrodo vienodai, o
+    // žodžiai (wrapWords:false) niekada nelaužomi per vidurį.
+    final group = _answerGroup;
 
     if (!longAnswers) {
       return [
@@ -457,10 +469,12 @@ class _NatureGameScreenState extends State<NatureGameScreen>
               stepGranularity: 0.5,
               style: TextStyle(
                 color: textColor,
-                // Maksimalus (pradinis) dydis — vienodas abiem išdėstymams, kad
-                // ekranai tarpusavyje atrodytų nuosekliai; AutoSizeText sumažina
-                // tik tiek, kiek reikia, ir ne žemiau minFontSize.
-                fontSize: 18,
+                // Pradinis dydis 16 (ne 18): pakankamai didelis, kad gerai
+                // skaitytųsi, bet ir toks, kad į 2 eilutes besilaužiantis ilgas
+                // atsakymas TILPTŲ NESUSITRAUKDAMAS → visi atsakymai lieka to
+                // paties dydžio (vienodi). Grupė + minFontSize garantuoja, kad
+                // jei kuris vis tiek netelpa, susitraukia VISI kartu, ne vienas.
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 height: 1.15,
               ),
