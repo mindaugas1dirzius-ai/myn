@@ -411,6 +411,7 @@ Failai: `C:\Users\minda\.claude\projects\C--Users-minda-OneDrive-Desktop\memory\
 
 ## ❓ 14. PASITIKRINIMO KLAUSIMAI (ar nauja sesija suprato)
 
+**A) Taisyklės ir principai:**
 1. Kodėl negalima dirbti dviem Claude sesijom vienu metu?
 2. Kodėl `git add -A` čia pavojinga (kas yra šakninis `android/`)?
 3. Kur skaičiuojami taškai/monetos — kliente ar serveryje? Kodėl?
@@ -421,6 +422,13 @@ Failai: `C:\Users\minda\.claude\projects\C--Users-minda-OneDrive-Desktop\memory\
 8. Kuo skiriasi turinio pakeitimas nuo UI pakeitimo (kada reikia perbudavoti APK)?
 9. Kodėl LT kabutės turi būti „..." o ne `"`?
 10. Koks dabartinis tikslas ir kur tiksliai baigėm?
+
+**B) Metodika ir skaičiavimai (ar suprato §5B — ne tik taisykles, bet ir „kaip dirbam"):**
+11. Kokie skaičių rėžiai daugybai (`×`) sunkiam ir ekstremaliam lygiui?
+12. Kaip ir kiek raidžių uždirbama mįslėms žaidžiant BET kurią kategoriją (`lettersFor`)?
+13. Kaip apskaičiuojami taškai už vieną atsakymą ir iki kiek sekundžių capinamas laikas?
+14. Patarlės/citatos į kitą kalbą — verčiamos pažodžiui ar reikia kultūrinio ekvivalento? Kodėl?
+15. Kuo „sunkus" gamtos klausimas skiriasi nuo „ekstremalaus" (pagal ką lemiam sunkumą)?
 
 Jei šie atsakymai aiškūs iš dokumento — perdavimas pavyko. Pasisveikink lietuviškai, paprastai,
 ir paklausk savininko, ką tęsiam (greičiausiai: gamtos klausimų pildymas iki 150). Jokio kodo be „OK".
