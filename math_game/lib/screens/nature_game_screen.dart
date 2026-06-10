@@ -278,9 +278,9 @@ class _NatureGameScreenState extends State<NatureGameScreen>
 
     // Ilgi atsakymai: klausimo kortelė susitraukia PAGAL TURINĮ (be tuščios
     // vietos, klausimo šriftas NEmažinamas — nebent klausimas labai ilgas, tada
-    // FittedBox jį sumažina, kad neviršytų ~42% ekrano). Visa likusi vieta —
-    // atsakymams: 6 platūs mygtukai dalijasi ją po lygiai.
-    final maxCardH = MediaQuery.of(context).size.height * 0.42;
+    // FittedBox jį sumažina, kad neviršytų ~34% ekrano). Visa likusi vieta —
+    // atsakymams: 6 platūs mygtukai dalijasi ją po lygiai (didesnis šriftas).
+    final maxCardH = MediaQuery.of(context).size.height * 0.34;
     return [
       ConstrainedBox(
         constraints: BoxConstraints(maxHeight: maxCardH),
@@ -301,7 +301,7 @@ class _NatureGameScreenState extends State<NatureGameScreen>
             final textW = cons.maxWidth - 30 - 4 - 20 - 8;
             // Teksto aukštis: − vert. padding(16) − atsarga(6).
             final textH = btnH - 16 - 6;
-            final fs = _uniformFont(q.options, textW, textH, maxFont: 16);
+            final fs = _uniformFont(q.options, textW, textH, maxFont: 20);
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -354,30 +354,35 @@ class _NatureGameScreenState extends State<NatureGameScreen>
                 blurRadius: 18),
           ],
         ),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 320),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Emoji „paveikslėlis" — virš teksto (kuklesnis, kad liktų
-                // daugiau vietos ilgam klausimui).
-                if (emoji.isNotEmpty) ...[
-                  Text(emoji, style: const TextStyle(fontSize: 46)),
-                  const SizedBox(height: 10),
-                ],
-                Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: AppColors.textPrimary,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    height: 1.25,
+        child: LayoutBuilder(
+          builder: (context, c) => FittedBox(
+            fit: BoxFit.scaleDown,
+            child: ConstrainedBox(
+              // Tekstas laužomas pagal VISĄ kortelės vidinį plotį (jokio šoninio
+              // tuščio tarpo, mažiau eilučių). FittedBox tik SUMAŽINA, jei
+              // klausimas labai ilgas ir netelpa į jam skirtą aukštį.
+              constraints: BoxConstraints(maxWidth: c.maxWidth),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Emoji „paveikslėlis" — virš teksto (kuklus, kad liktų
+                  // daugiau vietos atsakymams).
+                  if (emoji.isNotEmpty) ...[
+                    Text(emoji, style: const TextStyle(fontSize: 42)),
+                    const SizedBox(height: 8),
+                  ],
+                  Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: AppColors.textPrimary,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      height: 1.25,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -399,7 +404,7 @@ class _NatureGameScreenState extends State<NatureGameScreen>
         final cellH = cellW / aspect;
         final textW = cellW - 30 - 4 - 20 - 8;
         final textH = cellH - 16 - 6;
-        final fs = _uniformFont(options, textW, textH, maxFont: 16);
+        final fs = _uniformFont(options, textW, textH, maxFont: 18);
         return GridView.count(
           crossAxisCount: 2,
           shrinkWrap: true,
