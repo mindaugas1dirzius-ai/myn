@@ -34,11 +34,18 @@ function addRange(level: Level): [number, number] {
   }
 }
 
+// Daugyba/dalyba ribojama nedidelių skaičių — tad anksčiau pool'as buvo
+// per mažas ir klausimai kartojosi. Praplėsta įvairovei IŠLAIKANT aiškią
+// sunkumo tvarką (kiekvienas lygis sunkesnis už ankstesnį):
+//   lengvas    [2..9]×[2..9]  = 64 deriniai (pilna lentelė iki 9 — vis tiek lengva)
+//   vidutinis  [2..12]×[2..12] = 144 deriniai (lentelė iki 12)
+//   sunkus     [11..25]×[2..12] = 165 deriniai (dviženklis × lentelė, didesnės sandaugos)
+//   ekstremalus [12..50]×[6..19] = 546 deriniai (V3)
 function mulRange(level: Level): [number, number] {
   switch (level) {
-    case "lengvas": return [rnd(2, 5), rnd(2, 5)];
-    case "vidutinis": return [rnd(2, 10), rnd(2, 10)];
-    case "sunkus": return [rnd(2, 12), rnd(2, 12)];
+    case "lengvas": return [rnd(2, 9), rnd(2, 9)];
+    case "vidutinis": return [rnd(2, 12), rnd(2, 12)];
+    case "sunkus": return [rnd(11, 25), rnd(2, 12)];
     case "ekstremalus": return [rnd(12, 50), rnd(6, 19)]; // V3 praplėstas
   }
 }
