@@ -95,20 +95,133 @@ Dirbi **TIESIOGIAI savininko Windows kompiuteryje** (NE debesų Linux!). Detalė
 
 ---
 
-## 🧩 5. PROGRAMAVIMO PRINCIPAI (kaip mes dirbam)
+## 🧩 5. DARBO PRINCIPAI (kaip mes dirbam) — ŠIE SVARBŪS SAVININKUI
 
+### 💻 Programavimo
 1. **Jokio kodo be „OK, darom".** Pirma planas + sauga, tada kodas.
-2. **Maži, sufokusuoti failai (SRP):** viena atsakomybė viename faile. Dizainas atskirai nuo logikos.
-   Naują temą pridėti = kuo mažiau pakeitimų. NEKURTI monolitų.
-3. **Maži dokumentai, ne vienas didelis:** info skaidom į atskirus `.md` (PLANAS, DIZAINAS, ...).
-   Atmintis (memory) — irgi maži temų failai (žr. 13 skyrių).
-4. **Jokio dubliavimo:** seną/pakeistą kodą TRINAM iškart, ne komentuojam.
-5. **Komentarai paaiškina KODĖL** (lietuviškai), ne tik ką.
-6. **Po kiekvieno žingsnio:** `flutter analyze` (0 klaidų) + serverio `npm run build` (tsc 0 klaidų).
-7. **Faktai 100% patikrinti** (gamtos klausimai) — jokių prasimanymų. Klaida turiny = pasitikėjimo praradimas.
-8. **Turinys tinka VISOMS kalboms ir mentalitetams** — nieko neįžeisti.
-9. **Niekada nepridėk klausimo netikrinęs dublikatų** (tas pats faktas tame pačiame lygyje — DRAUDŽIAMA).
-10. **Vengti tool-permission popup'ų:** pirma papildyk `.claude/settings.json` allowlist'ą, tada vykdyk.
+2. **Maži, sufokusuoti failai (SRP):** viena atsakomybė viename faile (didžiausi ~280–426 eil.).
+   Dizainas (widgets) atskirai nuo logikos (services/providers). NEKURTI monolitų.
+3. **Maži dokumentai, ne vienas didelis:** info skaidom į atskirus `.md`. Atmintis — irgi maži temų failai (13 sk.).
+4. **Jokio dubliavimo (DRY):** seną/pakeistą kodą TRINAM iškart (ne komentuojam). Kartojimąsi keliam į bendrą funkciją.
+5. **Registro pattern:** nauja matematikos tema = 1 funkcija `questionRegistry.ts`, ne išbarstytas kodas.
+6. **Fisher-Yates** maišymui (NE `sort(()=>Math.random()-0.5)` — šališkas).
+7. **`fromJson` su atsargom** (`?? default`) — trūkstamas laukas nelaužia app.
+8. **Nested-map atsarga:** Cloud Functions atsakymą su ĮDĖTAIS objektais kliente skaityti per
+   `jsonDecode(jsonEncode())` (kitaip `Map<Object?,Object?>` lūžta → telefone atrodo „offline").
+9. **Komentarai paaiškina KODĖL** (lietuviškai), ne tik ką.
+10. **Po kiekvieno žingsnio:** `flutter analyze` (0 klaidų) + serverio `npm run build` (tsc 0 klaidų) + commit + push.
+11. **Vengti tool-permission popup'ų:** pirma papildyk `.claude/settings.json` allowlist'ą, tada vykdyk.
+
+### 🧪 Kokybės
+- **Smoke testai** generatoriams (tikrini invariantus: 6 variantai, jokių dublių, teisingas tarp jų, sveiki skaičiai).
+- **Patikrinti faktais, ne spėti** — perskaityti kodą/logą prieš teigiant.
+- **Offline fallback:** serveris nepasiekiamas → lokalus generatorius (žaidimas niekada nelūžta, tik „offline").
+- **Turinys:** faktai 100% patikrinti; variantai ≤46 simb. (tikrink KIEKVIENĄ kalbą atskirai); LT kabutės „...";
+  jokio dublio tame pačiame lygyje; tinka VISOMS kalboms/mentalitetams (nieko neįžeisti). Klaida turiny = pasitikėjimo praradimas.
+- ⚠️ **Vertimas NĖRA tiesioginis:** kas tinka lietuviškai, nebūtinai tinka italui/lenkui/arabui. **Patarlės, citatos, idiomos
+  NEVERČIAMOS pažodžiui** — kiekvienai kalbai reikia KULTŪRIŠKAI atitinkamo ekvivalento (žr. 5B sk. „Lokalizacija").
+
+### 🎮 Žaidimo dizaino (sutarta su savininku)
+- **30s laikmatis** klausimui (tiksi aukštyn, be streso), taškai pagal greitį `max(10,100−sek×3)`.
+- **Švelnus modelis:** klaida = 0, žaidimas tęsiasi visus 10 klausimų.
+- **Spąstai (trap):** klaidingi atsakymai = realios žmogiškos klaidos, garantuotai tarp 6 variantų — kad reikėtų galvoti.
+- **Rotacija (no-dup):** klausimai nesikartoja sesijoje IR tarp sesijų (žr. rotacijos receptą 10 sk.).
+- **SCORE = prestižas** (geriausias nedingsta, Top10) · **COINS = valiuta** (nusirašo atrakinant).
+  Coins teisingiau nei „20 sužaistų" — tinginys, spaudžiantis bet ką, coins negauna.
+- **Reklamos saikingai** (interstitial kas 3 partijas + cooldown). Atrakinimas amžinas; prenumerata = 30 d.
+
+### 🤝 Bendravimo / proceso
+- Paprastai, lietuviškai, be žargono. Struktūra KODĖL → KAIP, emoji, „šviesoforas".
+- **Jokių `AskUserQuestion` popup langų** — tik tekstas (savininkas atsako tekstu).
+- **Pagauti savininko klaidas** ir sąžiningai pasakyti (jis tai vertina labiausiai).
+- Po vieną žingsnį. Kokybė > greitis. Sąžiningai apie ribas (neapsimesti, kad veikia).
+
+---
+
+## 🧠 5B. METODIKA IR SKAIČIAVIMAI (tikslūs skaičiai iš KODO — „nematoma" žinia)
+
+> Šios žinios dingsta tarp sesijų. Be jų naujas Claude dėlios klausimus „iš akies" ir lygiai išsiderins.
+> VISKAS žemiau — patikrinta TIESIAI iš kodo. Faktiniai failai nurodyti skliaustuose.
+
+### A) Matematikos klausimų generavimas — RIBOS pagal lygį (`questionRegistry.ts`)
+Vienas variklis: `QUESTION_GENERATORS[family](level)` → `{display, answer, trap?, neighbors?}`. Nauja tema = +1 funkcija (ne 16 kopijų).
+
+**Skaičių rėžiai (`rnd(min,max)`, imtinai):**
+
+| Šeima | 🟢 Lengvas | 🟡 Vidutinis | 🔴 Sunkus | 🔥 Ekstremalus |
+|---|---|---|---|---|
+| Sudėtis `+` | `1–9 + 1–9` | `10–99 + 1–9` | `10–99 + 10–99` | `100–999 + 10–99` |
+| Atimtis `−` | atvirkštinė sudėčiai, rezultatas ≥0 (tie patys rėžiai) ||||
+| Daugyba `×` | `2–5 × 2–5` | `2–10 × 2–10` | `2–12 × 2–12` | `12–50 × 6–19` |
+| Dalyba `÷` | atvirkštinė daugybai, visada sveika (tie patys rėžiai) ||||
+
+**Sudėtiniai (su `trap` = tipinė žmogiška klaida, GARANTUOTAI tarp 6 variantų):**
+- **Mix:** lengvas/vidutinis = 1 atsitiktinis veiksmas; sunkus = 2 veiksmai be skliaustų (`A+B×C`, trap=`(A+B)×C`); ekstremalus = `A×B+C÷D` (trap = nepadalino).
+- **Skliaustai:** lengvas `(A+B)×C`; vidutinis `A×(B−C)`; sunkus `(A+B)×(C−D)`; ekstremalus `A×(B−(C+D))`.
+- **Algebra (rask x):** lengvas `x+B=C`; vidutinis `A×x=C`; sunkus `Ax+B=C`; ekstremalus `x²+A=B` (su `neighbors` x±1,x±2) arba `A×(x−B)=C`.
+
+### B) 6 variantų generavimas (`generateOptions.ts`)
+Aibė = {teisingas} → +`trap` (jei yra) → +`neighbors` (tik ×/÷) → +skaitmenų sukeitimas (jei answer≥10) → +`answer ±1, ±2, ±10`.
+Filtras: **tik teigiami sveiki, ≠ teisingam, be dublių.** Jei <6 — pildoma `±N` (didėjant). Visada lygiai **6**, sumaišyta **tikru Fisher-Yates**.
+
+### C) Taškų formulė (`gameConfig.ts`) — VIENODA visiems lygiams
+- `maxPoints = 100` **visiems lygiams** (lygiai skiriasi klausimų SUNKUMU, ne taškų skale; atskira Top10 kiekvienam režimui).
+- `pointsForAnswer = max(10, floor(100 − sekundės × 3))`; laikas capinamas iki **30s**. Greitas → ~100; 30s → 10; **klaida → 0**.
+- **Coins:** +1 už teisingą, **+1 papildomai jei atsakyta <3s** (serveryje).
+- Konstantos: `QUESTIONS_PER_GAME=10`, `OPTIONS_PER_QUESTION=6`, `MIN_TIME_PER_Q_MS=200` (botų filtras), `TIME_TOLERANCE_MS=3000`.
+
+### D) Anti-cheat (`submitScore`)
+1. Serveris PATS matuoja bendrą laiką (`Date.now() − createdAt`).
+2. Botų filtras: jei bendras laikas < `10 × 200ms` → atmesta.
+3. Jei `Σ(clientTimesMs) > bendrasLaikas + 3000ms` → atmesta (melagingai maži laikai dideliems taškams).
+4. Serveris **perskaičiuoja teisingus** iš `game.answers` — klientu nepasitiki.
+5. Žaidimas **ištrinamas** (replay apsauga). Rekordas rašomas TIK jei naujas geriausias.
+6. Kaupiama serveryje: `coins`, `totalPoints`, `pointsByCategory`, `learnedFacts` (unikalūs teisingų gamtos/sunkaus-mato klausimų ID), `streakDays` (UTC data), `pendingMysteryLetters`.
+
+### E) Rotacija — be pasikartojimo (`triviaEngine`: pickQuestions + mergeRecent)
+- `recentByMode[mode]` — **atskira istorija kiekvienam režimui/potemei/lygiui** (iki `ROTATION_KEEP=150`).
+- **Lankstus langas:** vengiam daugiausia `pool − 10 − 5(FRESH_MARGIN)` naujausių → mažam pool'ui langas susitraukia, kad visada liktų šviežių.
+- Eilė: nematyti → neseniai matyti; jei pool < 10 — leidžiam kartotis (geriau nei <10 klausimų).
+- Atmintis atnaujinama **žaidimo PRADŽIOJE** (ne tik pabaigoje) — iškart išėjus/grįžus gauni KITUS klausimus.
+- **Todėl tikslas 150:** 150 klausimų lygyje → ~14 žaidimų be pasikartojimo. Kodo keisti NEREIKIA, tik pasiekti kiekį.
+
+### F) Atrakinimo ekonomika (`unlockConfig.ts`)
+- Baziniai `add/sub/mul/div` — **VISI nemokami.**
+- Užrakintos šeimos `mix/brackets/algebra`: **Vidutinis = nemokamas DEMO**, kiti 3 lygiai užrakinti.
+- Paketas **NĖRA amžinas:** kaina `UNLOCK_COST_COINS=150`🪙, `PLAYS_PER_PACK=2` (po žaidimo −1; 0 → vėl užrakinta). Nuskaičiuojama startGame transakcijoje.
+- Reklama: `DAILY_AD_PACK_LIMIT=25` paketai/parą (×2 = 50 nemokami žaidimai). Premium: 30 d. (2.99€), laukas `premiumUntil`.
+
+### G) Mįslių mechanika („Cyber-Ratelis" — BANKO modelis; `mysteryTypes.ts` + `mysteryFunctions.ts`)
+- Kategorijos: patarlė/citata/istorija/klausimas/faktas. **Lygis 1–4 → bankas 200/300/400/500** 🔑.
+- **Raidės uždirbamos žaidžiant BET KĄ:** `lettersFor(correct)` → ≥10:3, ≥8:2, ≥6:1, kitaip 0. Saugomos `pendingMysteryLetters`.
+- **Bankas = `max(50, bankMax(level) − spent)`.** MOKAMA pagalba didina `spent` (tirpdo banką), leidžiama TIK jei bankas liktų ≥50 (grindys `MYSTERY_FLOOR`).
+- Pagalbų kainos (iš BANKO, ne iš balanso): užuomina **50**, atskleisti raidę **50**, +1 spėjimas **30**.
+- **Atspėjus** → `mysteryKeys += dabartinis bankas`. **Suklydus** → bankas/raktai NEMAŽĖJA, dingsta 1 spėjimas. `MAX_GUESSES=5` (+nupirkti). Bandymams išsekus → atskleidžia atsakymą, parenka NAUJĄ.
+- NEMOKAMOS raidės (iš `pendingMysteryLetters`) banko NEMAŽINA — tai atlygis.
+- `normalizeGuess`: mažosios, **diakritikai išlaikomi**, skyryba/tarpai suvienodinami. Pauzė tarp spėjimų `GUESS_COOLDOWN_MS=2000`.
+- Pool (klaviatūra): paslėptos raidės + 4 šiukšlės **iš paties teksto abėcėlės** (kalbai neutralu — veikia ir kirilica/arabų). `pickMystery`: tos kalbos vienetai (EN atsarga), pirmenybė neišspręstoms.
+
+### H) ⭐ LOKALIZACIJA / VERTIMAS (10 kalbų — ATSARGIAI!)
+- Palaikomos: `en, lt, es, it, pl, de, fr, uk, pt, ar`. Nežinoma kalba / neišverstas klausimas → **EN atsarga** (`DEFAULT_LANG`).
+- **Vertimas NĖRA pažodinis.** Kas tinka lietuviui, nebūtinai tinka italui/lenkui/arabui.
+  - **Patarlės, citatos, idiomos** — NIEKADA neverčiamos pažodžiui. Kiekvienai kalbai reikia **vietinio kultūrinio ekvivalento** ta pačia prasme (arba praleisti, jei nėra gero atitikmens).
+  - Faktai/skaičiai universalūs; bet formuluotė, pavyzdžiai, humoras — pritaikomi mentalitetui.
+- **Nieko neįžeisti** jokia kultūra/religija/regionu — vengti politiškai/religiškai jautrių temų.
+- **Ilgį ≤46 tikrink KIEKVIENA kalba atskirai** (kai kurios ilgesnės už EN). LT vidinės kabutės „..." (ne ASCII); kitos kalbos — savo kabučių taisyklės.
+- AR (arabų) — RTL, pridedama paskutinė.
+
+### I) Klausimų sunkumo kalibravimas RAŠOMAM turiniui (gamta/mįslės)
+Matematika generuojama (A skyrius), bet gamta/mįslės RAŠOMOS ranka — sunkumą lemia **fakto retumas**:
+- 🟢 **Lengvas:** kasdienės/vaikiškos žinios (voras = 8 kojos). Dalis klaidingų akivaizdžiai ne.
+- 🟡 **Vidutinis:** bendros žinios (paauglys/suaugęs žino). Klaidingi tikėtini.
+- 🔴 **Sunkus:** faktai reikalaujantys domėjimosi. Klaidingi — visi realūs kandidatai.
+- 🔥 **Ekstremalus:** specialisto/rekordų/anatomijos detalės (žuvies širdis = 2 kameros). VISI 5 klaidingi labai tikėtini → tikslumas privalomas.
+- `isTrap: true` = „False Friend" mitas (atrodo logiška, populiarus klaidingas įsitikinimas) — stipri retencijos priemonė.
+
+### J) Firestore duomenų modelis (kur kas gyvena)
+- **Kolekcijos:** `users/{uid}`; `active_games/{id}` (laikinas žaidimas, ištrinamas po submit); `leaderboard/{uid}_{mode}` (geriausias rezultatas režime).
+- **`users/{uid}` laukai:** `coins`, `playPacks{mode:liko}`, `premiumUntil`, `recentByMode{mode:[ids]}`, `username`, `totalPoints`, `pointsByCategory{nature|math}`, `learnedFacts`/`learnedFactIds`, `streakDays`/`lastPlayDate`, `pendingMysteryLetters`, `mysteryKeys`, `mysterySolved[]`, `mystery{...}` (aktyvi paslaptis), `adPacksToday`/`adPacksDate`.
+- **Klientas (Flutter):** offline atsarga `local_question_generator.dart` (matematika generuojama telefone, jei serveris nepasiekiamas — žaidimas nelūžta, tik „offline"). Serverio atsakymą su ĮDĖTAIS objektais skaityti per `jsonDecode(jsonEncode())`.
 
 ---
 
@@ -179,6 +292,11 @@ klausimas 28 · patarlė 15 · citata 13 · faktas 11 · istorija 9.
 
 **Užsirašyta „vėliau":** Firestore TTL `active_games`; rate-limiting `startGame`; nuolatiniai testai;
 lengvame yra 1 dublis („Ostrich" 2×) — sutvarkyti progai.
+
+**✅ nested-map bug JAU IŠTAISYTAS — NEKAPSTYK iš naujo.** `game_api.dart` (4 kvietimai), `unlock_api.dart`,
+`profile_api.dart` ir `mystery_api.dart` jau naudoja `jsonDecode(jsonEncode(...))` įdėtiems objektams
+(patikrinta grep'u). Jei telefonas vis tiek rodo „offline" — priežastis Cloud Run Invoker (allUsers),
+tvarko SAVININKAS konsolėje, **NE kodas.** (Kita sesija tai buvo įtarusi kaip „offline" priežastį — buvo neteisinga.)
 
 ---
 
