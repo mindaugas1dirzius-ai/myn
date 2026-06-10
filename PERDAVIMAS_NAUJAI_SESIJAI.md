@@ -60,6 +60,8 @@ Dirbi **TIESIOGIAI savininko Windows kompiuteryje** (NE debesų Linux!). Detalė
 
 - **OS:** Windows. Repo kelias: `C:\Users\minda\OneDrive\Desktop\minda myn zaidimas\myn`
   (⚠️ default darbinis katalogas gali būti `...\Desktop` — naudok PILNUS kelius arba `cd` į repo).
+- **Šaltinis = GitHub** (ne Windows, ne kuri nors kopija): viskas sinchronizuojama per `git`.
+  Prieš dirbdamas pasitikrink aplinką (`uname`): jei `MINGW…/Windows_NT` → Windows keliai `C:\...`.
 - **PowerShell 5.1** — NĖRA `&&` (naudok `;`). Nėra ternary/`??`. `git` komandos — be `cd` prefikso.
 - **Bash įrankis = Git Bash (MSYS/MINGW64)** — tinka `git`, `npm`, `tsc`, `node`, `grep`.
   ⚠️ **APGAULĖ (lengva suklysti):** `uname`, `grep`, `head`, keliai `/c/Users/...` veikia kaip Linux'e —
