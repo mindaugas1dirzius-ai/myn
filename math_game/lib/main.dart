@@ -2,24 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'services/ad_service.dart';
 import 'services/firebase_service.dart';
+import 'services/sound_service.dart';
 import 'l10n/app_strings.dart';
 import 'l10n/language_controller.dart';
 import 'theme/app_theme.dart';
-import 'screens/home_screen.dart';
+import 'screens/category_home_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await languageController.load(); // įkraunam išsaugotą kalbą
-  // Visa inicializacija apgaubta — jei kas nepavyksta, app VIS TIEK paleidžiamas
-  // (offline). Ekranas niekada nelieka tuščias.
+  // Firebase paliekam prieš runApp() — jis greitas ir lokalus, o ekranams
+  // jo reikia (kitaip skaitytų Firestore prieš inicializaciją). Apgaubta:
+  // jei nepavyksta, žaidimas tęsiasi offline.
   try {
     await FirebaseService.init();
-    await AdService.requestConsent(); // UMP (L, GDPR) PIRMA
-    await AdService.init(); // AdMob (M) — tik jei sutikimas leidžia
   } catch (_) {
     // ignoruojam — žaidimas veiks offline
   }
-  runApp(const MathGameApp());
+  runApp(const MathGameApp()); // ← ekranas pasirodo IŠKART, niekada nelieka tuščias
+  // Garsai — preload į RAM FONE (be await), kad mygtukai grotų be vėlavimo.
+  SoundService.instance.init();
+  // Sutikimas + reklamos — FONE, be await. UMP forma negali blokuoti paleidimo:
+  // jei Google serveris/regionas užstringa, vartotojas vis tiek mato meniu.
+  _initAdsInBackground();
+}
+
+/// Reklamų inicializacija fone — niekada neblokuoja UI.
+Future<void> _initAdsInBackground() async {
+  try {
+    await AdService.requestConsent(); // UMP (L, GDPR) PIRMA
+    await AdService.init(); // AdMob (M) — tik jei sutikimas leidžia
+  } catch (_) {
+    // UMP/AdMob klaida — žaidimas veikia ir be reklamų
+  }
 }
 
 class MathGameApp extends StatelessWidget {
@@ -47,7 +62,7 @@ class MathGameApp extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          home: const HomeScreen(),
+          home: const CategoryHomeScreen(),
         );
       },
     );

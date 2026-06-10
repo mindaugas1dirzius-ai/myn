@@ -16,13 +16,19 @@ const LOCKED_FAMILIES = new Set(["mix", "brackets", "algebra"]);
 /** Nemokamas demo lygis užrakintose šeimose. */
 const DEMO_LEVEL: Level = "vidutinis";
 
-/** Vieno lygio atrakinimo kaina coinais. */
+/** Vieno PAKETO atrakinimo kaina coinais (paketas = PLAYS_PER_PACK žaidimų). */
 export const UNLOCK_COST_COINS = 150;
 
-/** Kiek reklamų reikia atrakinti vieną lygį (kiekviena +75 coins ekvivalentas). */
-export const ADS_TO_UNLOCK = 2;
+/** Kiek žaidimų duoda vienas atrakintas paketas (coins arba reklama).
+ *  Po kiekvieno žaidimo skaitliukas mažėja; pasiekus 0 — lygis vėl užrakinamas. */
+export const PLAYS_PER_PACK = 2;
 
-/** Prenumeratos trukmė (ms). */
+/** Saugiklis (anti-farm): daugiausia reklamų-paketų per parą vienam žaidėjui.
+ *  25 paketai × 2 = max 50 nemokami žaidimai/parą. Kas nori daugiau —
+ *  perka mėnesinę prenumeratą (Etapas B) arba renka monetas žaisdamas. */
+export const DAILY_AD_PACK_LIMIT = 25;
+
+/** Prenumeratos trukmė (ms) — Etapas B (2.99 €/mėn). */
 export const PREMIUM_DURATION_MS = 30 * 24 * 60 * 60 * 1000;
 
 /** Ar šis režimas (family_level) yra užrakintas pagal nutylėjimą?

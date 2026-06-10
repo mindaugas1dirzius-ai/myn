@@ -29,19 +29,31 @@ class NeumorphicButton extends StatelessWidget {
         duration: const Duration(milliseconds: 120),
         padding: padding,
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          // Subtilus gradientas (šviesiau viršuje-kairėje) → tūrio pojūtis.
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [AppColors.shadowLight, AppColors.surface],
+          ),
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: accent.withValues(alpha: 0.55), width: 1.5),
-          boxShadow: const [
-            BoxShadow(
+          border: Border.all(color: accent.withValues(alpha: 0.7), width: 1.5),
+          boxShadow: [
+            // Neumorfiniai šešėliai (gylis).
+            const BoxShadow(
               color: AppColors.shadowDark,
               offset: Offset(5, 5),
               blurRadius: 12,
             ),
-            BoxShadow(
+            const BoxShadow(
               color: AppColors.shadowLight,
               offset: Offset(-5, -5),
               blurRadius: 12,
+            ),
+            // Akcento švytėjimas — mygtukas „šviečia" savo spalva.
+            BoxShadow(
+              color: accent.withValues(alpha: 0.28),
+              blurRadius: 18,
+              spreadRadius: -3,
             ),
           ],
         ),

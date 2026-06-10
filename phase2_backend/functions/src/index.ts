@@ -24,7 +24,9 @@ import {
   MIN_TIME_PER_Q_MS,
   MAX_TIME_PER_Q_MS,
   TIME_TOLERANCE_MS,
+  ROTATION_KEEP,
 } from "./gameConfig";
+import { mergeRecent } from "./triviaEngine";
 import {
   QUESTION_GENERATORS,
   GenQuestion,
@@ -33,15 +35,17 @@ import {
 import { generateOptions } from "./generateOptions";
 import {
   UNLOCK_COST_COINS,
-  ADS_TO_UNLOCK,
+  PLAYS_PER_PACK,
+  DAILY_AD_PACK_LIMIT,
   isLockedByDefault,
 } from "./unlockConfig";
+import { lettersFor } from "./mysteryTypes";
 
 admin.initializeApp();
 const db = admin.firestore();
 
 const REGION = "europe-west1";
-const ROTATION_KEEP = 30; // kiek paskutinių klausimų atsimename (žr. rotacijos saugiklį)
+// ROTATION_KEEP — bendra konstanta gameConfig.ts (naudoja ir startNatureGame).
 
 /** Vartotojo vardo sanitizacija prieš rašant į VIEŠĄ leaderboard. */
 function sanitizeUsername(raw: unknown): string {
@@ -77,19 +81,25 @@ export const startGame = onCall(
     const mode = request.data.mode as string;
 
     // Profilis: rotacija + UŽRAKTO patikra (sukčius negali žaisti užrakinto).
-    const userSnap = await db.collection("users").doc(uid).get();
+    const userRef = db.collection("users").doc(uid);
+    const userSnap = await userRef.get();
     const userData = userSnap.data() ?? {};
 
-    if (isLockedByDefault(family, level)) {
-      const unlocked: string[] = userData.unlockedModes ?? [];
-      const premiumUntil = (userData.premiumUntil as number) ?? 0;
-      const isPremium = premiumUntil > Date.now();
-      if (!unlocked.includes(mode) && !isPremium) {
+    // Užrakintas lygis žaidžiamas TIK jei turi paketą (playPacks[mode] > 0)
+    // arba aktyvią premium prenumeratą (Etapas B). Greita patikra prieš
+    // generuojant klausimus — kad serveris nedirbtų be reikalo.
+    const locked = isLockedByDefault(family, level);
+    const isPremium = ((userData.premiumUntil as number) ?? 0) > Date.now();
+    if (locked && !isPremium) {
+      const packs = (userData.playPacks as Record<string, number>) ?? {};
+      if ((packs[mode] ?? 0) <= 0) {
         throw new HttpsError("permission-denied", "Lygis užrakintas.");
       }
     }
 
-    const recent: string[] = userData.recentQuestions ?? [];
+    // Atmintis PER REŽIMĄ: šio mode istorija neliečia kitų lygių/temų.
+    const recentByMode = (userData.recentByMode as Record<string, string[]>) ?? {};
+    const recent: string[] = recentByMode[mode] ?? [];
     const seen = new Set<string>(recent);
 
     // Generuojam 10 UNIKALIŲ klausimų (vengiam pasikartojimo + paskutinių).
@@ -111,13 +121,31 @@ export const startGame = onCall(
     );
 
     const gameRef = db.collection("active_games").doc();
-    await gameRef.set({
-      uid,
-      mode: request.data.mode,
-      level,
-      answers: questions.map((q) => q.answer), // slapta
-      actions: questions.map((q) => q.display),
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    // Atominis paketo nuskaičiavimas (-1) + žaidimo įrašas vienoje transakcijoje.
+    // Skaičiuojama PRADŽIOJE (kai žaidimas startuoja), kad greitas start'ų
+    // spamas neišsunktų paketo daugiau nei priklauso.
+    await db.runTransaction(async (transaction) => {
+      if (locked) {
+        const fresh = await transaction.get(userRef);
+        const fd = fresh.data() ?? {};
+        const freshPremium = ((fd.premiumUntil as number) ?? 0) > Date.now();
+        if (!freshPremium) {
+          const packs = (fd.playPacks as Record<string, number>) ?? {};
+          const left = packs[mode] ?? 0;
+          if (left <= 0) {
+            throw new HttpsError("permission-denied", "Lygis užrakintas.");
+          }
+          transaction.update(userRef, { [`playPacks.${mode}`]: left - 1 });
+        }
+      }
+      transaction.set(gameRef, {
+        uid,
+        mode: request.data.mode,
+        level,
+        answers: questions.map((q) => q.answer), // slapta
+        actions: questions.map((q) => q.display),
+        createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      });
     });
 
     // Klientui grąžinam ir `answer` (variantas C, DIZAINAS.md):
@@ -238,15 +266,95 @@ export const submitScore = onCall(
       const hasCustomName = existingName !== undefined;
 
       // Coins balansas (kaupiamas serveryje).
-      const prevCoins = (userDoc.data()?.coins as number) ?? 0;
+      const prevData = userDoc.data() ?? {};
+      const prevCoins = (prevData.coins as number) ?? 0;
       const newCoins = prevCoins + coinsEarned;
 
-      // Rotacijos atnaujinimas + username + coins (vienas rašymas).
-      const prevRecent: string[] = userDoc.data()?.recentQuestions ?? [];
-      const newRecent = [...(game.actions as string[]), ...prevRecent].slice(0, ROTATION_KEEP);
+      // „Atspėk paslaptį" meta-žaidimas: pagal SERVERIO patikrintą teisingų
+      // skaičių sukaupiam „pažadėtas" atveriamas raides. Vėliau revealLetters
+      // jas suvartoja. ADITYVU — ekonomikos/taškų logika NEPALIESTA.
+      const prevPendingLetters = (prevData.pendingMysteryLetters as number) ?? 0;
+      const newPendingLetters = prevPendingLetters + lettersFor(correct);
+
+      // ===== ETAPAS C: kaupiama profilio statistika (viskas SERVERYJE) =====
+      // Kategorija pagal mode: "nature_*" → žinios, kita → matematika.
+      const category = (game.mode as string).startsWith("nature")
+        ? "nature"
+        : "math";
+
+      // Bendri (viso gyvenimo) taškai — avatarų progresui.
+      const prevTotal = (prevData.totalPoints as number) ?? 0;
+      const newTotal = prevTotal + score;
+
+      // Taškai pagal temą (merge išsaugo kitos temos reikšmę).
+      const prevCats = (prevData.pointsByCategory as Record<string, number>) ?? {};
+      const newCatPoints = (prevCats[category] ?? 0) + score;
+
+      // Išmokti faktai: tik UNIKALŪS (kartojant tą patį klausimą — NEDIDĖJA).
+      // Saugome teisingai atsakytų klausimų ID rinkinį (game.actions[i] = klausimo
+      // ID gamtai / išraiška matui). learnedFacts = to rinkinio dydis.
+      // Skaičiuojam Gamtos teisingus (žinios) arba sunkų/ekstremalų matą.
+      const isHardMath =
+        category === "math" && (level === "sunkus" || level === "ekstremalus");
+      const countsAsFact = category === "nature" || isHardMath;
+      const factIds = (game.actions as unknown[]) ?? [];
+      const prevFactIds: string[] = (prevData.learnedFactIds as string[]) ?? [];
+      const factSet = new Set<string>(prevFactIds);
+      if (countsAsFact) {
+        for (let i = 0; i < serverAnswers.length; i++) {
+          const id = factIds[i];
+          if (clientAnswers[i] === serverAnswers[i] && id != null) {
+            factSet.add(String(id));
+          }
+        }
+      }
+      // Saugiklis: ribojam dokumento dydį (laikom naujausius). Gamtos pūlas
+      // mažas (~150), tad praktiškai niekada nepasieks; tai tik apsauga matui.
+      const LEARNED_CAP = 2000;
+      let newFactIds = Array.from(factSet);
+      if (newFactIds.length > LEARNED_CAP) {
+        newFactIds = newFactIds.slice(newFactIds.length - LEARNED_CAP);
+      }
+      const newLearned = newFactIds.length;
+
+      // Serija (streak): dienos iš eilės (UTC data, nepriklauso nuo TZ).
+      const today = new Date().toISOString().slice(0, 10);
+      const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+      const lastPlay = (prevData.lastPlayDate as string) ?? "";
+      const prevStreak = (prevData.streakDays as number) ?? 0;
+      let newStreak: number;
+      if (lastPlay === today) {
+        newStreak = prevStreak > 0 ? prevStreak : 1; // jau žaista šiandien
+      } else if (lastPlay === yesterday) {
+        newStreak = prevStreak + 1; // tęsiasi serija
+      } else {
+        newStreak = 1; // nutrūko (arba pirmas kartas)
+      }
+
+      // Rotacija PER REŽIMĄ + username + coins + ETAPO C statistika (vienas rašymas).
+      // recentByMode[mode] — atskira kiekvieno lygio/temos istorija; merge:true
+      // giliai sulieja žemėlapį, tad kitų režimų istorijos nepaliečia.
+      const gameMode = game.mode as string;
+      const prevByMode = (prevData.recentByMode as Record<string, string[]>) ?? {};
+      const prevRecent: string[] = prevByMode[gameMode] ?? [];
+      // mergeRecent: naujausi pirma, BE dublikatų. Gamtoj žaidimo ID jau įrašyti
+      // PRADŽIOJE (startNatureGame) — dedup užtikrina, kad jie neužims dviejų
+      // vietų lange. Matematikai elgesys nepakitęs (tiesiog be atsitiktinių dublių).
+      const newRecent = mergeRecent(game.actions as string[], prevRecent, ROTATION_KEEP);
       transaction.set(
         userRef,
-        { recentQuestions: newRecent, username, coins: newCoins },
+        {
+          recentByMode: { [gameMode]: newRecent },
+          username,
+          coins: newCoins,
+          pendingMysteryLetters: newPendingLetters,
+          totalPoints: newTotal,
+          pointsByCategory: { [category]: newCatPoints },
+          learnedFacts: newLearned,
+          learnedFactIds: newFactIds,
+          streakDays: newStreak,
+          lastPlayDate: today,
+        },
         { merge: true }
       );
 
@@ -272,6 +380,14 @@ export const submitScore = onCall(
         isNewRecord,
         coinsEarned,
         totalCoins: newCoins,
+        // „Atspėk paslaptį" kabliukas: kiek raidžių uždirbta ŠIAME žaidime ir
+        // kiek iš viso laukia neatvertų — rezultatų ekranas tai parodo iškart.
+        earnedLetters: lettersFor(correct),
+        pendingMysteryLetters: newPendingLetters,
+        // Etapas C: nauja kaupiama statistika (klientas gali parodyti progresą).
+        totalPoints: newTotal,
+        learnedFacts: newLearned,
+        streakDays: newStreak,
         // Raginimas įvesti vardą (variantas C): rekordas + dar auto-vardas.
         promptName: isNewRecord && !hasCustomName,
       };
@@ -321,7 +437,8 @@ export const getMyRank = onCall(
 );
 
 // =================================================================
-// 4) unlockMode — atrakina vieną lygį už COINS (Etapas 3)
+// 4) unlockMode — nuperka žaidimų PAKETĄ lygiui už COINS (Etapas 3)
+//    Paketas NĖRA amžinas: playPacks[mode] += PLAYS_PER_PACK; startGame nuskaičiuoja po 1.
 // =================================================================
 export const unlockMode = onCall(
   { enforceAppCheck: true, minInstances: 0, region: REGION },
@@ -345,36 +462,36 @@ export const unlockMode = onCall(
     return await db.runTransaction(async (transaction) => {
       const userDoc = await transaction.get(userRef);
       const data = userDoc.data() ?? {};
-      const unlocked: string[] = data.unlockedModes ?? [];
-      if (unlocked.includes(mode)) {
-        return { success: true, alreadyUnlocked: true, coins: data.coins ?? 0 };
-      }
       const coins = (data.coins as number) ?? 0;
       if (coins < UNLOCK_COST_COINS) {
         throw new HttpsError("failed-precondition", "Per mažai monetų.");
       }
-      // Atominė transakcija: nurašom coins + pridedam į unlockedModes.
+      const packs = (data.playPacks as Record<string, number>) ?? {};
+      const newLeft = (packs[mode] ?? 0) + PLAYS_PER_PACK;
+      // Atominė transakcija: nurašom coins + pridedam paketą (merge išsaugo kitų lygių paketus).
       transaction.set(
         userRef,
         {
           coins: coins - UNLOCK_COST_COINS,
-          unlockedModes: [...unlocked, mode],
+          playPacks: { [mode]: newLeft },
         },
         { merge: true }
       );
       return {
         success: true,
-        alreadyUnlocked: false,
         coins: coins - UNLOCK_COST_COINS,
+        playsLeft: newLeft,
       };
     });
   }
 );
 
 // =================================================================
-// 5) unlockByAds — atrakina vieną lygį už 2 reklamas (Etapas 3)
+// 5) unlockByAd — duoda žaidimų PAKETĄ lygiui už PAŽIŪRĖTĄ reklamą
+//    Saugiklis: DAILY_AD_PACK_LIMIT paketų per parą vienam uid (anti-farm).
+//    Pilnas AdMob SSV (server-side verification) — vėliau.
 // =================================================================
-export const unlockByAds = onCall(
+export const unlockByAd = onCall(
   { enforceAppCheck: true, minInstances: 0, region: REGION },
   async (request) => {
     if (!request.auth) {
@@ -390,37 +507,67 @@ export const unlockByAds = onCall(
       throw new HttpsError("failed-precondition", "Šis lygis nemokamas.");
     }
 
+    // Dabartinė UTC diena „YYYY-MM-DD" — stabili, nepriklauso nuo serverio TZ.
+    const today = new Date().toISOString().slice(0, 10);
+
     const userRef = db.collection("users").doc(uid);
     return await db.runTransaction(async (transaction) => {
       const userDoc = await transaction.get(userRef);
       const data = userDoc.data() ?? {};
-      const unlocked: string[] = data.unlockedModes ?? [];
-      if (unlocked.includes(mode)) {
-        return { success: true, alreadyUnlocked: true, adsWatched: 0 };
-      }
-      // Skaičiuojam šio režimo peržiūrėtas reklamas. +1 už šį kvietimą.
-      const adProgress: Record<string, number> = data.adProgress ?? {};
-      const watched = (adProgress[mode] ?? 0) + 1;
 
-      if (watched >= ADS_TO_UNLOCK) {
-        // Pasiekta — atrakinam, išvalom progresą.
-        delete adProgress[mode];
-        transaction.set(
-          userRef,
-          { unlockedModes: [...unlocked, mode], adProgress },
-          { merge: true }
+      const savedDate = (data.adPacksDate as string) ?? "";
+      // Nauja diena (arba laukų dar nėra) — nulinam dienos skaitiklį.
+      const usedToday =
+        savedDate === today ? ((data.adPacksToday as number) ?? 0) : 0;
+      if (usedToday >= DAILY_AD_PACK_LIMIT) {
+        throw new HttpsError(
+          "resource-exhausted",
+          "Šiandien pasiekei reklamų limitą. Bandyk rytoj arba pirk prenumeratą."
         );
-        return { success: true, unlockedNow: true, adsWatched: watched };
       }
-      // Dar ne — fiksuojam progresą.
-      adProgress[mode] = watched;
-      transaction.set(userRef, { adProgress }, { merge: true });
+
+      const packs = (data.playPacks as Record<string, number>) ?? {};
+      const newLeft = (packs[mode] ?? 0) + PLAYS_PER_PACK;
+      const newUsedToday = usedToday + 1;
+
+      // Atominė transakcija: paketas + dienos skaitiklis/data.
+      transaction.set(
+        userRef,
+        {
+          playPacks: { [mode]: newLeft },
+          adPacksToday: newUsedToday,
+          adPacksDate: today,
+        },
+        { merge: true }
+      );
+
       return {
         success: true,
-        unlockedNow: false,
-        adsWatched: watched,
-        adsNeeded: ADS_TO_UNLOCK,
+        unlockedNow: true,
+        playsLeft: newLeft,
+        adsLeftToday: DAILY_AD_PACK_LIMIT - newUsedToday,
       };
     });
   }
 );
+
+// =================================================================
+// 6) startNatureGame — Gamtos/žinių trivijos startas (IZOLIUOTAS modulis).
+//    Įrašo į active_games tuo pačiu formatu → submitScore veikia be pakeitimų.
+//    Ekonomika (1–5) nepaliesta; tai TIK nauja eilutė.
+// =================================================================
+export { startNatureGame } from "./triviaFunctions";
+
+// =================================================================
+// 7) „Atspėk paslaptį" meta-žaidimas (IZOLIUOTAS modulis).
+//    Raides atveria pagal submitScore užrašytą pendingMysteryLetters;
+//    spėjimą tikrina serveris, monetos keičiamos saugiai (≥0).
+// =================================================================
+export {
+  startMystery,
+  revealLetters,
+  guessMystery,
+  resetMystery,
+  getMysteryStatus,
+  mysteryPowerup,
+} from "./mysteryFunctions";

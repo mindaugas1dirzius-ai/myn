@@ -1,3 +1,4 @@
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import '../l10n/app_strings.dart';
 import '../services/ad_service.dart';
@@ -53,7 +54,7 @@ class _UnlockDialogState extends State<_UnlockDialog> {
 
   Future<void> _watchAd() async {
     setState(() => _busy = true);
-    // Rodom rewarded reklamą; po peržiūros pranešam serveriui.
+    // Rodom rewarded reklamą; po peržiūros pranešam serveriui (→ +5 žaidimai).
     final watched = await AdService.showRewarded();
     if (!watched) {
       if (mounted) setState(() => _busy = false);
@@ -65,13 +66,25 @@ class _UnlockDialogState extends State<_UnlockDialog> {
       if (r.unlockedNow) {
         Navigator.pop(context, true);
       } else {
+        setState(() => _busy = false);
+      }
+    } on FirebaseFunctionsException catch (e) {
+      // Tik resource-exhausted = tikras dienos limitas. Kitkas — bendra klaida
+      // (pvz. App Check, tinklas) — kad žaidėjas nebūtų klaidinamas.
+      if (mounted) {
+        final s = AppStrings.of(context);
         setState(() {
           _busy = false;
-          _msg = AppStrings.of(context).adProgress(r.adsWatched, r.adsNeeded);
+          _msg = e.code == 'resource-exhausted' ? s.adLimitReached : s.adFailed;
         });
       }
     } catch (_) {
-      if (mounted) setState(() => _busy = false);
+      if (mounted) {
+        setState(() {
+          _busy = false;
+          _msg = AppStrings.of(context).adFailed;
+        });
+      }
     }
   }
 
@@ -121,7 +134,7 @@ class _UnlockDialogState extends State<_UnlockDialog> {
                       backgroundColor: AppColors.levelMedium.withValues(alpha: 0.15)),
                   icon: const Icon(Icons.ondemand_video,
                       color: AppColors.levelMedium, size: 18),
-                  label: Text(s.unlockWithAds(UnlockApi.adsToUnlock),
+                  label: Text(s.unlockWithAd,
                       style: const TextStyle(color: AppColors.levelMedium)),
                 ),
               ),

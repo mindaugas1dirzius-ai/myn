@@ -4,6 +4,16 @@
 > Einam **po vieną žingsnį**. Nepradedam naujo, kol esamas neaiškus ir nepažymėtas ✅.
 > Kiekvienai daliai atsakom į 3 klausimus: **KODĖL? KAIP? KAM SKIRTA?**
 
+## 🎯 PAGRINDINIS TIKSLAS (kreipia visus sprendimus)
+
+Paruošti ir **saugiai paleisti į Google Play** produktą, kuris atitinka 4 dalykus.
+Kiekvieną sprendimą sveriam pagal juos:
+
+1. 🔒 **Sauga** — pirmoje vietoje, virš visko.
+2. ✅ **Matematinis teisingumas** — viskas 100% teisinga.
+3. 🎮 **Įtraukumas + įvairovė** — kad neatsibostų: gera logika, dizainas, DAUG variantų lygiuose/žaidimuose ir jie **nesikartoja**.
+4. 💰 **Uždarbis** — kad neštų pinigų (coins, reklamos, prenumerata).
+
 ## 🛑 SVARBIAUSIA TAISYKLĖ (virš visų kitų)
 
 **Be aiškaus „OK, darom" — Claude NIEKO nekuria/nekeičia kode.**
@@ -15,13 +25,17 @@ principų ir Google Play), SUDERINAM, ir TIK tada, kai savininkas pasako
 
 ## 📜 DARBO TAISYKLĖS (visada galioja)
 
+### 0. Saugumas — pirmoje vietoje (virš visko)
+Prieš bet kokį pakeitimą įvertinam saugą: server-authoritative (serveris tikrina viską), App Check, Security Rules, jokio `eval()`, coins/IAP/atrakinimas tik serveryje, validacija boundary'uose.
+**Kaip veikia:** sauga svarbiau už greitį ar patogumą. Jei pakeitimas kelia riziką — nedarom, ieškom saugaus kelio.
+
 ### 1. Planas virš visko (Plan Before Code) + Kokybė > greitis
 Niekada nerašom kodo, kol abu nepatvirtinam, kurioje tiksliai plano vietoje esam ir ką konkrečiai darysim.
 **Kaip veikia:** prieš kiekvieną naują žingsnį parodau atnaujintą `PLANAS.md` vaizdą. Tik kai parašai **„Darom"** — judam toliau.
 **Auksinė taisyklė:** geriau **lėčiau, bet kokybiškai ir taip, kaip nori savininkas**, nei greitai ir „bele kaip". Po kiekvieno žingsnio parodau rezultatą — savininkas patikrina PRIEŠ einant toliau. Niekada nebėgam „kaip akis išdegę".
 
-### 2. Griežtas kodo skaidymas (Single Responsibility)
-Jokių milžiniškų failų. Kodas skaidomas į mažus, nepriklausomus modulius.
+### 2. Griežtas skaidymas (Single Responsibility) — KODE IR DOKUMENTUOSE
+Jokių milžiniškų failų ar dokumentų. Skaidom į mažus, nepriklausomus modulius. Didelius dokumentus irgi skaidom į mažesnius (ne vienas „viskas iš karto").
 **Kaip veikia:** dizainas (Widgets) gyvena atskirai nuo logikos (Services/Providers). Kiekviena serverio funkcija ar ekrano elementas turi **tik vieną aiškią užduotį** — kad pakeitimai nesugriautų likusio žaidimo.
 
 ### 3. „Skauto taisyklė" ir nulinis dubliavimas (Zero Redundancy)
