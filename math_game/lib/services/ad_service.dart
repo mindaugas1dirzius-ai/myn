@@ -20,6 +20,12 @@ class AdService {
   static DateTime? _lastInterstitial;
   static const Duration _cooldown = Duration(seconds: 90);
 
+  // Dažnio ribojimas (retention): reklamą rodom tik KAS 3-ią baigtą partiją,
+  // o ne po kiekvienos. Per dažna reklama atbaido žaidėjus. Skaitliukas auga
+  // su kiekviena partija; pasiekus ribą — parodom ir nulinam.
+  static const int _gamesPerAd = 3;
+  static int _gamesSinceAd = 0;
+
   static InterstitialAd? _interstitial;
 
   /// Ar leidžiama rodyti reklamas. Nustatoma per requestConsent() (UMP, L žingsnis).
@@ -158,14 +164,19 @@ class AdService {
     );
   }
 
-  /// Parodo interstitial, JEI praėjo cooldown ir reklama paruošta.
-  /// Žaidimas tęsiasi net jei reklamos nėra (niekada neblokuoja).
+  /// Parodo interstitial, JEI: praėjo bent 3 partijos, praėjo cooldown ir
+  /// reklama paruošta. Žaidimas tęsiasi net jei reklamos nėra (niekada neblokuoja).
   static void maybeShowInterstitial() {
     if (!adsAllowed) return;
+
+    // Dažnio riba: rodom tik kas _gamesPerAd-ią partiją.
+    _gamesSinceAd++;
+    if (_gamesSinceAd < _gamesPerAd) return; // dar ne laikas
+
     final now = DateTime.now();
     if (_lastInterstitial != null &&
         now.difference(_lastInterstitial!) < _cooldown) {
-      return; // dar cooldown
+      return; // dar cooldown (skaitliukas lieka — parodysim kitą kartą)
     }
     final ad = _interstitial;
     if (ad == null) {
@@ -185,6 +196,7 @@ class AdService {
       },
     );
     _lastInterstitial = now;
+    _gamesSinceAd = 0; // nulinam — kitas rodymas vėl po 3 partijų
     ad.show();
   }
 }

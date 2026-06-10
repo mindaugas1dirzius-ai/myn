@@ -41,10 +41,14 @@ dependencies:
   firebase_app_check: ^0.3.1+7   # Play Integrity (App Check)
 
   # Monetizacija (M žingsnis)
-  google_mobile_ads: ^5.2.0      # AdMob: banner + interstitial
+  google_mobile_ads: ^8.0.0      # AdMob: banner + interstitial + rewarded (Gradle 9 suderinama)
 
   # Nustatymai (kalbos pasirinkimo išsaugojimas)
   shared_preferences: ^2.3.3
+
+  # Garso efektai (mygtukai / teisinga / klaidinga / pabaiga).
+  # Žemo vėlavimo režimas + preload į RAM → garsas suveikia žaibiškai.
+  audioplayers: ^6.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -71,6 +75,19 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # Pagrindinių užrašų šriftas — Orbitron (geometrinis, „kiber" stilius).
+  # Kintamasis (variable) šriftas: vienas failas dengia visus storius (wght).
+  # Licencija: SIL OFL 1.1 — leidžiama naudoti komerciškai (saugu Google Play).
+  fonts:
+    - family: Orbitron
+      fonts:
+        - asset: assets/fonts/Orbitron.ttf
+
+  # Garso efektai. PATYS sugeneruoti WAV tonai (jokių autorinių teisių —
+  # 100% saugu Google Play). Trumpi → maži failai, greitai įkraunami į RAM.
+  assets:
+    - assets/sounds/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

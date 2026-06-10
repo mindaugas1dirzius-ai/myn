@@ -2,21 +2,36 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Vartotojų profiliai: kiekvienas mato visus (vardams), bet keičia tik savo.
+    // Vartotojų profiliai: kiekvienas mato visus (vardams).
+    //
+    // ⚠️ EKONOMIKOS SAUGA: klientas gali keisti TIK `username`. Visus pinigų/
+    // teisių laukus (coins, playPacks, premiumUntil, adPacksToday, adPacksDate,
+    // recentQuestions, unlockedModes) rašo TIK Cloud Functions (Admin SDK
+    // taisyklių nepaiso). Kitaip nulaužtas klientas įrašytų sau begalę monetų,
+    // nemokamus paketus ar „premium amžinai" ir apeitų visą serverio logiką.
+    function validUsername() {
+      return request.resource.data.username is string
+             && request.resource.data.username.size() >= 2
+             && request.resource.data.username.size() <= 16;
+    }
     match /users/{userId} {
       allow read: if request.auth != null;
-      allow write: if request.auth != null
-                   && request.auth.uid == userId
-                   // username validuojam TIK jei jis keičiamas. Kitų laukų
-                   // (avataro, nustatymų) atnaujinimas nesiunčiant username veiks.
-                   && (
-                     !request.resource.data.diff(resource.data).affectedKeys().hasAny(['username'])
-                     || (
-                       request.resource.data.username is string
-                       && request.resource.data.username.size() >= 2
-                       && request.resource.data.username.size() <= 16
-                     )
-                   );
+
+      // Sukurti dokumentą klientas gali TIK su vienu lauku — username
+      // (pirmas kartas, kol serveris dar nesukūrė profilio).
+      allow create: if request.auth != null
+                    && request.auth.uid == userId
+                    && request.resource.data.keys().hasOnly(['username'])
+                    && validUsername();
+
+      // Atnaujinti — leidžiama TIK jei keičiamas vienintelis laukas `username`.
+      // Bet koks bandymas paliesti coins/playPacks/premiumUntil ir kt. — blokuojama.
+      allow update: if request.auth != null
+                    && request.auth.uid == userId
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['username'])
+                    && validUsername();
+
+      allow delete: if false;
     }
 
     // Globali reitingų lentelė: žaidėjai gali TIK skaityti.

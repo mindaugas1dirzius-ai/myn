@@ -1,13 +1,17 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import '../l10n/app_strings.dart';
 import '../models/game_mode.dart';
 import '../providers/game_provider.dart';
+import '../services/sound_service.dart';
 import '../theme/app_theme.dart';
+import '../widgets/app_background.dart';
 import '../widgets/exit_dialog.dart';
 import '../widgets/live_points.dart';
 import '../widgets/neon_timer_ring.dart';
 import '../widgets/neumorphic_box.dart';
 import '../widgets/neumorphic_button.dart';
+import '../widgets/sound_toggle_button.dart';
 import 'result_screen.dart';
 
 /// G4: žaidimo ekranas — sujungia langelį, žiedą, atsakymus ir LOGIKĄ.
@@ -64,13 +68,20 @@ class _GameScreenState extends State<GameScreen>
   void _onAnswer(int value) {
     if (_game.isBusy) return;
     _stopwatch.stop();
+    SoundService.instance.tap(); // paspaudimo garsas iškart
     _game.answer(value, _stopwatch.elapsedMilliseconds);
+    if (_game.state == CellState.correct) {
+      SoundService.instance.correct();
+    } else {
+      SoundService.instance.wrong();
+    }
     _afterResolve();
   }
 
   void _onTimeout() {
     if (_game.isBusy) return;
     _stopwatch.stop();
+    SoundService.instance.wrong(); // laikas baigėsi = klaida
     _game.timeout();
     _afterResolve();
   }
@@ -93,14 +104,20 @@ class _GameScreenState extends State<GameScreen>
 
     _game.next();
     if (_game.finished) {
+      SoundService.instance.win(); // partijos pabaigos akordas
       // Siunčiam rezultatą serveriui (jei server režimas); gaunam pilną rezultatą.
       final result = await _game.submitToServer();
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (_) => ResultScreen(
-            op: widget.op,
-            level: widget.level,
+            accent: widget.level.color,
+            onPlayAgain: (ctx) => Navigator.of(ctx).pushReplacement(
+              MaterialPageRoute(
+                builder: (_) => GameScreen(
+                    modeId: widget.modeId, op: widget.op, level: widget.level),
+              ),
+            ),
             modeId: widget.modeId,
             correct: _game.correctCount,
             total: _game.total,
@@ -108,10 +125,13 @@ class _GameScreenState extends State<GameScreen>
             online: _game.source == Source.server,
             coinsEarned: result?.coinsEarned ?? 0,
             promptName: result?.promptName ?? false,
+            earnedLetters: result?.earnedLetters ?? 0,
+            pendingMysteryLetters: result?.pendingMysteryLetters ?? 0,
           ),
         ),
       );
     } else {
+      SoundService.instance.swoosh(); // naujo klausimo atsiradimas
       setState(() => _ringKey++); // naujas žiedas naujam klausimui
       _startQuestion();
     }
@@ -121,7 +141,9 @@ class _GameScreenState extends State<GameScreen>
   Widget build(BuildContext context) {
     final accent = widget.level.color;
     return Scaffold(
-      body: SafeArea(
+      body: AppBackground(
+        accent: accent,
+        child: SafeArea(
         child: ListenableBuilder(
           listenable: _game,
           builder: (context, _) {
@@ -148,10 +170,16 @@ class _GameScreenState extends State<GameScreen>
                         running: _game.state == CellState.idle,
                         resetKey: _ringKey,
                       ),
-                      IconButton(
-                        icon: Icon(Icons.close,
-                            color: AppColors.textSecondary, size: 28),
-                        onPressed: _onQuitPressed,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SoundToggleButton(),
+                          IconButton(
+                            icon: Icon(Icons.close,
+                                color: AppColors.textSecondary, size: 28),
+                            onPressed: _onQuitPressed,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -167,17 +195,36 @@ class _GameScreenState extends State<GameScreen>
             );
           },
         ),
+        ),
       ),
     );
   }
 
-  /// Ženklas, kad žaidžiama offline (rezultatas neįrašomas į Top 10).
+  /// Aiškus įspėjimas, kad žaidžiama offline — taškai/monetos neįsiskaitys
+  /// (rezultatas į Top 10 nepateks). Geltona juosta, kad žaidėjas pastebėtų.
   Widget _offlineBadge() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Text(
-        'Offline',
-        style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
+    final s = AppStrings.of(context);
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppColors.levelMedium.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: AppColors.levelMedium.withValues(alpha: 0.5)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.wifi_off, color: AppColors.levelMedium, size: 16),
+          const SizedBox(width: 8),
+          Flexible(
+            child: Text(
+              s.offlinePlaying,
+              style: const TextStyle(
+                  color: AppColors.levelMedium, fontSize: 12),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -250,6 +297,7 @@ class _GameScreenState extends State<GameScreen>
           color: c == accent ? AppColors.textPrimary : c,
           fontSize: 24,
           fontWeight: FontWeight.bold,
+          fontFamily: kHeadingFont,
         ),
       ),
     );

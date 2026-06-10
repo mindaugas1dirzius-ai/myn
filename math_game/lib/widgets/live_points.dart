@@ -77,7 +77,10 @@ class _LivePointsState extends State<LivePoints>
             const SizedBox(width: 4),
             Text('+$p',
                 style: TextStyle(
-                    color: c, fontSize: 20, fontWeight: FontWeight.bold)),
+                    color: c,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: kHeadingFont)),
           ],
         );
       },

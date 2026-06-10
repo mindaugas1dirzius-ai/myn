@@ -47,6 +47,7 @@ class NeumorphicBox extends StatelessWidget {
               fontSize: 48,
               fontWeight: FontWeight.bold,
               letterSpacing: 2,
+              fontFamily: kHeadingFont,
             ),
           ),
         ),

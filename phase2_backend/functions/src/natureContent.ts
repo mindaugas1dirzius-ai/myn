@@ -4112,7 +4112,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "How does the bombardier beetle defend itself?",
-        correct: "It sprays a hot, boiling chemical jet from its rear",
+        correct: "It sprays a hot, boiling chemical spray",
         distractors: [
           "It plays dead for hours",
           "It flashes bright light",
@@ -4124,7 +4124,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
       },
       lt: {
         question: "Kaip ginasi vabalas bombardyrius?",
-        correct: "Iš užpakalio purškia karštą, verdantį cheminį srautą",
+        correct: "Purškia karštą, verdantį cheminį srautą",
         distractors: [
           "Valandų valandas apsimeta negyvas",
           "Blyksi ryškia šviesa",
@@ -4504,7 +4504,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
       },
       lt: {
         question: "Kaip kūginis moliuskas (kūgiasraigė) pagauna žuvis?",
-        correct: "Iššauna nuodais užpildytą harpūno pavidalo dantį",
+        correct: "Iššauna nuodingą harpūno pavidalo dantį",
         distractors: [
           "Įvelia jas į gleivių tinklą",
           "Įkanda stipriais žandikauliais",
@@ -4596,7 +4596,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "The horseshoe crab has blue blood that humans use in medicine. Why is it valuable?",
-        correct: "It detects bacterial contamination in vaccines and drugs",
+        correct: "It detects bacterial contamination in drugs",
         distractors: [
           "It cures infections directly",
           "It is used as a blue food dye",
@@ -4654,7 +4654,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "How does the wood frog survive freezing winters?",
-        correct: "It freezes solid and thaws back to life in spring",
+        correct: "It freezes solid, then thaws alive in spring",
         distractors: [
           "It digs deep below the frost line",
           "It migrates south",
@@ -4704,7 +4704,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         correct: "Ultragarsą, per aukštą žmogui girdėti",
         distractors: [
           "Infragarsą, per žemą girdėti",
-          "Garsius spragtelėjimus, kuriuos lengvai girdime",
+          "Garsius spragtelėjimus, kuriuos girdime",
           "Matomos šviesos blyksnius",
           "Magnetinius impulsus",
           "Jokio garso",
@@ -4851,7 +4851,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "How can aphids reproduce so fast in summer?",
-        correct: "Females give birth without mating (parthenogenesis)",
+        correct: "Females give birth without mating",
         distractors: [
           "Each female lays a million eggs daily",
           "They split in half like cells",
@@ -4865,7 +4865,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         question: "Kaip amarai gali taip greitai daugintis vasarą?",
         correct: "Patelės gimdo be poravimosi (partenogenezė)",
         distractors: [
-          "Kiekviena patelė kasdien deda milijoną kiaušinių",
+          "Patelė kasdien deda milijoną kiaušinių",
           "Jie dalijasi pusiau kaip ląstelės",
           "Jauniklius nešioja patinai",
           "Jie atsiranda iš augalų sulčių",
@@ -5025,7 +5025,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
       },
       lt: {
         question: "Kuo neįprastas Antarkties ledžuvės kraujas?",
-        correct: "Jame nėra raudonųjų kraujo kūnelių ir hemoglobino",
+        correct: "Jame nėra raudonųjų kraujo kūnelių",
         distractors: [
           "Jis ryškiai žalias",
           "Tirštesnis už medų",
@@ -5048,7 +5048,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "How does the desert kangaroo rat survive without ever drinking water?",
-        correct: "It makes water internally from the dry seeds it eats",
+        correct: "It makes water from the dry seeds it eats",
         distractors: [
           "It licks morning dew only",
           "It drinks its own blood",
@@ -5060,7 +5060,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
       },
       lt: {
         question: "Kaip dykumos kengūrinė žiurkė išgyvena niekada negerdama vandens?",
-        correct: "Vandenį gamina viduje iš sausų sėklų, kurias valgo",
+        correct: "Vandenį gamina iš sausų sėklų, kurias ėda",
         distractors: [
           "Laižo tik rytinę rasą",
           "Geria savo kraują",
@@ -5428,13 +5428,13 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "Why does a sloth come down to the ground only about once a week?",
-        correct: "Its digestion is so slow it only needs to poop weekly",
+        correct: "It digests so slowly it poops only weekly",
         distractors: ["To drink water", "To find a mate", "To sunbathe", "To change trees", "To hunt insects"],
         explanation: "A sloth's digestion is so slow that a meal can take a month to process; it descends only about weekly to defecate.",
       },
       lt: {
         question: "Kodėl tinginys nusileidžia ant žemės tik maždaug kartą per savaitę?",
-        correct: "Jo virškinimas toks lėtas, kad tuštintis reikia tik kartą per savaitę",
+        correct: "Virškina taip lėtai, kad tuštinasi retai",
         distractors: ["Atsigerti vandens", "Susirasti porą", "Pasikaitinti saulėje", "Pakeisti medį", "Medžioti vabzdžių"],
         explanation: "Tinginio virškinimas toks lėtas, kad maistas apdorojamas net mėnesį; nusileidžia maždaug kartą per savaitę tuštintis.",
       },
@@ -6440,13 +6440,13 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "How do dolphins call and recognise each other as individuals?",
-        correct: "Each has its own signature whistle, like a name",
+        correct: "Each has its own whistle, like a name",
         distractors: ["By their skin patterns", "By smell underwater", "By touching fins", "By changing colour", "They cannot tell each other apart"],
         explanation: "Each dolphin develops a unique signature whistle early in life and uses it like a name to identify and call specific individuals.",
       },
       lt: {
         question: "Kaip delfinai vienas kitą atpažįsta ir pasišaukia kaip atskirus individus?",
-        correct: "Kiekvienas turi savo unikalų švilpesį – tarsi vardą",
+        correct: "Kiekvienas turi savo švilpesį – tarsi vardą",
         distractors: ["Pagal odos raštus", "Pagal kvapą po vandeniu", "Liesdami pelekus", "Keisdami spalvą", "Jie negali vienas kito atskirti"],
         explanation: "Kiekvienas delfinas anksti gyvenime išsiugdo unikalų švilpesį ir naudoja jį kaip vardą konkrečiam individui atpažinti ar pasišaukti.",
       },
@@ -6469,7 +6469,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
       },
       lt: {
         question: "Kai atsiskyrėliams krabams reikia didesnių kriauklių, kokį neįprastą socialinį elgesį jie parodo?",
-        correct: "Išsirikiuoja pagal dydį ir paeiliui keičiasi kriauklėmis",
+        correct: "Pagal dydį paeiliui keičiasi kriauklėmis",
         distractors: ["Kaunasi iki mirties", "Patys pasistato kriaukles", "Visi dalijasi viena kriaukle", "Vagia tik iš sraigių", "Tiesiog nustoja augti"],
         explanation: "Atsiskyrėliai krabai išsirikiuoja pagal dydį (laisvų vietų grandinė): atsilaisvinus vienai didelei kriauklei, kiekvienas perduoda savo seną kriauklę kitam mažesniam.",
       },
@@ -6538,7 +6538,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
       },
       lt: {
         question: "Kodėl kai kuriuose jūros vandenyse naktį, sujudinus vandenį, jis švyti ryškiai mėlynai?",
-        correct: "Bioliuminescuojantis planktonas (dinoflagelatai)",
+        correct: "Bioliuminescuojantis planktonas",
         distractors: ["Atspindėta mėnesiena", "Ištirpę mineralai", "Taršos cheminės medžiagos", "Šiltos srovės", "Elektrinės žuvys"],
         explanation: "Mažyčiai dinoflagelatai sujudinti skleidžia mėlyną šviesą, todėl bangos ir pėdsakai naktį švyti.",
       },
@@ -6555,13 +6555,13 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "How can a duck at the edge of a sleeping group still watch for danger?",
-        correct: "It sleeps with half its brain awake and one eye open",
+        correct: "It sleeps with half its brain awake",
         distractors: ["It never sleeps", "It sleeps standing on one leg", "It hears through its feet", "It smells predators in its sleep", "It posts a single guard duck"],
         explanation: "Ducks use unihemispheric sleep: one brain half rests while the other stays awake, keeping the outward-facing eye open to spot threats.",
       },
       lt: {
         question: "Kaip antis, esanti miegančios grupės pakraštyje, vis tiek gali budėti dėl pavojaus?",
-        correct: "Miega su viena budinčia smegenų puse ir atmerkta viena akimi",
+        correct: "Miega su viena budinčia smegenų puse",
         distractors: ["Ji niekada nemiega", "Miega stovėdama ant vienos kojos", "Girdi pėdomis", "Užuodžia plėšrūnus per miegą", "Pastato vieną sargybinę antį"],
         explanation: "Antys miega viena smegenų puse: viena dalis ilsisi, kita budi, o į išorę nukreipta akis lieka atmerkta pavojui pastebėti.",
       },
@@ -6653,7 +6653,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
       },
       lt: {
         question: "Kodėl flamingai rožiniai, o ne balti?",
-        correct: "Dėl pigmentų iš dumblių ir vėžiukų, kuriuos jie ėda",
+        correct: "Dėl pigmentų iš dumblių ir vėžiukų",
         distractors: ["Nuo saulės nudegimo", "Jie gimsta rožiniai", "Šaltas vanduo nudažo rožiniai", "Dėl mineralų dumble", "Dėl rožinio nepermerkiamo aliejaus"],
         explanation: "Flamingai išsirita pilki; karotenoidiniai pigmentai iš dumblių ir sūrymo vėžiukų, kuriuos jie ėda, pamažu nudažo plunksnas rožinai.",
       },
@@ -6808,7 +6808,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "Why does a snake keep flicking its forked tongue in and out?",
-        correct: "To smell, carrying scent to an organ in the mouth",
+        correct: "To smell — it carries scent to the mouth",
         distractors: ["To taste sweetness", "To threaten enemies", "To cool itself down", "To clean its eyes", "To make a hissing sound"],
         explanation: "The flicking tongue collects scent particles and delivers them to the Jacobson's organ, so the snake effectively smells in stereo.",
       },
@@ -6900,13 +6900,13 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "What happens to a shark's teeth throughout its life?",
-        correct: "They are constantly replaced — thousands over a lifetime",
+        correct: "They are constantly replaced — thousands",
         distractors: ["They never fall out", "They grow back only once", "They are made of bone", "They stop growing at adulthood", "They are shared between sharks"],
         explanation: "Sharks have rows of teeth that move forward like a conveyor belt; lost teeth are replaced continuously, totalling thousands in a lifetime.",
       },
       lt: {
         question: "Kas vyksta su ryklio dantimis per visą jo gyvenimą?",
-        correct: "Jie nuolat keičiami – per gyvenimą jų būna tūkstančiai",
+        correct: "Jie nuolat keičiami – jų būna tūkstančiai",
         distractors: ["Jie niekada neiškrenta", "Atauga tik vieną kartą", "Pagaminti iš kaulo", "Sustoja suaugus", "Dalijami tarp ryklių"],
         explanation: "Rykliai turi dantų eiles, judančias pirmyn tarsi konvejeris; netekti dantys nuolat keičiami, per gyvenimą jų būna tūkstančiai.",
       },
@@ -6946,13 +6946,13 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "How does a honeybee tell its hive-mates where to find good flowers?",
-        correct: "By a waggle dance showing direction and distance",
+        correct: "By a waggle dance (direction and distance)",
         distractors: ["By leaving a scent trail on the ground", "By buzzing a musical note", "By changing colour", "By leading them one by one", "By drawing in the honeycomb"],
         explanation: "A returning forager performs a figure-eight waggle dance whose angle and duration encode the direction and distance to the flowers.",
       },
       lt: {
         question: "Kaip bitė darbininkė praneša aviliui, kur rasti gerų žiedų?",
-        correct: "Atlikdama vingrų šokį, rodantį kryptį ir atstumą",
+        correct: "Vingrų šokiu, rodančiu kryptį ir atstumą",
         distractors: ["Palikdama kvapo pėdsaką ant žemės", "Zvimbdama muzikinę natą", "Keisdama spalvą", "Vesdama po vieną", "Piešdama koryje"],
         explanation: "Grįžusi rinkėja atlieka aštuoniukės formos vingrų šokį, kurio kampas ir trukmė užkoduoja kryptį ir atstumą iki žiedų.",
       },
@@ -6992,13 +6992,13 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     translations: {
       en: {
         question: "How can a gecko run up smooth glass and across ceilings?",
-        correct: "Millions of tiny hairs grip using molecular forces",
+        correct: "Tiny hairs grip using molecular forces",
         distractors: ["Sticky glue from its toes", "Tiny suction cups", "Static electricity", "Hooked claws only", "A layer of wet slime"],
         explanation: "Gecko toes are covered in microscopic hairs (setae) that grip surfaces by van der Waals molecular attraction — no glue needed.",
       },
       lt: {
         question: "Kaip gekonas gali bėgti stiklu aukštyn ir lubomis?",
-        correct: "Milijonai mažyčių plaukelių laikosi molekulinėmis jėgomis",
+        correct: "Plaukeliai laikosi molekulinėmis jėgomis",
         distractors: ["Lipnūs klijai iš pirštų", "Mažyčiai siurbtukai", "Statinė elektra", "Tik kabliuoti nagai", "Šlapių gleivių sluoksnis"],
         explanation: "Gekono pirštai padengti mikroskopiniais plaukeliais (setae), kurie laikosi paviršiaus per van der Valso molekulinę trauką – klijų nereikia.",
       },
@@ -7300,6 +7300,788 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         correct: "Maždaug 95%",
         distractors: ["Maždaug 50%", "Maždaug 20%", "Maždaug 70%", "Lygiai 100%", "Maždaug 30%"],
         explanation: "Medūza maždaug 95% vandens, be smegenų, širdies, kaulų ar kraujo – tačiau vis tiek medžioja ir juda.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_055",
+    category: "nature",
+    subTheme: "sea",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Molecular biology (cephalopod RNA editing)",
+    emoji: "🐙",
+    translations: {
+      en: {
+        question: "What can an octopus do to its own RNA to adapt to cold water — something almost no other animal does?",
+        correct: "Edit (recode) its own RNA",
+        distractors: ["Grow a second brain", "Change its DNA permanently", "Freeze its blood", "Swap organs with another octopus", "Turn its blood red"],
+        explanation: "Octopuses and other cephalopods extensively recode their RNA on the fly, especially in cold water — a trick almost unique in the animal kingdom.",
+      },
+      lt: {
+        question: "Ką aštuonkojis gali padaryti su savo RNR, kad prisitaikytų prie šalto vandens – ko beveik nedaro joks kitas gyvūnas?",
+        correct: "Redaguoti (perkoduoti) savo RNR",
+        distractors: ["Užsiauginti antras smegenis", "Visam laikui pakeisti savo DNR", "Užšaldyti kraują", "Apsikeisti organais su kitu aštuonkoju", "Paraudonuoti kraują"],
+        explanation: "Aštuonkojai ir kiti galvakojai plačiai perkoduoja savo RNR pagal poreikį, ypač šaltame vandenyje – tai beveik unikalu gyvūnijoje.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_056",
+    category: "nature",
+    subTheme: "mammals",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Zoology (sperm whale has the largest brain)",
+    emoji: "🐋",
+    translations: {
+      en: {
+        question: "Which animal has the largest brain of any creature, weighing about 8 kg?",
+        correct: "The sperm whale",
+        distractors: ["The African elephant", "The blue whale", "The giraffe", "The human", "The hippopotamus"],
+        explanation: "The sperm whale's brain weighs around 8 kg, the largest of any animal — about six times heavier than a human brain.",
+      },
+      lt: {
+        question: "Kuris gyvūnas turi didžiausias smegenis iš visų, sveriančias apie 8 kg?",
+        correct: "Kašalotas",
+        distractors: ["Afrikinis dramblys", "Mėlynasis banginis", "Žirafa", "Žmogus", "Hipopotamas"],
+        explanation: "Kašaloto smegenys sveria apie 8 kg – didžiausios iš visų gyvūnų, maždaug šešis kartus sunkesnės už žmogaus.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_057",
+    category: "nature",
+    subTheme: "birds",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Ornithology (wandering albatross largest wingspan)",
+    emoji: "🪽",
+    translations: {
+      en: {
+        question: "Which living bird has the largest wingspan, reaching about 3.5 metres?",
+        correct: "The wandering albatross",
+        distractors: ["The golden eagle", "The condor", "The pelican", "The swan", "The stork"],
+        explanation: "The wandering albatross has the largest wingspan of any living bird, up to about 3.5 m, letting it glide for hours without flapping.",
+      },
+      lt: {
+        question: "Kuris gyvas paukštis turi didžiausią sparnų mostą, siekiantį apie 3,5 metro?",
+        correct: "Klajūnas albatrosas",
+        distractors: ["Auksinis erelis", "Kondoras", "Pelikanas", "Gulbė", "Gandras"],
+        explanation: "Klajūno albatroso sparnų mostas – didžiausias tarp gyvų paukščių, iki maždaug 3,5 m, todėl jis valandų valandas sklendžia nemosuodamas.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_058",
+    category: "nature",
+    subTheme: "birds",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Ornithology (Arctic tern pole-to-pole migration)",
+    emoji: "🧭",
+    translations: {
+      en: {
+        question: "Which bird makes the longest yearly migration, flying roughly from pole to pole and back?",
+        correct: "The Arctic tern",
+        distractors: ["The barn swallow", "The Canada goose", "The albatross", "The stork", "The seagull"],
+        explanation: "The Arctic tern migrates from the Arctic to the Antarctic and back each year, covering tens of thousands of kilometres — the longest migration known.",
+      },
+      lt: {
+        question: "Kuris paukštis atlieka ilgiausią metinę migraciją, skrisdamas maždaug nuo ašigalio iki ašigalio ir atgal?",
+        correct: "Jūrinė žuvėdra (poliarinė)",
+        distractors: ["Kregždė", "Kanadinė žąsis", "Albatrosas", "Gandras", "Žuvėdra (paprastoji)"],
+        explanation: "Poliarinė žuvėdra kasmet skrenda nuo Arkties iki Antarktidos ir atgal, įveikdama dešimtis tūkstančių kilometrų – ilgiausia žinoma migracija.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_059",
+    category: "nature",
+    subTheme: "birds",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Zoology (peregrine falcon fastest in a dive)",
+    emoji: "🦅",
+    translations: {
+      en: {
+        question: "Which animal is the fastest of all, reaching about 390 km/h in a dive?",
+        correct: "The peregrine falcon",
+        distractors: ["The cheetah", "The sailfish", "The golden eagle", "The swift", "The frigatebird"],
+        explanation: "In a hunting dive (stoop) the peregrine falcon reaches roughly 390 km/h, making it the fastest animal on Earth.",
+      },
+      lt: {
+        question: "Kuris gyvūnas yra greičiausias iš visų, pikiruodamas pasiekiantis apie 390 km/h?",
+        correct: "Sakalas keleivis",
+        distractors: ["Gepardas", "Buriažuvė", "Auksinis erelis", "Čiurlys", "Fregata"],
+        explanation: "Medžioklės pikiravime sakalas keleivis pasiekia maždaug 390 km/h ir yra greičiausias gyvūnas Žemėje.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_060",
+    category: "nature",
+    subTheme: "mammals",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Zoology (Etruscan shrew smallest mammal, heart ~1500 bpm)",
+    emoji: "🐭",
+    translations: {
+      en: {
+        question: "Which is the smallest mammal by weight, with a heart that can beat up to about 1,500 times a minute?",
+        correct: "The Etruscan shrew",
+        distractors: ["The house mouse", "The bumblebee bat", "The harvest mouse", "The pygmy possum", "The mole"],
+        explanation: "The Etruscan shrew weighs under 2 grams and its heart can race up to about 1,500 beats per minute to fuel its tiny, hungry body.",
+      },
+      lt: {
+        question: "Kuris žinduolis yra mažiausias pagal svorį, o jo širdis gali plakti iki maždaug 1500 kartų per minutę?",
+        correct: "Etruskinis kirstukas",
+        distractors: ["Naminė pelė", "Kamaninis šikšnosparnis", "Dirvinė pelė", "Nykštukinis oposumas", "Kurmis"],
+        explanation: "Etruskinis kirstukas sveria mažiau nei 2 gramus, o jo širdis gali plakti iki maždaug 1500 kartų per minutę, kad maitintų mažytį, alkaną kūną.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_061",
+    category: "nature",
+    subTheme: "sea",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Marine biology (deep-sea anglerfish sexual parasitism)",
+    emoji: "🎣",
+    translations: {
+      en: {
+        question: "In some deep-sea anglerfish, what does the tiny male do to the much larger female?",
+        correct: "He fuses permanently onto her body",
+        distractors: ["He guards the eggs alone", "He carries her on his back", "He brings her food", "He turns into a female", "He builds a nest"],
+        explanation: "The tiny male anglerfish bites onto the female and fuses with her, sharing her blood and becoming a permanent attached sperm supply.",
+      },
+      lt: {
+        question: "Kai kurių giliavandenių undinžuvių mažytis patinas ką padaro daug didesnei patelei?",
+        correct: "Visam laikui priauga prie jos kūno",
+        distractors: ["Vienas saugo ikrus", "Neša ją ant nugaros", "Atneša jai maisto", "Virsta patele", "Pastato lizdą"],
+        explanation: "Mažytis undinžuvės patinas įsikanda į patelę ir su ja suauga, dalijasi jos krauju ir tampa nuolat prikibusiu spermos šaltiniu.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_062",
+    category: "nature",
+    subTheme: "sea",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Ichthyology (sailfish is the fastest fish)",
+    emoji: "🐟",
+    translations: {
+      en: {
+        question: "Which is widely considered the fastest fish, swimming up to about 110 km/h?",
+        correct: "The sailfish",
+        distractors: ["The tuna", "The shark", "The swordfish", "The marlin", "The barracuda"],
+        explanation: "The sailfish is often called the fastest fish, with bursts cited up to around 110 km/h, helped by its streamlined body and folding sail-like fin.",
+      },
+      lt: {
+        question: "Kuri žuvis plačiai laikoma greičiausia, plaukianti iki maždaug 110 km/h?",
+        correct: "Buriažuvė",
+        distractors: ["Tunas", "Ryklys", "Durklažuvė", "Marlinas", "Barakuda"],
+        explanation: "Buriažuvė dažnai vadinama greičiausia žuvimi – jos pliūpsniai siekia apie 110 km/h, padeda aptaki kūno forma ir sulankstomas burės pavidalo pelekas.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_063",
+    category: "nature",
+    subTheme: "insects",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Entomology (Goliath beetle among heaviest insects)",
+    emoji: "🪲",
+    translations: {
+      en: {
+        question: "Which is among the heaviest insects, whose larva can weigh up to about 100 grams?",
+        correct: "The Goliath beetle",
+        distractors: ["The stag beetle", "The hercules moth", "The giant cockroach", "The locust", "The hornet"],
+        explanation: "Goliath beetle larvae can weigh up to about 100 grams, making them among the heaviest insects on Earth.",
+      },
+      lt: {
+        question: "Kuris yra vienas sunkiausių vabzdžių, kurio lerva gali sverti iki maždaug 100 gramų?",
+        correct: "Galiotas vabalas",
+        distractors: ["Elniaragis", "Heraklio drugys", "Milžiniškas tarakonas", "Skėrys", "Širšė"],
+        explanation: "Galioto vabalo lervos gali sverti iki maždaug 100 gramų, todėl jie yra vieni sunkiausių vabzdžių Žemėje.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_064",
+    category: "nature",
+    subTheme: "insects",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Entomology (Saharan silver ant heat tolerance and navigation)",
+    emoji: "🐜",
+    translations: {
+      en: {
+        question: "How does the Saharan silver ant survive midday desert heat and find its way home?",
+        correct: "It forages in heat, navigating by steps",
+        distractors: ["It digs deep tunnels to hide", "It only comes out at night", "It follows scent trails", "It rides on other animals", "It waits for rain"],
+        explanation: "The Saharan silver ant sprints across sand near 50 °C while predators hide, and finds its nest by counting its own steps and reading the sun's angle.",
+      },
+      lt: {
+        question: "Kaip Sacharos sidabrinė skruzdėlė išgyvena dienos dykumos karštį ir randa kelią namo?",
+        correct: "Bėga karštyje, kelią randa pagal žingsnius",
+        distractors: ["Kasa gilius tunelius slėptis", "Išlenda tik naktį", "Seka kvapų pėdsakais", "Joja ant kitų gyvūnų", "Laukia lietaus"],
+        explanation: "Sacharos sidabrinė skruzdėlė lekia smėliu prie maždaug 50 °C, kol plėšrūnai slepiasi, o lizdą randa skaičiuodama savo žingsnius ir skaitydama saulės kampą.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_065",
+    category: "nature",
+    subTheme: "deep_sea",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Marine biology (vampire squid feeding ecology)",
+    emoji: "🦑",
+    translations: {
+      en: {
+        question: "Unlike its relatives, what does the deep-sea vampire squid mostly eat?",
+        correct: "Marine snow — drifting bits of dead matter",
+        distractors: ["Live fish it chases", "Other squid", "Coral polyps", "Plankton it filters with gills", "Nothing — it absorbs minerals"],
+        explanation: "The vampire squid lives in oxygen-poor deep water and feeds calmly on marine snow (sinking specks of dead plankton and waste) using two long sticky filaments, not by hunting.",
+      },
+      lt: {
+        question: "Skirtingai nei jos giminaičiai, kuo daugiausia minta giliavandenis vampyrinis kalmaras?",
+        correct: "Jūros sniegu (negyvomis dalelėmis)",
+        distractors: ["Gyvomis žuvimis, kurias gaudo", "Kitais kalmarais", "Koralų polipais", "Planktonu, filtruojamu žiaunomis", "Niekuo — sugeria mineralus"],
+        explanation: "Vampyrinis kalmaras gyvena deguonies stokojančiame gylyje ir ramiai minta jūros sniegu (krintančiomis negyvo planktono dalelėmis) dviem ilgais lipniais siūlais, o ne medžiodamas.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_066",
+    category: "nature",
+    subTheme: "amphibians",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Herpetology (Trichobatrachus robustus / hairy frog claws)",
+    emoji: "🐸",
+    translations: {
+      en: {
+        question: "How does the African hairy frog defend itself when grabbed?",
+        correct: "It breaks its own toe bones to push out claws",
+        distractors: ["It inflates to twice its size", "It sprays sticky glue", "It plays dead instantly", "It detaches its skin", "It bites with venom fangs"],
+        explanation: "When attacked, the hairy frog deliberately fractures the bones in its toes; the sharp broken ends pierce the skin and act as claws — a defense unlike almost any other animal.",
+      },
+      lt: {
+        question: "Kaip Afrikos plaukuotoji varlė ginasi, kai ją sugriebia?",
+        correct: "Lūžta savo pirštų kaulus, kad iškištų nagus",
+        distractors: ["Išsipučia dvigubai", "Purškia lipnius klijus", "Akimirksniu apsimeta negyva", "Numeta savo odą", "Kanda nuodingais iltimis"],
+        explanation: "Užpulta plaukuotoji varlė sąmoningai lūžta pirštų kaulus; aštrūs lūžio galai praduria odą ir veikia kaip nagai — gynyba, kokios beveik nėra pas kitus gyvūnus.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_067",
+    category: "nature",
+    subTheme: "ocean",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Physics/biology (snapping shrimp cavitation bubble)",
+    emoji: "🦐",
+    translations: {
+      en: {
+        question: "When a snapping shrimp snaps its claw, the collapsing bubble briefly reaches a temperature close to what?",
+        correct: "The surface of the Sun (thousands of degrees)",
+        distractors: ["Boiling water (100 °C)", "A campfire (~600 °C)", "Molten lava (~1200 °C)", "Body temperature (37 °C)", "Freezing point (0 °C)"],
+        explanation: "The claw snaps so fast it creates a cavitation bubble; when it collapses it emits a flash of light and a tiny spot reaches several thousand degrees — momentarily near the Sun's surface temperature.",
+      },
+      lt: {
+        question: "Kai pistoletinė krevetė trinkteli žnyple, sprogstantis burbulas trumpam pasiekia temperatūrą, artimą kam?",
+        correct: "Saulės paviršiui (tūkstančiai laipsnių)",
+        distractors: ["Verdančiam vandeniui (100 °C)", "Laužui (~600 °C)", "Išsilydžiusiai lavai (~1200 °C)", "Kūno temperatūrai (37 °C)", "Užšalimo taškui (0 °C)"],
+        explanation: "Žnyplė trinkteli taip greitai, kad sukuria kavitacijos burbulą; jam sprogstant blyksteli šviesa, o mažytis taškas pasiekia kelis tūkstančius laipsnių — akimirką beveik Saulės paviršiaus temperatūrą.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_068",
+    category: "nature",
+    subTheme: "insects",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Entomology (Belgica antarctica, only insect native to Antarctica)",
+    emoji: "🦟",
+    translations: {
+      en: {
+        question: "What is special about the Antarctic midge among insects?",
+        correct: "The only insect native to Antarctica",
+        distractors: ["It is the largest insect on Earth", "It can fly in space", "It lives over 100 years", "It glows in the dark", "It has no legs"],
+        explanation: "The wingless Antarctic midge (Belgica antarctica) is the only insect native to the continent; its larvae survive being frozen solid for most of the year.",
+      },
+      lt: {
+        question: "Kuo ypatingas Antarkties uodas tarp vabzdžių?",
+        correct: "Vienintelis Antarktidos vabzdys",
+        distractors: ["Tai didžiausias vabzdys Žemėje", "Jis gali skristi kosmose", "Gyvena virš 100 metų", "Šviečia tamsoje", "Neturi kojų"],
+        explanation: "Besparnis Antarkties uodas (Belgica antarctica) — vienintelis žemyne gyvenantis vabzdys; jo lervos išgyvena beveik visus metus visiškai įšalusios.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_069",
+    category: "nature",
+    subTheme: "biology",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Zoology (bdelloid rotifers, ancient asexual lineage)",
+    emoji: "🔬",
+    translations: {
+      en: {
+        question: "What is remarkable about tiny bdelloid rotifers?",
+        correct: "All female — no males for millions of years",
+        distractors: ["They live only one day", "They are the largest animals", "They photosynthesize like plants", "They have warm blood", "They never move"],
+        explanation: "Bdelloid rotifers are entirely female and have gone without sex for tens of millions of years, partly by picking up genes from other organisms and surviving total drying out.",
+      },
+      lt: {
+        question: "Kuo nepaprasti mažyčiai sukučiai (bdelloid rotifers)?",
+        correct: "Visos patelės — milijonus metų be patinų",
+        distractors: ["Gyvena tik vieną dieną", "Tai didžiausi gyvūnai", "Fotosintezuoja kaip augalai", "Turi šiltą kraują", "Niekada nejuda"],
+        explanation: "Sukučiai yra vien patelės ir dešimtis milijonų metų gyvena be lytinio dauginimosi — iš dalies pasiimdami genus iš kitų organizmų ir išgyvendami visišką išdžiūvimą.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_070",
+    category: "nature",
+    subTheme: "insects",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Entomology (termite queen lifespan and egg output)",
+    emoji: "🐛",
+    translations: {
+      en: {
+        question: "How productive can a termite queen be at her peak?",
+        correct: "She lays tens of thousands of eggs a day",
+        distractors: ["She lays one egg per year", "She lays eggs only once in her life", "She stops laying after a month", "She lays about ten eggs a day", "She never lays eggs herself"],
+        explanation: "A mature termite queen can lay tens of thousands of eggs per day and live for many years — one of the longest-lived and most fertile insects known.",
+      },
+      lt: {
+        question: "Kokia produktyvi gali būti termitų karalienė savo viršūnėje?",
+        correct: "Deda dešimtis tūkstančių kiaušinių per dieną",
+        distractors: ["Padeda vieną kiaušinėlį per metus", "Deda kiaušinėlius tik kartą gyvenime", "Po mėnesio nustoja dėti", "Padeda apie dešimt kiaušinėlių per dieną", "Pati niekada nededa kiaušinėlių"],
+        explanation: "Subrendusi termitų karalienė gali dėti dešimtis tūkstančių kiaušinėlių per dieną ir gyventi daug metų — tai vienas ilgiausiai gyvenančių ir vislausių žinomų vabzdžių.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_071",
+    category: "nature",
+    subTheme: "deep_sea",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Marine biology (Riftia giant tube worms, chemosynthesis)",
+    emoji: "🪱",
+    translations: {
+      en: {
+        question: "How do giant tube worms at deep-sea vents get their food, having no mouth or gut?",
+        correct: "Bacteria inside turn vent chemicals to food",
+        distractors: ["They filter plankton from water", "They absorb sunlight", "They eat falling fish", "They drink seawater for minerals", "They share food with crabs"],
+        explanation: "Giant tube worms have no mouth or digestive system; they host bacteria that perform chemosynthesis, turning chemicals from hydrothermal vents into nourishment.",
+      },
+      lt: {
+        question: "Kaip giliavandenės milžiniškos vamzdinės kirmėlės gauna maistą, neturėdamos nei burnos, nei žarnyno?",
+        correct: "Bakterijos jose chemikalus paverčia maistu",
+        distractors: ["Filtruoja planktoną iš vandens", "Sugeria saulės šviesą", "Ėda krintančias žuvis", "Geria jūros vandenį dėl mineralų", "Dalijasi maistu su krabais"],
+        explanation: "Milžiniškos vamzdinės kirmėlės neturi nei burnos, nei virškinimo sistemos; jose gyvena bakterijos, atliekančios chemosintezę — hidroterminių versmių chemikalus jos paverčia maistu.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_072",
+    category: "nature",
+    subTheme: "sharks",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Ichthyology (goblin shark protrusible jaws)",
+    emoji: "🦈",
+    translations: {
+      en: {
+        question: "What unusual ability does the deep-sea goblin shark use to catch prey?",
+        correct: "It shoots its jaws far out of its mouth",
+        distractors: ["It spins to stun fish", "It glows to lure prey", "It swims faster than any shark", "It uses electric shocks", "It spits a cloud of ink"],
+        explanation: "The rare goblin shark has jaws on stretchy ligaments that rapidly fling forward out of its mouth to snatch prey, then retract.",
+      },
+      lt: {
+        question: "Kokį neįprastą gebėjimą grobiui pagauti naudoja giliavandenis goblinų ryklys?",
+        correct: "Jis iššauna žandikaulius toli iš burnos",
+        distractors: ["Sukasi, kad apsvaigintų žuvis", "Šviečia, kad priviliotų grobį", "Plaukia greičiau už visus ryklius", "Naudoja elektros smūgius", "Spjauna rašalo debesį"],
+        explanation: "Retas goblinų ryklys turi žandikaulius ant tamprių raiščių, kurie staigiai iššauna pirmyn iš burnos sugriebti grobio, o paskui įsitraukia atgal.",
+      },
+    },
+  },
+  {
+    id: "nat_ext_073",
+    category: "nature",
+    subTheme: "sharks",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Ichthyology (frilled shark gestation length)",
+    emoji: "🦈",
+    translations: {
+      en: {
+        question: "The frilled shark is thought to have one of the longest pregnancies of any animal — about how long?",
+        correct: "Around three and a half years",
+        distractors: ["About three weeks", "About three months", "About one year", "About ten years", "About fifty years"],
+        explanation: "The deep-sea frilled shark is believed to carry its young for roughly 3.5 years, possibly the longest gestation of any vertebrate, because cold deep water slows development.",
+      },
+      lt: {
+        question: "Manoma, kad gauruotasis ryklys turi vieną ilgiausių nėštumų gyvūnų pasaulyje — maždaug kiek jis trunka?",
+        correct: "Apie trejus su puse metų",
+        distractors: ["Apie tris savaites", "Apie tris mėnesius", "Apie vienus metus", "Apie dešimt metų", "Apie penkiasdešimt metų"],
+        explanation: "Manoma, kad giliavandenis gauruotasis ryklys jauniklius nešioja maždaug 3,5 metų — galbūt ilgiausias nėštumas tarp stuburinių, nes šaltas gylio vanduo lėtina vystymąsi.",
+      },
+    },
+  },
+  {
+    id: "nat_le_013",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🐮",
+    translations: {
+      en: {
+        question: "What is a baby cow called?",
+        correct: "A calf",
+        distractors: ["A foal", "A piglet", "A lamb", "A kitten", "A chick"],
+        explanation: "A young cow is called a calf.",
+      },
+      lt: {
+        question: "Kaip vadinamas karvės jauniklis?",
+        correct: "Veršiukas",
+        distractors: ["Kumeliukas", "Paršiukas", "Ėriukas", "Kačiukas", "Viščiukas"],
+        explanation: "Karvės jauniklis vadinamas veršiuku.",
+      },
+    },
+  },
+  {
+    id: "nat_le_014",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🐴",
+    translations: {
+      en: {
+        question: "What is a baby horse called?",
+        correct: "A foal",
+        distractors: ["A calf", "A lamb", "A piglet", "A cub", "A joey"],
+        explanation: "A young horse is called a foal.",
+      },
+      lt: {
+        question: "Kaip vadinamas arklio jauniklis?",
+        correct: "Kumeliukas",
+        distractors: ["Veršiukas", "Ėriukas", "Paršiukas", "Meškiukas", "Kengūriukas"],
+        explanation: "Arklio jauniklis vadinamas kumeliuku.",
+      },
+    },
+  },
+  {
+    id: "nat_le_015",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🦘",
+    translations: {
+      en: {
+        question: "What is a baby kangaroo called?",
+        correct: "A joey",
+        distractors: ["A cub", "A calf", "A chick", "A foal", "A piglet"],
+        explanation: "A baby kangaroo is called a joey.",
+      },
+      lt: {
+        question: "Kaip vadinamas kengūros jauniklis?",
+        correct: "Kengūriukas",
+        distractors: ["Meškiukas", "Veršiukas", "Viščiukas", "Kumeliukas", "Paršiukas"],
+        explanation: "Kengūros jauniklis vadinamas kengūriuku.",
+      },
+    },
+  },
+  {
+    id: "nat_le_016",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🐺",
+    translations: {
+      en: {
+        question: "What do we call a group of wolves?",
+        correct: "A pack",
+        distractors: ["A herd", "A flock", "A school", "A swarm", "A pride"],
+        explanation: "A group of wolves is called a pack.",
+      },
+      lt: {
+        question: "Kaip vadinama vilkų grupė?",
+        correct: "Gauja",
+        distractors: ["Banda", "Pulkas", "Būrys", "Spiečius", "Kaimenė"],
+        explanation: "Vilkų grupė vadinama gauja.",
+      },
+    },
+  },
+  {
+    id: "nat_le_017",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🐟",
+    translations: {
+      en: {
+        question: "What do we call a group of fish swimming together?",
+        correct: "A school",
+        distractors: ["A pack", "A herd", "A flock", "A swarm", "A pride"],
+        explanation: "A group of fish swimming together is called a school.",
+      },
+      lt: {
+        question: "Kaip vadinama kartu plaukiojanti žuvų grupė?",
+        correct: "Būrys",
+        distractors: ["Gauja", "Banda", "Pulkas", "Spiečius", "Kaimenė"],
+        explanation: "Kartu plaukiojančių žuvų grupė vadinama būriu.",
+      },
+    },
+  },
+  {
+    id: "nat_le_018",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🐶",
+    translations: {
+      en: {
+        question: "Which animal is often called man's best friend?",
+        correct: "The dog",
+        distractors: ["The cat", "The horse", "The cow", "The rabbit", "The parrot"],
+        explanation: "Dogs are loyal companions, so they are called man's best friend.",
+      },
+      lt: {
+        question: "Kuris gyvūnas dažnai vadinamas geriausiu žmogaus draugu?",
+        correct: "Šuo",
+        distractors: ["Katė", "Arklys", "Karvė", "Triušis", "Papūga"],
+        explanation: "Šunys yra ištikimi, todėl vadinami geriausiais žmogaus draugais.",
+      },
+    },
+  },
+  {
+    id: "nat_le_019",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🐱",
+    translations: {
+      en: {
+        question: "Which pet purrs and likes to chase mice?",
+        correct: "The cat",
+        distractors: ["The dog", "The rabbit", "The fox", "The tiger", "The mouse"],
+        explanation: "Cats purr when content and often chase mice.",
+      },
+      lt: {
+        question: "Kuris augintinis murkia ir mėgsta gaudyti peles?",
+        correct: "Katė",
+        distractors: ["Šuo", "Triušis", "Lapė", "Tigras", "Pelė"],
+        explanation: "Katės murkia, kai joms gera, ir dažnai gaudo peles.",
+      },
+    },
+  },
+  {
+    id: "nat_le_020",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🐑",
+    translations: {
+      en: {
+        question: "Which farm animal gives us wool?",
+        correct: "The sheep",
+        distractors: ["The cow", "The pig", "The goat", "The horse", "The duck"],
+        explanation: "Sheep grow thick wool that we shear and use for clothes.",
+      },
+      lt: {
+        question: "Kuris ūkio gyvūnas duoda mums vilną?",
+        correct: "Avis",
+        distractors: ["Karvė", "Kiaulė", "Ožka", "Arklys", "Antis"],
+        explanation: "Avys augina storą vilną, kurią kerpame ir naudojame drabužiams.",
+      },
+    },
+  },
+  {
+    id: "nat_le_021",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🦩",
+    translations: {
+      en: {
+        question: "Which pink bird often stands on one leg?",
+        correct: "The flamingo",
+        distractors: ["The swan", "The stork", "The crane", "The peacock", "The duck"],
+        explanation: "Flamingos are pink and often rest while standing on one leg.",
+      },
+      lt: {
+        question: "Kuris rožinis paukštis dažnai stovi ant vienos kojos?",
+        correct: "Flamingas",
+        distractors: ["Gulbė", "Gandras", "Gervė", "Povas", "Antis"],
+        explanation: "Flamingai yra rožiniai ir dažnai ilsisi stovėdami ant vienos kojos.",
+      },
+    },
+  },
+  {
+    id: "nat_le_022",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🦚",
+    translations: {
+      en: {
+        question: "Which bird is famous for its colourful fan-shaped tail?",
+        correct: "The peacock",
+        distractors: ["The parrot", "The flamingo", "The swan", "The turkey", "The pigeon"],
+        explanation: "Male peacocks spread a large, colourful tail to attract a mate.",
+      },
+      lt: {
+        question: "Kuris paukštis garsus spalvinga vėduoklės formos uodega?",
+        correct: "Povas",
+        distractors: ["Papūga", "Flamingas", "Gulbė", "Kalakutas", "Balandis"],
+        explanation: "Povų patinai išskleidžia didelę spalvingą uodegą patelei privilioti.",
+      },
+    },
+  },
+  {
+    id: "nat_le_023",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🐠",
+    translations: {
+      en: {
+        question: "Which small pet fish is often kept in a bowl?",
+        correct: "The goldfish",
+        distractors: ["The shark", "The dolphin", "The whale", "The eel", "The crab"],
+        explanation: "Goldfish are small, hardy fish often kept as pets in bowls or tanks.",
+      },
+      lt: {
+        question: "Kuri maža žuvelė dažnai laikoma kaip augintinė akvariume?",
+        correct: "Auksinė žuvelė",
+        distractors: ["Ryklys", "Delfinas", "Banginis", "Ungurys", "Krabas"],
+        explanation: "Auksinės žuvelės yra mažos, atsparios ir dažnai laikomos akvariumuose.",
+      },
+    },
+  },
+  {
+    id: "nat_le_024",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🐿️",
+    translations: {
+      en: {
+        question: "Which bushy-tailed animal stores nuts for winter?",
+        correct: "The squirrel",
+        distractors: ["The mouse", "The rabbit", "The fox", "The beaver", "The hedgehog"],
+        explanation: "Squirrels gather and hide nuts to eat during winter.",
+      },
+      lt: {
+        question: "Kuris pūkuotauodegis gyvūnas kaupia riešutus žiemai?",
+        correct: "Voverė",
+        distractors: ["Pelė", "Triušis", "Lapė", "Bebras", "Ežys"],
+        explanation: "Voverės renka ir slepia riešutus, kad turėtų ką valgyti žiemą.",
+      },
+    },
+  },
+  {
+    id: "nat_le_025",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🦊",
+    translations: {
+      en: {
+        question: "Which wild animal has orange fur and a bushy tail?",
+        correct: "The fox",
+        distractors: ["The wolf", "The squirrel", "The cat", "The dog", "The rabbit"],
+        explanation: "The red fox has orange fur and a thick, bushy tail.",
+      },
+      lt: {
+        question: "Kuris laukinis gyvūnas turi rudą kailį ir pūkuotą uodegą?",
+        correct: "Lapė",
+        distractors: ["Vilkas", "Voverė", "Katė", "Šuo", "Triušis"],
+        explanation: "Rudoji lapė turi rusvai oranžinį kailį ir storą pūkuotą uodegą.",
+      },
+    },
+  },
+  {
+    id: "nat_le_026",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🐟",
+    translations: {
+      en: {
+        question: "What covers the body of most fish?",
+        correct: "Scales",
+        distractors: ["Fur", "Feathers", "Hair", "Shells", "Spines"],
+        explanation: "Most fish are covered in small, overlapping scales that protect them.",
+      },
+      lt: {
+        question: "Kas dengia daugumos žuvų kūną?",
+        correct: "Žvynai",
+        distractors: ["Kailis", "Plunksnos", "Plaukai", "Kriauklės", "Spygliai"],
+        explanation: "Daugumą žuvų dengia maži, vienas ant kito užeinantys žvynai.",
+      },
+    },
+  },
+  {
+    id: "nat_le_027",
+    category: "nature",
+    subTheme: "animals",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "General nature knowledge (everyday animals)",
+    emoji: "🐨",
+    translations: {
+      en: {
+        question: "What do koalas mainly eat?",
+        correct: "Eucalyptus leaves",
+        distractors: ["Bamboo", "Grass", "Fish", "Fruit", "Meat"],
+        explanation: "Koalas feed almost only on the leaves of eucalyptus trees.",
+      },
+      lt: {
+        question: "Kuo daugiausia minta koalos?",
+        correct: "Eukalipto lapais",
+        distractors: ["Bambukais", "Žole", "Žuvimi", "Vaisiais", "Mėsa"],
+        explanation: "Koalos minta beveik vien eukalipto medžių lapais.",
       },
     },
   },

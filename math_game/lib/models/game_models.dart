@@ -65,6 +65,8 @@ class GameResult {
   final int coinsEarned; // šioje sesijoje uždirbtos monetos
   final int totalCoins; // bendras balansas
   final bool promptName; // raginti įvesti vardą (rekordas + dar auto-vardas)
+  final int earnedLetters; // „Atspėk paslaptį": kiek raidžių uždirbta šiame žaidime
+  final int pendingMysteryLetters; // kiek iš viso laukia neatvertų raidžių
 
   const GameResult({
     required this.success,
@@ -74,6 +76,8 @@ class GameResult {
     required this.coinsEarned,
     required this.totalCoins,
     required this.promptName,
+    this.earnedLetters = 0,
+    this.pendingMysteryLetters = 0,
   });
 
   factory GameResult.fromJson(Map<String, dynamic> json) {
@@ -85,6 +89,8 @@ class GameResult {
       coinsEarned: (json['coinsEarned'] as num?)?.toInt() ?? 0,
       totalCoins: (json['totalCoins'] as num?)?.toInt() ?? 0,
       promptName: json['promptName'] as bool? ?? false,
+      earnedLetters: (json['earnedLetters'] as num?)?.toInt() ?? 0,
+      pendingMysteryLetters: (json['pendingMysteryLetters'] as num?)?.toInt() ?? 0,
     );
   }
 }

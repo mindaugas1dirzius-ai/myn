@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -45,8 +46,8 @@ class ProfileApi {
   static Future<RankResult> myRank(String mode) async {
     final res = await _functions
         .httpsCallable('getMyRank')
-        .call<Map<String, dynamic>>({'mode': mode});
-    final data = Map<String, dynamic>.from(res.data);
+        .call(<String, dynamic>{'mode': mode});
+    final data = jsonDecode(jsonEncode(res.data)) as Map<String, dynamic>;
     if (data['hasScore'] != true) return const RankResult.none();
     return RankResult(
       rank: (data['rank'] as num).toInt(),

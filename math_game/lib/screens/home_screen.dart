@@ -4,6 +4,7 @@ import '../l10n/app_strings.dart';
 import '../l10n/language_controller.dart';
 import '../models/game_mode.dart';
 import '../theme/app_theme.dart';
+import '../widgets/app_background.dart';
 import '../widgets/banner_ad_widget.dart';
 import '../widgets/neumorphic_button.dart';
 import 'level_select_screen.dart';
@@ -18,25 +19,39 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = AppStrings.of(context);
     return Scaffold(
-      body: SafeArea(
+      body: AppBackground(
+        accent: AppColors.levelEasy,
+        child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
           child: Column(
             children: [
-              // Viršutinė juosta: Profilis (kairėje) + kalbos jungiklis (dešinėje).
+              // Viršutinė juosta: (atgal) + Profilis (kairėje) + kalba (dešinėje).
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextButton.icon(
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const ProfileScreen()),
-                    ),
-                    icon: const Icon(Icons.person,
-                        color: AppColors.textSecondary, size: 20),
-                    label: Text(s.profile,
-                        style: const TextStyle(
-                            color: AppColors.textSecondary,
-                            fontWeight: FontWeight.bold)),
+                  Row(
+                    children: [
+                      // Atgal į temų meniu (jei yra kur grįžti).
+                      if (Navigator.of(context).canPop())
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pop(),
+                          icon: const Icon(Icons.arrow_back,
+                              color: AppColors.textSecondary, size: 22),
+                        ),
+                      TextButton.icon(
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                              builder: (_) => const ProfileScreen()),
+                        ),
+                        icon: const Icon(Icons.person,
+                            color: AppColors.textSecondary, size: 20),
+                        label: Text(s.profile,
+                            style: const TextStyle(
+                                color: AppColors.textSecondary,
+                                fontWeight: FontWeight.bold)),
+                      ),
+                    ],
                   ),
                   TextButton.icon(
                     onPressed: () => languageController.toggle(s.lang),
@@ -91,6 +106,7 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
+        ),
       ),
     );
   }
@@ -128,7 +144,9 @@ class HomeScreen extends StatelessWidget {
               op.label(s),
               style: const TextStyle(
                 color: AppColors.textPrimary,
-                fontSize: 16,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                fontFamily: kHeadingFont,
               ),
             ),
           ],

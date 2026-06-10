@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import '../l10n/app_strings.dart';
 
+/// Pagrindinių užrašų (pavadinimų, antraščių, didelių skaičių) šriftas.
+/// „Kiber/neon" stilius — Orbitron. Ilgą tekstą (gamtos klausimus) paliekam
+/// numatytuoju šriftu, kad gerai skaitytųsi.
+const String kHeadingFont = 'Orbitron';
+
 /// Cyber-Neumorphism paletė ir tema (DIZAINAS.md, 8 sprendimas).
 /// Visos spalvos vienoje vietoje — niekur nehardcodinam (mūsų 2 ir 3 taisyklės).
 class AppColors {
@@ -92,6 +97,17 @@ class AppTheme {
           headlineLarge: TextStyle(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
+            fontFamily: kHeadingFont,
+          ),
+          headlineMedium: TextStyle(
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.bold,
+            fontFamily: kHeadingFont,
+          ),
+          titleLarge: TextStyle(
+            color: AppColors.textPrimary,
+            fontWeight: FontWeight.bold,
+            fontFamily: kHeadingFont,
           ),
           bodyLarge: TextStyle(color: AppColors.textPrimary),
           bodyMedium: TextStyle(color: AppColors.textSecondary),
