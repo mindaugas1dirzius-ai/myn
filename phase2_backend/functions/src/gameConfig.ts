@@ -36,6 +36,11 @@ export function pointsForAnswer(maxPoints: number, elapsedMs: number): number {
 
 export const QUESTIONS_PER_GAME = 10;
 export const OPTIONS_PER_QUESTION = 6;
+
+/** Kiek paskutinių klausimų ID atsimename PER REŽIMĄ (recentByMode[mode]).
+ *  Tai VIRŠUTINĖ riba; faktinį „vengimo" langą lanksčiai mažina pickQuestions
+ *  pagal realų klausimų kiekį (kad mažam pool'ui visada liktų šviežių). */
+export const ROTATION_KEEP = 150;
 export const MIN_TIME_PER_Q_MS = 200; // greičiau = botas
 export const TIME_TOLERANCE_MS = 3000; // tinklo/latency paklaida lyginant laikus
 
