@@ -35,7 +35,13 @@ class TriviaTopicScreen extends StatelessWidget {
   /// Ar šiai temai apskritai rodom potemių parinkiklį?
   /// (Kitos temos eina tiesiai į lygių ekraną.)
   static bool hasSubThemes(String code) =>
-      code == 'tech' || code == 'body' || code == 'food';
+      code == 'tech' ||
+      code == 'body' ||
+      code == 'food' ||
+      code == 'geo' ||
+      code == 'history' ||
+      code == 'pop' ||
+      code == 'sport';
 
   /// Tos temos potemių sąrašas žaidėjo kalba.
   List<_SubTheme> _subThemesFor(AppStrings s) {
@@ -144,6 +150,114 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subFoodExotic,
             subtitle: s.subFoodExoticDesc,
             accent: AppColors.levelExtreme,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'mix',
+            emoji: '🎲',
+            title: s.topicMix,
+            subtitle: s.topicMixDesc,
+            accent: AppColors.neonBlue,
+            open: true,
+          ),
+        ];
+      case 'geo':
+        return [
+          _SubTheme(
+            id: 'cities',
+            emoji: '🏙️',
+            title: s.subGeoCities,
+            subtitle: s.subGeoCitiesDesc,
+            accent: AppColors.neonBlue,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'nature',
+            emoji: '🏔️',
+            title: s.subGeoNature,
+            subtitle: s.subGeoNatureDesc,
+            accent: AppColors.levelEasy,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'mix',
+            emoji: '🎲',
+            title: s.topicMix,
+            subtitle: s.topicMixDesc,
+            accent: AppColors.neonBlue,
+            open: true,
+          ),
+        ];
+      case 'history':
+        return [
+          _SubTheme(
+            id: 'ancient',
+            emoji: '🏛️',
+            title: s.subHistoryAncient,
+            subtitle: s.subHistoryAncientDesc,
+            accent: AppColors.levelHard,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'modern',
+            emoji: '🚀',
+            title: s.subHistoryModern,
+            subtitle: s.subHistoryModernDesc,
+            accent: AppColors.levelExtreme,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'mix',
+            emoji: '🎲',
+            title: s.topicMix,
+            subtitle: s.topicMixDesc,
+            accent: AppColors.neonBlue,
+            open: true,
+          ),
+        ];
+      case 'pop':
+        return [
+          _SubTheme(
+            id: 'cinema',
+            emoji: '🎬',
+            title: s.subPopCinema,
+            subtitle: s.subPopCinemaDesc,
+            accent: AppColors.levelExtreme,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'stories',
+            emoji: '📚',
+            title: s.subPopStories,
+            subtitle: s.subPopStoriesDesc,
+            accent: AppColors.levelMedium,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'mix',
+            emoji: '🎲',
+            title: s.topicMix,
+            subtitle: s.topicMixDesc,
+            accent: AppColors.neonBlue,
+            open: true,
+          ),
+        ];
+      case 'sport':
+        return [
+          _SubTheme(
+            id: 'rules',
+            emoji: '🏆',
+            title: s.subSportRules,
+            subtitle: s.subSportRulesDesc,
+            accent: AppColors.levelHard,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'disciplines',
+            emoji: '⚽',
+            title: s.subSportDisciplines,
+            subtitle: s.subSportDisciplinesDesc,
+            accent: AppColors.levelEasy,
             open: true,
           ),
           _SubTheme(

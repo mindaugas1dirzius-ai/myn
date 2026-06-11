@@ -2914,4 +2914,152 @@ export const HISTORY_QUESTIONS: TriviaQuestion[] = [
       },
     },
   },
+  {
+    id: "his_me_031",
+    category: "history",
+    subTheme: "ancient",
+    level: "vidutinis",
+    isTrap: false,
+    sourceVerified: "Roman tersorium — sponge on a stick (public latrines)",
+    emoji: "🧽",
+    translations: {
+      en: {
+        question: "What did ancient Romans share in public toilets instead of toilet paper?",
+        correct: "A sponge on a stick",
+        distractors: [
+          "Soft leaves",
+          "Sheep wool",
+          "A silk cloth",
+          "Clean sand",
+          "Olive oil",
+        ],
+        explanation:
+          "Romans used a sea sponge fixed to a stick (a tersorium), shared and rinsed in water.",
+      },
+      lt: {
+        question: "Ką senovės romėnai bendrai naudojo viešuosiuose tualetuose vietoj tualetinio popieriaus?",
+        correct: "Kempinę ant pagaliuko",
+        distractors: [
+          "Minkštus lapus",
+          "Avių vilną",
+          "Šilko skiautę",
+          "Švarų smėlį",
+          "Alyvuogių aliejų",
+        ],
+        explanation:
+          "Romėnai naudojo jūros kempinę ant pagaliuko (tersorium), kurią skalaudavo vandenyje.",
+      },
+    },
+  },
+  {
+    id: "his_me_032",
+    category: "history",
+    subTheme: "ancient",
+    level: "vidutinis",
+    isTrap: false,
+    sourceVerified: "Garum — fermented fish sauce, staple Roman condiment",
+    emoji: "🐟",
+    translations: {
+      en: {
+        question: "Which fermented sauce did ancient Romans pour on almost everything?",
+        correct: "Fish sauce (garum)",
+        distractors: [
+          "Soy sauce",
+          "Tomato ketchup",
+          "Mustard",
+          "Honey syrup",
+          "Apple vinegar",
+        ],
+        explanation:
+          "Garum, a salty fermented fish sauce, was the Romans' favourite flavouring.",
+      },
+      lt: {
+        question: "Kokį fermentuotą padažą senovės romėnai pildavo beveik ant visko?",
+        correct: "Žuvies padažą (garum)",
+        distractors: [
+          "Sojos padažą",
+          "Pomidorų kečupą",
+          "Garstyčias",
+          "Medaus sirupą",
+          "Obuolių actą",
+        ],
+        explanation:
+          "Garum — sūrus fermentuotas žuvies padažas — buvo mėgstamiausias romėnų prieskonis.",
+      },
+    },
+  },
+  {
+    id: "his_me_033",
+    category: "history",
+    subTheme: "ancient",
+    level: "vidutinis",
+    isTrap: false,
+    sourceVerified: "Ancient Egypt — kohl eye makeup worn by all genders",
+    emoji: "👁️",
+    translations: {
+      en: {
+        question: "In ancient Egypt, who commonly wore black kohl eye makeup?",
+        correct: "Both men and women",
+        distractors: [
+          "Only women",
+          "Only the pharaoh",
+          "Only priests",
+          "Only children",
+          "Only soldiers",
+        ],
+        explanation:
+          "Egyptians of all genders lined their eyes with kohl — for looks and to cut sun glare.",
+      },
+      lt: {
+        question: "Senovės Egipte kas dažniausiai dažydavosi akis juodu kohl dažu?",
+        correct: "Ir vyrai, ir moterys",
+        distractors: [
+          "Tik moterys",
+          "Tik faraonas",
+          "Tik žyniai",
+          "Tik vaikai",
+          "Tik kariai",
+        ],
+        explanation:
+          "Egiptiečiai (ir vyrai, ir moterys) ryškindavo akis kohl dažu — dėl grožio ir nuo saulės blizgesio.",
+      },
+    },
+  },
+  {
+    id: "his_me_034",
+    category: "history",
+    subTheme: "medieval",
+    level: "vidutinis",
+    isTrap: false,
+    sourceVerified: "Medieval Europe — forks rare; eating with hands, knife, spoon",
+    emoji: "🍞",
+    translations: {
+      en: {
+        question: "How did most people in medieval Europe usually eat their meals?",
+        correct: "With hands, a knife and a spoon",
+        distractors: [
+          "With a fork",
+          "With chopsticks",
+          "With two forks",
+          "Only with a spoon",
+          "Wearing gloves",
+        ],
+        explanation:
+          "Forks were rare and even mocked; people ate with hands, a knife and a spoon.",
+      },
+      lt: {
+        question: "Kaip viduramžių Europoje žmonės dažniausiai valgydavo?",
+        correct: "Rankomis, peiliu ir šaukštu",
+        distractors: [
+          "Šakute",
+          "Lazdelėmis",
+          "Dviem šakutėmis",
+          "Tik šaukštu",
+          "Su pirštinėmis",
+        ],
+        explanation:
+          "Šakutės buvo retos ir net pašiepiamos; valgyta rankomis, peiliu ir šaukštu.",
+      },
+    },
+  },
 ];

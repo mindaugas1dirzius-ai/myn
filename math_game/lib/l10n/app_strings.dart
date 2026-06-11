@@ -131,6 +131,34 @@ class AppStrings {
   String get subFoodExotic => _pick('Egzotiškas maistas', 'Exotic food');
   String get subFoodExoticDesc =>
       _pick('Drąsiausi patiekalai iš viso pasaulio', 'The boldest dishes worldwide');
+  // Geografija — potemės
+  String get subGeoCities => _pick('Sostinės ir šalys', 'Capitals & countries');
+  String get subGeoCitiesDesc =>
+      _pick('Valstybės, sostinės, žemynai', 'Countries, capitals, continents');
+  String get subGeoNature => _pick('Gamta ir orientyrai', 'Nature & landmarks');
+  String get subGeoNatureDesc =>
+      _pick('Kalnai, upės, jūros, dykumos', 'Mountains, rivers, seas, deserts');
+  // Istorija — potemės
+  String get subHistoryAncient => _pick('Senovės pasaulis', 'Ancient world');
+  String get subHistoryAncientDesc =>
+      _pick('Antika, viduramžiai, renesansas', 'Antiquity, Middle Ages, Renaissance');
+  String get subHistoryModern => _pick('Naujieji laikai', 'Modern era');
+  String get subHistoryModernDesc =>
+      _pick('Atradimai, išradimai, įvykiai', 'Discoveries, inventions, events');
+  // Pop kultūra — potemės
+  String get subPopCinema => _pick('Kinas ir muzika', 'Cinema & music');
+  String get subPopCinemaDesc =>
+      _pick('Filmai, dainos, animacija', 'Movies, songs, animation');
+  String get subPopStories => _pick('Herojai ir istorijos', 'Heroes & stories');
+  String get subPopStoriesDesc =>
+      _pick('Knygos, personažai, mitai, menas', 'Books, characters, myths, art');
+  // Sportas — potemės
+  String get subSportRules => _pick('Taisyklės ir technika', 'Rules & technique');
+  String get subSportRulesDesc =>
+      _pick('Žaidimo taisyklės ir inventorius', 'Game rules and equipment');
+  String get subSportDisciplines => _pick('Šakos ir varžybos', 'Disciplines & games');
+  String get subSportDisciplinesDesc =>
+      _pick('Olimpinės, futbolas, istorija', 'Olympics, football, history');
 
   // --- Veiksmai ---
   String get opAdd => _pick('Sudėtis', 'Addition');
