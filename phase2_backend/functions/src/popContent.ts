@@ -172,7 +172,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Elsa can create and control ice and snow.",
       },
       lt: {
-        question: "Filme „Ledo šalis” Elza valdo ką?",
+        question: "Ką filme „Ledo šalis” valdo Elza?",
         correct: "Ledą ir sniegą",
         distractors: ["Ugnį", "Vandenį", "Vėją", "Žaibą", "Smėlį"],
         explanation: "Elza kuria ir valdo ledą bei sniegą.",
@@ -241,7 +241,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "In Toy Story the toys come alive when no one looks.",
       },
       lt: {
-        question: "„Žaislų istorija” — filmas apie žaislus, kurie geba ką?",
+        question: "Ką geba žaislai filme „Žaislų istorija”?",
         correct: "Atgyti",
         distractors: ["Skraidyti lėktuvais", "Gaminti maistą", "Vairuoti", "Nardyti", "Statyti namus"],
         explanation: "„Žaislų istorijoje” žaislai atgyja, kai niekas nemato.",
@@ -336,7 +336,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         question: "Kokį maistą labiausiai mėgsta Mikė Pūkuotukas?",
         correct: "Medų",
         distractors: ["Morkas", "Žuvį", "Bananus", "Sūrį", "Duoną"],
-        explanation: "Mikė Pūkuotukas garsėja meilę medui.",
+        explanation: "Mikė Pūkuotukas garsėja meile medui.",
       },
     },
   },
@@ -450,7 +450,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Tetris is about fitting falling block shapes.",
       },
       lt: {
-        question: "Žaidime „Tetris” dėliojami krintantys kas?",
+        question: "Kokie krintantys daiktai dėliojami žaidime „Tetris”?",
         correct: "Blokai",
         distractors: ["Kortos", "Burbulai", "Monetos", "Žvaigždės", "Raidės"],
         explanation: "„Tetris” — krintančių blokų dėliojimas.",
@@ -473,7 +473,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Jurassic Park is about recreated dinosaurs.",
       },
       lt: {
-        question: "Filmai „Juros periodo parkas” garsūs sugrąžinę ką?",
+        question: "Kokius gyvūnus atgaivino filmai „Juros periodo parkas”?",
         correct: "Dinozaurus",
         distractors: ["Robotus", "Ateivius", "Drakonus", "Piratus", "Vampyrus"],
         explanation: "„Juros periodo parkas” — apie atkurtus dinozaurus.",
@@ -519,7 +519,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "A piano is played using its black and white keys.",
       },
       lt: {
-        question: "Pianinu grojama spaudžiant ką?",
+        question: "Ką spaudžiant grojama pianinu?",
         correct: "Klavišus",
         distractors: ["Tik stygas", "Tik pedalus", "Žalvario mygtukus", "Ladus", "Vožtuvus"],
         explanation: "Pianinu grojama spaudžiant juodus ir baltus klavišus.",
@@ -728,7 +728,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "King Kong is a giant ape from 1933 cinema.",
       },
       lt: {
-        question: "Klasikinis kino monstras King Kongas yra milžiniškas kas?",
+        question: "Koks milžiniškas gyvūnas yra kino monstras King Kongas?",
         correct: "Beždžionė",
         distractors: ["Driežas", "Lokys", "Voras", "Ryklys", "Gyvatė"],
         explanation: "King Kongas — milžiniška beždžionė iš 1933 m. kino.",
@@ -751,7 +751,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Mozart was a famous classical music composer.",
       },
       lt: {
-        question: "Volfgangas Amadėjus Mocartas garsus kaip kas?",
+        question: "Volfgangas Amadėjus Mocartas labiausiai žinomas kaip...?",
         correct: "Kompozitorius",
         distractors: ["Dailininkas", "Poetas", "Aktorius", "Skulptorius", "Architektas"],
         explanation: "Mocartas — garsus klasikinės muzikos kompozitorius.",
@@ -774,9 +774,9 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Jaws is about a great white shark.",
       },
       lt: {
-        question: "Klasikiniame trileryje „Nasrai” pagrindinė būtybė yra kuri?",
+        question: "Kokia būtybė yra pagrindinė klasikiniame trileryje „Nasrai”?",
         correct: "Ryklys",
-        distractors: ["Banginis", "Aštonkojis", "Krokodilas", "Ungurys", "Delfinas"],
+        distractors: ["Banginis", "Aštuonkojis", "Krokodilas", "Ungurys", "Delfinas"],
         explanation: "„Nasrai” — apie didįjį baltąjį ryklį.",
       },
     },
@@ -843,7 +843,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "The time machine is a DeLorean car.",
       },
       lt: {
-        question: "Filme „Atgal į ateitį” laiko mašina įmontuota į ką?",
+        question: "Į ką filme „Atgal į ateitį” įmontuota laiko mašina?",
         correct: "Automobilį",
         distractors: ["Traukinį", "Valtį", "Lėktuvą", "Telefono būdelę", "Dviratį"],
         explanation: "Laiko mašina — DeLorean automobilis.",
@@ -866,7 +866,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Tarzan was raised by apes in the jungle.",
       },
       lt: {
-        question: "Personažą Tarzaną džiunglėse užaugino kas?",
+        question: "Kas džiunglėse užaugino personažą Tarzaną?",
         correct: "Beždžionės",
         distractors: ["Vilkai", "Liūtai", "Lokiai", "Drambliai", "Gyvatės"],
         explanation: "Tarzaną džiunglėse užaugino beždžionės.",
@@ -958,7 +958,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Angry Birds are flung from a slingshot.",
       },
       lt: {
-        question: "Žaidime „Angry Birds” paukščiai paleidžiami naudojant ką?",
+        question: "Ką naudojant žaidime „Angry Birds” paleidžiami paukščiai?",
         correct: "Laidynę",
         distractors: ["Patranką", "Katapultą", "Lanką", "Spyruoklę", "Raketą"],
         explanation: "„Angry Birds” paukščiai paleidžiami iš laidynės.",
@@ -981,7 +981,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "The Ghostbusters capture ghosts.",
       },
       lt: {
-        question: "Filme „Vaiduoklių medžiotojai” komandos darbas — gaudyti ką?",
+        question: "Ką gaudo komanda filme „Vaiduoklių medžiotojai”?",
         correct: "Vaiduoklius",
         distractors: ["Ateivius", "Robotus", "Vagis", "Ryklius", "Šnipus"],
         explanation: "„Vaiduoklių medžiotojai” gaudo vaiduoklius.",
@@ -1050,7 +1050,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "A violin is played by drawing a bow across strings.",
       },
       lt: {
-        question: "Smuiku paprastai grojama naudojant ką?",
+        question: "Ką naudojant paprastai grojama smuiku?",
         correct: "Stryką",
         distractors: ["Lazdelę", "Mediatorių", "Plaktuką", "Kūjelį", "Šepetėlį"],
         explanation: "Smuiku grojama stryku braukiant per stygas.",
@@ -1282,7 +1282,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Robinson Crusoe is shipwrecked on a deserted island.",
       },
       lt: {
-        question: "Klasikinis personažas Robinzonas Kruzas atsiduria kur?",
+        question: "Kur atsiduria klasikinis personažas Robinzonas Kruzas?",
         correct: "Saloje",
         distractors: ["Dykumoje", "Oloje", "Ant kalno", "Mieste", "Tik laive"],
         explanation: "Robinzonas Kruzas patiria laivo avariją negyvenamoje saloje.",
@@ -1328,7 +1328,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Chaplin was a star of the silent film era.",
       },
       lt: {
-        question: "Čarlis Čaplinas išgarsėjo kuria kino era?",
+        question: "Kokiais filmais išgarsėjo Čarlis Čaplinas?",
         correct: "Nebyliais filmais",
         distractors: ["3D filmais", "Spalvotais filmais", "Garsiniais filmais", "Skaitmeniniais", "Internetiniais"],
         explanation: "Čaplinas — nebyliojo kino eros žvaigždė.",
@@ -1538,7 +1538,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         question: "Į ką muša būgnininkas, kad pasigirstų garsas?",
         correct: "Būgnus",
         distractors: ["Stygas", "Klavišus", "Pedalus", "Mygtukus", "Liežuvėlius"],
-        explanation: "Būgnininkas groja muša būgnus.",
+        explanation: "Būgnininkas groja mušdamas būgnus.",
       },
     },
   },
@@ -1696,7 +1696,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Ariel is a mermaid who wants to live on land.",
       },
       lt: {
-        question: "Filme „Undinėlė” Arielė yra kas?",
+        question: "Kas yra Arielė filme „Undinėlė”?",
         correct: "Undinė",
         distractors: ["Fėja", "Ragana", "Piratė", "Vaiduoklis", "Sausumos princesė"],
         explanation: "Arielė — undinė, norinti gyventi sausumoje.",
@@ -2225,7 +2225,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Beethoven's Ninth Symphony features the Ode to Joy.",
       },
       lt: {
-        question: "Kurio Devintojoje simfonijoje skamba „Odė džiaugsmui”?",
+        question: "Kurio kompozitoriaus Devintojoje simfonijoje skamba „Odė džiaugsmui”?",
         correct: "Bethovenas",
         distractors: ["Mocartas", "Bachas", "Bramsas", "Šubertas", "Haidnas"],
         explanation: "Bethoveno Devintojoje simfonijoje skamba „Odė džiaugsmui”.",

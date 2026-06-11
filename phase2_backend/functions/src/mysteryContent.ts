@@ -94,7 +94,7 @@ export const MYSTERIES: MysteryItem[] = [
       },
       lt: {
         text: "Vaizduotė svarbiau už žinias",
-        hint: "Einšteinas apie tai, kas veda atradimus",
+        hint: "Einšteinas apie tai, kas skatina atradimus",
         hint1: "Jis tikėjo, kad kūrybiškumas svarbesnis nei iškalti faktai.",
         hint2: "Naujos idėjos gimsta iš svajojimo, o ne tik iš to, ką jau išmokome.",
       },
@@ -116,7 +116,7 @@ export const MYSTERIES: MysteryItem[] = [
         text: "Jei mačiau toliau, tai tik todėl, kad stovėjau ant milžinų pečių",
         hint: "Niutonas apie pirmtakų darbą",
         hint1: "Kiekvienas naujas atradimas remiasi tuo, ką pasiekė didieji pirmtakai.",
-        hint2: "Pasiekiame aukščiau, nes kiti mus pirma pakėlė.",
+        hint2: "Pasiekiame aukščiau, nes kiti mus pirmiau pakėlė.",
       },
     },
   },
@@ -462,7 +462,7 @@ export const MYSTERIES: MysteryItem[] = [
       lt: {
         text: "Deimantas",
         hint: "Kokia natūrali medžiaga yra kiečiausia žinoma gamtoje?",
-        hint1: "Sudaryta iš gryno anglies.",
+        hint1: "Sudaryta iš grynos anglies.",
         hint2: "Naudojamas brangakmeniams ir pjovimo įrankiams.",
       },
     },
@@ -1387,7 +1387,7 @@ export const MYSTERIES: MysteryItem[] = [
         hint2: "What you do proves far more than anything you merely say.",
       },
       lt: {
-        text: "Darbai kalba garsiau už žodžius",
+        text: "Ne žodžiai, o darbai",
         hint: "Patarlė apie veiksmus ir kalbėjimą",
         hint1: "Ji vertina darbus labiau nei pažadus.",
         hint2: "Ką darai, įrodo kur kas daugiau nei tai, ką tik pasakai.",
@@ -1447,7 +1447,7 @@ export const MYSTERIES: MysteryItem[] = [
         hint2: "When minds join forces, the answer comes more easily.",
       },
       lt: {
-        text: "Viena galva gerai o dvi geriau",
+        text: "Viena galva gerai, o dvi geriau",
         hint: "Patarlė apie bendrą darbą",
         hint1: "Dviese problemą išspręsti lengviau nei vienam.",
         hint2: "Kai protai susivienija, sprendimas randamas lengviau.",

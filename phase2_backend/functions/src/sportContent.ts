@@ -56,7 +56,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "Points are scored by shooting through the hoop.",
       },
       lt: {
-        question: "Krepšinyje taškai pelnomi įmetus kamuolį kur?",
+        question: "Kur įmetus kamuolį krepšinyje pelnomi taškai?",
         correct: "Pro krepšį",
         distractors: ["Į vartus", "Virš kartelės", "Į duobutę", "Už linijos", "Į dėžę"],
         explanation: "Taškai pelnomi įmetus kamuolį pro krepšį.",
@@ -171,7 +171,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "Golfers aim to hit the ball into holes.",
       },
       lt: {
-        question: "Golfe kamuoliukas varomas į ką?",
+        question: "Į ką golfe varomas kamuoliukas?",
         correct: "Duobutę",
         distractors: ["Tinklą", "Krepšį", "Vartus", "Kišenę", "Žiedą"],
         explanation: "Golfo tikslas — įvaryti kamuoliuką į duobutes.",
@@ -194,7 +194,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "Cycling is racing on bicycles.",
       },
       lt: {
-        question: "Kuri sporto šaka naudoja dviratį?",
+        question: "Kurioje sporto šakoje varžomasi dviračiais?",
         correct: "Dviračių sportas",
         distractors: ["Irklavimas", "Boksas", "Šuoliai į vandenį", "Imtynės", "Buriavimas"],
         explanation: "Dviračių sportas — lenktynės dviračiais.",
@@ -219,7 +219,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
       lt: {
         question: "Kur vyksta bokso kova?",
         correct: "Ringe",
-        distractors: ["Aikštelėje", "Aikštėje", "Take", "Baseine", "Čiuožykloje"],
+        distractors: ["Aikštelėje", "Aikštėje", "Bėgimo take", "Baseine", "Čiuožykloje"],
         explanation: "Boksininkai kaunasi kvadratiniame ringe.",
       },
     },
@@ -888,7 +888,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "Triathlon is swimming, cycling and running.",
       },
       lt: {
-        question: "Triatlonas jungia plaukimą, dviračius ir ką?",
+        question: "Be plaukimo ir dviračių, ką dar jungia triatlonas?",
         correct: "Bėgimą",
         distractors: ["Irklavimą", "Slidinėjimą", "Boksą", "Šokimą", "Laipiojimą"],
         explanation: "Triatlonas — plaukimas, dviračiai ir bėgimas.",
@@ -1388,7 +1388,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         question: "NBA — aukščiausia krepšinio lyga — yra kuriame regione?",
         correct: "Šiaurės Amerikoje",
         distractors: ["Europoje", "Azijoje", "Pietų Amerikoje", "Afrikoje", "Okeanijoje"],
-        explanation: "NBA bazuojasi Šiaurės Amerikoje.",
+        explanation: "NBA įsikūrusi Šiaurės Amerikoje.",
       },
     },
   },
@@ -1414,7 +1414,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "The shot clock in pro basketball is 24 seconds.",
       },
       lt: {
-        question: "Per kiek sekundžių komanda turi mesti profesionaliame krepšinyje?",
+        question: "Per kiek sekundžių komanda turi atlikti metimą profesionaliame krepšinyje?",
         correct: "24 sekundės",
         distractors: [
           "20 sekundžių",
@@ -1466,7 +1466,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "Table tennis is played with paddles on a table.",
       },
       lt: {
-        question: "Kuri sporto šaka naudoja mažas raketes ir lengvą kamuoliuką ant stalo?",
+        question: "Kurioje sporto šakoje žaidžiama mažomis raketėmis ir lengvu kamuoliuku ant stalo?",
         correct: "Stalo tenisas",
         distractors: ["Tenisas", "Tinklinis", "Badmintonas", "Skvošas", "Golfas"],
         explanation: "Stalo tenisas žaidžiamas raketėmis ant stalo.",
@@ -1673,10 +1673,10 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "Ice hockey is played with sticks and a puck.",
       },
       lt: {
-        question: "Kuriame sporte taškai pelnomi lazda ir ritulio disku?",
+        question: "Kuriame sporte taškai pelnomi lazda ir guminiu disku?",
         correct: "Ledo ritulys",
         distractors: ["Futbolas", "Kriketas", "Tenisas", "Golfas", "Irklavimas"],
-        explanation: "Ledo ritulys žaidžiamas lazdomis ir ritulio disku.",
+        explanation: "Ledo ritulys žaidžiamas lazdomis ir guminiu disku.",
       },
     },
   },
@@ -1765,10 +1765,10 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "A jockey rides a horse in racing.",
       },
       lt: {
-        question: "Žirgų lenktynėse žokėjus joja ant kurio gyvūno?",
+        question: "Žirgų lenktynėse žokėjas joja ant kurio gyvūno?",
         correct: "Žirgo",
         distractors: ["Kupranugario", "Šuns", "Asilo", "Karvės", "Ožkos"],
-        explanation: "Žokėjus lenktynėse joja žirgu.",
+        explanation: "Žokėjas lenktynėse joja žirgu.",
       },
     },
   },
@@ -1929,7 +1929,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         question: "Kuris japonų kovos menas remiasi metimais ir laikymais?",
         correct: "Dziudo",
         distractors: ["Karatė", "Tekvondas", "Kung fu", "Kapoeira", "Muay Thai"],
-        explanation: "Dziudo naudoja metimus ir laikymo veiksmus.",
+        explanation: "Dziude naudojami metimai ir laikymo veiksmai.",
       },
     },
   },
@@ -2156,7 +2156,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "100 runs by one batsman is a century.",
       },
       lt: {
-        question: "Kaip kriketе vadinamas vieno mušėjo pelnytas 100 bėgimų rezultatas?",
+        question: "Kaip krikete vadinamas vieno mušėjo pelnytas 100 bėgimų rezultatas?",
         correct: "Šimtukas (century)",
         distractors: ["Dvigubas", "Riba", "Hat-trick", "Inningas", "Overas"],
         explanation: "Vieno mušėjo 100 bėgimų vadinami „century”.",
@@ -2501,7 +2501,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "The triple jump is hop, step and jump.",
       },
       lt: {
-        question: "Trišuolio fazės yra šuoliukas, žingsnis ir kas?",
+        question: "Be šuoliuko ir žingsnio, kuri trečia trišuolio fazė?",
         correct: "Šuolis",
         distractors: ["Bėgimas", "Pašokimas", "Atsispyrimas", "Šuoliavimas", "Žingsniavimas"],
         explanation: "Trišuolis — šuoliukas, žingsnis ir šuolis.",
@@ -2547,7 +2547,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "The fastest qualifier starts from pole position.",
       },
       lt: {
-        question: "Formulėje 1 greičiausias kvalifikacijos ratas suteikia ką?",
+        question: "Ką Formulėje 1 suteikia greičiausias kvalifikacijos ratas?",
         correct: "Pole poziciją",
         distractors: ["Greičiausio rato tašką", "Starto baudą", "Aptarnavimo eilę", "Premijinius taškus", "Podiumą"],
         explanation: "Greičiausias kvalifikacijoje startuoja iš pole pozicijos.",

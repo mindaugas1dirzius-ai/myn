@@ -121,7 +121,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
       en: {
         question: "Coffee is made from roasted what?",
         correct: "Beans",
-        distractors: ["Leaves", "Roots", "Petals", "Bark", "Seeds of corn"],
+        distractors: ["Leaves", "Roots", "Petals", "Bark", "Corn kernels"],
         explanation: "Coffee comes from roasted coffee beans.",
       },
       lt: {
@@ -217,7 +217,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Tea is brewed from tea plant leaves.",
       },
       lt: {
-        question: "Iš kurios augalo dalies dažniausiai gaminama arbata?",
+        question: "Iš kokios augalo dalies dažniausiai gaminama arbata?",
         correct: "Lapų",
         distractors: ["Šaknų", "Pupelių", "Vaisių", "Riešutų", "Stiebo"],
         explanation: "Arbata plikoma iš arbatmedžio lapų.",
@@ -449,7 +449,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Champagne comes from the Champagne region in France.",
       },
       lt: {
-        question: "Šampanas pavadintas pagal regioną kurioje šalyje?",
+        question: "Kuri šalis garsėja šampanu, pavadintu pagal jos regioną?",
         correct: "Prancūzija",
         distractors: ["Italija", "Ispanija", "Vokietija", "Austrija", "Belgija"],
         explanation: "Šampanas kilęs iš Šampanės regiono Prancūzijoje.",
@@ -472,7 +472,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Curry has deep roots in Indian cuisine.",
       },
       lt: {
-        question: "Su kuria šalimi stipriai siejami karį patiekalai?",
+        question: "Su kuria šalimi labiausiai siejami kario patiekalai?",
         correct: "Indija",
         distractors: ["Japonija", "Italija", "Meksika", "Egiptas", "Brazilija"],
         explanation: "Karis turi gilias šaknis Indijos virtuvėje.",
@@ -750,7 +750,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Sashimi is thin slices of raw fish or seafood.",
       },
       lt: {
-        question: "Sašimis — plonai pjaustyta žalia kas?",
+        question: "Koks žalias produktas plonai pjaustomas sašimiui?",
         correct: "Žuvis",
         distractors: ["Jautiena", "Tofu", "Daržovė", "Kiaušinis", "Grybas"],
         explanation: "Sašimis — ploni žalios žuvies ar jūros gėrybių griežinėliai.",
@@ -773,7 +773,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Cloves are aromatic dried flower buds.",
       },
       lt: {
-        question: "Prieskonis gvazdikėliai iš tikrųjų yra džiovinti kas?",
+        question: "Kokia augalo dalis yra džiovinti prieskonio gvazdikėliai?",
         correct: "Žiedpumpuriai",
         distractors: ["Šaknys", "Sėklos", "Lapai", "Žievė", "Uogos"],
         explanation: "Gvazdikėliai — aromatingi džiovinti žiedpumpuriai.",
@@ -957,7 +957,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Paprika is made from ground dried red peppers.",
       },
       lt: {
-        question: "Paprikos milteliai — sumalti džiovinti kas?",
+        question: "Kokios džiovintos daržovės sumalamos į paprikos miltelius?",
         correct: "Paprikos",
         distractors: ["Pomidorai", "Burokėliai", "Morkos", "Svogūnai", "Uogos"],
         explanation: "Paprika gaminama iš sumaltų džiovintų raudonųjų paprikų.",
@@ -1097,7 +1097,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "The tagine pot and dish come from North Africa, Morocco.",
       },
       lt: {
-        question: "Tažinas — lėtas troškinys, pavadintas pagal puodą iš kur?",
+        question: "Kuri šalis garsėja lėtu troškiniu tažinu?",
         correct: "Marokas",
         distractors: ["Turkija", "Graikija", "Iranas", "Tunisas", "Egiptas"],
         explanation: "Tažino puodas ir patiekalas kilę iš Maroko.",
@@ -1143,7 +1143,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Feijoada is a Brazilian national dish.",
       },
       lt: {
-        question: "Feižoada — juodųjų pupelių ir mėsos troškinys — kurios šalies?",
+        question: "Kuri šalis garsėja feižoada — pupelių ir mėsos troškiniu?",
         correct: "Brazilija",
         distractors: ["Portugalija", "Meksika", "Argentina", "Kuba", "Kolumbija"],
         explanation: "Feižoada — nacionalinis Brazilijos patiekalas.",
@@ -1166,7 +1166,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Capsaicin gives chili peppers their heat.",
       },
       lt: {
-        question: "Kuri medžiaga aitriųjų paprikų padaro aštrias?",
+        question: "Kuri medžiaga suteikia aitriosioms paprikoms aštrumą?",
         correct: "Kapsaicinas",
         distractors: ["Mentolis", "Kofeinas", "Kurkuminas", "Alicinas", "Taninas"],
         explanation: "Kapsaicinas suteikia aitriosioms paprikoms aštrumo.",
@@ -1212,7 +1212,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Cinnamon is made from the inner bark of trees.",
       },
       lt: {
-        question: "Prieskonis cinamonas — tai džiovinta medžio kas?",
+        question: "Kokia džiovinta medžio dalis yra prieskonis cinamonas?",
         correct: "Žievė",
         distractors: ["Šaknis", "Lapas", "Sėkla", "Žiedas", "Vaisius"],
         explanation: "Cinamonas gaminamas iš vidinės medžių žievės.",
@@ -1235,7 +1235,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Poutine originated in Quebec, Canada.",
       },
       lt: {
-        question: "Putinas — gruzdintos bulvytės su padažu ir sūriu — iš kur?",
+        question: "Kuri šalis sukūrė putiną — bulvytes su padažu ir sūriu?",
         correct: "Kanada",
         distractors: ["JAV", "Belgija", "Prancūzija", "Airija", "Nyderlandai"],
         explanation: "Putinas atsirado Kvebeke, Kanadoje.",
@@ -1327,7 +1327,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Baklava is thin pastry, nuts and sweet syrup.",
       },
       lt: {
-        question: "Baklava — saldumynas su riešutais ir kuo?",
+        question: "Su riešutais ir kuo dar gaminama baklava?",
         correct: "Sirupu",
         distractors: ["Grietinėle", "Šokoladu", "Uogiene", "Kremu", "Karameliu"],
         explanation: "Baklava — plona tešla, riešutai ir saldus sirupas.",
@@ -1684,7 +1684,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "BLT stands for bacon, lettuce and tomato.",
       },
       lt: {
-        question: "BLT sumuštinyje yra šoninė, salotos ir kas?",
+        question: "Be šoninės ir salotų, kas dar yra BLT sumuštinyje?",
         correct: "Pomidoras",
         distractors: ["Tunas", "Sūris", "Kiaušinis", "Kumpis", "Svogūnas"],
         explanation: "BLT reiškia šoninę, salotas ir pomidorą.",
@@ -1799,7 +1799,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "It is named after the town of Sandwich in England.",
       },
       lt: {
-        question: "Sumuštinis pavadintas pagal vietovę kurioje šalyje?",
+        question: "Kuri šalis davė sumuštiniui vardą pagal savo vietovę?",
         correct: "Anglija",
         distractors: ["Prancūzija", "Italija", "JAV", "Vokietija", "Ispanija"],
         explanation: "Pavadinimas kilo nuo Sandvičo miestelio Anglijoje.",
@@ -2006,7 +2006,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Turmeric gives curry its yellow color.",
       },
       lt: {
-        question: "Kuris prieskonis suteikia karį milteliams geltoną spalvą?",
+        question: "Kuris prieskonis suteikia kario milteliams geltoną spalvą?",
         correct: "Ciberžolė",
         distractors: ["Paprika", "Kuminas", "Imbieras", "Pipiras", "Kalendra"],
         explanation: "Ciberžolė nudažo karį geltonai.",
@@ -2029,7 +2029,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Brie is a soft cheese from France.",
       },
       lt: {
-        question: "Brie yra minkštas sūris, kilęs iš kurios šalies?",
+        question: "Kuri šalis garsėja minkštu sūriu brie?",
         correct: "Prancūzija",
         distractors: ["Italija", "Šveicarija", "Nyderlandai", "Ispanija", "Belgija"],
         explanation: "Brie — minkštas sūris iš Prancūzijos.",
@@ -2075,7 +2075,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Pad Thai is a famous Thai noodle dish.",
       },
       lt: {
-        question: "Pad Thai — makaronų patiekalas iš kurios šalies?",
+        question: "Kuri šalis garsėja makaronų patiekalu Pad Thai?",
         correct: "Tailandas",
         distractors: ["Vietnamas", "Kinija", "Japonija", "Korėja", "Indija"],
         explanation: "Pad Thai — garsus tailandietiškas makaronų patiekalas.",
@@ -2144,7 +2144,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Roquefort is aged in caves in southern France.",
       },
       lt: {
-        question: "Roquefort pelėsinis sūris brandinamas urvuose kurioje šalyje?",
+        question: "Kuri šalis garsėja urvuose brandinamu sūriu Roquefort?",
         correct: "Prancūzija",
         distractors: ["Italija", "Ispanija", "Graikija", "Anglija", "Danija"],
         explanation: "Roquefort brandinamas urvuose pietų Prancūzijoje.",
@@ -2397,7 +2397,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Rennet enzymes traditionally come from calf stomachs.",
       },
       lt: {
-        question: "Tradicinis šliužas, varškinantis pieną, gaunamas iš kur?",
+        question: "Iš kur gaunamas tradicinis šliužas, varškinantis pieną?",
         correct: "Gyvūno skrandžio",
         distractors: ["Augalų lapų", "Jūros druskos", "Vaisių sulčių", "Medžio žievės", "Kiaušinio baltymo"],
         explanation: "Šliužo fermentai tradiciškai gaunami iš veršelio skrandžio.",
@@ -2604,7 +2604,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "At the smoke point oil starts to smoke and break down.",
       },
       lt: {
-        question: "Aliejaus dūmijimo taškas — temperatūra, kurioje jis pradeda ką?",
+        question: "Ką pradeda daryti aliejus, pasiekęs dūmijimo tašką?",
         correct: "Rūkti",
         distractors: ["Užšalti", "Virti", "Sukietėti", "Išgaruoti", "Kristalizuotis"],
         explanation: "Dūmijimo taške aliejus pradeda rūkti ir irti.",
@@ -2719,7 +2719,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Nitrites fix the pink color in cured meats.",
       },
       lt: {
-        question: "Sūdyto kumpio rožinė spalva atsiranda dėl reakcijos su kuo?",
+        question: "Dėl reakcijos su kuo atsiranda rožinė sūdyto kumpio spalva?",
         correct: "Nitritais",
         distractors: ["Geležimi", "Paprika", "Burokėlių sultimis", "Vitaminu C", "Druska"],
         explanation: "Nitritai įtvirtina rožinę vytintos mėsos spalvą.",
@@ -2765,7 +2765,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Caramelization is the browning of sugar alone.",
       },
       lt: {
-        question: "Karamelizacija, skirtingai nei Majaro reakcija, apima tik ką?",
+        question: "Ką vienintelį apima karamelizacija, skirtingai nei Majaro reakcija?",
         correct: "Cukrų",
         distractors: ["Baltymą", "Riebalus", "Vandenį", "Druską", "Rūgštį"],
         explanation: "Karamelizacija — tai vien cukraus parudimas.",
@@ -2856,13 +2856,13 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     emoji: "🐡",
     translations: {
       en: {
-        question: "Japanese 'fugu' needs licensed chefs because it can be?",
+        question: "Japanese 'fugu' needs licensed chefs because it can be...?",
         correct: "Poisonous",
         distractors: ["Explosive", "Flammable", "Magnetic", "Radioactive", "Frozen"],
         explanation: "Pufferfish (fugu) holds tetrodotoxin, deadly if mis-prepared.",
       },
       lt: {
-        question: "Japonišką „fugu” ruošia tik licencijuoti virėjai, nes ji?",
+        question: "Japonišką „fugu” ruošia tik licencijuoti virėjai, nes ji gali būti...?",
         correct: "Nuodinga",
         distractors: ["Sprogi", "Degi", "Magnetinė", "Radioaktyvi", "Sušalusi"],
         explanation: "Fugu turi tetrodotoksino — netinkamai paruošta mirtinai nuodinga.",
@@ -2902,7 +2902,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     emoji: "🐟",
     translations: {
       en: {
-        question: "Sweden's pungent 'surströmming' is fermented which fish?",
+        question: "Sweden's pungent 'surströmming' is made by fermenting which fish?",
         correct: "Herring",
         distractors: ["Salmon", "Cod", "Shark", "Mackerel", "Tuna"],
         explanation: "Surströmming is fermented Baltic herring, famed for its smell.",
@@ -2925,7 +2925,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     emoji: "🥚",
     translations: {
       en: {
-        question: "A Chinese 'century egg' has its white turned what color?",
+        question: "In a Chinese 'century egg', what color does the egg white turn?",
         correct: "Dark brown",
         distractors: ["Pure white", "Bright red", "Sky blue", "Golden", "Grass green"],
         explanation: "Curing turns the white into a dark brown translucent jelly.",
@@ -3094,7 +3094,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Fried tarantulas are a famous snack in Skuon, Cambodia.",
       },
       lt: {
-        question: "Kepta tarantulė — žinomas užkandis kurioje šalyje?",
+        question: "Kuri šalis garsėja keptų tarantulių užkandžiu?",
         correct: "Kambodža",
         distractors: ["Japonija", "Brazilija", "Italija", "Egiptas", "Kanada"],
         explanation: "Keptos tarantulės — garsus Skuono miesto (Kambodža) užkandis.",
@@ -3117,7 +3117,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Witchetty grubs are a traditional Aboriginal Australian food.",
       },
       lt: {
-        question: "„Witchetty” lerva — tradicinis maistas kurioje šalyje?",
+        question: "Kuri šalis garsėja „Witchetty” lervomis kaip maistu?",
         correct: "Australija",
         distractors: ["Meksika", "Indija", "Graikija", "Norvegija", "Peru"],
         explanation: "„Witchetty” lervos — tradicinis Australijos aborigenų maistas.",
