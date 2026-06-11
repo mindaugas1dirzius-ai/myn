@@ -46,6 +46,21 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final s = AppStrings.of(context);
+
+    // Užrakintos temos (skeletas). Kol turinio nėra, jos rodomos pilkos su
+    // „Greitai" — paspaudus parodom žinutę, NIEKO nekviečiam serverio. Eilė ir
+    // spalvos pagal manifestą; „Blitz" — atskira mechanika (irgi „Greitai").
+    final lockedThemes = <_LockedTheme>[
+      _LockedTheme('🎬', s.categoryPop, s.categoryPopDesc),
+      _LockedTheme('🌍', s.categoryGeo, s.categoryGeoDesc),
+      _LockedTheme('🏛️', s.categoryHistory, s.categoryHistoryDesc),
+      _LockedTheme('🔬', s.categoryTech, s.categoryTechDesc),
+      _LockedTheme('🍔', s.categoryFood, s.categoryFoodDesc),
+      _LockedTheme('⚽', s.categorySport, s.categorySportDesc),
+      _LockedTheme('🧠', s.categoryBody, s.categoryBodyDesc),
+      _LockedTheme('⚡', s.categoryBlitz, s.categoryBlitzDesc),
+    ];
+
     return Scaffold(
       body: AppBackground(
         child: SafeArea(
@@ -144,6 +159,11 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                         _loadMysteryStatus();
                       },
                     ),
+                    // Užrakintos temos (skeletas) — kiekviena su „Greitai".
+                    for (final t in lockedThemes) ...[
+                      const SizedBox(height: 18),
+                      _lockedThemeCard(context, t, s),
+                    ],
                   ],
                 ),
               ),
@@ -154,7 +174,7 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                 label: Text(s.exitApp,
                     style: const TextStyle(color: AppColors.textSecondary)),
               ),
-              const Text('v9-categories',
+              const Text('v10-skeleton',
                   style:
                       TextStyle(color: AppColors.textSecondary, fontSize: 10)),
               const SizedBox(height: 4),
@@ -235,4 +255,62 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
       ),
     );
   }
+
+  /// Užrakintos temos kortelė (skeletas). Pilka, su spynele ir „· Greitai".
+  /// Paspaudus — TIK žinutė; jokio serverio kvietimo (turinio dar nėra).
+  Widget _lockedThemeCard(
+      BuildContext context, _LockedTheme t, AppStrings s) {
+    return NeumorphicButton(
+      accent: AppColors.textSecondary,
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(s.lockedThemeNote),
+            backgroundColor: AppColors.surface,
+          ),
+        );
+      },
+      child: Row(
+        children: [
+          Text(t.emoji, style: const TextStyle(fontSize: 44)),
+          const SizedBox(width: 18),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(t.title,
+                          style: const TextStyle(
+                              color: AppColors.textSecondary,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: kHeadingFont)),
+                    ),
+                    const SizedBox(width: 8),
+                    const Icon(Icons.lock_outline,
+                        color: AppColors.textSecondary, size: 16),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text('${t.subtitle} · ${s.comingSoon}',
+                    style: const TextStyle(
+                        color: AppColors.textSecondary, fontSize: 13)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Vienos užrakintos temos aprašas (vidinis — tik šiam ekranui).
+class _LockedTheme {
+  final String emoji;
+  final String title;
+  final String subtitle;
+  const _LockedTheme(this.emoji, this.title, this.subtitle);
 }

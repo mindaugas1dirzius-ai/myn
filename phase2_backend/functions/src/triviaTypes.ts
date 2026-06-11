@@ -39,6 +39,27 @@ export type NatureTopic = "facts" | "extinct" | "plants";
 /** Numatytoji potemė, jei klausimas neturi `topic` lauko. */
 export const DEFAULT_TOPIC: NatureTopic = "facts";
 
+/**
+ * Trivijos TEMOS kodas (serveriui ir registrui). Stabilūs, trumpi kodai —
+ * naudojami `mode` eilutėje (`<tema>_<lygis>`, pvz. "tech_lengvas") ir Top 10
+ * lentelių raktuose. NIEKADA nekeičiam jau paskelbtų kodų (sugadintų lenteles).
+ *
+ *   "nature"  — Gamta ir gyvūnai (VEIKIA; turi atskirą startNatureGame su potemėmis);
+ *   "pop"     — Pop kultūra / pramogos;
+ *   "geo"     — Geografija ir pasaulis;
+ *   "history" — Istorija ir civilizacijos;
+ *   "tech"    — Technologijos ir mokslas;
+ *   "food"    — Maistas ir gėrimai;
+ *   "sport"   — Sportas;
+ *   "body"    — Žmogaus kūnas.
+ *
+ * Matematika, „Atspėk paslaptį" ir „Blitz" NĖRA trivija (atskiri varikliai),
+ * todėl čia jų NĖRA.
+ */
+export type TriviaCategory =
+  | "nature" | "pop" | "geo" | "history"
+  | "tech" | "food" | "sport" | "body";
+
 /** Vienos kalbos turinys: klausimas, teisingas, klaidingi variantai. */
 export interface LocalizedContent {
   question: string;
@@ -56,7 +77,7 @@ export interface LocalizedContent {
 /** Vienas trivijos klausimas (visomis turimomis kalbomis). */
 export interface TriviaQuestion {
   id: string;             // unikalus, pvz. "nat_animals_001"
-  category: "nature" | "geography";
+  category: TriviaCategory;
   subTheme: string;       // pvz. "animals", "plants", "records", "myths"
   /**
    * Stambi potemė pasirinkimui (žr. NatureTopic). NEPRIVALOMA — jei nenurodyta,

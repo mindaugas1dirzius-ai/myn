@@ -554,7 +554,7 @@ export const unlockByAd = onCall(
 //    Įrašo į active_games tuo pačiu formatu → submitScore veikia be pakeitimų.
 //    Ekonomika (1–5) nepaliesta; tai TIK nauja eilutė.
 // =================================================================
-export { startNatureGame } from "./triviaFunctions";
+export { startNatureGame, startTriviaGame } from "./triviaFunctions";
 
 // =================================================================
 // 7) „Atspėk paslaptį" meta-žaidimas (IZOLIUOTAS modulis).

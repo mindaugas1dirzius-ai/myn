@@ -37,6 +37,35 @@ class AppStrings {
   String get categoryNatureDesc =>
       _pick('Gyvūnai, augalai, faktai', 'Animals, plants, facts');
 
+  // --- Naujos temos (skeletas: kol kas užrakintos „Greitai") ---
+  String get categoryPop => _pick('Pop kultūra', 'Pop culture');
+  String get categoryPopDesc =>
+      _pick('Filmai, muzika, pramogos', 'Movies, music, entertainment');
+  String get categoryGeo => _pick('Geografija', 'Geography');
+  String get categoryGeoDesc =>
+      _pick('Šalys, sostinės, pasaulis', 'Countries, capitals, the world');
+  String get categoryHistory => _pick('Istorija', 'History');
+  String get categoryHistoryDesc =>
+      _pick('Civilizacijos ir išradimai', 'Civilizations and inventions');
+  String get categoryTech => _pick('Technologijos', 'Technology');
+  String get categoryTechDesc =>
+      _pick('Mokslas ir išradimai', 'Science and inventions');
+  String get categoryFood => _pick('Maistas', 'Food');
+  String get categoryFoodDesc =>
+      _pick('Patiekalai ir gėrimai', 'Dishes and drinks');
+  String get categorySport => _pick('Sportas', 'Sport');
+  String get categorySportDesc =>
+      _pick('Žaidimai ir rekordai', 'Games and records');
+  String get categoryBody => _pick('Žmogaus kūnas', 'Human body');
+  String get categoryBodyDesc =>
+      _pick('Kaip veikia mūsų kūnas', 'How our body works');
+  String get categoryBlitz => _pick('Blitz', 'Blitz');
+  String get categoryBlitzDesc =>
+      _pick('Taip ar ne — greičiui', 'Yes or no — beat the clock');
+  String get lockedThemeNote => _pick(
+      'Ši tema dar ruošiama — greitai!',
+      'This theme is being prepared — coming soon!');
+
   // --- Gamtos žaidimas ---
   String get natureLoadError => _pick(
       'Nepavyko įkelti klausimų. Patikrink internetą ir bandyk dar.',

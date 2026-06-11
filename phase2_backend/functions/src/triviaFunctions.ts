@@ -26,6 +26,7 @@ import {
 import { NATURE_QUESTIONS } from "./natureContent";
 import { pickQuestions, assembleOptions, mergeRecent } from "./triviaEngine";
 import { Lang, NatureTopic } from "./triviaTypes";
+import { TRIVIA_REGISTRY, isGenericTriviaCategory } from "./triviaRegistry";
 
 const REGION = "europe-west1";
 
@@ -144,6 +145,97 @@ export const startNatureGame = onCall(
         explanation: a.explanation ?? "",
         emoji: a.emoji ?? "",
         optionEmojis: a.optionEmojis, // [] arba 6 emoji (viskas-arba-nieko)
+      })),
+    };
+  }
+);
+
+/**
+ * startTriviaGame — BENDRAS žinių trivijos startas VISOMS temoms, IŠSKYRUS
+ * gamtą (ji turi savo startNatureGame su potemėmis). Viena funkcija aptarnauja
+ * pop / geo / history / tech / food / sport / body — temą parenka registras.
+ *
+ * mode formatas: "<tema>_<lygis>" (pvz. "tech_lengvas"). PAPRASTAS — be potemių
+ * segmento, kad Top 10 raktai būtų švarūs (po vieną lentelę temai×lygiui).
+ *
+ * Saugiklis: jei temos masyvas tuščias arba per mažas tam lygiui — grąžinam
+ * „failed-precondition" (klientas tokias temas šiaip jau rodo užrakintas).
+ *
+ * Įrašas į active_games ir atminties (recentByMode) logika — TA PATI kaip
+ * startNatureGame ir matematikoj, todėl submitScore veikia be jokio pakeitimo.
+ */
+export const startTriviaGame = onCall(
+  { enforceAppCheck: true, minInstances: 0, region: REGION },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Prisijungimas privalomas.");
+    }
+    const uid = request.auth.uid;
+
+    // mode: "<tema>_<lygis>" (lygiai gali turėti „_"? NE — lygiai be pabraukimo,
+    // tad split iš kairės: pirma dalis = tema, paskutinė = lygis).
+    const modeRaw =
+      typeof request.data?.mode === "string" ? request.data.mode : "";
+    const parts = modeRaw.split("_");
+    if (parts.length !== 2) {
+      throw new HttpsError("invalid-argument", "Nežinomas režimas.");
+    }
+    const category = parts[0];
+    const level = parts[1] as Level;
+    if (!isGenericTriviaCategory(category)) {
+      throw new HttpsError("invalid-argument", "Nežinoma tema.");
+    }
+    if (!NATURE_LEVELS.includes(level)) {
+      throw new HttpsError("failed-precondition", "Šis lygis dar neparuoštas.");
+    }
+
+    const lang = parseLang(request.data?.lang);
+
+    const db = admin.firestore();
+    const userRef = db.collection("users").doc(uid);
+    const userSnap = await userRef.get();
+    const recentByMode =
+      (userSnap.data()?.recentByMode as Record<string, string[]>) ?? {};
+    const recent: string[] = recentByMode[modeRaw] ?? [];
+
+    // Be potemių filtro — visa tema vienas baseinas (potemes pridėsim vėliau).
+    const pool = TRIVIA_REGISTRY[category];
+    const picked = pickQuestions(pool, level, recent, QUESTIONS_PER_GAME);
+    if (picked.length < QUESTIONS_PER_GAME) {
+      throw new HttpsError(
+        "failed-precondition",
+        "Per mažai klausimų šiam lygiui."
+      );
+    }
+    const assembled = picked.map((q) => assembleOptions(q, lang));
+    const pickedIds = picked.map((q) => q.id);
+
+    const gameRef = db.collection("active_games").doc();
+    await gameRef.set({
+      uid,
+      mode: modeRaw,
+      level,
+      answers: assembled.map((a) => a.answer),
+      actions: pickedIds,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    await userRef.set(
+      { recentByMode: { [modeRaw]: mergeRecent(pickedIds, recent, ROTATION_KEEP) } },
+      { merge: true }
+    );
+
+    return {
+      gameId: gameRef.id,
+      level,
+      maxTimeMs: MAX_TIME_PER_Q_MS,
+      questions: assembled.map((a) => ({
+        action: a.display,
+        options: a.options,
+        answer: a.answer,
+        explanation: a.explanation ?? "",
+        emoji: a.emoji ?? "",
+        optionEmojis: a.optionEmojis,
       })),
     };
   }
