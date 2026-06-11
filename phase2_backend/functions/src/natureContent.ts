@@ -607,7 +607,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (polar bear)",
-    emoji: "🐻‍❄️",
+    emoji: "❄️",
     translations: {
       en: {
         question: "What color does a polar bear's fur look?",
@@ -2628,7 +2628,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: true,
     sourceVerified: "Zoology (polar bear skin is black)",
-    emoji: "🐻‍❄️",
+    emoji: "❄️",
     translations: {
       en: {
         question: "What color is a polar bear's skin under its white fur?",
@@ -5700,7 +5700,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Zoology (polar bears live in the Arctic)",
-    emoji: "🐻‍❄️",
+    emoji: "❄️",
     translations: {
       en: {
         question: "Which animal lives in the cold, snowy Arctic and has thick white fur?",
