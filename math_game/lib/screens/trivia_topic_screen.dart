@@ -193,7 +193,7 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subGeoParadox,
             subtitle: s.subGeoParadoxDesc,
             accent: AppColors.levelHard,
-            open: false,
+            open: true,
           ),
           _SubTheme(
             id: 'mix',
