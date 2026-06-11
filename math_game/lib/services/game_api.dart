@@ -106,6 +106,20 @@ class GameApi {
     });
   }
 
+  /// Pradeda BENDROS žinių trivijos žaidimą (pop/geo/history/tech/food/sport/
+  /// body). Serverio funkcija `startTriviaGame`. [mode] — `<tema>_<lygis>`
+  /// (pvz. "tech_lengvas"). Atsakymas TOKS PAT kaip startNatureGame, todėl
+  /// naudojam tą patį TriviaSession ir tą patį submitNatureScore pateikimą.
+  static Future<TriviaSession> startTriviaGame(String mode, String lang) {
+    return _withRetry(() async {
+      final result = await _functions
+          .httpsCallable('startTriviaGame')
+          .call(<String, dynamic>{'mode': mode, 'lang': lang});
+      final data = jsonDecode(jsonEncode(result.data)) as Map<String, dynamic>;
+      return TriviaSession.fromJson(data);
+    });
+  }
+
   /// Pateikia gamtos atsakymus (žodžius). Naudoja TĄ PATĮ submitScore endpoint'ą
   /// kaip matematika — serveris palygina string===string, skaičiuoja pagal laiką.
   static Future<GameResult> submitNatureScore(

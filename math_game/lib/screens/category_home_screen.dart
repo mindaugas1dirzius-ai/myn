@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../config/theme_catalog.dart';
 import '../l10n/app_strings.dart';
 import '../l10n/language_controller.dart';
 import '../theme/app_theme.dart';
@@ -7,10 +8,12 @@ import '../widgets/app_background.dart';
 import '../widgets/banner_ad_widget.dart';
 import '../widgets/neumorphic_button.dart';
 import '../services/mystery_api.dart';
+import 'blitz_placeholder_screen.dart';
 import 'home_screen.dart';
 import 'mystery_screen.dart';
 import 'nature_topic_screen.dart';
 import 'profile_screen.dart';
+import 'trivia_level_screen.dart';
 
 /// PRADINIS langas — temų pasirinkimas (kad nebūtų chaoso).
 ///
@@ -46,20 +49,6 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final s = AppStrings.of(context);
-
-    // Užrakintos temos (skeletas). Kol turinio nėra, jos rodomos pilkos su
-    // „Greitai" — paspaudus parodom žinutę, NIEKO nekviečiam serverio. Eilė ir
-    // spalvos pagal manifestą; „Blitz" — atskira mechanika (irgi „Greitai").
-    final lockedThemes = <_LockedTheme>[
-      _LockedTheme('🎬', s.categoryPop, s.categoryPopDesc),
-      _LockedTheme('🌍', s.categoryGeo, s.categoryGeoDesc),
-      _LockedTheme('🏛️', s.categoryHistory, s.categoryHistoryDesc),
-      _LockedTheme('🔬', s.categoryTech, s.categoryTechDesc),
-      _LockedTheme('🍔', s.categoryFood, s.categoryFoodDesc),
-      _LockedTheme('⚽', s.categorySport, s.categorySportDesc),
-      _LockedTheme('🧠', s.categoryBody, s.categoryBodyDesc),
-      _LockedTheme('⚡', s.categoryBlitz, s.categoryBlitzDesc),
-    ];
 
     return Scaffold(
       body: AppBackground(
@@ -110,59 +99,13 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                   style: Theme.of(context).textTheme.bodyMedium),
               const SizedBox(height: 28),
               Expanded(
+                // VISOS 11 temų rodomos iš vieno katalogo (theme_catalog.dart).
+                // Atrakinti temą = pakeisti `open: true` kataloge — čia nieko.
                 child: ListView(
                   children: [
-                    _categoryCard(
-                      context: context,
-                      accent: AppColors.levelEasy,
-                      emoji: '🧮',
-                      title: s.categoryMath,
-                      subtitle: s.categoryMathDesc,
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => const HomeScreen()),
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    _categoryCard(
-                      context: context,
-                      accent: AppColors.levelExtreme,
-                      emoji: '🌿',
-                      title: s.categoryNature,
-                      subtitle: s.categoryNatureDesc,
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (_) => const NatureTopicScreen()),
-                      ),
-                    ),
-                    const SizedBox(height: 18),
-                    // „Atspėk paslaptį" — skėtinis meta-žaidimas (raidės renkamos
-                    // žaidžiant kitas temas). Atskira kortelė.
-                    _categoryCard(
-                      context: context,
-                      accent: AppColors.neonBlue,
-                      emoji: '🕵️',
-                      title: s.lang == AppLang.lt
-                          ? 'Atspėk paslaptį'
-                          : 'Guess the Mystery',
-                      subtitle: s.lang == AppLang.lt
-                          ? 'Rink raides žaisdamas ir spėk posakį'
-                          : 'Earn letters by playing and guess the phrase',
-                      // Raudonas ženkliukas: kiek laukia neatvertų raidžių.
-                      badgeCount: _pendingLetters,
-                      onTap: () async {
-                        await Navigator.of(context).push(
-                          MaterialPageRoute(
-                              builder: (_) => const MysteryScreen()),
-                        );
-                        // Grįžus iš paslapties lango — atnaujinam ženkliuką
-                        // (žaidėjas galėjo atverti/išspręsti raides).
-                        _loadMysteryStatus();
-                      },
-                    ),
-                    // Užrakintos temos (skeletas) — kiekviena su „Greitai".
-                    for (final t in lockedThemes) ...[
-                      const SizedBox(height: 18),
-                      _lockedThemeCard(context, t, s),
+                    for (var i = 0; i < kThemes.length; i++) ...[
+                      if (i > 0) const SizedBox(height: 18),
+                      _themeTile(context, kThemes[i], s),
                     ],
                   ],
                 ),
@@ -185,6 +128,61 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
         ),
       ),
     );
+  }
+
+  /// Viena temos kortelė iš katalogo: atrakinta → spalvota + maršrutas;
+  /// užrakinta → pilka su „Greitai".
+  Widget _themeTile(BuildContext context, GameTheme t, AppStrings s) {
+    if (!t.open) return _lockedThemeCard(context, t, s);
+    // Mystery rodo raudoną ženkliuką (kiek laukia neatvertų raidžių).
+    final badge = t.kind == ThemeKind.mystery ? _pendingLetters : 0;
+    return _categoryCard(
+      context: context,
+      accent: t.accent,
+      emoji: t.emoji,
+      title: t.title(s),
+      subtitle: t.subtitle(s),
+      badgeCount: badge,
+      onTap: () => _onThemeTap(context, t),
+    );
+  }
+
+  /// Atrakintos temos maršrutas pagal jos tipą.
+  Future<void> _onThemeTap(BuildContext context, GameTheme t) async {
+    switch (t.kind) {
+      case ThemeKind.math:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        );
+        break;
+      case ThemeKind.nature:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const NatureTopicScreen()),
+        );
+        break;
+      case ThemeKind.mystery:
+        await Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const MysteryScreen()),
+        );
+        // Grįžus — atnaujinam ženkliuką (galėjo atverti/išspręsti raides).
+        _loadMysteryStatus();
+        break;
+      case ThemeKind.trivia:
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => TriviaLevelScreen(
+              categoryCode: t.code,
+              categoryTitle: t.title(AppStrings.of(context)),
+            ),
+          ),
+        );
+        break;
+      case ThemeKind.blitz:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const BlitzPlaceholderScreen()),
+        );
+        break;
+    }
   }
 
   Widget _categoryCard({
@@ -257,13 +255,17 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
   }
 
   /// Užrakintos temos kortelė (skeletas). Pilka, su spynele ir „· Greitai".
-  /// Paspaudus — TIK žinutė; jokio serverio kvietimo (turinio dar nėra).
-  Widget _lockedThemeCard(
-      BuildContext context, _LockedTheme t, AppStrings s) {
+  /// Paspaudus: Blitz → atidaro „Greitai" ekraną (jo mechanika atskira);
+  /// kitos → tik žinutė (jokio serverio kvietimo — turinio dar nėra).
+  Widget _lockedThemeCard(BuildContext context, GameTheme t, AppStrings s) {
     return NeumorphicButton(
       accent: AppColors.textSecondary,
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
       onTap: () {
+        if (t.kind == ThemeKind.blitz) {
+          _onThemeTap(context, t); // atidaro BlitzPlaceholderScreen
+          return;
+        }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(s.lockedThemeNote),
@@ -282,7 +284,7 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                 Row(
                   children: [
                     Flexible(
-                      child: Text(t.title,
+                      child: Text(t.title(s),
                           style: const TextStyle(
                               color: AppColors.textSecondary,
                               fontSize: 22,
@@ -295,7 +297,7 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                   ],
                 ),
                 const SizedBox(height: 4),
-                Text('${t.subtitle} · ${s.comingSoon}',
+                Text('${t.subtitle(s)} · ${s.comingSoon}',
                     style: const TextStyle(
                         color: AppColors.textSecondary, fontSize: 13)),
               ],
@@ -305,12 +307,4 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
       ),
     );
   }
-}
-
-/// Vienos užrakintos temos aprašas (vidinis — tik šiam ekranui).
-class _LockedTheme {
-  final String emoji;
-  final String title;
-  final String subtitle;
-  const _LockedTheme(this.emoji, this.title, this.subtitle);
 }

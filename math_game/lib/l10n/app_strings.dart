@@ -65,6 +65,11 @@ class AppStrings {
   String get lockedThemeNote => _pick(
       'Ši tema dar ruošiama — greitai!',
       'This theme is being prepared — coming soon!');
+  String get blitzComingSoonBody => _pick(
+      'Greitas „Taip ar Ne" režimas su gyvybėmis ir serija. '
+          'Ši mechanika dar kuriama — greitai!',
+      'A fast "Yes or No" mode with lives and streaks. '
+          'This mode is still being built — coming soon!');
 
   // --- Gamtos žaidimas ---
   String get natureLoadError => _pick(

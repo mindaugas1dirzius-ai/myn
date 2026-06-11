@@ -20,10 +20,20 @@ enum NatureLoadState { loading, ready, error }
 ///
 /// ⚠️ Taškai ČIA — kosmetika. Oficialius skaičiuoja serveris (submitScore).
 class NatureGameProvider extends ChangeNotifier {
-  final String modeId; // "nature_lengvas"
+  final String modeId; // "nature_lengvas" arba "tech_lengvas"
   final String lang; // "en" / "lt"
 
-  NatureGameProvider({required this.modeId, required this.lang}) {
+  /// Kurį serverio startą kviesti:
+  ///  - false (numatyta) → startNatureGame (gamta su potemėmis, NEPALIESTA);
+  ///  - true             → startTriviaGame (bendros naujos žinių temos).
+  /// Atsakymas ir pateikimas (submitNatureScore → submitScore) IDENTIŠKI.
+  final bool useTrivia;
+
+  NatureGameProvider({
+    required this.modeId,
+    required this.lang,
+    this.useTrivia = false,
+  }) {
     _load();
   }
 
@@ -74,7 +84,9 @@ class NatureGameProvider extends ChangeNotifier {
     }
 
     try {
-      final session = await GameApi.startNatureGame(modeId, lang);
+      final session = useTrivia
+          ? await GameApi.startTriviaGame(modeId, lang)
+          : await GameApi.startNatureGame(modeId, lang);
       if (session.questions.isEmpty) {
         _loadState = NatureLoadState.error;
         notifyListeners();

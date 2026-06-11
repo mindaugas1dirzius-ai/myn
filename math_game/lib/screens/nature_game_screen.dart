@@ -30,13 +30,23 @@ const List<String> _kNatureScenes = [
 ///  - NĖRA offline atsargos → klaidos ekranas su „bandyti dar".
 /// Bendrus elementus (žiedą, gyvus taškus, rezultatų ekraną) naudojam pakartotinai.
 class NatureGameScreen extends StatefulWidget {
-  final String modeId; // "nature_lengvas"
+  final String modeId; // "nature_lengvas" arba "tech_lengvas"
   final Color accent; // lygio spalva
+
+  /// true → kviečia startTriviaGame (bendros naujos temos), o ne startNatureGame.
+  /// Numatyta false → gamta veikia lygiai kaip anksčiau (jokio pakeitimo).
+  final bool useTrivia;
+
+  /// Klausimo kortelės foniniai „vaizdai" (emoji). Numatyta — gamtos rinkinys.
+  /// Kitoms temoms perduodam neutralų/temos rinkinį (žr. TriviaLevelScreen).
+  final List<String>? scenes;
 
   const NatureGameScreen({
     super.key,
     required this.modeId,
     required this.accent,
+    this.useTrivia = false,
+    this.scenes,
   });
 
   @override
@@ -71,7 +81,7 @@ class _NatureGameScreenState extends State<NatureGameScreen>
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
-    _scenes = List.of(_kNatureScenes)..shuffle();
+    _scenes = List.of(widget.scenes ?? _kNatureScenes)..shuffle();
   }
 
   @override
@@ -84,7 +94,11 @@ class _NatureGameScreenState extends State<NatureGameScreen>
     // jei kalba nepasirinkta rankiniu būdu (lang == null), telefonui esant
     // lietuviškam UI būtų LT, o klausimai serveris grąžintų EN (nesutapimas).
     final lang = AppStrings.of(context).lang == AppLang.lt ? 'lt' : 'en';
-    _game = NatureGameProvider(modeId: widget.modeId, lang: lang);
+    _game = NatureGameProvider(
+      modeId: widget.modeId,
+      lang: lang,
+      useTrivia: widget.useTrivia,
+    );
   }
 
   /// Vaizdas šiam klausimui pagal jo eilės numerį (stabilus per perpiešimus).
@@ -151,7 +165,11 @@ class _NatureGameScreenState extends State<NatureGameScreen>
             onPlayAgain: (ctx) => Navigator.of(ctx).pushReplacement(
               MaterialPageRoute(
                 builder: (_) => NatureGameScreen(
-                    modeId: widget.modeId, accent: widget.accent),
+                  modeId: widget.modeId,
+                  accent: widget.accent,
+                  useTrivia: widget.useTrivia,
+                  scenes: widget.scenes,
+                ),
               ),
             ),
             modeId: widget.modeId,

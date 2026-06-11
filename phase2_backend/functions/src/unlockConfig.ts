@@ -37,3 +37,30 @@ export function isLockedByDefault(family: string, level: Level): boolean {
   if (!LOCKED_FAMILIES.has(family)) return false; // baziniai — nemokami
   return level !== DEMO_LEVEL; // demo lygis nemokamas, kiti užrakinti
 }
+
+// =====================================================================
+// NAUJŲ ŽINIŲ TEMŲ UŽRAKTAS (griaučiai — vieta paruošta, įjungsim su turiniu)
+// =====================================================================
+
+/**
+ * Visos žinių temos kaina coinais (kai jas atrakinsim parduotuvėje).
+ * Manifestas: temos 4–10 — 150–200 coinų. Tikslias kainas suderinsim vėliau.
+ */
+export const TRIVIA_THEME_UNLOCK_COST = 150;
+
+/**
+ * Temos, kurios jau ATRAKINTOS visiems (turi turinio). Kol tuščia — VISOS
+ * naujos temos užrakintos. Kai pripildysim, pvz., „tech" klausimų, pridėsim
+ * "tech" čia (1 eilutė) — ir serveris ją laikys atrakinta.
+ *
+ * SVARBU: gamta (nature) NĖRA šitame sąraše, nes turi savo seną nemokamą
+ * srautą (startNatureGame) — jos čia liesti nereikia.
+ */
+export const OPEN_TRIVIA_CATEGORIES = new Set<string>([
+  // kol kas tuščia — visos naujos temos „Greitai"
+]);
+
+/** Ar žinių tema užrakinta pagal nutylėjimą? (kol nėra turinio → taip). */
+export function isTriviaCategoryLocked(category: string): boolean {
+  return !OPEN_TRIVIA_CATEGORIES.has(category);
+}
