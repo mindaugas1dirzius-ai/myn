@@ -41,15 +41,20 @@ export const TRIVIA_SUBTHEMES: Record<
     cinema: ["movies", "music", "cartoons"],
     stories: ["books", "art", "characters", "superheroes", "heroes", "myth", "games"],
   },
-  // Geografija: 2 potemės.
-  //   • "cities"  → 🏙️ Sostinės ir šalys;
-  //   • "nature"  → 🏔️ Gamta ir orientyrai (kalnai, upės, ežerai, jūros, dykumos…).
+  // Geografija: 4 potemės pagal žaidėjo planą.
+  //   • "nature"    → 🏞️ Gamtos stebuklai ir anomalijos (ATVIRA — esami gamtos klausimai);
+  //   • "megapolis" → 🏙️ Megapoliai ir urbanistinės paslaptys (Greitai — rašomi nauji);
+  //   • "culture"   → 🗼 Pasaulio kultūra ir festivaliai (Greitai — rašomi nauji);
+  //   • "paradox"   → 🗺️ Geografiniai paradoksai ir žemėlapiai (Greitai — rašomi nauji).
+  // Esami capitals/countries/continents lieka „Mix" sraute (be atskiros potemės).
   geo: {
-    cities: ["capitals", "countries", "continents"],
     nature: [
       "mountains", "rivers", "lakes", "seas", "oceans",
       "deserts", "islands", "earth", "landforms", "landmarks", "records",
     ],
+    megapolis: ["megacity", "architecture", "urban", "lostcities"],
+    culture: ["culture", "festivals", "traditions"],
+    paradox: ["paradox", "borders", "maps", "timezones", "enclaves"],
   },
   // Istorija: 2 potemės.
   //   • "ancient" → 🏛️ Senovės pasaulis (priešistorė, antika, viduramžiai, renesansas);

@@ -131,13 +131,19 @@ class AppStrings {
   String get subFoodExotic => _pick('Egzotiškas maistas', 'Exotic food');
   String get subFoodExoticDesc =>
       _pick('Drąsiausi patiekalai iš viso pasaulio', 'The boldest dishes worldwide');
-  // Geografija — potemės
-  String get subGeoCities => _pick('Sostinės ir šalys', 'Capitals & countries');
-  String get subGeoCitiesDesc =>
-      _pick('Valstybės, sostinės, žemynai', 'Countries, capitals, continents');
-  String get subGeoNature => _pick('Gamta ir orientyrai', 'Nature & landmarks');
+  // Geografija — potemės (pagal žaidėjo planą)
+  String get subGeoNature => _pick('Gamtos stebuklai', 'Natural wonders');
   String get subGeoNatureDesc =>
-      _pick('Kalnai, upės, jūros, dykumos', 'Mountains, rivers, seas, deserts');
+      _pick('Kanjonai, vulkanai, gelmės, rekordai', 'Canyons, volcanoes, depths, records');
+  String get subGeoMegapolis => _pick('Megapoliai', 'Megacities');
+  String get subGeoMegapolisDesc => _pick(
+      'Architektūra, požeminiai ir pamesti miestai', 'Architecture, underground & lost cities');
+  String get subGeoCulture => _pick('Kultūra ir festivaliai', 'Culture & festivals');
+  String get subGeoCultureDesc =>
+      _pick('Keisti įpročiai, festivaliai, tradicijos', 'Odd customs, festivals, traditions');
+  String get subGeoParadox => _pick('Geografiniai paradoksai', 'Geographic paradoxes');
+  String get subGeoParadoxDesc => _pick(
+      'Enklavai, sienos, laiko juostos, žemėlapiai', 'Enclaves, borders, time zones, maps');
   // Istorija — potemės
   String get subHistoryAncient => _pick('Senovės pasaulis', 'Ancient world');
   String get subHistoryAncientDesc =>

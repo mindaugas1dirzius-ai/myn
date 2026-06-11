@@ -164,20 +164,36 @@ class TriviaTopicScreen extends StatelessWidget {
       case 'geo':
         return [
           _SubTheme(
-            id: 'cities',
-            emoji: '🏙️',
-            title: s.subGeoCities,
-            subtitle: s.subGeoCitiesDesc,
-            accent: AppColors.neonBlue,
-            open: true,
-          ),
-          _SubTheme(
             id: 'nature',
-            emoji: '🏔️',
+            emoji: '🏞️',
             title: s.subGeoNature,
             subtitle: s.subGeoNatureDesc,
             accent: AppColors.levelEasy,
             open: true,
+          ),
+          _SubTheme(
+            id: 'megapolis',
+            emoji: '🏙️',
+            title: s.subGeoMegapolis,
+            subtitle: s.subGeoMegapolisDesc,
+            accent: AppColors.neonBlue,
+            open: false,
+          ),
+          _SubTheme(
+            id: 'culture',
+            emoji: '🗼',
+            title: s.subGeoCulture,
+            subtitle: s.subGeoCultureDesc,
+            accent: AppColors.levelMedium,
+            open: false,
+          ),
+          _SubTheme(
+            id: 'paradox',
+            emoji: '🗺️',
+            title: s.subGeoParadox,
+            subtitle: s.subGeoParadoxDesc,
+            accent: AppColors.levelHard,
+            open: false,
           ),
           _SubTheme(
             id: 'mix',
