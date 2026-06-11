@@ -177,7 +177,7 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subGeoMegapolis,
             subtitle: s.subGeoMegapolisDesc,
             accent: AppColors.neonBlue,
-            open: false,
+            open: true,
           ),
           _SubTheme(
             id: 'culture',
@@ -185,7 +185,7 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subGeoCulture,
             subtitle: s.subGeoCultureDesc,
             accent: AppColors.levelMedium,
-            open: false,
+            open: true,
           ),
           _SubTheme(
             id: 'paradox',
