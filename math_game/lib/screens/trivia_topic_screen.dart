@@ -207,19 +207,27 @@ class TriviaTopicScreen extends StatelessWidget {
       case 'history':
         return [
           _SubTheme(
-            id: 'ancient',
-            emoji: '🏛️',
-            title: s.subHistoryAncient,
-            subtitle: s.subHistoryAncientDesc,
+            id: 'engineering',
+            emoji: '🗿',
+            title: s.subHistoryEngineering,
+            subtitle: s.subHistoryEngineeringDesc,
             accent: AppColors.levelHard,
             open: true,
           ),
           _SubTheme(
-            id: 'modern',
-            emoji: '🚀',
-            title: s.subHistoryModern,
-            subtitle: s.subHistoryModernDesc,
+            id: 'rulers',
+            emoji: '👑',
+            title: s.subHistoryRulers,
+            subtitle: s.subHistoryRulersDesc,
             accent: AppColors.levelExtreme,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'myths',
+            emoji: '🔍',
+            title: s.subHistoryMyths,
+            subtitle: s.subHistoryMythsDesc,
+            accent: AppColors.levelMedium,
             open: true,
           ),
           _SubTheme(

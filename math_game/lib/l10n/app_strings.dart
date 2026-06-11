@@ -137,7 +137,8 @@ class AppStrings {
       _pick('Kanjonai, vulkanai, gelmės, rekordai', 'Canyons, volcanoes, depths, records');
   String get subGeoMegapolis => _pick('Megapoliai', 'Megacities');
   String get subGeoMegapolisDesc => _pick(
-      'Architektūra, požeminiai ir pamesti miestai', 'Architecture, underground & lost cities');
+      'Didmiesčiai, dangoraižiai, požemiai, pamesti miestai',
+      'Megacities, skyscrapers, underground, lost cities');
   String get subGeoCulture => _pick('Kultūra ir festivaliai', 'Culture & festivals');
   String get subGeoCultureDesc =>
       _pick('Keisti įpročiai, festivaliai, tradicijos', 'Odd customs, festivals, traditions');
@@ -151,6 +152,15 @@ class AppStrings {
   String get subHistoryModern => _pick('Naujieji laikai', 'Modern era');
   String get subHistoryModernDesc =>
       _pick('Atradimai, išradimai, įvykiai', 'Discoveries, inventions, events');
+  String get subHistoryEngineering => _pick('Senovės inžinerija', 'Ancient engineering');
+  String get subHistoryEngineeringDesc => _pick(
+      'Piramidės, akvedukai, prarasti statiniai', 'Pyramids, aqueducts, lost structures');
+  String get subHistoryRulers => _pick('Ekscentriški valdovai', 'Eccentric rulers');
+  String get subHistoryRulersDesc => _pick(
+      'Keisti karaliai, imperatoriai, jų užgaidos', 'Strange kings, emperors and their whims');
+  String get subHistoryMyths => _pick('Istoriniai mitai', 'Historical myths');
+  String get subHistoryMythsDesc =>
+      _pick('Populiarūs klaidingi įsitikinimai', 'Popular misconceptions debunked');
   // Pop kultūra — potemės
   String get subPopCinema => _pick('Kinas ir muzika', 'Cinema & music');
   String get subPopCinemaDesc =>

@@ -56,15 +56,15 @@ export const TRIVIA_SUBTHEMES: Record<
     culture: ["culture", "festivals", "traditions"],
     paradox: ["paradox", "borders", "maps", "timezones", "enclaves"],
   },
-  // Istorija: 2 potemės.
-  //   • "ancient" → 🏛️ Senovės pasaulis (priešistorė, antika, viduramžiai, renesansas);
-  //   • "modern"  → 🚀 Naujieji laikai ir mokslas (atradimai, išradimai, įvykiai…).
+  // Istorija: 3 potemės (kiekviena su savo turtingu rinkiniu po 40 klausimų).
+  //   • "engineering" → 🗿 Senovės civilizacijų inžinerija;
+  //   • "rulers"      → 👑 Ekscentriški valdovai;
+  //   • "myths"       → 🔍 Didieji istoriniai mitai.
+  // Senesni žymenys (ancient/modern/...) lieka „facts" puode (bendri klausimai).
   history: {
-    ancient: ["ancient", "prehistory", "medieval", "renaissance", "art"],
-    modern: [
-      "modern", "events", "science", "inventions",
-      "people", "explorers", "exploration", "space", "landmarks",
-    ],
+    engineering: ["engineering"],
+    rulers: ["rulers"],
+    myths: ["myths"],
   },
   // Technologijos: 1 potemė (NEKEISTI kodo „games").
   tech: {
