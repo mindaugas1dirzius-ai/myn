@@ -39,8 +39,16 @@ class _MysteryScreenState extends State<MysteryScreen>
   bool _busy = false; // spėjimas/atstatymas vyksta
   String? _error;
 
-  /// Į brūkšnelius sudėtų raidžių pool indeksai (tvarka = brūkšnelių tvarka).
-  final List<int> _placed = [];
+  /// Į KIEKVIENĄ brūkšnelį (slot) padėtos raidės POOL indeksas (arba null = tuščia).
+  /// Ilgis = paslėptų langelių skaičius; sąrašo indeksas = brūkšnelio eilės numeris.
+  /// Taip galima dėlioti raides BET KURIOJE vietoje (ne tik iš eilės) ir išvalyti
+  /// vieną konkrečią, neliečiant kitų.
+  List<int?> _slots = [];
+
+  /// Aktyvus brūkšnelis (kur kris kita paspausta raidė). Bakstelėjus BET KURĮ
+  /// brūkšnelį (tuščią ar užpildytą) — jis tik tampa aktyvus. Raidė NIEKADA
+  /// neišsitrina vien bakstelėjus — trinama tik „trinti" mygtuku.
+  int _cursor = 0;
 
   // Tikroji (resolved) kalba — nustatoma didChangeDependencies. SVARBU: imam ją
   // per AppStrings.of(context) (kaip visa programa), o NE iš languageController
@@ -83,7 +91,7 @@ class _MysteryScreenState extends State<MysteryScreen>
     setState(() {
       _loading = true;
       _error = null;
-      _placed.clear();
+      _slots = [];
     });
     try {
       var v = await MysteryApi.start(_lang);
@@ -95,6 +103,7 @@ class _MysteryScreenState extends State<MysteryScreen>
       setState(() {
         _view = v;
         _loading = false;
+        _resetSlots();
       });
       if (v.revealedNow.isNotEmpty) {
         SoundService.instance.points(); // naujų raidžių „atsivėrimo" garsas
@@ -120,27 +129,83 @@ class _MysteryScreenState extends State<MysteryScreen>
     return v.mask.where((c) => c.slot && c.ch == null).length;
   }
 
-  Set<int> get _usedPool => _placed.toSet();
+  Set<int> get _usedPool => _slots.whereType<int>().toSet();
   bool get _canGuess =>
-      _view != null && _blankCount > 0 && _placed.length == _blankCount;
+      _view != null && _blankCount > 0 && !_slots.contains(null);
+
+  /// Naujai paslapčiai/pool'ui — tuščių brūkšnelių sąrašas ir žymeklis pradžioje.
+  /// VISADA kviesti PO to, kai `_view` jau nustatytas (nes `_blankCount` skaito jį).
+  void _resetSlots() {
+    _slots = List<int?>.filled(_blankCount, null);
+    _cursor = 0;
+  }
+
+  /// Pirmas tuščias brūkšnelis nuo `start` (ratu — paskui nuo pradžios). null jei visi pilni.
+  int? _firstEmptyFrom(int start) {
+    for (var i = start; i < _slots.length; i++) {
+      if (_slots[i] == null) return i;
+    }
+    for (var i = 0; i < start && i < _slots.length; i++) {
+      if (_slots[i] == null) return i;
+    }
+    return null;
+  }
 
   void _tapPool(int i) {
-    if (_placed.contains(i)) return; // ta pati raidė jau padėta
-    if (_placed.length >= _blankCount) return; // visi brūkšneliai užpildyti
+    if (_usedPool.contains(i)) return; // ta pati raidė jau padėta
+    // Kur dėti: aktyvus brūkšnelis (jei tuščias), kitaip pirmas tuščias nuo jo.
+    final target = (_cursor < _slots.length && _slots[_cursor] == null)
+        ? _cursor
+        : _firstEmptyFrom(_cursor);
+    if (target == null) return; // visi brūkšneliai užpildyti
     SoundService.instance.tap(); // raidės „klavišo" spragtelėjimas
-    setState(() => _placed.add(i));
+    setState(() {
+      _slots[target] = i;
+      _cursor = _firstEmptyFrom(target + 1) ?? target; // šok į kitą tuščią
+    });
+  }
+
+  /// Bakstelėjus brūkšnelį — jis TIK tampa aktyvus (čia kris kita paspausta
+  /// raidė arba jį ištrins „trinti" mygtukas). Raidės NEIŠVALOM automatiškai —
+  /// žaidėjas pats nusprendžia, kada trinti (mygtuku), kad netyčia bakstelėjus
+  /// raidė nedingtų. Norint pakeisti vidurį: bakstelk → „trinti" → nauja raidė.
+  void _tapBlank(int b) {
+    if (b < 0 || b >= _slots.length) return;
+    SoundService.instance.tap();
+    setState(() {
+      _cursor = b; // tik pozicionuojam žymeklį; NETRINAME
+    });
   }
 
   void _backspace() {
-    if (_placed.isEmpty) return;
-    SoundService.instance.tap(); // ištrynimo spragtelėjimas
-    setState(() => _placed.removeLast());
+    // Jei aktyvus brūkšnelis užpildytas — išvalom jį; kitaip žingsnis atgal iki
+    // artimiausios užpildytos raidės ir ją išvalom (kaip tikra klaviatūra).
+    if (_cursor < _slots.length && _slots[_cursor] != null) {
+      SoundService.instance.tap();
+      setState(() => _slots[_cursor] = null);
+      return;
+    }
+    for (var b = _cursor - 1; b >= 0; b--) {
+      if (_slots[b] != null) {
+        SoundService.instance.tap();
+        setState(() {
+          _slots[b] = null;
+          _cursor = b;
+        });
+        return;
+      }
+    }
   }
 
   void _clear() {
-    if (_placed.isEmpty) return;
+    if (_usedPool.isEmpty) return;
     SoundService.instance.swoosh(); // viską nuvalom — „švyst"
-    setState(_placed.clear);
+    setState(() {
+      for (var i = 0; i < _slots.length; i++) {
+        _slots[i] = null;
+      }
+      _cursor = 0;
+    });
   }
 
   /// Surenka spėjamą tekstą: atvertos raidės + sudėtos iš pool + skyrikliai.
@@ -154,10 +219,9 @@ class _MysteryScreenState extends State<MysteryScreen>
       } else if (c.ch != null) {
         sb.write(c.ch); // jau atverta raidė
       } else {
-        // paslėptas langelis — imam padėtą raidę (jei yra)
-        if (blank < _placed.length) {
-          sb.write(v.pool[_placed[blank]]);
-        }
+        // paslėptas langelis — imam į tą brūkšnelį padėtą raidę (jei yra)
+        final pi = blank < _slots.length ? _slots[blank] : null;
+        if (pi != null) sb.write(v.pool[pi]);
         blank++;
       }
     }
@@ -220,7 +284,7 @@ class _MysteryScreenState extends State<MysteryScreen>
       if (!mounted) return;
       setState(() {
         _view = v;
-        _placed.clear();
+        _resetSlots();
       });
     } catch (_) {
       if (mounted) {
@@ -248,7 +312,7 @@ class _MysteryScreenState extends State<MysteryScreen>
         _view = r.view;
         // Atvėrus raidę pool gali pasikeisti — nuvalom padėtas raides, kad
         // indeksai nesusimaišytų su naujuoju pool.
-        _placed.clear();
+        _resetSlots();
       });
       if (action == 'revealLetter' && r.revealedNow.isNotEmpty) {
         SoundService.instance.points();
@@ -823,8 +887,11 @@ class _MysteryScreenState extends State<MysteryScreen>
         final mi = pair.$1;
         final c = pair.$2;
         if (c.slot && c.ch == null) {
-          final filled = blank < _placed.length ? v.pool[_placed[blank]] : null;
-          cells.add(_blankCell(filled));
+          final pi = blank < _slots.length ? _slots[blank] : null;
+          final filled = pi != null ? v.pool[pi] : null;
+          final b = blank; // užfiksuojam šio brūkšnelio indeksą tap'ui
+          cells.add(_blankCell(filled,
+              active: b == _cursor, onTap: () => _tapBlank(b)));
           blank++;
         } else if (c.slot) {
           cells.add(_revealedCell(c.ch!, mi, isNew: revealedNow.contains(mi)));
@@ -877,14 +944,22 @@ class _MysteryScreenState extends State<MysteryScreen>
     );
   }
 
-  Widget _blankCell(String? filled) => _cellBox(
-        child: Text(filled ?? '',
-            style: const TextStyle(
-                color: AppColors.textPrimary,
-                fontSize: 17,
-                fontWeight: FontWeight.bold)),
-        border: _accent.withValues(alpha: 0.6),
-        underline: true,
+  /// Brūkšnelis. Bakstelėjamas (pozicionuoja žymeklį / išvalo raidę). [active]
+  /// pažymi, kur kris kita paspausta raidė (paryškintas fonas + storesnė linija).
+  Widget _blankCell(String? filled,
+          {bool active = false, VoidCallback? onTap}) =>
+      GestureDetector(
+        onTap: onTap,
+        child: _cellBox(
+          child: Text(filled ?? '',
+              style: const TextStyle(
+                  color: AppColors.textPrimary,
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold)),
+          border: active ? _accent : _accent.withValues(alpha: 0.6),
+          underline: true,
+          active: active,
+        ),
       );
 
   Widget _punctCell(String ch) => Padding(
@@ -897,17 +972,23 @@ class _MysteryScreenState extends State<MysteryScreen>
       );
 
   Widget _cellBox(
-      {required Widget child, required Color border, bool underline = false}) {
+      {required Widget child,
+      required Color border,
+      bool underline = false,
+      bool active = false}) {
     return Container(
       width: 22,
       height: 30,
       margin: const EdgeInsets.symmetric(horizontal: 1.5),
       alignment: Alignment.center,
       decoration: BoxDecoration(
+        // Aktyvus brūkšnelis paryškinamas — žaidėjas mato, kur kris kita raidė.
+        color: active ? _accent.withValues(alpha: 0.18) : null,
         border: underline
-            ? Border(bottom: BorderSide(color: border, width: 2))
+            ? Border(bottom: BorderSide(color: border, width: active ? 3 : 2))
             : Border.all(color: border, width: 1.5),
-        borderRadius: underline ? null : BorderRadius.circular(6),
+        borderRadius:
+            underline ? BorderRadius.circular(4) : BorderRadius.circular(6),
       ),
       child: child,
     );

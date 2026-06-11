@@ -172,6 +172,68 @@ export const NATURE_EMOJI: Record<string, string> = {
   // ---------- Daugiau žinduolių ----------
   "Otter": "🦦", "Ūdra": "🦦",
   "Manatee": "🦭", "Lamantinas": "🦭",
+  "Walrus": "🦭", "Vėplys": "🦭",
+  "Seal": "🦭", "Ruonis": "🦭",
+  "Buffalo": "🐃", "Buivolas": "🐃",
+  "Water Buffalo": "🐃", "Azijinis buivolas": "🐃",
+  "Ox": "🐂", "Jautis": "🐂",
+  "Donkey": "🫏", "Asilas": "🫏",
+  "Deer": "🦌", "Elnias": "🦌",
+  "Reindeer": "🦌", "Šiaurės elnias": "🦌",
+  "Fox": "🦊", "Lapė": "🦊",
+  "Hedgehog": "🦔", "Ežys": "🦔",
+  "Boar": "🐗", "Šernas": "🐗",
+  "Llama": "🦙", "Lama": "🦙",
+  "Alpaca": "🦙", "Alpaka": "🦙",
+  "Ram": "🐏", "Avinas": "🐏",
+  "Skunk": "🦨", "Skunkas": "🦨",
+  "Badger": "🦡", "Barsukas": "🦡",
+  "Beaver": "🦫", "Bebras": "🦫",
+  "Mole": "🐀", "Kurmis": "🐀",
+  "Orangutan": "🦧", "Orangutangas": "🦧",
+
+  // ---------- Jūros gyviai (papildomi) ----------
+  "Crab": "🦀", "Krabas": "🦀",
+  "Lobster": "🦞", "Omaras": "🦞",
+  "Shrimp": "🦐", "Krevetė": "🦐",
+  "Jellyfish": "🪼", "Medūza": "🪼",
+  "Seahorse": "🐠", "Jūrų arkliukas": "🐠",
+  "Seal pup": "🦭", "Ruoniukas": "🦭",
+
+  // ---------- Roplys / driežai (papildomi) ----------
+  "Lizard": "🦎", "Driežas": "🦎",
+  "Iguana": "🦎",
+
+  // ---------- Išnykę / dinozaurai ----------
+  // Emoji TIK du (🦖 plėšrūnai, 🦕 augalėdžiai/kiti) — bet vis tiek ĮVAIRIAU nei
+  // tuščia: dino klausimuose variantai pasiskirsto, atrodo gyvai. (Taškai pagal
+  // LAIKĄ, tad net jei spalva užsimena — sukčiui tai nieko neduoda.)
+  "Tyrannosaurus rex": "🦖", "Tiranozauras reksas": "🦖",
+  "T. rex": "🦖", "Tyrannosaurus": "🦖", "Tiranozauras": "🦖",
+  "Velociraptor": "🦖", "Velokiraptorius": "🦖",
+  "Spinosaurus": "🦖", "Spinozauras": "🦖",
+  "Allosaurus": "🦖", "Alozauras": "🦖",
+  "Triceratops": "🦕", "Triceratopsas": "🦕",
+  "Stegosaurus": "🦕", "Stegozauras": "🦕",
+  "Diplodocus": "🦕", "Diplodokas": "🦕",
+  "Brachiosaurus": "🦕", "Brachiozauras": "🦕",
+  "Ankylosaurus": "🦕", "Ankilozauras": "🦕",
+  "Brontosaurus": "🦕", "Brontozauras": "🦕",
+  "Iguanodon": "🦕", "Iguanodonas": "🦕",
+  "Mammoth": "🦣", "Mamutas": "🦣",
+  "Woolly mammoth": "🦣", "Vilnonis mamutas": "🦣",
+  "Megalodon": "🦈", "Megalodonas": "🦈",
+  // Ryklių rūšys → visos 🦈 (lygiagretu, NEišduoda: visi variantai rykliai).
+  // Be šių „išnykęs ryklys" klausimas rodydavo 🦈 TIK ant Megalodono = atsakymo
+  // išdavimas. Dabar visi 6 variantai turi 🦈 → „viskas arba nieko" suveikia.
+  "Hammerhead": "🦈", "Plaktagalvis": "🦈", "Hammerhead shark": "🦈",
+  "Tiger shark": "🦈", "Tigrinis ryklys": "🦈",
+  "Bull shark": "🦈", "Bukasnukis ryklys": "🦈",
+  "Mako": "🦈", "Mako shark": "🦈", "Mako ryklys": "🦈",
+  "Reef shark": "🦈", "Rifinis ryklys": "🦈",
+  "Dodo": "🦤",
+  "Saber-toothed cat": "🐯", "Kardadantė katė": "🐯",
+  "Pteranodon": "🦅", "Pteranodonas": "🦅",
 
   // ---------- Gyvūnų klasės (lygiagretu — neišduoda) ----------
   "Mammal": "🐾", "Žinduolis": "🐾",

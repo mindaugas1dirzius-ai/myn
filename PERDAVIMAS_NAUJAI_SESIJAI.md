@@ -4,16 +4,35 @@
 > informacijos praradimo. **Perskaityk VISĄ prieš pradedant dirbti.**
 > Ankstesnė versija buvo pasenusi → sukėlė didelę painiavą (žr. 1 skyrių). Nepakartok.
 
+> ### 🆕 NAUJAUSIA BŪSENA (2026-06-11) — perskaityk PIRMA
+> - **Universalus trivijos variklis `startTriviaGame` VEIKIA ir DEPLOYINTAS.** Aptarnauja
+>   7 temas (pop/geo/history/tech/food/sport/body) per registrą — be atskirų funkcijų.
+> - **Visos 7 trivijos temos jau po 120 klausimų** (15×4 lygiai ×2 = patikrinta `KLAUSIMU_STATISTIKA.md`).
+>   Gamta atskirai = 600. Iš viso ~1440 patikrinto turinio.
+> - **🆕 POTEMIŲ ARCHITEKTŪRA įdiegta** (`subThemeConfig.ts`): bendros temos gali turėti
+>   potemes kaip gamta. Mode formatai: `<tema>_<lygis>` (2 dalys = „facts") ARBA
+>   `<tema>_<potemė>_<lygis>` (3 dalys). „facts"=klausimai be potemės žymos; „mix"=visi.
+>   **Atgaliniai suderinama, NULIS regresijos** (tuščias potemių sąrašas → veikia kaip seniau).
+> - **SUTARTAS PLANAS:** kiekviena tema gaus 3 PLAČIAS potemes + „mix" gale (ne siauras!),
+>   tikslas ≥150 klausimų/lygiui/potemei. Klausimai PRAMOGINIAI-įdomūs (ne techniniai),
+>   universalūs visoms šalims, nieko neįžeidžiantys. (pvz. Dota prizų fondai, medus nesugenda).
+> - **⚠️ KONVEJERIO TAISYKLĖ:** pirma įsitikinam, kad variklis+potemės veikia telefone su
+>   TECH bandomąja poteme, TIK TADA masinis pildymas ir kitų temų pertaginimas.
+> - **⚠️ BODY potemių turinys (brain/bones/heart) JAU PARAŠYTAS (255 klausimai), BET dar
+>   NELIESTI/NEPERTAGINTI** — laukia žalios šviesos po tech testo. `subThemeConfig.ts` body
+>   kodai dar gali keistis į plačius (smegenys / raumenys-kaulai-fitnesas / biokuriozai-medicina).
+
 ---
 
 ## ⚡ 0. SANTRAUKA (30 sekundžių)
 
 - **Projektas:** „BRAIN ARENA" — Flutter (Android) + Firebase protų žaidimas vakarų rinkoms.
-- **Turinys:** 3 kategorijos — 🧮 Matematika (veikia pilnai), 🌿 Gamta (pildom), 🔍 Mistika (veikia).
+- **Turinys:** 3 kategorijos — 🧮 Matematika (veikia pilnai), 🌿 Gamta (✅ BAIGTA 600 klausimų), 🔍 Mistika (veikia).
 - **Repo:** `mindaugas1dirzius-ai/myn`, branch **`claude/android-app-monetization-ads-RORMZ`**.
 - **Kur baigėm:** sujungėm išsiskyrusius git medžius; viskas įkelta į GitHub (branch sinchronizuotas su `origin`).
-- **Dabartinis tikslas:** prikrauti VISUS gamtos lygius iki **≥150 klausimų** (dabar 79/96/100/68).
-- **Po to:** subalansuoti mįsles, tada kiti darbai (žr. 9 skyrių).
+- **✅ GAMTA PILNAI BAIGTA:** 151/150/150/150 = **600 klausimų** (visi 4 lygiai ≥150). NEPERRAŠINĖTI gamtos turinio!
+- **Dabartinis tikslas:** išbandyti NAUJĄ universalų trivijos variklį (`startTriviaGame`) su tech testiniu turiniu.
+- **Po to:** jei variklis veikia → pilti turinį 7 naujoms temoms; subalansuoti mįsles; kiti darbai (žr. 9 skyrių).
 - **4 ramsčiai (svarbos eilė):** 1) Sauga 2) Faktų/matematikos teisingumas 3) Įvairovė (jokio kartojimosi) 4) Uždarbis.
 
 ---
@@ -250,10 +269,12 @@ TAS PATS `submitScore` (App Check apsaugotas). Nulis regresijos.
 - Spąstai (trap) garantuotai tarp 6 variantų, Fisher-Yates maišymas, rotacija (no-dup).
 - Užraktai: Mix/Skliaustai/Algebra — Vidutinis nemokamas, kiti 3 lygiai už 150🪙 arba 2 reklamas.
 
-### 🌿 Gamta (veikia, turinys pildomas)
+### 🌿 Gamta (✅ BAIGTA — 600 klausimų)
 - `startNatureGame` funkcija; potemės: faktai / išnykę / augalai / mix; 4 lygiai.
 - 6 variantai (1 teisingas + 5 klaidingi), paaiškinimas, emoji.
 - Mode formatas: `nature_<potemė>_<lygis>` arba senas `nature_<lygis>`.
+- **Klausimų: Lengvas 151 · Vidutinis 150 · Sunkus 150 · Ekstremalus 150 = 600 (visi ≥150 ✅).**
+- ⚠️ **NEPILDYTI ir NEPERRAŠINĖTI gamtos** — ji baigta. Fokusas perkeltas į naują trivijos variklį.
 
 ### 🔍 Mistika (veikia)
 - `startMystery`/`revealLetters`/`guessMystery`/`mysteryPowerup`/`getMysteryStatus`/`resetMystery`.
@@ -274,14 +295,15 @@ TAS PATS `submitScore` (App Check apsaugotas). Nulis regresijos.
 - **Git:** branch sinchronizuotas su `origin` (`0/0`). Yra atsarginė šaka `backup-local-darbas`.
 - **Darbo medis švarus**, išskyrus `android/` (senas MINA, sąmoningai nekeliam).
 
-**Gamtos klausimų skaičiai (tikslas ≥150 kiekvienam):**
+**Gamtos klausimų skaičiai (✅ TIKSLAS ≥150 PASIEKTAS — BAIGTA):**
 
-| Lygis | Dabar | Trūksta iki 150 |
+| Lygis | Dabar | Būsena |
 |---|---|---|
-| Lengvas | 79 | +71 |
-| Vidutinis | 96 | +54 |
-| Sunkus | 100 | +50 |
-| Ekstremalus | 68 | +82 |
+| Lengvas | 151 | ✅ |
+| Vidutinis | 150 | ✅ |
+| Sunkus | 150 | ✅ |
+| Ekstremalus | 150 | ✅ |
+| **IŠ VISO** | **600** | ✅ BAIGTA |
 
 **Mįslių skaičiai (subalansuoti — istorija/faktas/citata atsilieka):**
 klausimas 28 · patarlė 15 · citata 13 · faktas 11 · istorija 9.
@@ -290,8 +312,11 @@ klausimas 28 · patarlė 15 · citata 13 · faktas 11 · istorija 9.
 
 ## ⬜ 9. KĄ TĘSTI (planas, eilės tvarka)
 
-1. **🎯 DABARTINIS: prikrauti gamtos lygius iki ≥150** (žr. 8 sk. trūkumus).
-   Partijos po ~15 klausimų: nauji faktai → validuoti → `npm run build` → deploy → atsiskaityti.
+1. **🎯 DABARTINIS: išbandyti naują universalų trivijos variklį** (`startTriviaGame`).
+   Receptas: tech testiniai klausimai (15/lygiui) → `npm run build` → deploy → laikinai
+   atrakinti tech kliente (`theme_catalog.dart` open:true) → sužaisti telefone → vėl užrakinti.
+   Kai variklis patvirtintas → tas pats receptas visoms 7 naujoms temoms (pop/geo/history/tech/food/sport/body).
+   ✅ **Gamta (600) BAIGTA — jos NEPILDYTI.**
 2. **Subalansuoti mįsles** — pakelti istorija/faktas/citata link klausimas/patarlė lygio.
 3. **Ištrinti `gen.js`** prieš galutinį „švarų" commit'ą (tai laikinas įrankis).
 4. Vėliau: dienos serija (streak), rewarded ×2 monetos, IAP $2.99 prenumerata, naujos kategorijos.

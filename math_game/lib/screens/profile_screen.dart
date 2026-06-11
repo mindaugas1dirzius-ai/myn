@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../config/theme_catalog.dart';
 import '../l10n/app_strings.dart';
 import '../models/avatar_catalog.dart';
 import '../models/game_mode.dart';
@@ -136,9 +137,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   accent: AppColors.levelExtreme,
                   initiallyExpanded: false,
                   children: [
-                    for (final level in _natureLevels) _natureLevelRow(s, level),
+                    for (final sub in _natureSubs)
+                      _subSection(
+                        emoji: sub.emoji,
+                        title: sub.title(s),
+                        children: [
+                          for (final level in GameLevel.values)
+                            _modeLevelRow(s, sub.modeId(level), level),
+                        ],
+                      ),
                   ],
                 ),
+                // Trivijos temos (tech/geo/…): ta pati forma — tema → 4 lygiai.
+                // Rodom tik ATRAKINTAS (open) temas iš bendro katalogo, tad kai
+                // atrakinsim naują — profilyje atsiras automatiškai.
+                for (final t in kThemes
+                    .where((t) => t.kind == ThemeKind.trivia && t.open))
+                  _categorySection(
+                    emoji: t.emoji,
+                    title: t.title(s),
+                    accent: t.accent,
+                    initiallyExpanded: false,
+                    children: [
+                      for (final level in GameLevel.values)
+                        _modeLevelRow(s, '${t.code}_${level.name}', level),
+                    ],
+                  ),
                 const SizedBox(height: 20),
                 // Avatarų progresas + tinklelis (kaupiamoji motyvacija).
                 AvatarCollection(
@@ -415,12 +439,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return '${d.year}-${two(d.month)}-${two(d.day)}';
   }
 
-  /// Atviri gamtos lygiai (visi 4 jau turi patvirtintą turinį serveryje).
-  static const List<GameLevel> _natureLevels = [
-    GameLevel.lengvas,
-    GameLevel.vidutinis,
-    GameLevel.sunkus,
-    GameLevel.ekstremalus,
+  /// Gamtos potemės profiliui (ta pati tvarka kaip potemių ekrane).
+  /// modeId: „faktai" lieka senu `nature_<lygis>`; kitos — `nature_<sub>_<lygis>`
+  /// (sutampa su NatureLevelScreen, kad rekordai būtų tie patys).
+  static final List<_NatureSub> _natureSubs = [
+    _NatureSub('💡', (s) => s.topicFacts, (lvl) => 'nature_${lvl.name}'),
+    _NatureSub(
+        '🦕', (s) => s.topicExtinct, (lvl) => 'nature_extinct_${lvl.name}'),
+    _NatureSub(
+        '🌱', (s) => s.topicPlants, (lvl) => 'nature_plants_${lvl.name}'),
+    _NatureSub('🎲', (s) => s.topicMix, (lvl) => 'nature_mix_${lvl.name}'),
   ];
 
   /// Temos (kategorijos) grupė — kad temos nesimaišytų.
@@ -445,9 +473,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  /// Vieno gamtos lygio eilutė (rekordas + Top 10 popup).
-  Widget _natureLevelRow(AppStrings s, GameLevel level) {
-    final mode = 'nature_${level.name}';
+  /// Potemės/temos antraštė su savo lygiais (nesusiplaka su lygiais).
+  Widget _subSection({
+    required String emoji,
+    required String title,
+    required List<Widget> children,
+  }) {
+    return Theme(
+      data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+      child: ExpansionTile(
+        leading: Text(emoji, style: const TextStyle(fontSize: 22)),
+        title: Text(title,
+            style: const TextStyle(
+                color: AppColors.textPrimary, fontWeight: FontWeight.bold)),
+        childrenPadding: const EdgeInsets.only(left: 8),
+        children: children,
+      ),
+    );
+  }
+
+  /// Vieno lygio eilutė BET KURIAM serverio mode (gamta/trivija) — rekordas +
+  /// Top 10 popup. Universalu: paduodi mode kodą, gauni vienodą eilutę.
+  Widget _modeLevelRow(AppStrings s, String mode, GameLevel level) {
     return ListTile(
       leading: const SizedBox(width: 8),
       title: Text(level.title(s), style: TextStyle(color: level.color)),
@@ -506,4 +553,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
       onTap: _online ? () => showRankDialog(context, mode, level) : null,
     );
   }
+}
+
+/// Gamtos potemės aprašas profiliui (emoji + pavadinimas + mode kodo gamyba).
+class _NatureSub {
+  final String emoji;
+  final String Function(AppStrings) title;
+  final String Function(GameLevel) modeId;
+  const _NatureSub(this.emoji, this.title, this.modeId);
 }

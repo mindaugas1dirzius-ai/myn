@@ -23,14 +23,27 @@ class TriviaLevelScreen extends StatelessWidget {
   /// Antraštė viršuje (temos pavadinimas žaidėjo kalba).
   final String categoryTitle;
 
+  /// Potemės kodas (jei tema turi potemes): "games" | "brain" | "mix" | ...
+  /// Tuščias arba "facts" → tema be potemės (senas 2 dalių mode).
+  final String? subThemeId;
+
   const TriviaLevelScreen({
     super.key,
     required this.categoryCode,
     required this.categoryTitle,
+    this.subThemeId,
   });
 
-  /// Mode serveriui: `kodas_lygis` (švarus, be potemės segmento).
-  String _modeIdFor(GameLevel lvl) => '${categoryCode}_${lvl.name}';
+  /// Mode serveriui:
+  ///   - be potemės / „facts" → `kodas_lygis` (2 dalys, suderinamumas);
+  ///   - su poteme            → `kodas_potemė_lygis` (3 dalys, startTriviaGame).
+  String _modeIdFor(GameLevel lvl) {
+    final sub = subThemeId;
+    if (sub == null || sub.isEmpty || sub == 'facts') {
+      return '${categoryCode}_${lvl.name}';
+    }
+    return '${categoryCode}_${sub}_${lvl.name}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +97,7 @@ class TriviaLevelScreen extends StatelessWidget {
               modeId: _modeIdFor(lvl),
               accent: accent,
               useTrivia: true,
-              scenes: kTriviaScenes,
+              scenes: triviaScenesFor(categoryCode),
             ),
           ),
         );
@@ -107,10 +120,63 @@ class TriviaLevelScreen extends StatelessWidget {
   }
 }
 
-/// Neutralūs „vaizdai" klausimo kortelei bendrose temose. SVARBU: nė vienas
-/// neturi išduoti atsakymo — tik bendri „žinių/protmūšio" motyvai. Vėliau
-/// galėsim parinkti emoji pagal konkrečią temą.
+/// Neutralūs „vaizdai" klausimo kortelei — atsarga, jei temos savo rinkinio nėra.
+/// SVARBU: nė vienas NEturi išduoti atsakymo — tik bendri „žinių/protmūšio" motyvai.
 const List<String> kTriviaScenes = [
   '❓', '💡', '🧠', '📚', '🎯', '🔎', '✨', '🧩', '🏆', '⭐',
   '📖', '🗺️', '🔭', '🎓', '🧪', '⚙️', '📝', '🌐', '🕹️', '🎲',
 ];
+
+/// TEMINIAI klausimo kortelės „vaizdai" pagal temos kodą. 🚨 Kiekvienas rinkinys —
+/// SU TEMA susiję, ĮVAIRŪS, bet BENDRI motyvai, kurie NIEKADA neišduoda atsakymo
+/// (jokio konkretaus daikto, kuris būtų teisingas variantas). Tik dekoracija,
+/// kad kortelė atrodytų gyvai ir žaidėjas jaustų, kokios temos klausimas.
+const Map<String, List<String>> _kThemeScenes = {
+  // 🚨 Tech: kortelėje VENGTI konkrečių įrenginių (💻📱🤖🌐⌨️🖱️), nes lengvi tech
+  // klausimai PATYS klausia apie įrenginį (pvz. „kas yra pokalbių robotas?" → 🤖
+  // išduotų). Vietoj to — BENDRI mokslo/inžinerijos/kosmoso motyvai.
+  'tech': [
+    '⚙️', '🛰️', '🔌', '🎮', '🕹️', '📡', '🔭', '🚀', '🧑‍💻', '🔬',
+    '🧪', '⚗️', '🧮', '📐', '📊', '💡', '🛸', '🔢', '💿', '🧲',
+  ],
+  'geo': [
+    '🗺️', '🌍', '🌎', '🌏', '🧭', '⛰️', '🏔️', '🏝️', '🌋', '🏜️',
+    '🏞️', '🌊', '🧊', '🏙️', '🚩', '🌐', '🗿', '🏖️', '🏕️', '⛺',
+  ],
+  'history': [
+    '🏛️', '📜', '⚔️', '🏺', '🗿', '👑', '🛡️', '🏰', '⛩️', '🪓',
+    '🗝️', '🕰️', '📯', '⚱️', '🪔', '🏹', '🛕', '🧭', '⚜️', '📖',
+  ],
+  // 🚨 Maistas: kortelėje JOKIŲ konkrečių maisto produktų! Klausimai PATYS yra apie
+  // maistą (pvz. „kuris RAUDONAS vaisius?"), tad 🍓🍎 prie klausimo IŠDUODA atsakymą
+  // (per spalvą/formą) arba prieštarauja. Vietoj to — BENDRI virtuvės/valgymo motyvai
+  // (įrankiai, puodai, procesai), kurie niekada nėra nė vienas iš 6 atsakymų.
+  'food': [
+    '🍽️', '🍴', '🥄', '🔪', '🍳', '🧑‍🍳', '👨‍🍳', '👩‍🍳', '🥢', '🧂',
+    '🥣', '⏲️', '🫕', '🛒', '🧊', '🔥', '🫗', '🧑‍🌾', '🥡', '🍶',
+  ],
+  // 🚨 Sportas: kortelėje JOKIŲ konkrečių sporto šakų! Klausimai PATYS yra apie šakas
+  // (pvz. „kurioje šakoje Stenlio taurė?"), tad ⚽🏒 prie klausimo IŠDUODA/prieštarauja.
+  // Vietoj to — BENDRI sporto motyvai (taurės, medaliai, stadionas, švilpukas, kt.).
+  'sport': [
+    '🏆', '🥇', '🥈', '🥉', '🏅', '🎖️', '📣', '🏟️', '⏱️', '📋',
+    '🎯', '🚩', '🏁', '🔔', '📊', '🎫', '💪', '🥤', '🧢', '👟',
+  ],
+  // 🚨 Žmogaus kūno tema: kortelėje JOKIŲ konkrečių kūno dalių/organų! Klausimai
+  // PATYS yra apie kūno dalis, tad 🦵 prie klausimo „sąnarys rankoje?" atrodo
+  // melagingai IR pakiša kitą atsakymą (🦵→„Kelis"). Vietoj to — BENDRI
+  // medicinos/biologijos motyvai (stetoskopas, DNR, mikroskopas), kurie niekada
+  // nėra nė vienas iš 6 atsakymų ir neprieštarauja klausimui.
+  'body': [
+    '🩺', '🧬', '🔬', '🩻', '💊', '🧪', '🏥', '⚕️', '🩹', '🌡️',
+    '💉', '🧫', '🥼', '❤️‍🩹', '📋', '⚗️', '🩼', '🦠', '🫧', '🧴',
+  ],
+  'pop': [
+    '🎬', '🎵', '🎤', '🎸', '🎮', '🎨', '🎭', '🎧', '🌟', '🎞️',
+    '📺', '🎷', '🥁', '🎹', '📀', '🎼', '🪩', '🎟️', '🎫', '📽️',
+  ],
+};
+
+/// Grąžina temos kortelės „vaizdų" rinkinį (arba bendrą atsargą, jei temos nėra).
+List<String> triviaScenesFor(String categoryCode) =>
+    _kThemeScenes[categoryCode] ?? kTriviaScenes;

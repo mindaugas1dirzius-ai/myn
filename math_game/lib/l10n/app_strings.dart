@@ -99,6 +99,39 @@ class AppStrings {
       'Ši potemė dar ruošiama — greitai!',
       'This topic is being prepared — coming soon!');
 
+  // --- Bendrų temų potemės (tech, žmogaus kūnas) ---
+  // Tech
+  String get subTechGames =>
+      _pick('Video žaidimų evoliucija', 'Video game evolution');
+  String get subTechGamesDesc =>
+      _pick('Nuo Tetris iki Fortnite, esportas', 'From Tetris to Fortnite, esports');
+  String get subTechSpace => _pick('Kosmoso lenktynės', 'Space race');
+  String get subTechSpaceDesc =>
+      _pick('SpaceX, NASA, Marsas, astronautai', 'SpaceX, NASA, Mars, astronauts');
+  String get subTechAi => _pick('AI, robotai ir virusai', 'AI, robots & viruses');
+  String get subTechAiDesc => _pick(
+      'Dirbtinis intelektas, hakeriai, virusai', 'AI, hackers, computer viruses');
+  // Žmogaus kūnas — potemės „protmūšio" stiliumi (įdomu, ne vadovėlis)
+  String get subBodyBrain => _pick('Smegenų paslaptys', 'Brain secrets');
+  String get subBodyBrainDesc =>
+      _pick('Iliuzijos, sapnai, atminties ribos', 'Illusions, dreams, memory limits');
+  String get subBodyBones => _pick('Raumenys ir fitnesas', 'Muscle & fitness');
+  String get subBodyBonesDesc =>
+      _pick('Kaulai, ištvermė, kūno supergalios', 'Bones, endurance, body superpowers');
+  String get subBodyBio => _pick('Biologiniai kuriozai', 'Biology oddities');
+  String get subBodyBioDesc =>
+      _pick('Keista medicina, DNR, kūno paslaptys', 'Strange medicine, DNA, body secrets');
+  // Maistas — potemės „protmūšio" stiliumi
+  String get subFoodWorld => _pick('Pasaulio virtuvės', 'World cuisines');
+  String get subFoodWorldDesc =>
+      _pick('Patiekalų kilmė ir garsiausi skoniai', 'Dish origins and famous flavors');
+  String get subFoodScience => _pick('Maisto mokslas', 'Food science');
+  String get subFoodScienceDesc =>
+      _pick('Kas vyksta keptuvėje, ingredientų chemija', 'Kitchen chemistry of ingredients');
+  String get subFoodExotic => _pick('Egzotiškas maistas', 'Exotic food');
+  String get subFoodExoticDesc =>
+      _pick('Drąsiausi patiekalai iš viso pasaulio', 'The boldest dishes worldwide');
+
   // --- Veiksmai ---
   String get opAdd => _pick('Sudėtis', 'Addition');
   String get opSub => _pick('Atimtis', 'Subtraction');

@@ -27,7 +27,11 @@ Lygiai: lengvas / vidutinis / sunkus / ekstremalus.
 
 | Tema | Variklis | Klausimų |
 |------|----------|---------:|
-| 🌿 Gamta | `startNatureGame` | 600 |
+| 🌿 Gamta (iš viso) | `startNatureGame` | 720 |
+| → potemė „Įdomūs faktai" (facts) | | 600 |
+| → potemė „Išnykę gyvūnai" (extinct) | | 60 (15×4) |
+| → potemė „Augalai" (plants) | | 60 (15×4) |
+| → potemė „Viskas iš eilės" (mix) | | traukia iš visų |
 | 🧮 Matematika | generuojama | — (dinaminė) |
 | 🔍 Mistika | atskiras | — |
 | ⚡ Blitz „taip ir ne" | rezervas | — (dar neliesta) |

@@ -22,8 +22,8 @@ class NatureTopicScreen extends StatelessWidget {
     final s = AppStrings.of(context);
 
     // Potemių sąrašas. `open` = turi patvirtintų klausimų (kitaip „Greitai").
-    // KOL kas atviri tik „faktai" (esami 211 klausimų). Kitas potemes
-    // (extinct/plants) ir „mix" atrakinsime, kai pripildysim klausimų (Etapas B).
+    // Atviri: „faktai" (600), „išnykę gyvūnai" (60: 15×4 lygiai),
+    // „augalai" (60: 15×4 lygiai) ir „mix" (traukia iš visų potemių).
     final topics = <_TopicEntry>[
       _TopicEntry(
         id: 'facts',
@@ -39,7 +39,7 @@ class NatureTopicScreen extends StatelessWidget {
         title: s.topicExtinct,
         subtitle: s.topicExtinctDesc,
         accent: AppColors.levelHard,
-        open: false,
+        open: true,
       ),
       _TopicEntry(
         id: 'plants',
@@ -47,7 +47,7 @@ class NatureTopicScreen extends StatelessWidget {
         title: s.topicPlants,
         subtitle: s.topicPlantsDesc,
         accent: AppColors.levelEasy,
-        open: false,
+        open: true,
       ),
       _TopicEntry(
         id: 'mix',
@@ -55,7 +55,7 @@ class NatureTopicScreen extends StatelessWidget {
         title: s.topicMix,
         subtitle: s.topicMixDesc,
         accent: AppColors.neonBlue,
-        open: false,
+        open: true,
       ),
     ];
 

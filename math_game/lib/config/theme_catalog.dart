@@ -93,7 +93,7 @@ final List<GameTheme> kThemes = <GameTheme>[
     emoji: '🎬',
     accent: AppColors.levelHard,
     kind: ThemeKind.trivia,
-    open: false,
+    open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categoryPop,
     subtitle: (s) => s.categoryPopDesc,
   ),
@@ -102,7 +102,7 @@ final List<GameTheme> kThemes = <GameTheme>[
     emoji: '🌍',
     accent: AppColors.levelEasy,
     kind: ThemeKind.trivia,
-    open: false,
+    open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categoryGeo,
     subtitle: (s) => s.categoryGeoDesc,
   ),
@@ -111,7 +111,7 @@ final List<GameTheme> kThemes = <GameTheme>[
     emoji: '🏛️',
     accent: AppColors.levelMedium,
     kind: ThemeKind.trivia,
-    open: false,
+    open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categoryHistory,
     subtitle: (s) => s.categoryHistoryDesc,
   ),
@@ -120,7 +120,7 @@ final List<GameTheme> kThemes = <GameTheme>[
     emoji: '🔬',
     accent: AppColors.neonBlue,
     kind: ThemeKind.trivia,
-    open: false,
+    open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categoryTech,
     subtitle: (s) => s.categoryTechDesc,
   ),
@@ -129,7 +129,7 @@ final List<GameTheme> kThemes = <GameTheme>[
     emoji: '🍔',
     accent: AppColors.levelHard,
     kind: ThemeKind.trivia,
-    open: false,
+    open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categoryFood,
     subtitle: (s) => s.categoryFoodDesc,
   ),
@@ -138,7 +138,7 @@ final List<GameTheme> kThemes = <GameTheme>[
     emoji: '⚽',
     accent: AppColors.levelEasy,
     kind: ThemeKind.trivia,
-    open: false,
+    open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categorySport,
     subtitle: (s) => s.categorySportDesc,
   ),
@@ -147,7 +147,7 @@ final List<GameTheme> kThemes = <GameTheme>[
     emoji: '🧠',
     accent: AppColors.levelExtreme,
     kind: ThemeKind.trivia,
-    open: false,
+    open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categoryBody,
     subtitle: (s) => s.categoryBodyDesc,
   ),

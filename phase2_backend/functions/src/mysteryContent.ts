@@ -883,7 +883,7 @@ export const MYSTERIES: MysteryItem[] = [
       lt: {
         text: "Eureka",
         hint: "Garsus Archimedo atradimo šūksnis",
-        hint1: "Graikiškai reiškia „radau“.",
+        hint1: "Graikiškai reiškia „radau”.",
         hint2: "Tariama, kad jis tai sušuko vonioje.",
       },
     },
@@ -904,7 +904,7 @@ export const MYSTERIES: MysteryItem[] = [
         text: "Mažas žingsnis žmogui",
         hint: "Pirmojo žmogaus Mėnulyje žodžiai",
         hint1: "Ištarė Neilas Armstrongas 1969 m.",
-        hint2: "Toliau – „milžiniškas šuolis žmonijai“.",
+        hint2: "Toliau – „milžiniškas šuolis žmonijai”.",
       },
     },
   },
@@ -1056,7 +1056,7 @@ export const MYSTERIES: MysteryItem[] = [
     id: "mys_cit_007",
     category: "citata",
     level: 2,
-    sourceVerified: "Viljamas Šekspyras, „Hamletas“ (To be or not to be)",
+    sourceVerified: "Viljamas Šekspyras, „Hamletas” (To be or not to be)",
     texts: {
       en: {
         text: "To be or not to be",
@@ -1076,7 +1076,7 @@ export const MYSTERIES: MysteryItem[] = [
     id: "mys_cit_008",
     category: "citata",
     level: 3,
-    sourceVerified: "Frydrichas Nyčė, „Stabų saulėlydis“",
+    sourceVerified: "Frydrichas Nyčė, „Stabų saulėlydis”",
     texts: {
       en: {
         text: "That which does not kill us makes us stronger",
@@ -1136,7 +1136,7 @@ export const MYSTERIES: MysteryItem[] = [
     id: "mys_cit_011",
     category: "citata",
     level: 3,
-    sourceVerified: "„Whole Earth Catalog“, išpopuliarino Steve'as Jobsas (2005 m. Stanfordo kalba)",
+    sourceVerified: "„Whole Earth Catalog”, išpopuliarino Steve'as Jobsas (2005 m. Stanfordo kalba)",
     texts: {
       en: {
         text: "Stay hungry stay foolish",

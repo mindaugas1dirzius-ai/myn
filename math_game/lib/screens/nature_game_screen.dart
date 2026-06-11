@@ -296,7 +296,15 @@ class _NatureGameScreenState extends State<NatureGameScreen>
     final longest =
         q.options.fold<int>(0, (m, o) => o.length > m ? o.length : m);
     final longAnswers = longest > 22;
-    final card = _questionCard(q.action, _sceneFor(_game.index), accent);
+    // KLAUSIMO KORTELĖS paveikslėlis. Pirmenybė — serverio `cardEmoji`: tai
+    // klausimo SUBJEKTAS (pvz. 🕷️ prie „kiek kojų turi voras?"), kurį serveris
+    // davė TIK patikrinęs, kad jis NEIŠDUODA atsakymo (ne vėliava/orientyras, ne
+    // spalvos klausimas, nesutampa su jokio varianto emoji). Jei serveris davė ""
+    // (būtų išdavęs) — krentam į BENDRĄ temos „sceną" (🌍🌿…), kuri kaskart kita.
+    // 🚨 NIEKADA tiesiogiai nenaudojam `q.emoji` — tik serverio patikrintą cardEmoji.
+    final scene =
+        q.cardEmoji.isNotEmpty ? q.cardEmoji : _sceneFor(_game.index);
+    final card = _questionCard(q.action, scene, accent);
 
     // Bendra dydžio grupė (laikoma būsenoje) — auto_size_text sinchronizuoja
     // VISUS grupės tekstus į tą patį šriftą → langeliai atrodo vienodai, o
@@ -444,30 +452,33 @@ class _NatureGameScreenState extends State<NatureGameScreen>
     }
     final textColor = c == accent ? AppColors.textPrimary : c;
 
-    // Susijęs emoji iš serverio („viskas arba nieko“). Jei nėra – VIENODAS
-    // lapelis 🍃 visiems variantams (net skaičiams), kad KIEKVIENAS atsakymas
-    // turėtų paveikslėlį ir atrodytų nuosekliai. Nė vienas neišsiskiria, tad
-    // atsakymas neišduodamas.
-    final serverEmoji = _game.current.emojiForOption(value);
-    final emoji = serverEmoji.isNotEmpty ? serverEmoji : '🍃';
+    // Mažas paveikslėlis prie atsakymo — KĄ atsiuntė serveris (assembleOptions):
+    //  • savą, unikalų emoji kiekvienam variantui (pvz. 🦇 🐒 🦉 🐿️ 🦜 🦥), KAI
+    //    jis neišduoda atsakymo; arba
+    //  • VIENODĄ temos ženkliuką ant VISŲ (🍃/🗺️/⚙️/📜/🍽️/🏅/🩺/🎵), kai savų emoji
+    //    duoti negalima (būtų išdavę arba ne visi turi) — taip atsakymai NIEKADA
+    //    nelieka tušti ir niekada nebūna mišrūs (vieni su, kiti be).
+    final emoji = _game.current.emojiForOption(value);
+    final hasEmoji = emoji.isNotEmpty;
     return NeumorphicButton(
       accent: c,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       onTap: () => _onAnswer(value),
-      // Emoji – FIKSUOTAS plotis (30px), kad visuose 6 mygtukuose stovėtų
-      // idealiai vienodoje pozicijoje (ilgi žodžiai NEstumdo emoji). Tekstas
-      // užima likusią vietą; vienodas šriftas + perkėlimas į 2 eilutes.
+      // Su emoji: FIKSUOTAS jo plotis (30px), kad visuose mygtukuose stovėtų
+      // vienodoje pozicijoje. Be emoji: tekstas užima visą mygtuką (centruotas).
       child: Row(
         children: [
-          SizedBox(
-            width: 30,
-            child: Text(
-              emoji,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 22),
+          if (hasEmoji) ...[
+            SizedBox(
+              width: 30,
+              child: Text(
+                emoji,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 22),
+              ),
             ),
-          ),
-          const SizedBox(width: 4),
+            const SizedBox(width: 4),
+          ],
           Expanded(
             // VIENODAS šriftas visiems grupės atsakymams: AutoSizeText su bendra
             // `group` parenka VIENĄ dydį (didžiausią, prie kurio telpa visi).

@@ -27,6 +27,7 @@ import { NATURE_QUESTIONS } from "./natureContent";
 import { pickQuestions, assembleOptions, mergeRecent } from "./triviaEngine";
 import { Lang, NatureTopic } from "./triviaTypes";
 import { TRIVIA_REGISTRY, isGenericTriviaCategory } from "./triviaRegistry";
+import { isSubThemeOf, poolForSubTheme } from "./subThemeConfig";
 
 const REGION = "europe-west1";
 
@@ -108,7 +109,7 @@ export const startNatureGame = onCall(
     if (picked.length < QUESTIONS_PER_GAME) {
       throw new HttpsError("failed-precondition", "Per mažai klausimų šiam lygiui.");
     }
-    const assembled = picked.map((q) => assembleOptions(q, lang));
+    const assembled = picked.map((q) => assembleOptions(q, lang, "nature"));
 
     const pickedIds = picked.map((q) => q.id);
 
@@ -144,6 +145,7 @@ export const startNatureGame = onCall(
         answer: a.answer,
         explanation: a.explanation ?? "",
         emoji: a.emoji ?? "",
+        cardEmoji: a.cardEmoji ?? "",     // kortelės subjektas (arba "" → scena)
         optionEmojis: a.optionEmojis, // [] arba 6 emoji (viskas-arba-nieko)
       })),
     };
@@ -172,18 +174,35 @@ export const startTriviaGame = onCall(
     }
     const uid = request.auth.uid;
 
-    // mode: "<tema>_<lygis>" (lygiai gali turėti „_"? NE — lygiai be pabraukimo,
-    // tad split iš kairės: pirma dalis = tema, paskutinė = lygis).
+    // mode: DU palaikomi formatai (lygiai BE pabraukimo, tad split saugus):
+    //   "<tema>_<lygis>"            — be potemės (potemė = „facts");
+    //   "<tema>_<potemė>_<lygis>"   — su poteme (pvz. "body_brain_lengvas").
     const modeRaw =
       typeof request.data?.mode === "string" ? request.data.mode : "";
     const parts = modeRaw.split("_");
-    if (parts.length !== 2) {
+    if (parts.length !== 2 && parts.length !== 3) {
       throw new HttpsError("invalid-argument", "Nežinomas režimas.");
     }
     const category = parts[0];
-    const level = parts[1] as Level;
+    let subTheme: string;
+    let level: Level;
+    if (parts.length === 2) {
+      subTheme = "facts";              // be potemės → numatytoji „facts"
+      level = parts[1] as Level;
+    } else {
+      subTheme = parts[1];             // potemė (arba „mix")
+      level = parts[2] as Level;
+    }
     if (!isGenericTriviaCategory(category)) {
       throw new HttpsError("invalid-argument", "Nežinoma tema.");
+    }
+    // Potemė turi būti žinoma: „facts"/„mix" visada leidžiama, kitos — pagal konfigą.
+    if (
+      subTheme !== "facts" &&
+      subTheme !== "mix" &&
+      !isSubThemeOf(category, subTheme)
+    ) {
+      throw new HttpsError("invalid-argument", "Nežinoma potemė.");
     }
     if (!NATURE_LEVELS.includes(level)) {
       throw new HttpsError("failed-precondition", "Šis lygis dar neparuoštas.");
@@ -198,8 +217,10 @@ export const startTriviaGame = onCall(
       (userSnap.data()?.recentByMode as Record<string, string[]>) ?? {};
     const recent: string[] = recentByMode[modeRaw] ?? [];
 
-    // Be potemių filtro — visa tema vienas baseinas (potemes pridėsim vėliau).
-    const pool = TRIVIA_REGISTRY[category];
+    // Baseinas pagal potemę: „facts" → bendri klausimai, „mix" → visi,
+    // kitaip → tik tos potemės. (Atgaliniam suderinamumui: tema be potemių
+    // turi tuščią sąrašą, tad „facts" = visi klausimai, kaip ir seniau.)
+    const pool = poolForSubTheme(category, TRIVIA_REGISTRY[category], subTheme);
     const picked = pickQuestions(pool, level, recent, QUESTIONS_PER_GAME);
     if (picked.length < QUESTIONS_PER_GAME) {
       throw new HttpsError(
@@ -207,7 +228,9 @@ export const startTriviaGame = onCall(
         "Per mažai klausimų šiam lygiui."
       );
     }
-    const assembled = picked.map((q) => assembleOptions(q, lang));
+    // category perduodam, kad atsakymų ženkliukas (kai nėra savų emoji) būtų
+    // TEMOS (🗺️/⚙️/📜…), o ne bendras.
+    const assembled = picked.map((q) => assembleOptions(q, lang, category));
     const pickedIds = picked.map((q) => q.id);
 
     const gameRef = db.collection("active_games").doc();
@@ -235,6 +258,7 @@ export const startTriviaGame = onCall(
         answer: a.answer,
         explanation: a.explanation ?? "",
         emoji: a.emoji ?? "",
+        cardEmoji: a.cardEmoji ?? "",     // kortelės subjektas (arba "" → scena)
         optionEmojis: a.optionEmojis,
       })),
     };

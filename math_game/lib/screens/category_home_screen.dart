@@ -14,6 +14,7 @@ import 'mystery_screen.dart';
 import 'nature_topic_screen.dart';
 import 'profile_screen.dart';
 import 'trivia_level_screen.dart';
+import 'trivia_topic_screen.dart';
 
 /// PRADINIS langas — temų pasirinkimas (kad nebūtų chaoso).
 ///
@@ -168,12 +169,20 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
         _loadMysteryStatus();
         break;
       case ThemeKind.trivia:
+        // Temos su potemėmis (tech, žmogaus kūnas) → potemių parinkiklis;
+        // kitos → tiesiai į lygių ekraną (kaip seniau).
+        final hasSubs = TriviaTopicScreen.hasSubThemes(t.code);
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (_) => TriviaLevelScreen(
-              categoryCode: t.code,
-              categoryTitle: t.title(AppStrings.of(context)),
-            ),
+            builder: (_) => hasSubs
+                ? TriviaTopicScreen(
+                    categoryCode: t.code,
+                    categoryTitle: t.title(AppStrings.of(context)),
+                  )
+                : TriviaLevelScreen(
+                    categoryCode: t.code,
+                    categoryTitle: t.title(AppStrings.of(context)),
+                  ),
           ),
         );
         break;

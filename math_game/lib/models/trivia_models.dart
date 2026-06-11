@@ -16,8 +16,14 @@ class TriviaQuestion {
   final String answer; // teisingas (sutaps su vienu iš options)
   final String explanation; // KODĖL teisinga — rodoma žaidimo pabaigoje
   final String emoji; // iliustracinis „paveikslėlis" (gali būti tuščias)
+  /// KLAUSIMO KORTELĖS paveikslėlis: klausimo SUBJEKTAS (pvz. 🕷️ prie „kiek kojų
+  /// turi voras?"), kurį serveris davė TIK kai jis neišduoda atsakymo. Tuščias =
+  /// rodom bendrą temos „sceną" (kaip seniau). NIEKADA neišduoda teisingo.
+  final String cardEmoji;
   /// Po vieną emoji KIEKVIENAM variantui (ta pati tvarka kaip [options]).
-  /// Tuščias = serveris nusprendė nerodyti (viskas-arba-nieko saugiklis).
+  /// Serveris atsiunčia ARBA savus, unikalius emoji (kai visi variantai turi
+  /// neišduodantį paveikslėlį), ARBA VIENODĄ temos ženkliuką ant visų (🍃/🗺️/⚙️…)
+  /// — taip atsakymai NIEKADA nelieka tušti ir niekada nebūna mišrūs.
   final List<String> optionEmojis;
 
   const TriviaQuestion({
@@ -26,6 +32,7 @@ class TriviaQuestion {
     required this.answer,
     this.explanation = '',
     this.emoji = '',
+    this.cardEmoji = '',
     this.optionEmojis = const [],
   });
 
@@ -45,6 +52,7 @@ class TriviaQuestion {
       answer: json['answer'] as String? ?? '',
       explanation: json['explanation'] as String? ?? '',
       emoji: json['emoji'] as String? ?? '',
+      cardEmoji: json['cardEmoji'] as String? ?? '',
       optionEmojis: rawEmojis.map((e) => e.toString()).toList(),
     );
   }

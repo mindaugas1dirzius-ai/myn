@@ -22,7 +22,7 @@ import {
   NatureTopic,
   DEFAULT_TOPIC,
 } from "./triviaTypes";
-import { emojiForOption } from "./natureEmoji";
+import { emojiForOption } from "./themeEmoji";
 
 /** Fisher-Yates — teisingas, nešališkas masyvo maišymas (kaip generateOptions). */
 function shuffle<T>(arr: T[]): T[] {
@@ -129,6 +129,11 @@ export interface AssembledQuestion {
   explanation?: string;  // kodėl teisingas (rodoma pabaigoje)
   emoji?: string;        // iliustracinis emoji (vietoj nuotraukos)
   /**
+   * KLAUSIMO KORTELĖS paveikslėlis: q.emoji (subjektas), kai NEIŠDUODA atsakymo,
+   * kitaip "" (klientas rodo bendrą temos „sceną"). Žr. logiką assembleOptions.
+   */
+  cardEmoji?: string;
+  /**
    * Po vieną emoji KIEKVIENAM variantui (ta pati tvarka kaip `options`).
    * „Viskas arba nieko": užpildoma TIK jei VISI variantai turi emoji — kitaip
    * tuščias masyvas (klientas rodo tik tekstą). Taip vienas variantas niekada
@@ -137,27 +142,130 @@ export interface AssembledQuestion {
   optionEmojis: string[];
 }
 
+/**
+ * TEMOS ŽENKLIUKAS atsakymo mygtukams, kai NEGALIM duoti kiekvienam variantui
+ * savo, unikalaus ir neišduodančio paveikslėlio. Vietoj TUŠČIŲ (be jokio
+ * paveikslėlio — savininkas to nenori: „net to lapelio nebuvo") rodom VIENODĄ
+ * temos ženkliuką ant VISŲ 6 mygtukų. Kadangi jis identiškas visiems, jis
+ * NIEKADA neišduoda, kuris atsakymas teisingas — tad saugu net spalvų/vėliavų
+ * klausimuose. Taip kiekvienas klausimas atrodo „gyvas", vientisas ir užbaigtas,
+ * niekada nei tuščias, nei mišrus (vieni su, kiti be).
+ */
+const THEME_BADGE: Record<string, string> = {
+  nature: "🍃",
+  tech: "⚙️",
+  geo: "🗺️",
+  history: "📜",
+  food: "🍽️",
+  sport: "🏅",
+  body: "🩺",
+  pop: "🎵",
+};
+const DEFAULT_BADGE = "✨";
+
 export function assembleOptions(
   q: TriviaQuestion,
-  lang: Lang
+  lang: Lang,
+  category?: string
 ): AssembledQuestion {
   const content = pickContent(q, lang);
   const needDistractors = OPTIONS_PER_QUESTION - 1; // 6 → 5
   const chosen = shuffle(content.distractors).slice(0, needDistractors);
   const options = shuffle([content.correct, ...chosen]);
 
-  // Per-variantą emoji. DVI sąlygos (kitaip rodom tik tekstą):
-  //  1) VISKAS-ARBA-NIEKO: jei bent vienas variantas neturi emoji — nerodom nė
-  //     vieno (kad vienas neišsiskirtų ir neišduotų atsakymo).
-  //  2) VISI SKIRTINGI: jei keli variantai gautų TĄ PATĮ emoji (pvz. 6 paukščiai
-  //     visi → 🐦), tai atrodo kaip nesąmonė ir nieko nepasako — tada irgi
-  //     rodom tik tekstą. Emoji rodom TIK kai kiekvienas variantas turi savo,
-  //     unikalų, prasmingą paveikslėlį (pvz. 🦁 🦅 🐸 🦈 🐍 🐝).
-  const looked = options.map((o) => emojiForOption(o));
-  const allHaveEmoji = looked.every((e) => !!e);
+  // Emoji prie ATSAKYMŲ — „VISKAS ARBA NIEKO" (profesionalus, vienodas vaizdas).
+  // Paveikslėlį rodom KIEKVIENAM variantui TIK kai VISI variantai turi savą,
+  // UNIKALŲ ir neišduodantį paveikslėlį. Kitaip — JOKIO emoji (švarus tekstas),
+  // NIEKADA „šakutės" filerio ar mišraus rinkinio (vieni su, kiti be). Klausimo
+  // SUBJEKTAS lieka ant kortelės (cardEmoji), tad vaizdas vis tiek gyvas.
+  // „Atskleidžiantys" emoji: spalvoti kvadratai = pati spalva = atsakymas.
+  const REVEALING = new Set([
+    "⬜", "⬛", "🟫", "🟦", "🟩", "🟥", "🟨", "🟧", "🟪", "🌫️",
+  ]);
+  // ORIENTYRAI — žinomi statiniai/vietos, kurie KORTELĖJE išduotų vietos atsakymą
+  // (pvz. 🗼 → Paryžius, 🗽 → Niujorkas). Geografijoj nenaudojam jų kortelėje.
+  const CARD_LANDMARKS = new Set([
+    "🗼", "🗽", "🏛️", "🏰", "🏯", "🕌", "⛩️", "🗿", "🕋", "🛕",
+    "⛲", "🌉", "🎡", "🎢", "🏟️", "🏝️",
+  ]);
+  const looked = options.map((o) => emojiForOption(o)); // emoji | undefined
+
+  // ⭐ NAUJA SISTEMA (2026-06-11) — protinga, veikia VISIEMS klausimams be žodyno
+  // pildymo po vieną. Rodom KIEKVIENAM variantui SAVĄ paveikslėlį (ten, kur yra),
+  // o kur nėra — temos ženklą. Į temos ženklą (vienodą ant VISŲ) krentam TIK kai
+  // paveikslėliai realiai IŠDUOTŲ teisingą atsakymą. Trys išdavimo atvejai:
+  //   (1) spalvų kvadratai / regimos savybės klausimas (žr. žemiau);
+  //   (2) teisingas — VIENINTELIS su paveikslėliu (kiti be) → 🦈 „Megalodonas",
+  //       kiti lapukai → matosi, kuris teisingas;
+  //   (3) teisingas — VIENINTELIS BE paveikslėlio (visi kiti turi) → irgi išskiria.
+  // Visais kitais atvejais teisingas atsakymas „pasislepia" tarp kitų → saugu
+  // rodyti įvairius, su tema susijusius paveikslėlius (būtent to prašė savininkas).
+  const correctIdx = options.indexOf(content.correct);
+  const correctHasEmoji = correctIdx >= 0 && !!looked[correctIdx];
+  const numWithEmoji = looked.filter((e) => !!e).length;
+  const numDistractorsWithEmoji = numWithEmoji - (correctHasEmoji ? 1 : 0);
+  const distractorsCount = options.length - 1;
+
+  // (1) Spalvų kvadratai variantuose — pati spalva = atsakymas.
+  const anyRevealing = looked.some((e) => !!e && REVEALING.has(e));
+  // (1b) Klausimas apie REGIMĄ savybę (spalvą), kur paveikslėlis ją parodytų
+  //      (pvz. „kokios spalvos…", „kuris RAUDONAS vaisius?") → saugiau be jų.
+  const visualQuestion =
+    /(spalv|colou?r|raudon|žali|zali|gelton|mėlyn|melyn|oranžin|oranzin|violetin|rožin|rozin|rud[aąoų]|balt|juod|pilk)/i.test(
+      content.question
+    );
+  // (1c) Klausimas apie VĖLIAVĄ („kuri šalis turi šią vėliavą?") — šalių vėliavos
+  //      variantuose tiesiogiai išduotų atsakymą, tad saugiau be jų.
+  const flagQuestion = /(vėliav|veliav|\bflag\b)/i.test(content.question);
+  // (2) teisingas — vienintelis su paveikslėliu.
+  const correctIsLonePicture =
+    correctHasEmoji && numDistractorsWithEmoji === 0;
+  // (3) teisingas — vienintelis be paveikslėlio.
+  const correctIsLoneFallback =
+    !correctHasEmoji && numDistractorsWithEmoji === distractorsCount;
+
+  const reveals =
+    anyRevealing ||
+    visualQuestion ||
+    flagQuestion ||
+    correctIsLonePicture ||
+    correctIsLoneFallback;
+
+  // ── KLAUSIMO KORTELĖS paveikslėlis (cardEmoji) ─────────────────────────────
+  // Rodom q.emoji — klausimo SUBJEKTĄ (pvz. 🕷️ prie „kiek kojų turi voras?",
+  // kur atsakymas „8") — TIK kai jis NEIŠDUODA atsakymo. Kitaip grąžinam "" ir
+  // klientas parenka bendrą temos „sceną" (kaip seniau). Į sceną krentam, kai:
+  //   • q.emoji tuščias;
+  //   • spalvos kvadratas (REVEALING) arba regimos savybės/spalvos klausimas;
+  //   • q.emoji SUTAMPA su kurio nors varianto emoji (looked) → identifikacinis
+  //     klausimas, kur subjektas = atsakymas („kuris gyvūnas…" → 🦇 = atsakymas);
+  //   • vėliava (🇫🇷, 🇯🇵…) ar žinomas orientyras (🗼, 🗽…) → geografijoj išduotų
+  //     vietą (sostinę/šalį).
+  const qEmoji = q.emoji ?? "";
+  const isFlagEmoji = /[\u{1F1E6}-\u{1F1FF}]/u.test(qEmoji);
+  const cardEmoji =
+    qEmoji &&
+    !REVEALING.has(qEmoji) &&
+    !visualQuestion &&
+    !isFlagEmoji &&
+    !CARD_LANDMARKS.has(qEmoji) &&
+    !looked.includes(qEmoji)
+      ? qEmoji
+      : "";
+
+  // SAVI PAVEIKSLĖLIAI vs. TEMOS ŽENKLIUKAS — niekada tuščia, niekada mišru.
+  // Kiekvienam variantui SAVĄ, unikalų emoji rodom TIK kai VISI turi (allHaveEmoji),
+  // VISI skirtingi (allDistinct) ir niekas neišduoda atsakymo (!reveals). KITAIP —
+  // ne tuščia (kaip seniau), o VIENODAS temos ženkliukas ant VISŲ 6 (pvz. 🍃/🗺️/⚙️):
+  // atrodo vientisai, niekada nelieka „be jokio paveikslėlio", o kadangi identiškas
+  // visiems — neišduoda teisingo net spalvų/vėliavų klausimuose.
+  const allHaveEmoji = numWithEmoji === options.length;
   const allDistinct = new Set(looked).size === looked.length;
-  const optionEmojis =
-    allHaveEmoji && allDistinct ? (looked as string[]) : [];
+  const realRow = allHaveEmoji && allDistinct && !reveals;
+  const badge = THEME_BADGE[category ?? "nature"] ?? DEFAULT_BADGE;
+  const optionEmojis: string[] = realRow
+    ? (looked as string[])
+    : options.map(() => badge);
 
   return {
     display: content.question,
@@ -165,6 +273,7 @@ export function assembleOptions(
     answer: content.correct,
     explanation: content.explanation,
     emoji: q.emoji,
+    cardEmoji,
     optionEmojis,
   };
 }

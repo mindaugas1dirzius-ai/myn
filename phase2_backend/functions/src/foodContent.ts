@@ -20,7 +20,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_001",
     category: "food",
-    subTheme: "origins",
+    subTheme: "world",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Culinary history (pizza, Italy)",
@@ -43,7 +43,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_002",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Food science (chocolate from cocoa)",
@@ -66,7 +66,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_003",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Dairy science (cheese from milk)",
@@ -89,7 +89,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_004",
     category: "food",
-    subTheme: "fruit",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Botany (banana color)",
@@ -112,7 +112,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_005",
     category: "food",
-    subTheme: "drinks",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Botany (coffee from beans)",
@@ -135,7 +135,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_006",
     category: "food",
-    subTheme: "origins",
+    subTheme: "world",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Culinary history (sushi, Japan)",
@@ -158,7 +158,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_007",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Food basics (bread from flour)",
@@ -181,7 +181,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_008",
     category: "food",
-    subTheme: "vegetables",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Botany (carrot color)",
@@ -204,7 +204,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_009",
     category: "food",
-    subTheme: "drinks",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Beverage basics (tea from leaves)",
@@ -227,7 +227,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_010",
     category: "food",
-    subTheme: "origins",
+    subTheme: "world",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Culinary history (taco, Mexico)",
@@ -250,7 +250,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_011",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Food basics (honey from bees)",
@@ -273,7 +273,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_012",
     category: "food",
-    subTheme: "fruit",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Botany (lemon taste)",
@@ -296,7 +296,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_013",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Food basics (omelette from eggs)",
@@ -319,7 +319,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_014",
     category: "food",
-    subTheme: "origins",
+    subTheme: "world",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Culinary history (croissant association)",
@@ -342,7 +342,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_015",
     category: "food",
-    subTheme: "vegetables",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Botany (potato grows underground)",
@@ -367,7 +367,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_001",
     category: "food",
-    subTheme: "spices",
+    subTheme: "exotic",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Spice trade (saffron is costliest)",
@@ -390,7 +390,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_002",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Culinary history (paella, Spain)",
@@ -413,7 +413,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_003",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Food science (guacamole from avocado)",
@@ -436,7 +436,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_004",
     category: "food",
-    subTheme: "drinks",
+    subTheme: "exotic",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Beverage history (Champagne region)",
@@ -459,7 +459,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_005",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Culinary history (curry, India)",
@@ -505,7 +505,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_007",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Culinary history (kimchi, Korea)",
@@ -528,7 +528,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_008",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Food science (marzipan from almonds)",
@@ -551,7 +551,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_009",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Culinary history (goulash, Hungary)",
@@ -597,7 +597,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_011",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Culinary history (hummus, Middle East)",
@@ -620,7 +620,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_012",
     category: "food",
-    subTheme: "drinks",
+    subTheme: "exotic",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Beverage science (espresso base)",
@@ -643,7 +643,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_013",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Culinary history (gyros, Greece)",
@@ -666,7 +666,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_014",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Food science (tofu from soybeans)",
@@ -737,7 +737,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_002",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Culinary history (sashimi, Japan)",
@@ -760,7 +760,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_003",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Botany (cloves are flower buds)",
@@ -783,7 +783,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_004",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Culinary history (risotto, Italy)",
@@ -821,7 +821,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
       lt: {
         question: "Kuris yra sodrusis penktasis pagrindinis skonis?",
         correct: "Umami",
-        distractors: ["Aštrus", "Sterptus", "Mėtinis", "Dūminis", "Riebus"],
+        distractors: ["Aštrus", "Rūgštokas", "Mėtinis", "Dūminis", "Riebus"],
         explanation: "Umami — sodrusis skonis, susijęs su glutamatu.",
       },
     },
@@ -829,7 +829,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_006",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Culinary history (ceviche, Peru)",
@@ -852,7 +852,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_007",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Botany (vanilla from orchid)",
@@ -875,7 +875,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_008",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Culinary history (falafel, Middle East)",
@@ -921,7 +921,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_010",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Culinary history (pho, Vietnam)",
@@ -944,7 +944,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_011",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Botany (paprika from peppers)",
@@ -967,7 +967,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_012",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Culinary history (tiramisu, Italy)",
@@ -1013,7 +1013,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_014",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Culinary history (borscht, Eastern Europe)",
@@ -1036,7 +1036,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_015",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Food science (gelatin source)",
@@ -1084,7 +1084,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_ek_002",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Culinary history (tagine, Morocco)",
@@ -1130,7 +1130,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_ek_004",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Culinary history (feijoada, Brazil)",
@@ -1176,7 +1176,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_ek_006",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Culinary history (moussaka, Greece)",
@@ -1199,7 +1199,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_ek_007",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Botany (cinnamon is bark)",
@@ -1222,7 +1222,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_ek_008",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Culinary history (poutine, Canada)",
@@ -1268,7 +1268,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_ek_010",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Culinary history (pierogi, Poland)",
@@ -1314,7 +1314,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_ek_012",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Culinary history (baklava, Ottoman origin)",
@@ -1372,7 +1372,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_ek_014",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Culinary history (cepelinai, Lithuania)",
@@ -1418,7 +1418,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_016",
     category: "food",
-    subTheme: "fruit",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Strawberry color",
@@ -1441,7 +1441,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_017",
     category: "food",
-    subTheme: "fruit",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Raisins are dried grapes",
@@ -1464,7 +1464,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_018",
     category: "food",
-    subTheme: "origins",
+    subTheme: "world",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Spaghetti is pasta",
@@ -1487,7 +1487,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_019",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Beef from cattle",
@@ -1510,7 +1510,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_020",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Popcorn from corn",
@@ -1533,7 +1533,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_021",
     category: "food",
-    subTheme: "drinks",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Orange juice from oranges",
@@ -1556,7 +1556,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_022",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Peanut butter from peanuts",
@@ -1579,7 +1579,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_023",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Egg yolk color",
@@ -1602,7 +1602,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_024",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Ketchup from tomatoes",
@@ -1625,7 +1625,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_025",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Ice cream from milk",
@@ -1648,7 +1648,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_026",
     category: "food",
-    subTheme: "vegetables",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Onion makes eyes water",
@@ -1671,7 +1671,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_027",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "BLT sandwich ingredients",
@@ -1694,7 +1694,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_028",
     category: "food",
-    subTheme: "vegetables",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Lettuce used in salad",
@@ -1717,7 +1717,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_029",
     category: "food",
-    subTheme: "drinks",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Milk color",
@@ -1740,7 +1740,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_le_030",
     category: "food",
-    subTheme: "fruit",
+    subTheme: "exotic",
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Cherry is a stone fruit",
@@ -1763,7 +1763,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_016",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Maple syrup from maple sap",
@@ -1786,7 +1786,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_017",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Sandwich named after place in England",
@@ -1809,7 +1809,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_018",
     category: "food",
-    subTheme: "origins",
+    subTheme: "world",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Parmesan from Italy",
@@ -1832,7 +1832,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_019",
     category: "food",
-    subTheme: "drinks",
+    subTheme: "exotic",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Cider from apples",
@@ -1855,7 +1855,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_020",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Soy sauce from soybeans",
@@ -1878,7 +1878,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_021",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Pesto with pine nuts",
@@ -1901,7 +1901,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_022",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Basmati is rice",
@@ -1924,7 +1924,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_023",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Butter churned from cream",
@@ -1947,7 +1947,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_024",
     category: "food",
-    subTheme: "drinks",
+    subTheme: "exotic",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Espresso machine from Italy",
@@ -1970,7 +1970,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_025",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Wasabi served with sushi",
@@ -1993,7 +1993,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_026",
     category: "food",
-    subTheme: "spices",
+    subTheme: "exotic",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Turmeric colors curry yellow",
@@ -2016,7 +2016,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_027",
     category: "food",
-    subTheme: "origins",
+    subTheme: "world",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Brie cheese from France",
@@ -2039,7 +2039,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_028",
     category: "food",
-    subTheme: "vegetables",
+    subTheme: "exotic",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Sauerkraut from cabbage",
@@ -2062,7 +2062,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_029",
     category: "food",
-    subTheme: "cuisine",
+    subTheme: "world",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Pad Thai from Thailand",
@@ -2085,7 +2085,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_me_030",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Marmalade from oranges",
@@ -2131,7 +2131,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_017",
     category: "food",
-    subTheme: "origins",
+    subTheme: "world",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Roquefort from France",
@@ -2154,7 +2154,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_018",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Tahini from sesame",
@@ -2177,7 +2177,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_019",
     category: "food",
-    subTheme: "spices",
+    subTheme: "exotic",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Saffron from crocus stigma",
@@ -2200,7 +2200,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_020",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Tabbouleh from bulgur",
@@ -2269,7 +2269,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_023",
     category: "food",
-    subTheme: "origins",
+    subTheme: "world",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Balsamic vinegar from Modena",
@@ -2292,7 +2292,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_024",
     category: "food",
-    subTheme: "ingredients",
+    subTheme: "science",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Couscous from wheat semolina",
@@ -2361,7 +2361,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_027",
     category: "food",
-    subTheme: "spices",
+    subTheme: "exotic",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Vanilla second most expensive spice",
@@ -2407,7 +2407,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
   {
     id: "foo_su_029",
     category: "food",
-    subTheme: "drinks",
+    subTheme: "exotic",
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Brazil is top coffee producer",
@@ -2792,6 +2792,381 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         correct: "Kakavos sviesto",
         distractors: ["Palmių aliejaus", "Sviesto", "Kokosų aliejaus", "Lašinių", "Pieno riebalų"],
         explanation: "Temperavimas suformuoja tinkamus kakavos sviesto kristalus.",
+      },
+    },
+  },
+
+  // ===== EGZOTIŠKAS MAISTAS (exotic) — papildymas, kad visi lygiai turėtų bazę =====
+  // VIDUTINIS (medium)
+  {
+    id: "foo_me_031",
+    category: "food",
+    subTheme: "exotic",
+    level: "vidutinis",
+    isTrap: false,
+    sourceVerified: "Escargot is cooked land snails (France)",
+    emoji: "🐌",
+    translations: {
+      en: {
+        question: "Escargot, a French dish, is made from which animal?",
+        correct: "Snail",
+        distractors: ["Frog", "Oyster", "Clam", "Squid", "Eel"],
+        explanation: "Escargot is cooked land snails, a French delicacy.",
+      },
+      lt: {
+        question: "Prancūziškas patiekalas „escargot” — iš kurio gyvūno?",
+        correct: "Sraigės",
+        distractors: ["Varlės", "Austrės", "Geldelės", "Kalmarai", "Unguriai"],
+        explanation: "„Escargot” — virtos sausumos sraigės, prancūzų delikatesas.",
+      },
+    },
+  },
+  {
+    id: "foo_me_032",
+    category: "food",
+    subTheme: "exotic",
+    level: "vidutinis",
+    isTrap: false,
+    sourceVerified: "Kimchi is fermented napa cabbage (Korea)",
+    emoji: "🥬",
+    translations: {
+      en: {
+        question: "Korean kimchi is most often made from which vegetable?",
+        correct: "Cabbage",
+        distractors: ["Carrot", "Potato", "Onion", "Cucumber", "Pepper"],
+        explanation: "Classic kimchi is fermented napa cabbage with seasonings.",
+      },
+      lt: {
+        question: "Korėjietiškas „kimchi” dažniausiai iš kurios daržovės?",
+        correct: "Kopūstai",
+        distractors: ["Morkos", "Bulvės", "Svogūnai", "Agurkai", "Paprika"],
+        explanation: "Klasikinis „kimchi” — fermentuoti pekino kopūstai su prieskoniais.",
+      },
+    },
+  },
+
+  // SUNKUS (hard)
+  {
+    id: "foo_su_031",
+    category: "food",
+    subTheme: "exotic",
+    level: "sunkus",
+    isTrap: false,
+    sourceVerified: "Fugu (pufferfish) contains tetrodotoxin",
+    emoji: "🐡",
+    translations: {
+      en: {
+        question: "Japanese 'fugu' needs licensed chefs because it can be?",
+        correct: "Poisonous",
+        distractors: ["Explosive", "Flammable", "Magnetic", "Radioactive", "Frozen"],
+        explanation: "Pufferfish (fugu) holds tetrodotoxin, deadly if mis-prepared.",
+      },
+      lt: {
+        question: "Japonišką „fugu” ruošia tik licencijuoti virėjai, nes ji?",
+        correct: "Nuodinga",
+        distractors: ["Sprogi", "Degi", "Magnetinė", "Radioaktyvi", "Sušalusi"],
+        explanation: "Fugu turi tetrodotoksino — netinkamai paruošta mirtinai nuodinga.",
+      },
+    },
+  },
+  {
+    id: "foo_su_032",
+    category: "food",
+    subTheme: "exotic",
+    level: "sunkus",
+    isTrap: false,
+    sourceVerified: "Balut is a boiled developing duck egg (Philippines)",
+    emoji: "🥚",
+    translations: {
+      en: {
+        question: "Balut, a Filipino street food, is a boiled egg of which bird?",
+        correct: "Duck",
+        distractors: ["Chicken", "Goose", "Quail", "Turkey", "Ostrich"],
+        explanation: "Balut is a boiled developing duck egg, popular in the Philippines.",
+      },
+      lt: {
+        question: "Filipinietiškas „balut” — virtas kurio paukščio kiaušinis?",
+        correct: "Antis",
+        distractors: ["Višta", "Žąsis", "Putpelė", "Kalakutas", "Strutis"],
+        explanation: "„Balut” — virtas besivystantis anties kiaušinis (Filipinai).",
+      },
+    },
+  },
+  {
+    id: "foo_su_033",
+    category: "food",
+    subTheme: "exotic",
+    level: "sunkus",
+    isTrap: false,
+    sourceVerified: "Surströmming is fermented Baltic herring (Sweden)",
+    emoji: "🐟",
+    translations: {
+      en: {
+        question: "Sweden's pungent 'surströmming' is fermented which fish?",
+        correct: "Herring",
+        distractors: ["Salmon", "Cod", "Shark", "Mackerel", "Tuna"],
+        explanation: "Surströmming is fermented Baltic herring, famed for its smell.",
+      },
+      lt: {
+        question: "Aštraus kvapo švediškas „surströmming” — kuri žuvis?",
+        correct: "Silkė",
+        distractors: ["Lašiša", "Menkė", "Ryklys", "Skumbrė", "Tunas"],
+        explanation: "„Surströmming” — fermentuota Baltijos silkė, garsi kvapu.",
+      },
+    },
+  },
+  {
+    id: "foo_su_034",
+    category: "food",
+    subTheme: "exotic",
+    level: "sunkus",
+    isTrap: false,
+    sourceVerified: "Century egg white turns dark brown jelly",
+    emoji: "🥚",
+    translations: {
+      en: {
+        question: "A Chinese 'century egg' has its white turned what color?",
+        correct: "Dark brown",
+        distractors: ["Pure white", "Bright red", "Sky blue", "Golden", "Grass green"],
+        explanation: "Curing turns the white into a dark brown translucent jelly.",
+      },
+      lt: {
+        question: "Kiniško „šimtamečio kiaušinio” baltymas tampa kokios spalvos?",
+        correct: "Tamsiai ruda",
+        distractors: ["Gryna balta", "Ryškiai raudona", "Dangaus mėlyna", "Auksinė", "Žolės žalia"],
+        explanation: "Brandinant baltymas virsta tamsiai ruda permatoma drebučių mase.",
+      },
+    },
+  },
+  {
+    id: "foo_su_035",
+    category: "food",
+    subTheme: "exotic",
+    level: "sunkus",
+    isTrap: false,
+    sourceVerified: "Escamoles are ant larvae (Mexico)",
+    emoji: "🐜",
+    translations: {
+      en: {
+        question: "Mexican 'escamoles' are the edible larvae of which insect?",
+        correct: "Ants",
+        distractors: ["Bees", "Wasps", "Beetles", "Moths", "Crickets"],
+        explanation: "Escamoles are ant larvae, sometimes called 'insect caviar'.",
+      },
+      lt: {
+        question: "Meksikietiški „escamoles” — kurio vabzdžio valgomos lervos?",
+        correct: "Skruzdėlės",
+        distractors: ["Bitės", "Vapsvos", "Vabalai", "Drugiai", "Svirpliai"],
+        explanation: "„Escamoles” — skruzdėlių lervos, vadinamos „vabzdžių ikrais”.",
+      },
+    },
+  },
+  {
+    id: "foo_su_036",
+    category: "food",
+    subTheme: "exotic",
+    level: "sunkus",
+    isTrap: false,
+    sourceVerified: "Hákarl is fermented Greenland shark (Iceland)",
+    emoji: "🦈",
+    translations: {
+      en: {
+        question: "Iceland's 'hákarl' is fermented meat of which animal?",
+        correct: "Shark",
+        distractors: ["Whale", "Seal", "Cod", "Salmon", "Herring"],
+        explanation: "Hákarl is fermented Greenland shark, an Icelandic specialty.",
+      },
+      lt: {
+        question: "Islandiškas „hákarl” — fermentuota kurio gyvūno mėsa?",
+        correct: "Ryklys",
+        distractors: ["Banginis", "Ruonis", "Menkė", "Lašiša", "Silkė"],
+        explanation: "„Hákarl” — fermentuota Grenlandijos ryklio mėsa (Islandija).",
+      },
+    },
+  },
+
+  // EKSTREMALUS (extreme)
+  {
+    id: "foo_ek_031",
+    category: "food",
+    subTheme: "exotic",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Casu marzu contains live cheese-fly larvae (Sardinia)",
+    emoji: "🧀",
+    translations: {
+      en: {
+        question: "Sardinia's 'casu marzu' cheese holds live larvae of which insect?",
+        correct: "Fly",
+        distractors: ["Ant", "Bee", "Moth", "Beetle", "Wasp"],
+        explanation: "Casu marzu famously contains live cheese-fly larvae.",
+      },
+      lt: {
+        question: "Sardiniškas sūris „casu marzu” — gyvos kurio vabzdžio lervos?",
+        correct: "Musė",
+        distractors: ["Skruzdėlė", "Bitė", "Drugys", "Vabalas", "Vapsva"],
+        explanation: "„Casu marzu” turi gyvų sūrinės musės lervų.",
+      },
+    },
+  },
+  {
+    id: "foo_ek_032",
+    category: "food",
+    subTheme: "exotic",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Sannakji is freshly cut octopus (Korea)",
+    emoji: "🐙",
+    translations: {
+      en: {
+        question: "Korean 'sannakji' serves still-moving pieces of which animal?",
+        correct: "Octopus",
+        distractors: ["Squid", "Eel", "Shrimp", "Crab", "Jellyfish"],
+        explanation: "Sannakji is freshly cut octopus, often still squirming.",
+      },
+      lt: {
+        question: "Korėjietiškas „sannakji” — tebejudantys kurio gyvūno gabalėliai?",
+        correct: "Aštuonkojis",
+        distractors: ["Kalmaras", "Ungurys", "Krevetė", "Krabas", "Medūza"],
+        explanation: "„Sannakji” — ką tik supjaustytas aštuonkojis, dar judantis.",
+      },
+    },
+  },
+  {
+    id: "foo_ek_033",
+    category: "food",
+    subTheme: "exotic",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Kopi luwak beans pass through Asian palm civet",
+    emoji: "☕",
+    translations: {
+      en: {
+        question: "Pricey 'kopi luwak' coffee uses beans digested by which animal?",
+        correct: "Civet",
+        distractors: ["Monkey", "Bat", "Sloth", "Lemur", "Elephant"],
+        explanation: "Kopi luwak beans pass through the Asian palm civet.",
+      },
+      lt: {
+        question: "Brangi kava „kopi luwak” — pupelės iš kurio gyvūno virškinimo?",
+        correct: "Civetė",
+        distractors: ["Beždžionė", "Šikšnosparnis", "Tinginys", "Lemūras", "Dramblys"],
+        explanation: "„Kopi luwak” pupelės pereina per azijinės civetės virškinimą.",
+      },
+    },
+  },
+  {
+    id: "foo_ek_034",
+    category: "food",
+    subTheme: "exotic",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Shirako is fish milt, often cod (Japan)",
+    emoji: "🐟",
+    translations: {
+      en: {
+        question: "Japanese 'shirako' is the milt (sperm sac) of which animal?",
+        correct: "Cod",
+        distractors: ["Octopus", "Squid", "Shrimp", "Crab", "Eel"],
+        explanation: "Shirako is fish milt, most often from cod.",
+      },
+      lt: {
+        question: "Japoniškas „shirako” — kurio gyvūno pieniai (sėklidžių maišeliai)?",
+        correct: "Menkė",
+        distractors: ["Aštuonkojis", "Kalmaras", "Krevetė", "Krabas", "Ungurys"],
+        explanation: "„Shirako” — žuvies pieniai, dažniausiai menkės.",
+      },
+    },
+  },
+  {
+    id: "foo_ek_035",
+    category: "food",
+    subTheme: "exotic",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Fried tarantula is a snack in Skuon, Cambodia",
+    emoji: "🕷️",
+    translations: {
+      en: {
+        question: "Fried tarantula is a well-known snack in which country?",
+        correct: "Cambodia",
+        distractors: ["Japan", "Brazil", "Italy", "Egypt", "Canada"],
+        explanation: "Fried tarantulas are a famous snack in Skuon, Cambodia.",
+      },
+      lt: {
+        question: "Kepta tarantulė — žinomas užkandis kurioje šalyje?",
+        correct: "Kambodža",
+        distractors: ["Japonija", "Brazilija", "Italija", "Egiptas", "Kanada"],
+        explanation: "Keptos tarantulės — garsus Skuono miesto (Kambodža) užkandis.",
+      },
+    },
+  },
+  {
+    id: "foo_ek_036",
+    category: "food",
+    subTheme: "exotic",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Witchetty grub is traditional Aboriginal food (Australia)",
+    emoji: "🐛",
+    translations: {
+      en: {
+        question: "The 'witchetty grub' bush food is traditionally eaten where?",
+        correct: "Australia",
+        distractors: ["Mexico", "India", "Greece", "Norway", "Peru"],
+        explanation: "Witchetty grubs are a traditional Aboriginal Australian food.",
+      },
+      lt: {
+        question: "„Witchetty” lerva — tradicinis maistas kurioje šalyje?",
+        correct: "Australija",
+        distractors: ["Meksika", "Indija", "Graikija", "Norvegija", "Peru"],
+        explanation: "„Witchetty” lervos — tradicinis Australijos aborigenų maistas.",
+      },
+    },
+  },
+  {
+    id: "foo_ek_037",
+    category: "food",
+    subTheme: "exotic",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Black ivory coffee beans pass through elephants (Thailand)",
+    emoji: "🐘",
+    translations: {
+      en: {
+        question: "'Black ivory' coffee uses beans digested by which large animal?",
+        correct: "Elephant",
+        distractors: ["Rhino", "Hippo", "Giraffe", "Camel", "Buffalo"],
+        explanation: "Black ivory coffee beans pass through elephants.",
+      },
+      lt: {
+        question: "Kava „black ivory” — pupelės iš kurio didelio gyvūno virškinimo?",
+        correct: "Dramblys",
+        distractors: ["Raganosis", "Begemotas", "Žirafa", "Kupranugaris", "Buivolas"],
+        explanation: "„Black ivory” kavos pupelės pereina per dramblių virškinimą.",
+      },
+    },
+  },
+  {
+    id: "foo_ek_038",
+    category: "food",
+    subTheme: "exotic",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Mopane worm is caterpillar of emperor moth (S. Africa)",
+    emoji: "🐛",
+    translations: {
+      en: {
+        question: "Southern Africa's 'mopane worm' is the caterpillar of which insect?",
+        correct: "Moth",
+        distractors: ["Butterfly", "Beetle", "Wasp", "Cicada", "Locust"],
+        explanation: "The mopane worm is the caterpillar of an emperor moth.",
+      },
+      lt: {
+        question: "Pietų Afrikos „mopane kirminas” — kurio vabzdžio vikšras?",
+        correct: "Naktinis drugys",
+        distractors: ["Dieninis drugys", "Vabalas", "Vapsva", "Cikada", "Skėrys"],
+        explanation: "„Mopane kirminas” — imperatoriškojo naktinio drugio vikšras.",
       },
     },
   },

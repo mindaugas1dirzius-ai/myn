@@ -1926,7 +1926,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
         explanation: "Judo uses throws and grappling holds.",
       },
       lt: {
-        question: "Kuri japonų kovos menas remiasi metimais ir laikymais?",
+        question: "Kuris japonų kovos menas remiasi metimais ir laikymais?",
         correct: "Dziudo",
         distractors: ["Karatė", "Tekvondas", "Kung fu", "Kapoeira", "Muay Thai"],
         explanation: "Dziudo naudoja metimus ir laikymo veiksmus.",
