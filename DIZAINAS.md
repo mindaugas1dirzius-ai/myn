@@ -264,3 +264,63 @@ enforceAppCheck + Auth (kaip kitos funkcijos).
 
 **Web/offline:** jei Firebase nepasiekiamas → „Offline" vietoj „Dar nežaista".
 Tikri duomenys — tikroje Android app.
+
+---
+
+## 🆕 „TAIP / NE" MECHANIKA — DU ATSKIRI REŽIMAI (sprendimas ant popieriaus, NE dabar)
+
+> ⚠️ Svarbu: „Taip / Ne" NĖRA vien Blitz. Tas pats mygtukų principas (Taip/Ne)
+> naudojamas DVIEM VISIŠKAI skirtingiems žaidimams. Aprašom, **kaip atrodys**,
+> kad vėliau nereikėtų perdaryti. Nieko nestatom, kol nesutarta + „OK, darom".
+> Bendra su trivija: serveris=smegenys, App Check, taškai/monetos iš serverio.
+
+### A) ⚡ BLITZ — greitas „Taip ar Ne" (faktų patikra)
+**Idėja:** ekrane vienas TEIGINYS (faktas), žaidėjas kuo greičiau spaudžia
+**TAIP** arba **NE**. Tempas — pagrindinis jausmas (adrenalinas).
+
+**Kaip atrodys (ekranas):**
+- Viršuje — neoninis laikmačio žiedas (kaip trivijoje), bet **trumpas: ~2–3 s**.
+- Centre — didelis teiginys, pvz. „Banginis yra žuvis".
+- Apačioje — **2 dideli mygtukai:** ✅ TAIP (žalias) · ❌ NE (raudonas).
+- Po atsakymo — žalias pulse / raudonas shake (kaip trivijoje), iškart kitas.
+
+**Mechanika (skiriasi nuo trivijos):**
+- **Gyvybės** (pvz. 3 ❤️) — suklydus arba pavėlavus dingsta 1; 0 → žaidimas baigtas.
+- **Serija (streak)** — kuo daugiau teisingų iš eilės, tuo didesnis taškų daugiklis.
+- Klausimų NĖRA fiksuotai 10 — žaidi, kol turi gyvybių (begalinis srautas).
+- Turinys: trumpi teiginiai su lauku „ar tiesa?" (`true/false`) — NE 6 variantai.
+
+### B) 🕵️ ATSPĖK ŽODĮ — dedukcija per „Taip / Ne" užuominas
+**Idėja:** mes iš anksto sukuriam temą su **paslėptu žodžiu** ir prie jo ~**50 paruoštų
+klausimų** su atsakymais Taip/Ne. Žaidėjas **spaudžia klausimus**, žaidimas atsako
+**Taip arba Ne** (iš įrašytų duomenų), o žaidėjas iš užuominų turi **atspėti žodį**.
+Stilius: Akinator / „20 klausimų". (Tai NE Blitz — tempo nėra, čia galvosūkis.)
+
+**Kaip atrodys (ekranas):**
+- Viršuje — tema ir „Atspėk paslėptą žodį" + skaitliukas (kiek klausimų panaudota).
+- Centre — **paruoštų klausimų sąrašas** (pvz. „Ar tai gyvas?", „Ar didesnis už katę?").
+  Žaidėjas spaudžia klausimą → šalia atsiranda atsakymas **✅ Taip** arba **❌ Ne**.
+- Panaudoti klausimai lieka istorijoje (kad matytum surinktas užuominas).
+- Apačioje — mygtukas **„Spėti žodį"** → laukelis įvesti spėjimą (kaip mįslėse).
+
+**Mechanika:**
+- **Riboti spaudimai/spėjimai** — kuo mažiau klausimų panaudoji iki teisingo spėjimo,
+  tuo daugiau taškų (skatina mąstyti, ne spausti viską iš eilės).
+- Atsakymai Taip/Ne — **iš anksto įrašyti** prie kiekvieno žodžio (serveris saugo,
+  klientas tik rodo) → jokio „gyvo" sprendimo telefone, sukčiauti neapsimoka.
+- Spėjimo tikrinimas — kaip mįslėse (`normalizeGuess`: mažosios raidės, diakritikai
+  išlaikomi, tarpai/skyryba suvienodinami).
+- Turinio vienetas: `{ žodis, [50 klausimų su true/false], užuominos kalboms }`.
+
+### Kodėl du atskiri turinio modeliai (svarbu turiniui)
+| | ⚡ Blitz | 🕵️ Atspėk žodį |
+|---|---|---|
+| Turinio vienetas | teiginys + `true/false` | žodis + ~50 klausimų(`true/false`) |
+| Žaidėjo veiksmas | spaudžia Taip/Ne į teiginį | spaudžia klausimus, tada spėja žodį |
+| Jausmas | greitis, adrenalinas | dedukcija, galvosūkis |
+| Laikmatis | trumpas (~2–3 s) | nėra spaudimo (mąstymas) |
+| Pabaiga | gyvybės baigėsi | atspėjo / baigėsi spėjimai |
+
+**Statusas dabar:** abiem režimams paruošta tik STRUKTŪRINĖ vieta
+(`blitz_placeholder_screen.dart` rodo „Greitai"). Mechanika ir turinys — vėliau,
+atskirai (potemes ir tikslias turinio taisykles savininkas pateiks atskirai).
