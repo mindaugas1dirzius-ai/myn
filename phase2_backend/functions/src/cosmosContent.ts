@@ -7,6 +7,8 @@
  *
  * Potemės (subThemeConfig.ts „cosmos"):
  *   🪐 planets   — Planetos ir Saulės sistema (ĮGYVENDINTA, 40 kl.);
+ *   🚀 spacerace — Kosmoso lenktynės (40 kl., PERKELTA iš tech „space" —
+ *                  sujungiama triviaRegistry.ts, NE čia, kad nekeistume techContent);
  *   🧑‍🚀 astronauts — Astronautai ir misijos (Greitai);
  *   🔭 universe  — Visata ir žvaigždės (Greitai);
  *   🛰️ rockets   — Raketos ir tyrimai (Greitai).

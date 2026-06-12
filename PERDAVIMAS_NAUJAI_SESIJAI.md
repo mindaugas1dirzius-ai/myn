@@ -181,14 +181,18 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 3. #51 NAUJOS TEMOS: 🌌 Kosmosas, 🏺 Mitologija, 📏 Rekordai, 🏷️ Prekių ženklai,
    🚂 Transportas (potemės — TURINIO_PLANAS.md; startui ~120 kl./temai).
    - ⏳ **🌌 KOSMOSAS PRADĖTA (2026-06-13, savininko „darom"):** ATSKIRA tema
-     (kodas `cosmos`, kortelė meniu) su 4 potemėmis. ✅ 🪐 **Planetos** pilna
-     (cos_pla_001–040, 10/lygiui, faktai švieži — NEkartoja tech „space"; mažas
-     failas `cosmosPlanets.ts` + indeksas `cosmosContent.ts`). ⬜ 🧑‍🚀 Astronautai ·
-     🔭 Visata · 🛰️ Raketos — open:false „Greitai", pildoma partijomis (po 40).
-     Wiring: triviaTypes(+cosmos) · triviaRegistry · subThemeConfig · unlockConfig ·
-     themeEmoji(🌌) · theme_catalog · trivia_topic_screen · app_strings.
-     tech „Kosmoso lenktynės" potemė LIEKA (savininkas: „viskas gerai").
-     ⚠️ APK pastatytas, bet telefonas testo metu buvo ATJUNGTAS — įdiegti, kai prijungs.
+     (kodas `cosmos`, kortelė meniu) su 5 potemėmis. ✅ ĮDIEGTA telefone.
+     - 🪐 **Planetos** PILNA (cos_pla_001–040, 10/lygiui, švieži faktai; mažas
+       failas `cosmosPlanets.ts` + indeksas `cosmosContent.ts`).
+     - 🚀 **Kosmoso lenktynės** PILNA (40, 10/lygiui) — PERKELTA iš tech „space"
+       (savininkas: „kosmosas dviejose temose painu"). Perkelta REGISTRO lygyje
+       (triviaRegistry.ts: category→cosmos, subTheme→spacerace; ID nekeisti;
+       fiziškai lieka techContent.ts — saugu). Tech NEBETURI „space" potemės.
+     - ⬜ 🧑‍🚀 Astronautai · 🔭 Visata · 🛰️ Raketos — „Greitai", pildoma po 40.
+     Wiring: triviaTypes(+cosmos) · triviaRegistry(+move) · subThemeConfig(cosmos
+     5 potemės, tech be space) · unlockConfig · themeEmoji(🌌) · theme_catalog ·
+     trivia_topic_screen(tech be space kortelės, cosmos +spacerace) · app_strings.
+     tech AI potemė (ai/robots) LIEKA tech (genuiniai tech), dar „Greitai".
 4. #50 potemių pildymas esamoms (naujos potemės turi tik ~10 kl./lygiui → iki 40+).
    → **GRIAUČIAI PILNI.**
 

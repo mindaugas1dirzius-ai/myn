@@ -73,14 +73,7 @@ class TriviaTopicScreen extends StatelessWidget {
             accent: AppColors.levelMedium,
             open: true,
           ),
-          _SubTheme(
-            id: 'space',
-            emoji: '🚀',
-            title: s.subTechSpace,
-            subtitle: s.subTechSpaceDesc,
-            accent: AppColors.levelExtreme,
-            open: true,
-          ),
+          // „Kosmoso lenktynės" potemė PERKELTA į Kosmoso temą (2026-06-13).
           _SubTheme(
             id: 'ai',
             emoji: '🤖',
@@ -186,6 +179,14 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subCosmosPlanets,
             subtitle: s.subCosmosPlanetsDesc,
             accent: AppColors.levelHard,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'spacerace',
+            emoji: '🚀',
+            title: s.subTechSpace,
+            subtitle: s.subTechSpaceDesc,
+            accent: AppColors.levelMedium,
             open: true,
           ),
           _SubTheme(

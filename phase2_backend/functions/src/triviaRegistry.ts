@@ -28,16 +28,29 @@ import { COSMOS_QUESTIONS } from "./cosmosContent";
  */
 export type GenericTriviaCategory = Exclude<TriviaCategory, "nature">;
 
+// 🌌 „Kosmoso lenktynės" (savininko valia 2026-06-13): tech „space" klausimai
+// PERKELTI į Kosmoso temą kaip potemė „spacerace" — kad kosmosas nebūtų dviejose
+// temose (painu). IDŲ NEKEIČIAM (rotacija saugi); tik category→cosmos,
+// subTheme→spacerace. Fiziškai jie lieka techContent.ts (saugu — be 5000 eil. failo
+// chirurgijos), o čia perskirstomi registre. (Vėliau galima fiziškai iškelti į
+// atskirą cosmosSpacerace.ts — tik tvarkos sumetimais.)
+const TECH_SPACE_AS_COSMOS: TriviaQuestion[] = TECH_QUESTIONS.filter(
+  (q) => q.subTheme === "space"
+).map((q) => ({ ...q, category: "cosmos" as const, subTheme: "spacerace" }));
+const TECH_CORE: TriviaQuestion[] = TECH_QUESTIONS.filter(
+  (q) => q.subTheme !== "space"
+);
+
 /** Kodas → tos temos klausimų masyvas. */
 export const TRIVIA_REGISTRY: Record<GenericTriviaCategory, TriviaQuestion[]> = {
   pop: POP_QUESTIONS,
   geo: GEO_QUESTIONS,
   history: HISTORY_QUESTIONS,
-  tech: TECH_QUESTIONS,
+  tech: TECH_CORE,
   food: FOOD_QUESTIONS,
   sport: SPORT_QUESTIONS,
   body: BODY_QUESTIONS,
-  cosmos: COSMOS_QUESTIONS,
+  cosmos: [...COSMOS_QUESTIONS, ...TECH_SPACE_AS_COSMOS],
 };
 
 /** Ar duotas tekstas yra žinoma bendro variklio tema? (type guard) */
