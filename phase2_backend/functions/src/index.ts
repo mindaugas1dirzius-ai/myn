@@ -594,3 +594,15 @@ export {
 //    „klausimas + kandidatas", vertinimas TIK iš serverio isTrue[].
 // =================================================================
 export { startBlitz, submitBlitzScore } from "./blitzFunctions";
+
+// =================================================================
+// 10) 🕵️ DETEKTYVAS (IZOLIUOTAS modulis). Slaptas žodis + perkamų
+//     TAIP/NE klausimų turgus + 3 gyvybės; žodis perdega po žaidimo;
+//     nemokamai 3 bylos/parą, premium be ribos.
+// =================================================================
+export {
+  startDetective,
+  buyDetectiveClue,
+  guessDetective,
+  abandonDetective,
+} from "./detectiveFunctions";

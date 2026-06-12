@@ -3,6 +3,7 @@ import '../l10n/app_strings.dart';
 import '../theme/app_theme.dart';
 import '../widgets/app_background.dart';
 import '../widgets/banner_ad_widget.dart';
+import 'detective_screen.dart';
 import 'melt_setup_screen.dart';
 import 'mystery_screen.dart';
 
@@ -45,7 +46,7 @@ class MysteryModeScreen extends StatelessWidget {
                       const SizedBox(height: 16),
                       _modeCard(
                         context,
-                        emoji: '🕵️',
+                        emoji: '🔑',
                         title: t('Klasikinis', 'Classic'),
                         subtitle: t(
                             'Rink raides žaisdamas kitas temas ir spėk posakį savo tempu',
@@ -63,6 +64,17 @@ class MysteryModeScreen extends StatelessWidget {
                             'Beat the clock — pick your level and pace as letters melt away'),
                         accent: AppColors.levelMedium,
                         builder: (_) => const MeltSetupScreen(),
+                      ),
+                      const SizedBox(height: 14),
+                      _modeCard(
+                        context,
+                        emoji: '🕵️',
+                        title: t('Detektyvas', 'Detective'),
+                        subtitle: t(
+                            'Slaptas žodis: pirk TAIP/NE užuominas iš bylos banko ir atspėk',
+                            'A secret word: buy YES/NO clues from the case bank and crack it'),
+                        accent: AppColors.correct,
+                        builder: (_) => const DetectiveScreen(),
                       ),
                     ],
                   ),

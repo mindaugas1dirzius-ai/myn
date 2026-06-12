@@ -213,6 +213,33 @@ didChangeDependencies → užklausa išeidavo su 'en'. PATAISYTA: pirmas `_load(
 dabar iš didChangeDependencies (`_started` saugiklis). PAMOKA ateičiai: ekrano
 kalbą skaityti TIK po didChangeDependencies, ne initState!
 
+## ✅ 5 RATAS (2026-06-12 vakaras): 🕵️ DETEKTYVAS (#48) ĮGYVENDINTAS
+
+Savininko „kuriam kitą" + patvirtintas kelias: Detektyvas → temos/potemės →
+bendra taškų sistema → klausimų pildymas/profiliai/dizainai.
+
+- MECHANIKA: slaptas ŽODIS + perkamų TAIP/NE klausimų TURGUS (visi tekstai
+  matomi, atsakymas kainuoja: 🟢15/🟡30/🔴60 🔑 iš BYLOS banko 200/300/400/500
+  pagal lygį, grindys 50) + ❤️×3 gyvybės. BE laikrodžio (mąstymo žaidimas).
+  Atspėjus — likęs bankas → mysteryKeys. Žodis PERDEGA (detectiveSolved, cap 300).
+- MONETIZACIJA (savininko valia): nemokamai 3 bylos/parą (UTC,
+  detectiveDate/detectiveCount; resume nesinaudoja limitu), premium
+  (premiumUntil) — be ribos. v2: bylų paketai.
+- SERVERIS: detectiveTypes.ts / detectiveContent.ts (10 bylų LT+EN pagal
+  amžiaus skalę: L1 Žirafa/Ugnikalnis/Ledai · L2 Piramidė/Delfinas/Kompasas ·
+  L3 Gladiatorius/Marsas · L4 Stalagmitas/Metronomas; po 9 klausimus 3×3) /
+  detectiveFunctions.ts (startDetective, buyDetectiveClue, guessDetective,
+  abandonDetective — visos enforceAppCheck, deploy'intos). Atsakymas grąžinamas
+  TIK nupirkus; žodis tik kaukė+pool.
+- KLIENTAS: detective_models / detective_api / detective_screen (lygio
+  pasirinkimas Naujokas→Šerlokas, bylos ekranas: kategorija+bankas+❤️, žodžio
+  langeliai + raidžių pool, 🛒 turgus 3 kainų sekcijomis, TAIP/NE atsakymai
+  ant kortelių, SPĖTI ŽODĮ). Įėjimas: mystery_mode_screen 3-ia kortelė 🕵️
+  (klasikinis dabar 🔑). Planas: docs/planai/DETEKTYVAS_PLANAS.md.
+- ⚠️ TURINIO PILDYMAS: naujos bylos = nauji įrašai DETECTIVE_CASES (id auga);
+  perdegusios bylos nekartojamos, tad bylų reikia DAUG — pildymo prioritetas
+  kartu su „klausimas" mįslėmis.
+
 ## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
 
 1. **#50 — 1 banga: potemių papildymas** (TURINIO_PLANAS.md) — naujos potemės
