@@ -866,32 +866,37 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
             ),
           ],
           const SizedBox(height: 12),
-          // „Bylos segtuvas": žodžio lenta su 🔍 vandens ženklu fone.
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 10),
-            decoration: BoxDecoration(
-              color: AppColors.surface.withValues(alpha: 0.55),
-              borderRadius: BorderRadius.circular(18),
-              border:
-                  Border.all(color: _accent.withValues(alpha: 0.35)),
-            ),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Positioned(
-                  right: -6,
-                  bottom: -16,
-                  child: Opacity(
-                    opacity: 0.08,
-                    child: const Text('🔍', style: TextStyle(fontSize: 90)),
+          // „Bylos segtuvas" su žodžio langeliais — TIK ✍️ PRO režime.
+          // Lentos žaidime raidžių skaičius išduotų atsakymą (savininko
+          // taisyklė) — ten žodžio kaukės apskritai nėra.
+          if (!boardMode) ...[
+            Container(
+              width: double.infinity,
+              padding:
+                  const EdgeInsets.symmetric(vertical: 18, horizontal: 10),
+              decoration: BoxDecoration(
+                color: AppColors.surface.withValues(alpha: 0.55),
+                borderRadius: BorderRadius.circular(18),
+                border:
+                    Border.all(color: _accent.withValues(alpha: 0.35)),
+              ),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Positioned(
+                    right: -6,
+                    bottom: -16,
+                    child: Opacity(
+                      opacity: 0.08,
+                      child: const Text('🔍', style: TextStyle(fontSize: 90)),
+                    ),
                   ),
-                ),
-                _wordBoard(v),
-              ],
+                  _wordBoard(v),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 12),
+            const SizedBox(height: 12),
+          ],
           if (_sosText != null) _sosStrip(),
           if (_sosText == null && _sosAvailable) _sosCard(v),
           if (boardMode) ...[

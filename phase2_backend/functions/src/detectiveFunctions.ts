@@ -95,14 +95,17 @@ function detectivePayload(
   const order = hasBoard
     ? (state.boardOrder ?? text.board!.map((_, i) => i))
     : [];
+  // 🕵️ LENTOS žaidime žodžio KAUKĖS NESIUNČIAM VISAI (savininko taisyklė):
+  // raidžių skaičius leistų išbraukti ilgus/trumpus žodžius nežaidžiant.
+  const hideWord = (state.variant ?? (hasBoard ? 2 : 1)) === 2;
   return {
     caseId: state.caseId,
     level: state.level,
     categoryLabel: text.categoryLabel,
     intro: text.intro ?? "",
-    mask: buildMask(text.word, empty),
-    pool: buildPool(text.word, empty),
-    totalLetters: letterIndices(text.word).length,
+    mask: hideWord ? [] : buildMask(text.word, empty),
+    pool: hideWord ? [] : buildPool(text.word, empty),
+    totalLetters: hideWord ? 0 : letterIndices(text.word).length,
     bank: detectiveBank(state.spent),
     floor: DETECTIVE_FLOOR,
     lives: state.lives,
