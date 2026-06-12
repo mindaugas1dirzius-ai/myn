@@ -105,6 +105,9 @@ class AppStrings {
       _pick('Video žaidimų evoliucija', 'Video game evolution');
   String get subTechGamesDesc =>
       _pick('Nuo Tetris iki Fortnite, esportas', 'From Tetris to Fortnite, esports');
+  String get subTechMyths => _pick('Mitai ir išradimai', 'Myths & inventions');
+  String get subTechMythsDesc => _pick(
+      'Paplitę mitai ir išradimų istorijos', 'Common myths and invention stories');
   String get subTechSpace => _pick('Kosmoso lenktynės', 'Space race');
   String get subTechSpaceDesc =>
       _pick('SpaceX, NASA, Marsas, astronautai', 'SpaceX, NASA, Mars, astronauts');
@@ -128,6 +131,9 @@ class AppStrings {
   String get subFoodScience => _pick('Maisto mokslas', 'Food science');
   String get subFoodScienceDesc =>
       _pick('Kas vyksta keptuvėje, ingredientų chemija', 'Kitchen chemistry of ingredients');
+  String get subFoodProduction => _pick('Gamybos paslaptys', 'Production secrets');
+  String get subFoodProductionDesc =>
+      _pick('Kaip gaminamas mūsų maistas', 'How our food is made');
   String get subFoodExotic => _pick('Egzotiškas maistas', 'Exotic food');
   String get subFoodExoticDesc =>
       _pick('Drąsiausi patiekalai iš viso pasaulio', 'The boldest dishes worldwide');
@@ -175,6 +181,18 @@ class AppStrings {
   String get subPopStoriesDesc =>
       _pick('Knygos, personažai, mitai, menas', 'Books, characters, myths, art');
   // Sportas — potemės
+  String get subSportRacing => _pick('Lenktynės', 'Racing');
+  String get subSportRacingDesc =>
+      _pick('Formulė 1, ralis, trasos, greitis', 'Formula 1, rally, tracks, speed');
+  String get subSportGym => _pick('Gimnastika', 'Gymnastics');
+  String get subSportGymDesc =>
+      _pick('Prietaisai, akrobatika, įvertinimai', 'Apparatus, acrobatics, scoring');
+  String get subSportOlympics => _pick('Olimpiada', 'Olympics');
+  String get subSportOlympicsDesc =>
+      _pick('Žiedai, ugnis, medaliai, istorija', 'Rings, flame, medals, history');
+  String get subSportMartial => _pick('Kovos menai', 'Martial arts');
+  String get subSportMartialDesc =>
+      _pick('Dziudo, boksas, karatė, diržai', 'Judo, boxing, karate, belts');
   String get subSportRules => _pick('Taisyklės ir technika', 'Rules & technique');
   String get subSportRulesDesc =>
       _pick('Žaidimo taisyklės ir inventorius', 'Game rules and equipment');

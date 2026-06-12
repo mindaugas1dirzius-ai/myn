@@ -65,6 +65,14 @@ class TriviaTopicScreen extends StatelessWidget {
             open: true,
           ),
           _SubTheme(
+            id: 'myths',
+            emoji: '💻',
+            title: s.subTechMyths,
+            subtitle: s.subTechMythsDesc,
+            accent: AppColors.levelMedium,
+            open: true,
+          ),
+          _SubTheme(
             id: 'space',
             emoji: '🚀',
             title: s.subTechSpace,
@@ -150,6 +158,14 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subFoodExotic,
             subtitle: s.subFoodExoticDesc,
             accent: AppColors.levelExtreme,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'production',
+            emoji: '🍳',
+            title: s.subFoodProduction,
+            subtitle: s.subFoodProductionDesc,
+            accent: AppColors.neonBlue,
             open: true,
           ),
           _SubTheme(
@@ -284,6 +300,38 @@ class TriviaTopicScreen extends StatelessWidget {
         ];
       case 'sport':
         return [
+          _SubTheme(
+            id: 'racing',
+            emoji: '🏎️',
+            title: s.subSportRacing,
+            subtitle: s.subSportRacingDesc,
+            accent: AppColors.levelHard,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'gymnastics',
+            emoji: '🤸',
+            title: s.subSportGym,
+            subtitle: s.subSportGymDesc,
+            accent: AppColors.levelMedium,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'olympics',
+            emoji: '🏅',
+            title: s.subSportOlympics,
+            subtitle: s.subSportOlympicsDesc,
+            accent: AppColors.levelExtreme,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'martial',
+            emoji: '🥋',
+            title: s.subSportMartial,
+            subtitle: s.subSportMartialDesc,
+            accent: AppColors.neonBlue,
+            open: true,
+          ),
           _SubTheme(
             id: 'rules',
             emoji: '🏆',

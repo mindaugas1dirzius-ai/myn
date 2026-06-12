@@ -71,23 +71,35 @@ export const TRIVIA_SUBTHEMES: Record<
     rulers: ["rulers"],
     myths: ["myths"],
   },
-  // Technologijos: 1 potemė (NEKEISTI kodo „games").
+  // Technologijos: 2 potemės (NEKEISTI kodo „games").
+  //   • "myths" → 💻 Tech mitai ir išradimai (2026-06-12).
   tech: {
     games: ["games"],
+    myths: ["myths"],
   },
-  // Maistas: 3 žymėtos potemės (NEKEISTI kodų).
+  // Maistas: 4 žymėtos potemės (NEKEISTI kodų).
+  //   • "production" → 🍳 Gamybos paslaptys (2026-06-12).
   food: {
     world: ["world"],
     science: ["science"],
     exotic: ["exotic"],
+    production: ["production"],
   },
-  // Sportas: 2 potemės.
-  //   • "rules"       → 🏆 Taisyklės ir technika;
-  //   • "disciplines" → ⚽ Šakos ir varžybos (olimpinės, futbolas, istorija…).
+  // Sportas: 6 potemės pagal žaidėjo planą (2026-06-12).
+  //   • "racing"     → 🏎️ Lenktynės;
+  //   • "gymnastics" → 🤸 Gimnastika;
+  //   • "olympics"   → 🏅 Olimpiada (žyma perkelta IŠ disciplines);
+  //   • "martial"    → 🥋 Kovos menai;
+  //   • "rules"      → 🏆 Taisyklės ir technika;
+  //   • "disciplines"→ ⚽ Šakos ir varžybos.
   sport: {
+    racing: ["racing"],
+    gymnastics: ["gymnastics"],
+    olympics: ["olympics"],
+    martial: ["martial"],
     rules: ["rules", "equipment"],
     disciplines: [
-      "sports", "identify", "olympics", "football", "history", "tennis", "basketball",
+      "sports", "identify", "football", "history", "tennis", "basketball",
     ],
   },
   // Žmogaus kūnas: 2 žymėtos potemės + „facts" (NEKEISTI kodų).
