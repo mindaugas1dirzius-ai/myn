@@ -34,6 +34,12 @@ class MeltApi {
     return MeltSync.fromJson(_decode(r.data));
   }
 
+  /// VIENKARTINIS laiko stabdymas (30 s) — taškai ir raidės sustoja.
+  static Future<MeltSync> freeze() async {
+    final r = await _functions.httpsCallable('freezeMelt').call();
+    return MeltSync.fromJson(_decode(r.data));
+  }
+
   /// Spėja visą tekstą.
   static Future<MeltGuessOutcome> guess(String guess) async {
     final r = await _functions

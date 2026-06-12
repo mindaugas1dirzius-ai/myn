@@ -33,6 +33,10 @@ class MeltView {
   final int keys;
   final bool resumed;
   final int pendingApplied; // kiek nemokamų raidžių pritaikyta starte
+  // Laiko stabdymas (vienkartinis per partiją).
+  final bool freezeUsed;
+  final int frozenLeftMs; // kiek ms dar užšaldyta (0 — nešaldoma)
+  final int lockedAt; // 0 — nenaudotas; kitaip serverio ms
 
   const MeltView({
     required this.mysteryId,
@@ -55,6 +59,9 @@ class MeltView {
     required this.keys,
     this.resumed = false,
     this.pendingApplied = 0,
+    this.freezeUsed = false,
+    this.frozenLeftMs = 0,
+    this.lockedAt = 0,
   });
 
   factory MeltView.fromJson(Map<String, dynamic> j) {
@@ -83,6 +90,9 @@ class MeltView {
       keys: (j['keys'] as num?)?.toInt() ?? 0,
       resumed: j['resumed'] as bool? ?? false,
       pendingApplied: (j['pendingApplied'] as num?)?.toInt() ?? 0,
+      freezeUsed: j['freezeUsed'] as bool? ?? false,
+      frozenLeftMs: (j['frozenLeftMs'] as num?)?.toInt() ?? 0,
+      lockedAt: (j['lockedAt'] as num?)?.toInt() ?? 0,
     );
   }
 }

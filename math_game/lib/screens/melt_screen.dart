@@ -127,12 +127,29 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
     return used;
   }
 
-  // --- Gyvas laikas ---
+  // --- Gyvas laikas (su laiko stabdymo veidrodžiu) ---
+
+  static const _freezeMs = 30000;
 
   int get _nowServerMs =>
       DateTime.now().millisecondsSinceEpoch + _serverOffsetMs;
+
+  /// Užšaldyto laiko tarpas (iki 30 s) — atimamas iš praėjusio laiko.
+  int get _lockExtra => _view.lockedAt > 0
+      ? (_nowServerMs - _view.lockedAt).clamp(0, _freezeMs)
+      : 0;
+
+  /// Ar laikas ŠIUO METU užšaldytas.
+  bool get _frozenNow =>
+      _view.lockedAt > 0 && (_nowServerMs - _view.lockedAt) < _freezeMs;
+
+  int get _frozenLeftMs => _frozenNow
+      ? _freezeMs - (_nowServerMs - _view.lockedAt)
+      : 0;
+
   int get _elapsedMs =>
-      (_nowServerMs - _view.startedAt).clamp(0, _view.limitSec * 1000);
+      (_nowServerMs - _view.startedAt - _lockExtra)
+          .clamp(0, _view.limitSec * 1000);
   int get _remainingMs => (_view.limitSec * 1000 - _elapsedMs).clamp(0, 1 << 31);
   int get _autoCountNow =>
       math.min(_elapsedMs ~/ (_view.intervalSec * 1000), _view.totalLetters);
@@ -337,6 +354,31 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
     }
   }
 
+  Future<void> _freeze() async {
+    if (_finished || _view.freezeUsed || _busy) return;
+    try {
+      final s = await MeltApi.freeze();
+      if (!mounted) return;
+      if (s.expired) {
+        _finished = true;
+        SoundService.instance.wrong();
+        await _showLossDialog(s.answer ?? '');
+        if (mounted) Navigator.of(context).pop();
+        return;
+      }
+      SoundService.instance.points();
+      setState(() => _applyView(s.view!));
+      _feedback(
+          _t('❄️ Laikas sustabdytas 30 sek. — vesk ramiai!',
+              '❄️ Time frozen for 30 s — type calmly!'),
+          good: true);
+    } catch (_) {
+      if (!mounted) return;
+      _feedback(_t('Nepavyko. Bandyk vėl.', 'Failed. Try again.'),
+          good: false);
+    }
+  }
+
   Future<void> _abandon() async {
     final ok = await showDialog<bool>(
       context: context,
@@ -404,9 +446,18 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
               style:
                   const TextStyle(color: AppColors.textSecondary, fontSize: 12),
             ),
+            const SizedBox(height: 6),
             Text(
-              _t('Iš viso: ${r.totalKeys} 🔑', 'Total: ${r.totalKeys} 🔑'),
-              style: const TextStyle(color: AppColors.textSecondary),
+              _t('Tavo raktų banke dabar: ${r.totalKeys} 🔑',
+                  'Your key bank now holds: ${r.totalKeys} 🔑'),
+              style: const TextStyle(
+                  color: AppColors.textPrimary, fontWeight: FontWeight.w600),
+            ),
+            Text(
+              _t('(visi raktai, sukaupti per visas partijas)',
+                  '(all keys earned across all games)'),
+              style: const TextStyle(
+                  color: AppColors.textSecondary, fontSize: 11),
             ),
           ],
         ),
@@ -550,20 +601,25 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
   Widget _statusRow(int secs, bool urgent, int nextInMs) {
     final mm = (secs ~/ 60).toString();
     final ss = (secs % 60).toString().padLeft(2, '0');
+    final frozen = _frozenNow;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(_t('LAIKAS', 'TIME'),
-                style: const TextStyle(
-                    color: AppColors.textSecondary,
+            Text(frozen ? _t('SUSTABDYTA', 'FROZEN') : _t('LAIKAS', 'TIME'),
+                style: TextStyle(
+                    color: frozen
+                        ? AppColors.neonBlue
+                        : AppColors.textSecondary,
                     fontSize: 11,
                     letterSpacing: 1.5)),
-            Text('$mm:$ss',
+            Text(frozen ? '❄ $mm:$ss' : '$mm:$ss',
                 style: TextStyle(
-                    color: urgent ? AppColors.wrong : AppColors.textPrimary,
+                    color: frozen
+                        ? AppColors.neonBlue
+                        : (urgent ? AppColors.wrong : AppColors.textPrimary),
                     fontWeight: FontWeight.bold,
                     fontSize: 26)),
           ],
@@ -585,15 +641,23 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(_t('KITA RAIDĖ', 'NEXT LETTER'),
-                style: const TextStyle(
-                    color: AppColors.textSecondary,
+            Text(
+                frozen
+                    ? _t('ŠALDYMAS', 'FREEZE')
+                    : _t('KITA RAIDĖ', 'NEXT LETTER'),
+                style: TextStyle(
+                    color: frozen
+                        ? AppColors.neonBlue
+                        : AppColors.textSecondary,
                     fontSize: 11,
                     letterSpacing: 1.5)),
             Text(
-              nextInMs > 0 ? '${(nextInMs / 1000).ceil()} s' : '—',
-              style: const TextStyle(
-                  color: AppColors.levelMedium,
+              frozen
+                  ? '${(_frozenLeftMs / 1000).ceil()} s'
+                  : (nextInMs > 0 ? '${(nextInMs / 1000).ceil()} s' : '—'),
+              style: TextStyle(
+                  color:
+                      frozen ? AppColors.neonBlue : AppColors.levelMedium,
                   fontWeight: FontWeight.bold,
                   fontSize: 26),
             ),
@@ -792,11 +856,16 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
 
   Widget _buttonsRow() {
     final ready = _canGuess && !_busy && !_finished && !_guessLocked;
+    final canFreeze = !_view.freezeUsed && !_finished;
     return Row(
       children: [
         _iconBtn(Icons.backspace_outlined, _backspace),
         const SizedBox(width: 8),
         _iconBtn(Icons.clear, _clear),
+        const SizedBox(width: 8),
+        // ❄ VIENKARTINIS laiko stabdymas (30 s) — vesk raides be streso.
+        _iconBtn(Icons.ac_unit, canFreeze ? _freeze : null,
+            color: canFreeze ? AppColors.neonBlue : AppColors.textSecondary),
         const SizedBox(width: 8),
         Expanded(
           child: NeumorphicButton(
@@ -821,7 +890,8 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
     );
   }
 
-  Widget _iconBtn(IconData icon, VoidCallback? onTap) {
+  Widget _iconBtn(IconData icon, VoidCallback? onTap,
+      {Color color = AppColors.textSecondary}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -831,10 +901,9 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-              color: AppColors.textSecondary.withValues(alpha: 0.5)),
+          border: Border.all(color: color.withValues(alpha: 0.5)),
         ),
-        child: Icon(icon, color: AppColors.textSecondary, size: 22),
+        child: Icon(icon, color: color, size: 22),
       ),
     );
   }

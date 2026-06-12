@@ -585,5 +585,6 @@ export {
   startMelt,
   syncMelt,
   guessMelt,
+  freezeMelt,
   abandonMelt,
 } from "./meltFunctions";

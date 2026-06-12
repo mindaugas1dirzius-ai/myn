@@ -35,6 +35,7 @@ import {
   MELT_MIN_LETTERS,
   MELT_MAX_LETTERS,
   MELT_FREE_KEEP_HIDDEN,
+  MELT_FREEZE_MS,
   deriveMelt,
   isValidMeltConfig,
   meltCooldownMs,
@@ -63,6 +64,11 @@ function meltPayload(
 ) {
   const total = letterIndices(content.text).length;
   const d = deriveMelt(state, total, nowMs);
+  // Laiko stabdymo būsena klientui: ar panaudotas ir kiek ms dar užšaldyta.
+  const frozenLeftMs =
+    state.lockedAt != null
+      ? Math.max(0, MELT_FREEZE_MS - (nowMs - state.lockedAt))
+      : 0;
   return {
     mysteryId: state.id,
     hint: content.hint,
@@ -82,6 +88,9 @@ function meltPayload(
     pMax: meltPMax(state.level, state.intervalSec),
     potentialPointsNow: d.potentialPointsNow,
     keys,
+    freezeUsed: state.lockedAt != null,
+    frozenLeftMs,
+    lockedAt: state.lockedAt ?? null,
   };
 }
 
@@ -346,6 +355,58 @@ export const guessMelt = onCall(
         correct: false,
         expired: false,
         nextGuessInMs: meltCooldownMs((state.wrongGuesses ?? 0) + 1),
+      };
+    });
+  }
+);
+
+// =================================================================
+// 3b) freezeMelt — VIENKARTINIS laiko stabdymas (30 s) raidėms suvesti.
+//     Taškai ir raidžių tirpimas sustoja; po 30 s laikas tęsiasi nuo tos
+//     pačios vietos (deterviacija per deriveMelt, jokių laikmačių).
+// =================================================================
+export const freezeMelt = onCall(
+  { enforceAppCheck: true, minInstances: 0, region: REGION },
+  async (request) => {
+    if (!request.auth) {
+      throw new HttpsError("unauthenticated", "Prisijungimas privalomas.");
+    }
+    const uid = request.auth.uid;
+    const db = admin.firestore();
+    const userRef = db.collection("users").doc(uid);
+
+    return await db.runTransaction(async (tx) => {
+      const snap = await tx.get(userRef);
+      const data = snap.data() ?? {};
+      const state = data.mysteryMelt as MeltState | undefined;
+      if (!state) {
+        throw new HttpsError("failed-precondition", "Nėra aktyvios partijos.");
+      }
+      if (state.lockedAt != null) {
+        throw new HttpsError(
+          "failed-precondition",
+          "Laiko stabdymas jau panaudotas šioje partijoje."
+        );
+      }
+      const item = findMystery(state.id);
+      const content = item?.texts[state.lang];
+      if (!item || !content) {
+        settleLossWrites(tx, userRef);
+        throw new HttpsError("failed-precondition", "Partija nebegalioja.");
+      }
+      const now = Date.now();
+      const total = letterIndices(content.text).length;
+      const d = deriveMelt(state, total, now);
+      if (d.expired) {
+        settleLossWrites(tx, userRef);
+        return { expired: true, answer: content.text };
+      }
+      const newState: MeltState = { ...state, lockedAt: now };
+      tx.set(userRef, { mysteryMelt: newState }, { merge: true });
+      return {
+        expired: false,
+        ...meltPayload(newState, content, item.category, now,
+          (data.mysteryKeys as number) ?? 0),
       };
     });
   }

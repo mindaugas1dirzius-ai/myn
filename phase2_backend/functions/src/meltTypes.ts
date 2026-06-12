@@ -44,6 +44,10 @@ export const MELT_GUESS_COOLDOWN_MS = 2500;
 /** Nemokamų raidžių lubos: frazė niekada ne „pre-solved" (liks bent tiek paslėptų). */
 export const MELT_FREE_KEEP_HIDDEN = 3;
 
+/** „Laiko stabdymo" langas: kartą per partiją žaidėjas gali užšaldyti laiką
+ *  30 sekundžių raidėms ramiai suvesti — taškai ir raidės tuo metu netirpsta. */
+export const MELT_FREEZE_MS = 30000;
+
 /** Bazinis laimėjimas pagal lygį 1..4 — sąmoningai sutampa su klasikinio
  *  režimo banko dydžiais (200/300/400/500), kad ekonomika būtų pažįstama. */
 export function meltBaseFor(level?: number): number {
@@ -90,6 +94,11 @@ export interface MeltState {
   intervalSec: number;
   lastGuessTs: number;
   wrongGuesses: number;
+  /** Kada įjungtas vienkartinis laiko stabdymas (null/undefined — dar nenaudotas).
+   *  Visa derivacija atima min(now − lockedAt, MELT_FREEZE_MS) iš praėjusio laiko,
+   *  todėl užšaldymo metu laikas, taškai ir raidės sustoja, o jam pasibaigus —
+   *  tęsiasi lygiai nuo tos pačios vietos (deterministiškai, be papildomų įrašų). */
+  lockedAt?: number | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -135,7 +144,12 @@ export function deriveMelt(
 ): MeltDerived {
   const limitMs = state.limitSec * 1000;
   const intervalMs = state.intervalSec * 1000;
-  const elapsedMs = Math.max(0, nowMs - state.startedAt);
+  // Laiko stabdymas: iš praėjusio laiko atimame užšaldytą tarpą (iki 30 s).
+  const lockExtra =
+    state.lockedAt != null
+      ? Math.min(Math.max(0, nowMs - state.lockedAt), MELT_FREEZE_MS)
+      : 0;
+  const elapsedMs = Math.max(0, nowMs - state.startedAt - lockExtra);
   const expired = elapsedMs >= limitMs;
 
   // Automatinės: pirmos k revealOrder pozicijų.
