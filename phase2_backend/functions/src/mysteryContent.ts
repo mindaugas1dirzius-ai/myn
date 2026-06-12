@@ -1592,3 +1592,37 @@ export function pickMystery(
 export function findMystery(id: string): MysteryItem | undefined {
   return MYSTERIES.find((m) => m.id === id);
 }
+
+/**
+ * Parenka paslaptį „Raidžių tirpimo" režimui: kaip pickMystery, bet tinka tik
+ * frazės su pakankamai raidžių (trumpos tirpsta per žiauriai). minLetters
+ * tikrinamas TOS kalbos tekstui. Jei filtruotų nelieka — krentam į pickMystery
+ * (geriau trumpa frazė nei jokios).
+ */
+export function pickMeltMystery(
+  lang: Lang,
+  solvedIds: string[],
+  minLetters: number
+): { item: MysteryItem; lang: Lang; content: MysteryText } | null {
+  const solved = new Set(solvedIds);
+  const countLetters = (s: string) =>
+    [...s].filter((ch) => /\p{L}/u.test(ch)).length;
+
+  let usable = MYSTERIES.filter(
+    (m) => m.texts[lang] && countLetters(m.texts[lang]!.text) >= minLetters
+  );
+  let useLangBase: Lang = lang;
+  if (usable.length === 0) {
+    usable = MYSTERIES.filter(
+      (m) => m.texts.en && countLetters(m.texts.en.text) >= minLetters
+    );
+    useLangBase = "en";
+  }
+  if (usable.length === 0) return pickMystery(lang, solvedIds);
+
+  const fresh = usable.filter((m) => !solved.has(m.id));
+  const pool = fresh.length > 0 ? fresh : usable;
+  const item = pool[Math.floor(Math.random() * pool.length)];
+  const content = item.texts[useLangBase]!;
+  return { item, lang: useLangBase, content };
+}

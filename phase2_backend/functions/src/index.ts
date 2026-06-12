@@ -569,3 +569,15 @@ export {
   getMysteryStatus,
   mysteryPowerup,
 } from "./mysteryFunctions";
+
+// =================================================================
+// 8) „Raidžių tirpimas" — naujas paslapties režimas (IZOLIUOTAS modulis).
+//    Žaidėjas pats renkasi laiką ir tirpimo tempą; taškai pagal procentinę
+//    formulę; raidės atsiveria deterministiškai iš serverio laiko.
+// =================================================================
+export {
+  startMelt,
+  syncMelt,
+  guessMelt,
+  abandonMelt,
+} from "./meltFunctions";
