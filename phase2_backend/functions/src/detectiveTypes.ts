@@ -107,8 +107,9 @@ export const DETECTIVE_TYPED_BONUS = 1.25;
  *  saugo DETECTIVE_MIN_AWARD grindys). */
 export const DETECTIVE_FLOOR = 0;
 
-/** Nemokamų bylų limitas per parą (UTC). Premium (premiumUntil) — be ribos. */
-export const DETECTIVE_FREE_PER_DAY = 3;
+/** Nemokamų bylų limitas per parą (UTC). Premium (premiumUntil) — be ribos.
+ *  ⚠️ TESTUI laikinai 999 — PRIEŠ PALEIDIMĄ GRĄŽINTI į 3! */
+export const DETECTIVE_FREE_PER_DAY = 999;
 
 /** Gyvybės: klaidingas spėjimas −1; 0 → byla žlugo (žodis vis tiek perdega). */
 export const DETECTIVE_LIVES = 3;
