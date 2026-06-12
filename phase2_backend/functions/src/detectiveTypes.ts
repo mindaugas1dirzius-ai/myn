@@ -62,6 +62,12 @@ export interface DetectiveState {
   boardOrder?: number[];  // sumaišyti lentos indeksai (fiksuoti starte)
   sosBought?: boolean;    // SOS mįslė nupirkta
   wrongGuesses?: number;  // klaidingų spėjimų kiekis (rangui)
+  /** AKTYVAUS spėjimo lango pradžia (null — neatidarytas). */
+  lockedAt?: number | null;
+  /** Ankstesnių langų susikaupęs užšaldytas laikas ms. */
+  lockMsUsed?: number;
+  /** Kiek langų jau atidaryta (lubos DETECTIVE_MAX_FREEZES). */
+  freezeCount?: number;
 }
 
 // ---------------------------------------------------------------------------
@@ -106,6 +112,29 @@ export const DETECTIVE_TYPED_BONUS = 1.25;
 /** Žemiausia banko riba perkant. 0 — galima nupirkti VISKĄ (laimėjimą
  *  saugo DETECTIVE_MIN_AWARD grindys). */
 export const DETECTIVE_FLOOR = 0;
+
+/** SPĖJIMO LANGAS (savininko taisyklė): paspaudus SPĖTI laikas sustoja
+ *  1 MINUTEI, kad žaidėjas ramiai suvestų raides. Langą uždaro spėjimas
+ *  arba pirkimas; baigiasi ir pats. */
+export const DETECTIVE_GUESS_WINDOW_MS = 60000;
+
+/** Kiek langų per bylą — saugiklis nuo „amžinos pauzės" be spėjimo. */
+export const DETECTIVE_MAX_FREEZES = 5;
+
+/** Praėjęs laikas BE užšaldytų tarpų (deterministiška, be laikmačių). */
+export function detectiveElapsedMs(
+  state: DetectiveState,
+  nowMs: number
+): number {
+  const active =
+    state.lockedAt != null
+      ? Math.min(
+          Math.max(0, nowMs - state.lockedAt), DETECTIVE_GUESS_WINDOW_MS
+        )
+      : 0;
+  const lockExtra = (state.lockMsUsed ?? 0) + active;
+  return Math.max(0, nowMs - state.startedAt - lockExtra);
+}
 
 /** Nemokamų bylų limitas per parą (UTC). Premium (premiumUntil) — be ribos.
  *  ⚠️ TESTUI laikinai 999 — PRIEŠ PALEIDIMĄ GRĄŽINTI į 3! */

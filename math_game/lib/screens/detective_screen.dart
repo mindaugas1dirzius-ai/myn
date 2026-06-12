@@ -51,6 +51,11 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
   Timer? _ticker; // gyvas taksometras (1 s)
   int _serverOffsetMs = 0;
 
+  /// SPĖJIMO LANGO veidrodis (tiesa serveryje): SPĖTI sustabdo laiką
+  /// 1 minutei raidėms suvesti.
+  int _lockedAt = 0; // 0 — langas neatidarytas
+  int _lockMsUsed = 0;
+
   AppLang _appLang = AppLang.en;
   bool get _isLt => _appLang == AppLang.lt;
   String _t(String lt, String en) => _isLt ? lt : en;
@@ -80,13 +85,23 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
   int get _nowServerMs =>
       DateTime.now().millisecondsSinceEpoch + _serverOffsetMs;
 
+  int get _windowMs => _view?.guessWindowMs ?? 60000;
+  int get _activeLockMs =>
+      _lockedAt > 0 ? (_nowServerMs - _lockedAt).clamp(0, _windowMs) : 0;
+  bool get _frozenNow =>
+      _lockedAt > 0 && (_nowServerMs - _lockedAt) < _windowMs;
+  int get _frozenLeftMs =>
+      _frozenNow ? _windowMs - (_nowServerMs - _lockedAt) : 0;
+
   /// Kiek laimėtų atspėjęs DABAR (savininko formulė su grindimis).
+  /// Spėjimo lango laikas NESKAIČIUOJAMAS (laikrodis sustojęs).
   int get _potentialNow {
     final v = _view;
     if (v == null) return 0;
-    final elapsedSec =
-        ((_nowServerMs - v.startedAt) / 1000).floor().clamp(0, 1 << 30);
-    final raw = v.bank - elapsedSec * v.timeCoef;
+    final elapsedMs =
+        (_nowServerMs - v.startedAt - _lockMsUsed - _activeLockMs)
+            .clamp(0, 1 << 62);
+    final raw = v.bank - (elapsedMs ~/ 1000) * v.timeCoef;
     return raw < v.minAward ? v.minAward : raw;
   }
 
@@ -167,6 +182,8 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
         _typingMode = !v.hasBoard || v.variant == 1;
         _sosAvailable = v.sosAvailable;
         _sosText = v.sosText;
+        _lockedAt = v.lockedAt;
+        _lockMsUsed = v.lockMsUsed;
         _phase = _Phase.playing;
         _cursor = _firstEmpty();
       });
@@ -216,6 +233,11 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
             .map((q) => q.i == r.i ? q.withAnswer(r.ans, r.note) : q)
             .toList();
         _view = _view!.copyWith(bank: r.bank, questions: qs);
+        // Pirkimas uždaro spėjimo langą serveryje — atspindime ir čia.
+        if (_lockedAt > 0) {
+          _lockMsUsed += _activeLockMs;
+          _lockedAt = 0;
+        }
       });
     } catch (_) {
       if (!mounted) return;
@@ -243,6 +265,11 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
         _sosText = r.sos;
         _sosAvailable = false;
         _view = _view!.copyWith(bank: r.bank, sosText: r.sos);
+        // Pirkimas uždaro spėjimo langą serveryje — atspindime ir čia.
+        if (_lockedAt > 0) {
+          _lockMsUsed += _activeLockMs;
+          _lockedAt = 0;
+        }
       });
     } catch (_) {
       if (!mounted) return;
@@ -279,6 +306,9 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
       _sosAvailable = r.sosAvailable;
       _typed.clear();
       _cursor = _firstEmpty();
+      // Klaida uždarė spėjimo langą serveryje — sinchronizuojam veidrodį.
+      _lockedAt = 0;
+      _lockMsUsed = r.lockMsUsed;
       if (pickedIdx != null) _eliminated.add(pickedIdx); // kortelė „sudegė"
     });
     _feedback(
@@ -286,16 +316,58 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
         good: false);
   }
 
+  /// SPĖJIMO LANGAS: paspaudus SPĖTI laikas SUSTOJA 1 min raidėms suvesti.
+  Future<void> _openGuessWindow() async {
+    setState(() => _busy = true);
+    try {
+      final v = await DetectiveApi.openGuessWindow();
+      if (!mounted) return;
+      setState(() {
+        _view = v;
+        _serverOffsetMs =
+            v.serverNow - DateTime.now().millisecondsSinceEpoch;
+        _lockedAt = v.lockedAt;
+        _lockMsUsed = v.lockMsUsed;
+        _sosAvailable = v.sosAvailable;
+        _sosText = v.sosText ?? _sosText;
+        _cursor = _firstEmpty();
+      });
+      if (_frozenNow) {
+        SoundService.instance.points();
+        _feedback(
+            _t('⏸ Laikas sustojo 1 min — suvesk raides ir spausk SPĖTI!',
+                '⏸ Time paused for 1 min — type the letters and press GUESS!'),
+            good: true);
+      } else {
+        _feedback(
+            _t('Stabdymai išnaudoti — laikas tiksi! Suvesk ir spausk SPĖTI.',
+                'No pauses left — the clock is ticking! Type and press GUESS.'),
+            good: false);
+      }
+    } catch (_) {
+      if (!mounted) return;
+      _feedback(_t('Nepavyko. Bandyk vėl.', 'Failed. Try again.'),
+          good: false);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
   Future<void> _submitTyped() async {
     if (_busy || _finished) return;
-    // Mygtukas spaudžiamas VISADA — jei langeliai neužpildyti, paaiškinam.
+    // Mygtukas spaudžiamas VISADA: neužpildyta + langas neatidarytas →
+    // SUSTABDOM LAIKĄ (1 min suvedimui); langas jau atidarytas → priminimas.
     if (!_canGuess) {
-      SoundService.instance.tap();
-      setState(() => _cursor = _firstEmpty());
-      _feedback(
-          _t('Užpildyk visus langelius raidėmis ir spausk dar kartą!',
-              'Fill in all the boxes with letters, then press again!'),
-          good: false);
+      if (_frozenNow) {
+        SoundService.instance.tap();
+        setState(() => _cursor = _firstEmpty());
+        _feedback(
+            _t('Užpildyk visus langelius raidėmis ir spausk dar kartą!',
+                'Fill in all the boxes with letters, then press again!'),
+            good: false);
+        return;
+      }
+      await _openGuessWindow();
       return;
     }
     setState(() => _busy = true);
@@ -834,6 +906,31 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
           ],
           const SizedBox(height: 16),
           _market(v),
+          const SizedBox(height: 14),
+          // 🏳️ PASIDUODU — matomas mygtukas (ne tik ikona viršuje).
+          GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: _busy || _finished ? null : _abandon,
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              decoration: BoxDecoration(
+                color: AppColors.wrong.withValues(alpha: 0.08),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(
+                    color: AppColors.wrong.withValues(alpha: 0.55)),
+              ),
+              child: Text(
+                '🏳️ ${_t('PASIDUODU', 'I GIVE UP')}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    color: AppColors.wrong,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    letterSpacing: 1.2),
+              ),
+            ),
+          ),
           if (v.freeLeft >= 0) ...[
             const SizedBox(height: 10),
             Text(
@@ -866,16 +963,29 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
         ),
         Column(
           children: [
-            Text(_t('LAIMĖSI', 'PRIZE'),
-                style: const TextStyle(
-                    color: AppColors.textSecondary,
+            Text(
+                _frozenNow
+                    ? '⏸ ${_t('SUSTABDYTA', 'PAUSED')}'
+                    : _t('LAIMĖSI', 'PRIZE'),
+                style: TextStyle(
+                    color: _frozenNow
+                        ? AppColors.neonBlue
+                        : AppColors.textSecondary,
                     fontSize: 10,
                     letterSpacing: 1.5)),
             Text('$_potentialNow 🔑',
-                style: const TextStyle(
-                    color: AppColors.levelMedium,
+                style: TextStyle(
+                    color: _frozenNow
+                        ? AppColors.neonBlue
+                        : AppColors.levelMedium,
                     fontWeight: FontWeight.bold,
                     fontSize: 22)),
+            if (_frozenNow)
+              Text(
+                  _t('suvesk per ${(_frozenLeftMs / 1000).ceil()} s',
+                      'type within ${(_frozenLeftMs / 1000).ceil()} s'),
+                  style: const TextStyle(
+                      color: AppColors.neonBlue, fontSize: 10)),
           ],
         ),
         Text(

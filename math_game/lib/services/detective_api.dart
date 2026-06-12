@@ -50,6 +50,15 @@ class DetectiveApi {
   /// Perka SOS mįslę (atrakinama likus 1 gyvybei; i = -1 serveryje).
   static Future<DetectiveClueOutcome> buySos() => buyClue(-1);
 
+  /// SPĖJIMO LANGAS: SPĖTI sustabdo laiką 1 min raidėms suvesti (i = -2).
+  /// Grąžina atnaujintą bylos vaizdą su lockedAt/freezesLeft.
+  static Future<DetectiveView> openGuessWindow() async {
+    final r = await _functions
+        .httpsCallable('buyDetectiveClue')
+        .call(<String, dynamic>{'i': -2});
+    return DetectiveView.fromJson(_decode(r.data));
+  }
+
   /// Pasiduoda (žodis parodomas, byla perdega).
   static Future<String?> abandon() async {
     final r = await _functions.httpsCallable('abandonDetective').call();

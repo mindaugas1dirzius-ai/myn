@@ -88,6 +88,11 @@ class DetectiveView {
   final int serverNow;
   final int timeCoef; // 🔑/sek. bauda
   final int minAward; // grindys — spėti apsimoka visada
+  // SPĖJIMO LANGAS: SPĖTI sustabdo laiką raidėms suvesti.
+  final int guessWindowMs;
+  final int lockedAt; // 0 — langas neatidarytas; kitaip serverio ms
+  final int lockMsUsed; // ankstesnių langų užšaldytas laikas ms
+  final int freezesLeft;
   final int variant; // 1 ✍️ · 2 🎯 lenta
   final bool hasBoard;
   final List<String> board; // „įtariamųjų" kortelės (sumaišyta tvarka)
@@ -118,6 +123,10 @@ class DetectiveView {
     required this.serverNow,
     required this.timeCoef,
     required this.minAward,
+    this.guessWindowMs = 60000,
+    this.lockedAt = 0,
+    this.lockMsUsed = 0,
+    this.freezesLeft = 0,
     required this.variant,
     required this.hasBoard,
     required this.board,
@@ -155,6 +164,10 @@ class DetectiveView {
         serverNow: serverNow,
         timeCoef: timeCoef,
         minAward: minAward,
+        guessWindowMs: guessWindowMs,
+        lockedAt: lockedAt,
+        lockMsUsed: lockMsUsed,
+        freezesLeft: freezesLeft,
         variant: variant,
         hasBoard: hasBoard,
         board: board,
@@ -198,6 +211,10 @@ class DetectiveView {
       serverNow: (j['serverNow'] as num?)?.toInt() ?? 0,
       timeCoef: (j['timeCoef'] as num?)?.toInt() ?? 1,
       minAward: (j['minAward'] as num?)?.toInt() ?? 20,
+      guessWindowMs: (j['guessWindowMs'] as num?)?.toInt() ?? 60000,
+      lockedAt: (j['lockedAt'] as num?)?.toInt() ?? 0,
+      lockMsUsed: (j['lockMsUsed'] as num?)?.toInt() ?? 0,
+      freezesLeft: (j['freezesLeft'] as num?)?.toInt() ?? 0,
       variant: (j['variant'] as num?)?.toInt() ?? 1,
       hasBoard: j['hasBoard'] as bool? ?? false,
       board: rawBoard.map((e) => e.toString()).toList(),
@@ -250,6 +267,7 @@ class DetectiveGuessOutcome {
   final bool sosAvailable;
   final int rank; // 1 🥇 Šerlokas · 2 🥈 Inspektorius · 3 🥉 Naujokas
   final int boughtCount;
+  final int lockMsUsed; // po klaidos — uždaryto lango laikas (sinchronui)
   // Išskaidymas (sąžiningumui).
   final int bankLeft;
   final int elapsedSec;
@@ -267,6 +285,7 @@ class DetectiveGuessOutcome {
     this.sosAvailable = false,
     this.rank = 3,
     this.boughtCount = 0,
+    this.lockMsUsed = 0,
     this.bankLeft = 0,
     this.elapsedSec = 0,
     this.timePenalty = 0,
@@ -287,6 +306,7 @@ class DetectiveGuessOutcome {
       sosAvailable: j['sosAvailable'] as bool? ?? false,
       rank: (j['rank'] as num?)?.toInt() ?? 3,
       boughtCount: (j['boughtCount'] as num?)?.toInt() ?? 0,
+      lockMsUsed: (j['lockMsUsed'] as num?)?.toInt() ?? 0,
       bankLeft: (b['bankLeft'] as num?)?.toInt() ?? 0,
       elapsedSec: (b['elapsedSec'] as num?)?.toInt() ?? 0,
       timePenalty: (b['timePenalty'] as num?)?.toInt() ?? 0,

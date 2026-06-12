@@ -30,13 +30,16 @@ import {
   DetectiveText,
   DETECTIVE_FLOOR,
   DETECTIVE_FREE_PER_DAY,
+  DETECTIVE_GUESS_WINDOW_MS,
   DETECTIVE_LIVES,
+  DETECTIVE_MAX_FREEZES,
   DETECTIVE_MIN_AWARD,
   DETECTIVE_SOLVED_CAP,
   DETECTIVE_SOS_PRICE,
   canBuyClue,
   detectiveAward,
   detectiveBank,
+  detectiveElapsedMs,
   detectivePricesFor,
   detectiveRank,
   detectiveTimeCoef,
@@ -121,7 +124,14 @@ function detectivePayload(
     timeCoef: detectiveTimeCoef(state.level),
     minAward: DETECTIVE_MIN_AWARD,
     potentialNow: detectiveAward(
-      state.level, state.spent, now - state.startedAt, false
+      state.level, state.spent, detectiveElapsedMs(state, now), false
+    ),
+    // SPĖJIMO LANGAS (laikas sustoja suvedimui).
+    guessWindowMs: DETECTIVE_GUESS_WINDOW_MS,
+    lockedAt: state.lockedAt ?? null,
+    lockMsUsed: state.lockMsUsed ?? 0,
+    freezesLeft: Math.max(
+      0, DETECTIVE_MAX_FREEZES - (state.freezeCount ?? 0)
     ),
     variant: state.variant ?? (hasBoard ? 2 : 1),
     hasBoard,
@@ -135,6 +145,19 @@ function detectivePayload(
       !!text.sos && state.lives === 1 && !state.sosBought &&
       canBuyClue(state.spent, DETECTIVE_SOS_PRICE),
     ...(state.sosBought && text.sos ? { sosText: text.sos } : {}),
+  };
+}
+
+/** Uždaro aktyvų spėjimo langą: jo laikas perkeliamas į lockMsUsed. */
+function foldLock(state: DetectiveState, nowMs: number): DetectiveState {
+  if (state.lockedAt == null) return state;
+  const used = Math.min(
+    Math.max(0, nowMs - state.lockedAt), DETECTIVE_GUESS_WINDOW_MS
+  );
+  return {
+    ...state,
+    lockMsUsed: (state.lockMsUsed ?? 0) + used,
+    lockedAt: null,
   };
 }
 
@@ -255,6 +278,9 @@ export const startDetective = onCall(
           : {}),
         sosBought: false,
         wrongGuesses: 0,
+        lockedAt: null,
+        lockMsUsed: 0,
+        freezeCount: 0,
       };
 
       tx.set(
@@ -286,7 +312,7 @@ export const buyDetectiveClue = onCall(
     }
     const uid = request.auth.uid;
     const iRaw = request.data?.i;
-    if (typeof iRaw !== "number" || !Number.isInteger(iRaw) || iRaw < -1) {
+    if (typeof iRaw !== "number" || !Number.isInteger(iRaw) || iRaw < -2) {
       throw new HttpsError("invalid-argument", "Netinkamas klausimas.");
     }
 
@@ -305,6 +331,45 @@ export const buyDetectiveClue = onCall(
       if (!item || !text) {
         burnWrites(tx, userRef, data, state.caseId);
         throw new HttpsError("failed-precondition", "Byla nebegalioja.");
+      }
+
+      // SPĖJIMO LANGAS (i = -2): paspaudus SPĖTI laikas sustoja 1 minutei,
+      // kad žaidėjas ramiai suvestų raides. Langą uždaro spėjimas/pirkimas.
+      if (iRaw === -2) {
+        const now = Date.now();
+        const keys = (data.mysteryKeys as number) ?? 0;
+        // Langas jau aktyvus — grąžinam esamą būseną (be naujo lango).
+        const activeLeft = state.lockedAt != null
+          ? DETECTIVE_GUESS_WINDOW_MS - (now - state.lockedAt)
+          : 0;
+        if (activeLeft > 0) {
+          return {
+            frozen: true,
+            ...detectivePayload(state, text, keys, freeLeftFor(data), true),
+          };
+        }
+        // Langų limitas — laikas tiksi, bet žaisti galima toliau.
+        const used = state.freezeCount ?? 0;
+        if (used >= DETECTIVE_MAX_FREEZES) {
+          const folded = foldLock(state, now);
+          if (folded !== state) {
+            tx.set(userRef, { detective: folded }, { merge: true });
+          }
+          return {
+            frozen: false,
+            ...detectivePayload(folded, text, keys, freeLeftFor(data), true),
+          };
+        }
+        const newState: DetectiveState = {
+          ...foldLock(state, now),
+          lockedAt: now,
+          freezeCount: used + 1,
+        };
+        tx.set(userRef, { detective: newState }, { merge: true });
+        return {
+          frozen: true,
+          ...detectivePayload(newState, text, keys, freeLeftFor(data), true),
+        };
       }
 
       // SOS mįslė: tik likus 1 gyvybei, vienkartinė.
@@ -328,8 +393,9 @@ export const buyDetectiveClue = onCall(
             "failed-precondition", "Banke per mažai SOS mįslei."
           );
         }
+        // Pirkimas uždaro spėjimo langą (mąstymas turguje = laikas tiksi).
         const newState: DetectiveState = {
-          ...state,
+          ...foldLock(state, Date.now()),
           spent: state.spent + DETECTIVE_SOS_PRICE,
           sosBought: true,
         };
@@ -359,8 +425,9 @@ export const buyDetectiveClue = onCall(
           "Banke per mažai — spėk iš to, ką žinai!"
         );
       }
+      // Pirkimas uždaro spėjimo langą (mąstymas turguje = laikas tiksi).
       const newState: DetectiveState = {
-        ...state,
+        ...foldLock(state, Date.now()),
         spent: state.spent + price,
         bought: [...state.bought, iRaw],
       };
@@ -429,15 +496,17 @@ export const guessDetective = onCall(
       const now = Date.now();
       if (correct) {
         // ✍️ premija tik kai lenta BUVO galima, bet žaidėjas rašė pats.
+        // Laikas BE užšaldytų langų — SPĖTI nebaudžia pats savęs.
         const typedBonus = typed && hasBoard;
+        const elapsedMs = detectiveElapsedMs(state, now);
         const awarded = detectiveAward(
-          state.level, state.spent, now - state.startedAt, typedBonus
+          state.level, state.spent, elapsedMs, typedBonus
         );
         const totalKeys = ((data.mysteryKeys as number) ?? 0) + awarded;
         burnWrites(tx, userRef, data, state.caseId, {
           mysteryKeys: totalKeys,
         });
-        const elapsedSec = Math.floor((now - state.startedAt) / 1000);
+        const elapsedSec = Math.floor(elapsedMs / 1000);
         const boughtCount =
           state.bought.length + (state.sosBought ? 1 : 0);
         return {
@@ -470,11 +539,13 @@ export const guessDetective = onCall(
           answers: answersFor(text),
         };
       }
+      // Klaida uždaro spėjimo langą — laikas vėl tiksi.
+      const folded = foldLock(state, now);
       tx.set(
         userRef,
         {
           detective: {
-            ...state,
+            ...folded,
             lives: newLives,
             wrongGuesses: (state.wrongGuesses ?? 0) + 1,
           },
@@ -485,6 +556,7 @@ export const guessDetective = onCall(
         correct: false,
         dead: false,
         lives: newLives,
+        lockMsUsed: folded.lockMsUsed ?? 0,
         // SOS pasiūlymas atsiranda likus 1 gyvybei.
         sosAvailable:
           !!text.sos && newLives === 1 && !state.sosBought &&
