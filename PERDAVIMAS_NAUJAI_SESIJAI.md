@@ -1,10 +1,111 @@
-# 🔄 PERDAVIMAS NAUJAI SESIJAI (Handoff) — v2 (2026-06)
+# 🔄 PERDAVIMAS NAUJAI SESIJAI (Handoff) — v3 (2026-06-12 vakaras)
 
-> Šis dokumentas perduoda VISKĄ naujai Claude sesijai, kad ji tęstų be klaidų ir be
-> informacijos praradimo. **Perskaityk VISĄ prieš pradedant dirbti.**
-> Ankstesnė versija buvo pasenusi → sukėlė didelę painiavą (žr. 1 skyrių). Nepakartok.
+> Šis dokumentas perduoda VISKĄ naujai Claude sesijai. **Perskaityk VISĄ prieš dirbant.**
+> Git: branch `claude/android-app-monetization-ads-RORMZ`, paskutinis commit `ee12616`.
 
-> ### 🆕 NAUJAUSIA BŪSENA (2026-06-11) — perskaityk PIRMA
+## 🚨 PIRMAS DARBAS naujai sesijai (vartotojo spec 2026-06-12 vakaras)
+
+### A. „Raidžių tirpimo" SPĖTI pertvarka (vartotojo TIKSLI specifikacija):
+1. **SPĖTI mygtukas spaudžiamas VISADA** (dabar aktyvuojasi tik užpildžius visus
+   langelius — vartotojas skundėsi „spėti nesispaudžia").
+2. **Paspaudus SPĖTI — VISAS laikas SUSTOJA** ir žmogus turi **30 sekundžių**
+   suvesti atsakymą (kad nenervintų taškų tirpimas vedant).
+3. **Neteisingai spėjus — MINUS taškų bauda**, BET balansas (mysteryKeys) negali
+   nukristi žemiau 0 — minusuojama tik tiek, kiek žaidėjas turi. Baudos dydį
+   SUDERINTI su vartotoju (pasiūlymas: ~10 % pMax arba fiksuota ~25 🔑).
+4. Atskiras ❄ mygtukas (dabartinis vienkartinis užšaldymas) — PERŽIŪRĖTI: pagal
+   naują spec jis tikriausiai NEBEREIKALINGAS (užšaldymą daro pats SPĖTI).
+   Vartotojas klausė „kas ta snaigė" — UI jam neaiškus.
+   ĮGYVENDINIMAS: pernaudoti freezeMelt mechanizmą (state.lockedAt, deriveMelt
+   atima lockExtra) — tik trigger perkelti į SPĖTI; bauda — guessMelt wrong šakoje
+   `mysteryKeys = max(0, keys - bauda)`.
+
+### B. NEPRITAIKYTAS paslapčių lygių sulygiavimas pagal amžių (vartotojas nutraukė
+įrankį, bet PRINCIPĄ patvirtino: L1=9–12 m. vaikai, L2=paaugliai, L3=suaugę,
+L4=žinovai). Mano paruoštas ir peržiūrėtas perkėlimų sąrašas — TAIKYTI:
+- → L1: mys_klaus_016 (Saulės sistema), mys_klaus_017 (Mėlynasis banginis),
+  mys_klaus_028 (Ugnikalnis), mys_fakt_015 (Drambliai negali pašokti),
+  mys_fakt_020 (Koalos miega)
+- → L2: mys_klaus_004 (Oda), 010 (Didžioji kinų siena), 011 (Laisvės statula),
+  013 (Šiaurės pašvaistė), 015 (Sachara), 018 (Amazonė), 019 (Mona Liza),
+  020 (Pizos bokštas), 024 (Juodoji skylė), 029 (Bermudų trikampis),
+  039 (Kosminė stotis)
+Po A+B: `npx tsc --noEmit` → deploy VISŲ mystery+melt funkcijų (turinys įkompiliuotas):
+startMystery, revealLetters, guessMystery, resetMystery, mysteryPowerup,
+startMelt, syncMelt, guessMelt, freezeMelt, abandonMelt → APK perbūti TIK jei
+keistas klientas → commit+push → PRANEŠTI vartotojui ką patikrinti.
+
+## 📅 KAS PADARYTA 2026-06-12 (visi commitai push'inti)
+
+1. **Mystery EN „The"** orientyrams + kableliai citatose (deploy ✅).
+2. **Pop potemės 🎥/📺/🎵** (+123 kl.) + pop sunkumo auditas (commit 565f23d).
+3. **Sport 🏎️🤸🏅🥋 / Tech 💻 mitai / Food 🍳 gamyba** (+230 kl., commit 3573328).
+4. **Sunkumo auditas VISOMS 8 temoms** pagal amžiaus skalę (~180 pataisų:
+   176 lygiai, ~30 „atsakymas klausime" perrašymai, 21 emoji, 4 fakto klaidos,
+   9 seni dublikatai perrašyti; commitai c4ba3a7+f9ad6ba; deploy ✅).
+5. **ROTACIJOS PERTVARKA** (commit 3d43874): klausimas NIEKADA nesikartoja, kol
+   neišnaudotas visas fondas (100 kl. = 10 partijų; įrodyta simuliacija — pirmas
+   pasikartojimas 11-oje partijoje); kartotis neišvengiama → seniausi pirmiausia
+   (LRU); atmintis PER TEMĄ (`recentByMode["cat_sport"]`), ne per režimą —
+   potemės ir Mix dalijasi; ROTATION_KEEP_CAT=800; matematika lieka per režimą
+   (MATH_FAMILIES). submitScore rašo į tą patį cat_ raktą.
+6. **„Raidžių tirpimas" — naujas paslapties režimas** (deploy ✅, veikia telefone):
+   - Failai: meltTypes.ts, meltFunctions.ts (start/sync/guess/freeze/abandon),
+     melt_models.dart, melt_api.dart, melt_setup_screen.dart, melt_screen.dart,
+     mystery_mode_screen.dart. Planas: docs/planai/RAIDZIU_TIRPIMAS_PLANAS.md.
+   - FORMULĖS: bazė pagal lygį 200/300/400/500; speedCoef 20s→1.0, 10s→1.25,
+     5s→1.5; pMax=bazė×coef; laimėjus
+     `taškai = pMax × (1−elapsed/limit) × (1−autoPenalty/totalLetters)`, min 1;
+     nemokamos raidės iš viktorinų (pendingMysteryLetters) imamos iš revealOrder
+     GALO ir baudos NEDIDINA; limitai [60,120,300]s, intervalai [5,10,20]s,
+     lygiai [1..4]; frazės 12–40 raidžių; spėjimų cooldown 2.5s×2^klaidos (max 15s);
+     ❄ freeze: state.lockedAt, deriveMelt atima min(now−lockedAt, 30000).
+   - Determinizmas: revealOrder fiksuotas starte; auto atsivėrę = pirmos
+     floor(elapsed/interval) pozicijų; jokių serverio laikmačių.
+   - Ekranas: viena didelė interaktyvi lenta (be iššokančių langų), įrašai
+     saugomi pagal poziciją+raidę (_typed Map) — tirpstančios raidės jų netrina.
+7. **Paslapčių turinys įdomesnis** (commit b97d74d?): +25 mįslės (14 klausimas +
+   11 faktas: Bermudų trikampis, Stounhendžas, Trojos arklys, perlai acte...);
+   svoris `preferFun`: ~80 % traukimų iš klausimas/faktas (citatos retos);
+   iš viso 101 mįslė. pickMeltMystery: lygis+ilgis su atsitraukimais.
+8. **Melt UI pataisos** (commitai e75e25f, ee12616): lygių pasirinkimas setup'e,
+   pilno ekrano MysteryModeScreen (vietoj bottom sheet), ❄ mygtukas,
+   laimėjimo dialoge paaiškintas raktų bankas.
+
+## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
+
+1. **#50 — 1 banga: potemių papildymas** (TURINIO_PLANAS.md) — naujos potemės
+   turi tik 10 kl./lygiui → kiekviena partija = visas fondas; papildžius iki 40+
+   kartojimosi problema išnyks natūraliai. KARTU taikyti KLAUSIMU_STILIAUS_GIDAS.md.
+2. **#47 — TAIP/NE blitz** (planas docs/planai/TAIP_NE_BLITZ_PLANAS.md — su
+   „patikrinimo šablonu", apeinančiu LT linksnių problemą).
+3. **#48 — Detektyvas** (nemokamoje turinys auga lėtai, mokamoje daugiau = uždarbis).
+4. **#49 — vieninga taškų sistema** (vartotojas dar galvoja; tik rekordai atskirai;
+   parduotuvė už taškus; lygiai progresui).
+5. **#51 — naujos temos** (Kosmosas, Mitologija, Rekordai, Prekių ženklai,
+   Transportas — potemės jau suplanuotos TURINIO_PLANAS.md).
+6. Smulku: Drūkšiai (mys_klaus_009) — LT-centrinis, peržiūrėti tarptautiškumui;
+   monotonijos perrašymai (geo „Kokia sostinė?" ×47 ir kt. — žemėlapis gide).
+
+## ⚙️ TECHNINIAI ĮPROČIAI (privaloma)
+
+- Deploy: `cd phase2_backend/functions && npx firebase-tools deploy --only functions:<vardai>`.
+- Validacija: `node validateContent.js src/<failas>.ts` + `npx tsc --noEmit`.
+- Flutter: `C:/Users/minda/flutter/bin/flutter` (PATH nėra); analyze → build apk
+  --debug → adb install per PowerShell ($adb=...platform-tools\adb.exe, įrenginys
+  R5CX221CT5N). ❗ NELIESTI telefono ekrano, jei vartotojas juo naudojasi.
+- gcloud CLI NĖRA; jei nauja funkcija meta 401/„offline" — Cloud Run Invoker
+  allUsers per Console (bet 06-12 firebase deploy teises sudėjo pats — veikė).
+- Po KIEKVIENO pakeitimo: commit (specifiniai failai, ne -A) + push + PRANEŠTI
+  vartotojui lietuviškai, ką tiksliai patikrinti telefone.
+- Turinio taisyklės: amžiaus skalė (lengvas=9–12 m. VAIKAI, vidutinis=12–18,
+  sunkus=suaugę, ekstremalus=žinovai) galioja IR paslapčių lygiams 1–4;
+  faktai NEGINČIJAMI iš patikimų šaltinių; jokio „atsakymo klausime"; emoji
+  neišduoda atsakymo; LT kabutės „..." (U+201E/U+201D — NE U+201C!; 06-12 dvi
+  TS sintaksės klaidos buvo būtent dėl ASCII/U+201C kabučių stringuose);
+  variantai ≤46 simb. abiem kalbomis; klausimai įdomūs, IŠ GYVENIMO, ne sausi.
+
+> ### 🕰 ISTORINĖ BŪSENA (2026-06-11) — žemiau senesnis kontekstas
 > - **Universalus trivijos variklis `startTriviaGame` VEIKIA ir DEPLOYINTAS.** Aptarnauja
 >   7 temas (pop/geo/history/tech/food/sport/body) per registrą — be atskirų funkcijų.
 > - **Visos 7 trivijos temos jau po 120 klausimų** (15×4 lygiai ×2 = patikrinta `KLAUSIMU_STATISTIKA.md`).
