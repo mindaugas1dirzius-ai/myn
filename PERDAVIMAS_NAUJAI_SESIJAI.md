@@ -174,6 +174,12 @@ atsiverti 1–2 raidės. Pataisa dviem pusėm:
   IŠTRINTAS (nebenaudojamas), `blitzComingSoonBody` tekstas pašalintas.
 - `isTrue` klientui siunčiamas SĄMONINGAI (variantas C — kaip trivijos answer):
   momentinei žaliai/raudonai reakcijai; vertinimas vis tiek tik serveryje.
+- 🎨 DIZAINAS v2 (savininko „sugalvok įdomų profesionalų patogų"): kortelė
+  įskrenda animacija; atsakymas mygtukais ARBA BRAUKIANT (← NE / TAIP →);
+  didelis ✓/✕ blyksnis; skrendantys „+130" taškai; 🔥 kombo ženkliukas su
+  daugikliu; pulsuojantis FINALAS ×2; 3-2-1 atskaita su taisyklių kortele;
+  rezultatų panelė (ne dialogas) su skaičiuojančiais taškais, statistikos
+  kortelėmis, „🏆 Naujas rekordas" ir dideliu „▶ Žaisti dar".
 
 ## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
 

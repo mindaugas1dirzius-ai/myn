@@ -10,11 +10,16 @@ import '../theme/app_theme.dart';
 import '../widgets/app_background.dart';
 import '../widgets/banner_ad_widget.dart';
 
-/// ⚡ TAIP/NE BLITZ — 30 s raundas prieš laikrodį.
+/// ⚡ TAIP/NE BLITZ — 30 s arkadinis raundas prieš laikrodį.
 ///
-/// Teiginiai krenta vienas po kito: klausimas + 👉 kandidatas. Žaidėjas
-/// spaudžia TAIP (kandidatas teisingas) arba NE (distraktorius). VIENAS
-/// bendras laikmatis; klaida = 0 ir kombo nulinasi; paskutinės 5 s ×2.
+/// DIZAINAS (savininko prašymu — įdomu, profesionalu, patogu):
+///  - teiginio KORTELĖ įskrenda su animacija; galima atsakyti DIDELIAIS
+///    mygtukais (✕ NE / ✓ TAIP nykščio zonoje) ARBA BRAUKIANT kortelę
+///    (← NE, TAIP →);
+///  - per atsakymą — didelis ✓/✕ blyksnis + skrendantys taškai + vibracija;
+///  - 🔥 serijos ženkliukas rodo daugiklį; paskutinės 5 s — raudonas
+///    pulsuojantis FINALAS ×2;
+///  - pabaigoje — rezultatų panelė su skaičiuojančiais taškais.
 ///
 /// VISA TIESA SERVERYJE: paketą paruošia startBlitz, vertina submitBlitzScore
 /// pagal savo isTrue[]; čia tik eilė, laikrodis ir atsakymų sąrašas.
@@ -25,13 +30,14 @@ class BlitzGameScreen extends StatefulWidget {
   State<BlitzGameScreen> createState() => _BlitzGameScreenState();
 }
 
-enum _Phase { loading, error, countdown, playing, submitting, done }
+enum _Phase { loading, error, countdown, playing, submitting, result }
 
 class _BlitzGameScreenState extends State<BlitzGameScreen> {
   static const _accent = AppColors.levelMedium; // ⚡ geltona
 
   _Phase _phase = _Phase.loading;
   BlitzSession? _session;
+  BlitzResult? _result;
   Timer? _ticker;
 
   int _countdown = 3; // 3-2-1 prieš startą
@@ -41,8 +47,11 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
   int _streak = 0;
   int _bestCombo = 0;
   int _liveScore = 0; // kliento veidrodis (tikrą skaičiuoja serveris)
-  bool _lastWrong = false; // raudonas blyksnis po klaidos
-  bool _answerLock = false; // apsauga nuo dvigubo paspaudimo
+  int _lastGain = 0; // skrendantys taškai (+130)
+  bool? _lastOk; // ✓/✕ blyksniui (null — dar nieko)
+  int _flashSeq = 0; // animacijų raktas (kiekvienam atsakymui naujas)
+  bool _pressedYes = false; // mygtukų paspaudimo animacijai
+  bool _pressedNo = false;
 
   AppLang _appLang = AppLang.en;
   AppStrings get _s => AppStrings.of(context);
@@ -76,16 +85,21 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
   bool get _finalPhase =>
       _phase == _Phase.playing && _elapsedMs >= 25000 && _remainingMs > 0;
 
+  /// Dabartinis kombo daugiklis (rodymui): 1.0 → 2.0.
+  double get _multiplier => 1 + 0.1 * (_streak - 1).clamp(0, 10);
+
   Future<void> _load() async {
     setState(() {
       _phase = _Phase.loading;
+      _result = null;
       _answers.clear();
       _idx = 0;
       _streak = 0;
       _bestCombo = 0;
       _liveScore = 0;
-      _lastWrong = false;
-      _answerLock = false;
+      _lastGain = 0;
+      _lastOk = null;
+      _flashSeq = 0;
     });
     try {
       final lang = _appLang == AppLang.lt ? 'lt' : 'en';
@@ -143,7 +157,7 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
   }
 
   void _answer(bool val) {
-    if (_phase != _Phase.playing || _answerLock) return;
+    if (_phase != _Phase.playing) return;
     final st = _session!.statements;
     if (_idx >= st.length) return;
     final tMs = _elapsedMs.clamp(0, _durationMs);
@@ -154,20 +168,18 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
       SoundService.instance.points();
       _streak++;
       if (_streak > _bestCombo) _bestCombo = _streak;
-      _liveScore += _pointsFor(_streak, tMs);
+      _lastGain = _pointsFor(_streak, tMs);
+      _liveScore += _lastGain;
     } else {
       HapticFeedback.heavyImpact();
       SoundService.instance.wrong();
       _streak = 0;
+      _lastGain = 0;
     }
     setState(() {
-      _lastWrong = !ok;
+      _lastOk = ok;
+      _flashSeq++;
       _idx++;
-      _answerLock = true;
-    });
-    // Trumpa pauzė tarp teiginių, kad blyksnis matytųsi (ne stabdo laikrodžio).
-    Timer(const Duration(milliseconds: 160), () {
-      if (mounted) setState(() => _answerLock = false);
     });
     if (_idx >= st.length) _endRound(); // paketas baigėsi anksčiau laiko
   }
@@ -180,76 +192,14 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
     try {
       final r = await GameApi.submitBlitzScore(_session!.gameId, _answers);
       if (!mounted) return;
-      setState(() => _phase = _Phase.done);
       if (r.isNewRecord) SoundService.instance.win();
-      await _showResultDialog(r);
+      setState(() {
+        _result = r;
+        _phase = _Phase.result;
+      });
     } catch (_) {
       if (!mounted) return;
-      setState(() => _phase = _Phase.done);
       await _showExpiredDialog();
-    }
-  }
-
-  Future<void> _showResultDialog(BlitzResult r) async {
-    final again = await showDialog<bool>(
-      context: context,
-      barrierDismissible: false,
-      builder: (ctx) {
-        final s = AppStrings.of(ctx);
-        return AlertDialog(
-          backgroundColor: AppColors.surface,
-          title: Text('⚡ ${s.blitzTimeUp}',
-              style: const TextStyle(color: AppColors.textPrimary)),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('${r.finalScore}',
-                  style: const TextStyle(
-                      color: _accent,
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold)),
-              if (r.isNewRecord)
-                Padding(
-                  padding: const EdgeInsets.only(top: 2),
-                  child: Text(s.blitzNewRecord,
-                      style: const TextStyle(
-                          color: AppColors.correct,
-                          fontWeight: FontWeight.bold)),
-                ),
-              const SizedBox(height: 10),
-              Text(
-                '${s.blitzCorrectLabel}: ${r.correct} / ${r.answered}',
-                style: const TextStyle(color: AppColors.textPrimary),
-              ),
-              Text(
-                '${s.blitzBestCombo}: ${r.bestCombo}',
-                style: const TextStyle(color: AppColors.textPrimary),
-              ),
-              const SizedBox(height: 6),
-              Text('+${r.coinsEarned} 🪙   +${r.earnedLetters} 🔤',
-                  style: const TextStyle(color: AppColors.textSecondary)),
-            ],
-          ),
-          actions: [
-            TextButton(
-                onPressed: () => Navigator.pop(ctx, false),
-                child: Text(s.blitzClose)),
-            TextButton(
-                onPressed: () => Navigator.pop(ctx, true),
-                child: Text(s.blitzPlayAgain,
-                    style: const TextStyle(
-                        color: AppColors.correct,
-                        fontWeight: FontWeight.bold))),
-          ],
-        );
-      },
-    );
-    if (!mounted) return;
-    if (again == true) {
-      _load();
-    } else {
-      Navigator.of(context).pop();
     }
   }
 
@@ -301,7 +251,7 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
     return leave == true;
   }
 
-  // --- UI ---
+  // ─────────────────────────── UI ───────────────────────────
 
   @override
   Widget build(BuildContext context) {
@@ -339,176 +289,244 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
   Widget _body(AppStrings s) {
     switch (_phase) {
       case _Phase.loading:
-        return const Center(
-            child: CircularProgressIndicator(color: _accent));
+        return const Center(child: CircularProgressIndicator(color: _accent));
       case _Phase.error:
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(s.natureLoadError,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: AppColors.textSecondary)),
-                const SizedBox(height: 16),
-                TextButton(onPressed: _load, child: Text(s.retry)),
-              ],
-            ),
-          ),
-        );
+        return _errorView(s);
       case _Phase.countdown:
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(s.blitzGetReady,
-                  style: const TextStyle(
-                      color: AppColors.textSecondary, fontSize: 18)),
-              const SizedBox(height: 12),
-              Text('$_countdown',
-                  style: const TextStyle(
-                      color: _accent,
-                      fontSize: 80,
-                      fontWeight: FontWeight.bold)),
-            ],
-          ),
-        );
+        return _countdownView(s);
       case _Phase.playing:
       case _Phase.submitting:
-      case _Phase.done:
-        return _round(s);
+        return _roundView(s);
+      case _Phase.result:
+        return _resultView(s, _result!);
     }
   }
 
-  Widget _round(AppStrings s) {
+  Widget _errorView(AppStrings s) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(s.natureLoadError,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: AppColors.textSecondary)),
+            const SizedBox(height: 16),
+            TextButton(onPressed: _load, child: Text(s.retry)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  /// 3-2-1 atskaita + trumpos taisyklės (kad naujokas suprastų per 3 s).
+  Widget _countdownView(AppStrings s) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(s.blitzGetReady,
+              style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 18,
+                  letterSpacing: 1.2)),
+          const SizedBox(height: 8),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 350),
+            transitionBuilder: (child, anim) => ScaleTransition(
+              scale: CurvedAnimation(parent: anim, curve: Curves.elasticOut),
+              child: FadeTransition(opacity: anim, child: child),
+            ),
+            child: Text(
+              '$_countdown',
+              key: ValueKey(_countdown),
+              style: const TextStyle(
+                  color: _accent, fontSize: 96, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(height: 18),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: _accent.withValues(alpha: 0.35)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _ruleRow('⏱', s.blitzRule30s),
+                const SizedBox(height: 6),
+                _ruleRow('🔥', s.blitzRuleCombo),
+                const SizedBox(height: 6),
+                _ruleRow('⚡', s.blitzRuleFinal),
+                const SizedBox(height: 6),
+                _ruleRow('👆', s.blitzRuleSwipe),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _ruleRow(String emoji, String text) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(emoji, style: const TextStyle(fontSize: 16)),
+        const SizedBox(width: 8),
+        Text(text,
+            style:
+                const TextStyle(color: AppColors.textPrimary, fontSize: 14)),
+      ],
+    );
+  }
+
+  /// Pagrindinis raundo vaizdas.
+  Widget _roundView(AppStrings s) {
     final st = _session!.statements;
     final secs = (_remainingMs / 1000).ceil();
-    final urgent = _remainingMs <= 5000 || _finalPhase;
+    final urgent = _finalPhase || _remainingMs <= 5000;
     final frac = (_remainingMs / _durationMs).clamp(0.0, 1.0).toDouble();
     final current = _idx < st.length ? st[_idx] : null;
     final waiting = _phase != _Phase.playing;
+    // Pulsas finale: laikrodžio skaičius „kvėpuoja".
+    final pulse = urgent && ((_elapsedMs ~/ 300) % 2 == 0) ? 1.12 : 1.0;
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),
+      padding: const EdgeInsets.fromLTRB(16, 2, 16, 10),
       child: Column(
         children: [
-          // Tirpstanti laiko juosta + skaitliukai.
+          // ── Viršus: laikas · kombo · taškai ──
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('⏱ $secs s',
-                  style: TextStyle(
-                      color: urgent ? AppColors.wrong : AppColors.textPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22)),
-              if (_finalPhase)
-                Text(s.blitzFinalX2,
-                    style: const TextStyle(
-                        color: AppColors.wrong,
+              AnimatedScale(
+                scale: pulse,
+                duration: const Duration(milliseconds: 280),
+                child: Text('⏱ $secs',
+                    style: TextStyle(
+                        color:
+                            urgent ? AppColors.wrong : AppColors.textPrimary,
                         fontWeight: FontWeight.bold,
-                        fontSize: 16)),
+                        fontSize: 26)),
+              ),
+              _comboPill(s),
               Text('$_liveScore',
                   style: const TextStyle(
                       color: _accent,
                       fontWeight: FontWeight.bold,
-                      fontSize: 22)),
+                      fontSize: 26)),
             ],
           ),
           const SizedBox(height: 6),
+          // ── Tirpstanti laiko juosta ──
           ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: LinearProgressIndicator(
-              value: frac,
-              minHeight: 10,
-              backgroundColor: AppColors.shadowDark,
-              valueColor: AlwaysStoppedAnimation(
-                  urgent ? AppColors.wrong : _accent),
+            borderRadius: BorderRadius.circular(7),
+            child: Stack(
+              children: [
+                Container(height: 12, color: AppColors.shadowDark),
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 120),
+                  height: 12,
+                  width: MediaQuery.of(context).size.width * frac,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: urgent
+                          ? [AppColors.wrong, AppColors.wrong]
+                          : [_accent, _accent.withValues(alpha: 0.65)],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 6),
+          SizedBox(
+            height: 22,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('${s.blitzAnswered}: ${_answers.length}',
+                    style: const TextStyle(
+                        color: AppColors.textSecondary, fontSize: 12)),
+                if (_finalPhase)
+                  AnimatedScale(
+                    scale: pulse,
+                    duration: const Duration(milliseconds: 280),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: AppColors.wrong.withValues(alpha: 0.18),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: AppColors.wrong),
+                      ),
+                      child: Text(s.blitzFinalX2,
+                          style: const TextStyle(
+                              color: AppColors.wrong,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12)),
+                    ),
+                  ),
+              ],
             ),
           ),
           const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('${s.blitzAnswered}: ${_answers.length}',
-                  style: const TextStyle(
-                      color: AppColors.textSecondary, fontSize: 12)),
-              Text(
-                _streak >= 2 ? '🔥 ${s.blitzCombo} ×$_streak' : '',
-                style: const TextStyle(
-                    color: AppColors.correct,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 13),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          // Teiginio kortelė.
+          // ── Kortelė + blyksnis + skrendantys taškai ──
           Expanded(
-            child: waiting
-                ? const Center(
-                    child: CircularProgressIndicator(color: _accent))
-                : current == null
-                    ? const SizedBox.shrink()
-                    : AnimatedContainer(
-                        duration: const Duration(milliseconds: 140),
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(18),
-                        decoration: BoxDecoration(
-                          color: AppColors.surface,
-                          borderRadius: BorderRadius.circular(18),
-                          border: Border.all(
-                            color: _lastWrong && _answerLock
-                                ? AppColors.wrong
-                                : _accent.withValues(alpha: 0.5),
-                            width: _answerLock ? 2.5 : 1.5,
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            AutoSizeText(
-                              current.q,
-                              maxLines: 4,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  color: AppColors.textPrimary,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            const SizedBox(height: 18),
-                            AutoSizeText(
-                              '👉 ${current.cand}',
-                              maxLines: 2,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  color: _accent,
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                if (waiting)
+                  const Center(
+                      child: CircularProgressIndicator(color: _accent))
+                else if (current != null)
+                  _statementCard(current),
+                _answerFlash(),
+                _floatingPoints(),
+              ],
+            ),
           ),
           const SizedBox(height: 12),
-          // Du DIDELI mygtukai: NE (kairė, raudona) / TAIP (dešinė, žalia).
+          // ── DIDELI nykščio mygtukai ──
           Row(
             children: [
               Expanded(
                   child: _bigButton(
-                      label: '✕ ${s.blitzNo}',
-                      color: AppColors.wrong,
-                      onTap: waiting || current == null
-                          ? null
-                          : () => _answer(false))),
+                icon: Icons.close_rounded,
+                label: s.blitzNo,
+                color: AppColors.wrong,
+                pressed: _pressedNo,
+                onTap: waiting || current == null
+                    ? null
+                    : () {
+                        setState(() => _pressedNo = true);
+                        Timer(const Duration(milliseconds: 130), () {
+                          if (mounted) setState(() => _pressedNo = false);
+                        });
+                        _answer(false);
+                      },
+              )),
               const SizedBox(width: 12),
               Expanded(
                   child: _bigButton(
-                      label: '✓ ${s.blitzYes}',
-                      color: AppColors.correct,
-                      onTap: waiting || current == null
-                          ? null
-                          : () => _answer(true))),
+                icon: Icons.check_rounded,
+                label: s.blitzYes,
+                color: AppColors.correct,
+                pressed: _pressedYes,
+                onTap: waiting || current == null
+                    ? null
+                    : () {
+                        setState(() => _pressedYes = true);
+                        Timer(const Duration(milliseconds: 130), () {
+                          if (mounted) setState(() => _pressedYes = false);
+                        });
+                        _answer(true);
+                      },
+              )),
             ],
           ),
         ],
@@ -516,36 +534,325 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
     );
   }
 
-  Widget _bigButton(
-      {required String label, required Color color, VoidCallback? onTap}) {
+  /// 🔥 serijos ženkliukas su daugikliu (×1.4) — auga su serija.
+  Widget _comboPill(AppStrings s) {
+    final active = _streak >= 2;
+    return AnimatedScale(
+      scale: active ? 1.0 : 0.0,
+      duration: const Duration(milliseconds: 220),
+      curve: Curves.easeOutBack,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+        decoration: BoxDecoration(
+          color: AppColors.correct.withValues(alpha: 0.14),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: AppColors.correct.withValues(alpha: 0.7)),
+        ),
+        child: Text(
+          '🔥 ×${_multiplier.toStringAsFixed(1)}',
+          style: const TextStyle(
+              color: AppColors.correct,
+              fontWeight: FontWeight.bold,
+              fontSize: 16),
+        ),
+      ),
+    );
+  }
+
+  /// Teiginio kortelė: įskrenda su animacija; braukiama ← NE / TAIP →.
+  Widget _statementCard(BlitzStatement st) {
+    return GestureDetector(
+      onHorizontalDragEnd: (d) {
+        final v = d.primaryVelocity ?? 0;
+        if (v > 250) _answer(true); // brauk dešinėn = TAIP
+        if (v < -250) _answer(false); // brauk kairėn = NE
+      },
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 200),
+        switchInCurve: Curves.easeOutCubic,
+        transitionBuilder: (child, anim) => SlideTransition(
+          position: Tween<Offset>(
+                  begin: const Offset(0.25, 0), end: Offset.zero)
+              .animate(anim),
+          child: FadeTransition(opacity: anim, child: child),
+        ),
+        child: Container(
+          key: ValueKey(_idx),
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+                color: _accent.withValues(alpha: 0.5), width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                  color: _accent.withValues(alpha: 0.10),
+                  blurRadius: 18,
+                  spreadRadius: 2),
+            ],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AutoSizeText(
+                st.q,
+                maxLines: 4,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontSize: 22,
+                    height: 1.25,
+                    fontWeight: FontWeight.w600),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                child: Container(
+                  height: 1.2,
+                  width: 90,
+                  color: _accent.withValues(alpha: 0.35),
+                ),
+              ),
+              AutoSizeText(
+                st.cand,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                    color: _accent,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Didelis ✓/✕ blyksnis per visą kortelę po kiekvieno atsakymo.
+  Widget _answerFlash() {
+    if (_lastOk == null) return const SizedBox.shrink();
+    final ok = _lastOk!;
+    return IgnorePointer(
+      child: TweenAnimationBuilder<double>(
+        key: ValueKey('flash_$_flashSeq'),
+        tween: Tween(begin: 0, end: 1),
+        duration: const Duration(milliseconds: 420),
+        builder: (context, t, _) => Opacity(
+          opacity: ((1 - t) * 0.9).clamp(0.0, 1.0),
+          child: Transform.scale(
+            scale: 0.7 + 0.7 * t,
+            child: Icon(
+              ok ? Icons.check_circle_rounded : Icons.cancel_rounded,
+              size: 120,
+              color: ok ? AppColors.correct : AppColors.wrong,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Skrendantys taškai „+130" virš kortelės (tik už teisingą).
+  Widget _floatingPoints() {
+    if (_lastOk != true || _lastGain <= 0) return const SizedBox.shrink();
+    return IgnorePointer(
+      child: TweenAnimationBuilder<double>(
+        key: ValueKey('gain_$_flashSeq'),
+        tween: Tween(begin: 0, end: 1),
+        duration: const Duration(milliseconds: 650),
+        builder: (context, t, _) => Transform.translate(
+          offset: Offset(0, -30 - 70 * t),
+          child: Opacity(
+            opacity: (1 - t).clamp(0.0, 1.0),
+            child: Text(
+              '+$_lastGain',
+              style: const TextStyle(
+                  color: AppColors.correct,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 34),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _bigButton({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required bool pressed,
+    VoidCallback? onTap,
+  }) {
     final enabled = onTap != null;
     return GestureDetector(
       onTap: onTap,
+      child: AnimatedScale(
+        scale: pressed ? 0.93 : 1.0,
+        duration: const Duration(milliseconds: 110),
+        child: Container(
+          height: 88,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+                color: enabled ? color : AppColors.textSecondary, width: 2),
+            boxShadow: enabled
+                ? [
+                    BoxShadow(
+                        color: color.withValues(alpha: pressed ? 0.45 : 0.22),
+                        blurRadius: 16,
+                        spreadRadius: 1),
+                  ]
+                : null,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon,
+                  color: enabled ? color : AppColors.textSecondary, size: 34),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: TextStyle(
+                  color: enabled ? color : AppColors.textSecondary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                  letterSpacing: 1.5,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Rezultatų panelė: taškai suskaičiuojami animacija, statistikos kortelės.
+  Widget _resultView(AppStrings s, BlitzResult r) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
+      child: Column(
+        children: [
+          const SizedBox(height: 8),
+          Text('⚡ ${s.blitzTimeUp}',
+              style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 16,
+                  letterSpacing: 1.4)),
+          const SizedBox(height: 6),
+          // Taškai skaičiuojasi 0 → rezultatas.
+          TweenAnimationBuilder<double>(
+            tween: Tween(begin: 0, end: r.finalScore.toDouble()),
+            duration: const Duration(milliseconds: 900),
+            curve: Curves.easeOutCubic,
+            builder: (context, v, _) => Text(
+              '${v.round()}',
+              style: const TextStyle(
+                  color: _accent, fontSize: 64, fontWeight: FontWeight.bold),
+            ),
+          ),
+          if (r.isNewRecord)
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0.6, end: 1),
+              duration: const Duration(milliseconds: 600),
+              curve: Curves.elasticOut,
+              builder: (context, sc, child) =>
+                  Transform.scale(scale: sc, child: child),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                decoration: BoxDecoration(
+                  color: AppColors.correct.withValues(alpha: 0.15),
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: AppColors.correct),
+                ),
+                child: Text(s.blitzNewRecord,
+                    style: const TextStyle(
+                        color: AppColors.correct,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16)),
+              ),
+            ),
+          const SizedBox(height: 18),
+          Row(
+            children: [
+              _statCard('✅', s.blitzCorrectLabel,
+                  '${r.correct} / ${r.answered}'),
+              const SizedBox(width: 10),
+              _statCard('🔥', s.blitzBestCombo, '${r.bestCombo}'),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              _statCard('🪙', s.blitzCoins, '+${r.coinsEarned}'),
+              const SizedBox(width: 10),
+              _statCard('🔤', s.blitzLetters, '+${r.earnedLetters}'),
+            ],
+          ),
+          const Spacer(),
+          // Pagrindinis veiksmas — ŽAISTI DAR (didelis), šalia Uždaryti.
+          GestureDetector(
+            onTap: _load,
+            child: Container(
+              width: double.infinity,
+              height: 64,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: AppColors.correct, width: 2),
+                boxShadow: [
+                  BoxShadow(
+                      color: AppColors.correct.withValues(alpha: 0.25),
+                      blurRadius: 14),
+                ],
+              ),
+              child: Text('▶ ${s.blitzPlayAgain}',
+                  style: const TextStyle(
+                      color: AppColors.correct,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      letterSpacing: 1.2)),
+            ),
+          ),
+          const SizedBox(height: 10),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(s.blitzClose,
+                style: const TextStyle(color: AppColors.textSecondary)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _statCard(String emoji, String label, String value) {
+    return Expanded(
       child: Container(
-        height: 86,
-        alignment: Alignment.center,
+        padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: AppColors.surface,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(
-              color: enabled ? color : AppColors.textSecondary, width: 2),
-          boxShadow: enabled
-              ? [
-                  BoxShadow(
-                      color: color.withValues(alpha: 0.25),
-                      blurRadius: 14,
-                      spreadRadius: 1),
-                ]
-              : null,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: _accent.withValues(alpha: 0.3)),
         ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: enabled ? color : AppColors.textSecondary,
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-            letterSpacing: 1.5,
-          ),
+        child: Column(
+          children: [
+            Text(emoji, style: const TextStyle(fontSize: 20)),
+            const SizedBox(height: 4),
+            Text(label,
+                style: const TextStyle(
+                    color: AppColors.textSecondary, fontSize: 11)),
+            const SizedBox(height: 2),
+            Text(value,
+                style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18)),
+          ],
         ),
       ),
     );
