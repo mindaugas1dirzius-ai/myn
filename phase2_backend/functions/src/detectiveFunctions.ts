@@ -24,10 +24,10 @@ import {
   DETECTIVE_FLOOR,
   DETECTIVE_FREE_PER_DAY,
   DETECTIVE_LIVES,
-  DETECTIVE_PRICES,
   DETECTIVE_SOLVED_CAP,
   canBuyClue,
   detectiveBank,
+  detectivePricesFor,
 } from "./detectiveTypes";
 import { findDetectiveCase, pickDetectiveCase } from "./detectiveContent";
 
@@ -84,7 +84,7 @@ function detectivePayload(
     floor: DETECTIVE_FLOOR,
     lives: state.lives,
     maxLives: DETECTIVE_LIVES,
-    prices: DETECTIVE_PRICES,
+    prices: detectivePricesFor(state.level),
     // Klausimų TEKSTAI matomi visi (turgaus esmė) — atsakymas tik nupirktų.
     questions: text.questions.map((q, i) => ({
       i,
@@ -257,7 +257,7 @@ export const buyDetectiveClue = onCall(
           lives: state.lives,
         };
       }
-      const price = DETECTIVE_PRICES[text.questions[iRaw].t];
+      const price = detectivePricesFor(state.level)[text.questions[iRaw].t];
       if (!canBuyClue(state.level, state.spent, price)) {
         throw new HttpsError(
           "failed-precondition",

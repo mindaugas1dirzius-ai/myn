@@ -32,6 +32,7 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
   _Phase _phase = _Phase.levelSelect;
   DetectiveView? _view;
   bool _busy = false;
+  int? _buyingI; // kurios užuominos pirkimas keliauja į serverį (suktukui)
 
   /// Žaidėjo įrašytos raidės pagal kaukės indeksą (kaip tirpime).
   final Map<int, String> _typed = {};
@@ -149,7 +150,12 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
           good: false);
       return;
     }
-    setState(() => _busy = true);
+    // Momentinis atsakas: garsas ir suktukas IŠKART, dar prieš serverį.
+    SoundService.instance.tap();
+    setState(() {
+      _busy = true;
+      _buyingI = c.i;
+    });
     try {
       final r = await DetectiveApi.buyClue(c.i);
       if (!mounted) return;
@@ -181,7 +187,12 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
       _feedback(_t('Nepavyko. Bandyk vėl.', 'Failed. Try again.'),
           good: false);
     } finally {
-      if (mounted) setState(() => _busy = false);
+      if (mounted) {
+        setState(() {
+          _busy = false;
+          _buyingI = null;
+        });
+      }
     }
   }
 
@@ -606,15 +617,24 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
     }
     if (current.isNotEmpty) words.add(current);
 
+    // Ilgi žodžiai (pvz. UGNIKALNIS) NETELPA į ekraną — kiekvieną žodį
+    // suspaudžiam iki turimo pločio (FittedBox), kad nebūtų „overflow" juostos.
+    final maxW = MediaQuery.of(context).size.width - 76;
     return Wrap(
       alignment: WrapAlignment.center,
       spacing: 14,
       runSpacing: 14,
       children: [
         for (final w in words)
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [for (final i in w) _boardCell(v, i)],
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: maxW),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [for (final i in w) _boardCell(v, i)],
+              ),
+            ),
           ),
       ],
     );
@@ -819,62 +839,73 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
     final bought = c.a != null;
     final price = v.prices[c.t] ?? 0;
     final affordable = v.bank - price >= v.floor;
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: bought
-              ? (c.a! ? AppColors.correct : AppColors.wrong)
-                  .withValues(alpha: 0.7)
-              : _accent.withValues(alpha: 0.35),
-          width: bought ? 1.8 : 1.2,
-        ),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              c.q,
-              style: const TextStyle(
-                  color: AppColors.textPrimary, fontSize: 14.5, height: 1.25),
-            ),
+    final buying = _buyingI == c.i;
+    // VISA kortelė — mygtukas (ne tik mažas kainos ženkliukas!).
+    // behavior: opaque — paspaudimas veikia ir ant „tuščios" kortelės vietos.
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: bought || _busy ? null : () => _buy(c),
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.only(bottom: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(
+            color: bought
+                ? (c.a! ? AppColors.correct : AppColors.wrong)
+                    .withValues(alpha: 0.7)
+                : _accent.withValues(alpha: buying ? 0.9 : 0.35),
+            width: bought || buying ? 1.8 : 1.2,
           ),
-          const SizedBox(width: 10),
-          if (bought)
-            // Atsakymo „atvertimo" animacija — chip'as iššoka.
-            TweenAnimationBuilder<double>(
-              tween: Tween(begin: 0.4, end: 1),
-              duration: const Duration(milliseconds: 320),
-              curve: Curves.elasticOut,
-              builder: (context, sc, child) =>
-                  Transform.scale(scale: sc, child: child),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: (c.a! ? AppColors.correct : AppColors.wrong)
-                      .withValues(alpha: 0.16),
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(
-                      color: c.a! ? AppColors.correct : AppColors.wrong),
-                ),
-                child: Text(
-                  c.a! ? '✓ ${_t('TAIP', 'YES')}' : '✗ ${_t('NE', 'NO')}',
-                  style: TextStyle(
-                      color: c.a! ? AppColors.correct : AppColors.wrong,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14),
-                ),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                c.q,
+                style: const TextStyle(
+                    color: AppColors.textPrimary, fontSize: 14.5, height: 1.25),
               ),
-            )
-          else
-            GestureDetector(
-              onTap: _busy || !affordable ? null : () => _buy(c),
-              child: Container(
+            ),
+            const SizedBox(width: 10),
+            if (bought)
+              // Atsakymo „atvertimo" animacija — chip'as iššoka.
+              TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0.4, end: 1),
+                duration: const Duration(milliseconds: 320),
+                curve: Curves.elasticOut,
+                builder: (context, sc, child) =>
+                    Transform.scale(scale: sc, child: child),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: (c.a! ? AppColors.correct : AppColors.wrong)
+                        .withValues(alpha: 0.16),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                        color: c.a! ? AppColors.correct : AppColors.wrong),
+                  ),
+                  child: Text(
+                    c.a! ? '✓ ${_t('TAIP', 'YES')}' : '✗ ${_t('NE', 'NO')}',
+                    style: TextStyle(
+                        color: c.a! ? AppColors.correct : AppColors.wrong,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14),
+                  ),
+                ),
+              )
+            else if (buying)
+              const SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(
+                    strokeWidth: 2.5, color: AppColors.levelMedium),
+              )
+            else
+              Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
@@ -896,8 +927,8 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
                       fontSize: 14),
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

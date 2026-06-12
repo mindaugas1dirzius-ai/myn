@@ -827,17 +827,26 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
     }
     if (current.isNotEmpty) words.add(current);
 
+    // Ilgi žodžiai netelpa į ekraną — suspaudžiam žodį iki turimo pločio
+    // (FittedBox), kad nebūtų geltonos „overflow" juostos ant raidžių.
+    final maxW = MediaQuery.of(context).size.width - 44;
     return Wrap(
       alignment: WrapAlignment.center,
       spacing: 14,
       runSpacing: 14,
       children: [
         for (final w in words)
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (final i in w) _boardCell(v, i),
-            ],
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: maxW),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (final i in w) _boardCell(v, i),
+                ],
+              ),
+            ),
           ),
       ],
     );

@@ -15,12 +15,19 @@ import { Lang } from "./triviaTypes";
 /** Klausimo kainos lygis: 1 pigus (platus) · 2 vidutinis · 3 brangus (beveik pasako). */
 export type ClueTier = 1 | 2 | 3;
 
-/** Kainos pagal lygį 🔑 (perkama iš BYLOS banko, ne iš balanso). */
-export const DETECTIVE_PRICES: Record<ClueTier, number> = {
-  1: 15,
-  2: 30,
-  3: 60,
-};
+/** Kainos pagal BYLOS sunkumo lygį 🔑 (perkama iš bylos banko, ne iš balanso).
+ *  SAVININKO TAISYKLĖ (2026-06-13): nupirkus VISAS 12 užuominų banke turi
+ *  likti 20 🔑, kad žaidėjas VISADA galėtų spėti ir laimėti bent kiek:
+ *  L1: 200−4×(10+15+20)=20 · L2: 300−4×(15+25+30)=20 ·
+ *  L3: 400−4×(20+30+45)=20 · L4: 500−4×(25+40+55)=20. */
+export function detectivePricesFor(level?: number): Record<ClueTier, number> {
+  switch (level) {
+    case 4: return { 1: 25, 2: 40, 3: 55 };
+    case 3: return { 1: 20, 2: 30, 3: 45 };
+    case 2: return { 1: 15, 2: 25, 3: 30 };
+    default: return { 1: 10, 2: 15, 3: 20 };
+  }
+}
 
 /** Bylos bankas pagal sunkumo lygį 1..4 — kaip paslapčių (pažįstama ekonomika). */
 export function detectiveBankFor(level?: number): number {
@@ -32,8 +39,9 @@ export function detectiveBankFor(level?: number): number {
   }
 }
 
-/** Žemiausia banko riba — pirkti galima tik jei liks bent tiek. */
-export const DETECTIVE_FLOOR = 50;
+/** Žemiausia banko riba. 0 — galima nupirkti VISAS užuominas (kainos
+ *  sustyguotos taip, kad po visų pirkimų liktų ~20–30 🔑 spėjimui). */
+export const DETECTIVE_FLOOR = 0;
 
 /** Nemokamų bylų limitas per parą (UTC). Premium (premiumUntil) — be ribos. */
 export const DETECTIVE_FREE_PER_DAY = 3;
