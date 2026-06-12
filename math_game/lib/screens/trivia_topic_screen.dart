@@ -195,7 +195,7 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subCosmosAstronauts,
             subtitle: s.subCosmosAstronautsDesc,
             accent: AppColors.levelMedium,
-            open: false,
+            open: true,
           ),
           _SubTheme(
             id: 'universe',

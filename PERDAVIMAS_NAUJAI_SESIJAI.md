@@ -150,8 +150,9 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 
 ## 8. DABARTINĖ BŪSENA (2026-06-13)
 
-- **Turinys:** trivijos+gamta 2 405 kl. (gamta 720 · sport 270 · body 255 ·
-  history 244 · pop 243 · geo 240 · tech 217 · food 176 · **cosmos 40 NAUJA**) · 40 mitų ·
+- **Turinys:** trivijos+gamta 2 445 kl. (gamta 720 · sport 270 · body 255 ·
+  history 244 · pop 243 · geo 240 · tech 177 · food 176 · **cosmos 120 NAUJA**) · 40 mitų ·
+  (cosmos 120 = planets 40 + astronauts 40 + spacerace 40 [perkelta iš tech]) ·
   101 mįslė (pool 73 be citatų/patarlių; lygiai L1=15/L2=45/L3=35/**L4=6** —
   pildant pirmiausia L4 ir „klausimas" tipo 42) · **16 detektyvo bylų** (v2).
 - **Įrankiai functions/:** `_appcheck_fix.js` (App Check per API),
@@ -194,7 +195,11 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
        (savininkas: „kosmosas dviejose temose painu"). Perkelta REGISTRO lygyje
        (triviaRegistry.ts: category→cosmos, subTheme→spacerace; ID nekeisti;
        fiziškai lieka techContent.ts — saugu). Tech NEBETURI „space" potemės.
-     - ⬜ 🧑‍🚀 Astronautai · 🔭 Visata · 🛰️ Raketos — „Greitai", pildoma po 40.
+     - 🧑‍🚀 **Astronautai ir misijos** PILNA (cos_ast_001–040, 10/lygiui; mažas
+       failas `cosmosAstronauts.ts`; ŽMONĖS kosmose — gyvenimas TKS, kūnas,
+       garsūs pirmieji [Tereškova/Leonovas/Glenas], gyvūnai; NEkartoja spacerace).
+     - ⬜ 🔭 Visata · 🛰️ Raketos — „Greitai", pildoma po 40 (tas pats receptas:
+       naujas mažas failas → cosmosContent import → trivia_topic_screen open:true).
      Wiring: triviaTypes(+cosmos) · triviaRegistry(+move) · subThemeConfig(cosmos
      5 potemės, tech be space) · unlockConfig · themeEmoji(🌌) · theme_catalog ·
      trivia_topic_screen(tech be space kortelės, cosmos +spacerace) · app_strings.
