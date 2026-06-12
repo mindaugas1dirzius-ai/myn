@@ -1362,7 +1362,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     id: "pop_ek_014",
     category: "pop",
     subTheme: "games",
-    level: "ekstremalus",
+    level: "vidutinis",
     isTrap: false,
     sourceVerified: "Games (Mario created by Nintendo, Japan)",
     emoji: "🎮",
