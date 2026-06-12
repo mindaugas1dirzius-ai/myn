@@ -27,6 +27,12 @@ statom turinį ir kokybę.
 - **Savininkas genialiai gaudo spragas žaisdamas** (spaudinėjimo exploit, ilgio
   kvapas, per trumpi langai) — jo pastabas vertinti kaip auksą ir taisyti TUOJ PAT.
 - NESKUBĖTI: kokybė > greitis; klaidą radus — pirma sutvarkyti.
+- **🧹 KODO ŠVARA (savininkas 2026-06-13): sukūrus naują, seną nereikalingą kodą,
+  kuris nieko nebeduoda — IŠTRINTI iškart** (ne komentuoti, ne palikti). Maži failai,
+  jokių šiukšlių — kad būtų lengva taisyti ir rasti klaidas. Nebenaudojamus failus
+  irgi trinti. (DRY; žr. atmintį [[feedback-coding-rules]].)
+- **💾 VISKAS Į GITHUB** po kiekvieno gabalo (commit konkrečių failų + push) —
+  GitHub vienintelis patikimas šaltinis, kad darbas nedingtų. Nekaupti tik lokaliai.
 - **VIENA SESIJA ant repo vienu metu!** (2026-06-13 incidentas: dvi sesijos lietė
   tuos pačius failus). Jei dirba kita — jos failų NELIESTI, prieš push `git pull`.
 
