@@ -226,10 +226,8 @@ export const startMelt = onCall(
         wrongGuesses: 0,
         lockMsUsed: 0,
         freezeCount: 0,
-        // Lango trukmė pagal atsakymo žodžių kiekį (30 s / 1 min / 1,5 min).
-        freezeMs: meltFreezeMsFor(
-          picked.content.text.trim().split(/\s+/).length
-        ),
+        // Lango trukmė pagal atsakymo RAIDŽIŲ kiekį (min 1 min / 1,5 / 2).
+        freezeMs: meltFreezeMsFor(totalLetters),
       };
 
       tx.set(

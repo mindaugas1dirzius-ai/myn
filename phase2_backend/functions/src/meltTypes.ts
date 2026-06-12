@@ -68,13 +68,13 @@ export const MELT_FREE_KEEP_HIDDEN = 3;
  *  Numatytoji trukmė (1 žodis / senos partijos be freezeMs lauko). */
 export const MELT_FREEZE_MS = 30000;
 
-/** Lango trukmė pagal ATSAKYMO ŽODŽIŲ kiekį (savininko taisyklė 2026-06-12):
- *  1 žodis → 30 s; 2–3 žodžiai → 1 min; 4+ žodžiai → 1 min 30 s —
- *  kad ilgesnį atsakymą žmogus spėtų surinkti. */
-export function meltFreezeMsFor(wordCount: number): number {
-  if (wordCount <= 1) return 30000;
-  if (wordCount <= 3) return 60000;
-  return 90000;
+/** Lango trukmė pagal ATSAKYMO RAIDŽIŲ kiekį (savininkas 2026-06-13:
+ *  „VAIVORYKŠTĖ per 30 s nespėju — minutę mažiausiai duok"):
+ *  MINIMUM 1 minutė visiems; ilgesni atsakymai gauna daugiau. */
+export function meltFreezeMsFor(letterCount: number): number {
+  if (letterCount <= 12) return 60000;
+  if (letterCount <= 20) return 90000;
+  return 120000;
 }
 
 /** Kiek kartų per partiją SPĖTI gali stabdyti laiką — saugiklis, kad nebūtų
