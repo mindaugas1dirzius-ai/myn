@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_functions/cloud_functions.dart';
 import '../models/blitz_models.dart';
 import '../models/game_models.dart';
+import '../models/myth_models.dart';
 import '../models/trivia_models.dart';
 
 /// Serverio kvietimai (J žingsnis): startGame / submitScore.
@@ -172,6 +173,41 @@ class GameApi {
       });
       final data = jsonDecode(jsonEncode(result.data)) as Map<String, dynamic>;
       return BlitzResult.fromJson(data);
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // 🧐 TIESA AR MITAS? — mūsų paruošti teiginiai; atsiskaitymas per TĄ PATĮ
+  // submitScore (bool atsakymai lyginami serveryje kaip ir kiti tipai).
+  // ---------------------------------------------------------------------------
+
+  /// Pradeda „Tiesa ar mitas?" partiją. [mode] — `myth_<lygis>`.
+  static Future<MythSession> startMythGame(String mode, String lang) {
+    return _withRetry(() async {
+      final result = await _functions
+          .httpsCallable('startMythGame')
+          .call(<String, dynamic>{'mode': mode, 'lang': lang});
+      final data = jsonDecode(jsonEncode(result.data)) as Map<String, dynamic>;
+      return MythSession.fromJson(data);
+    });
+  }
+
+  /// Pateikia „Tiesa ar mitas?" atsakymus (bool sąrašas) per submitScore.
+  static Future<GameResult> submitMythScore(
+    String gameId,
+    List<bool> clientAnswers,
+    List<int> clientTimesMs,
+  ) {
+    return _withRetry(() async {
+      final result = await _functions
+          .httpsCallable('submitScore')
+          .call(<String, dynamic>{
+        'gameId': gameId,
+        'clientAnswers': clientAnswers,
+        'clientTimesMs': clientTimesMs,
+      });
+      final data = jsonDecode(jsonEncode(result.data)) as Map<String, dynamic>;
+      return GameResult.fromJson(data);
     });
   }
 }

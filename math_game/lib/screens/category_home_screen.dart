@@ -9,6 +9,7 @@ import '../widgets/banner_ad_widget.dart';
 import '../widgets/neumorphic_button.dart';
 import '../services/mystery_api.dart';
 import 'blitz_game_screen.dart';
+import 'myth_game_screen.dart';
 import 'home_screen.dart';
 import 'mystery_mode_screen.dart';
 import 'nature_topic_screen.dart';
@@ -190,6 +191,11 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
       case ThemeKind.blitz:
         Navigator.of(context).push(
           MaterialPageRoute(builder: (_) => const BlitzGameScreen()),
+        );
+        break;
+      case ThemeKind.myth:
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const MythGameScreen()),
         );
         break;
     }

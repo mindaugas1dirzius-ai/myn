@@ -62,6 +62,9 @@ class AppStrings {
   String get categoryBlitz => _pick('Blitz', 'Blitz');
   String get categoryBlitzDesc =>
       _pick('Taip ar ne — greičiui', 'Yes or no — beat the clock');
+  String get categoryMyth => _pick('Tiesa ar mitas?', 'Fact or myth?');
+  String get categoryMythDesc => _pick(
+      'Patikrink, ar neapgauna mitai', 'Find out if myths are fooling you');
   String get lockedThemeNote => _pick(
       'Ši tema dar ruošiama — greitai!',
       'This theme is being prepared — coming soon!');
@@ -84,14 +87,7 @@ class AppStrings {
   String get blitzFinalX2 => _pick('FINALAS ×2!', 'FINALE ×2!');
   String get blitzPickDuration =>
       _pick('Pasirink raundo trukmę', 'Pick your round length');
-  String get blitzFast30 => _pick('Žaibo raundas — 30 s', 'Lightning — 30 s');
-  String get blitzFast30Desc => _pick(
-      'Trumpas ir aštrus: kiekviena sekundė auksinė',
-      'Short and sharp: every second counts');
-  String get blitzLong60 => _pick('Ilgas raundas — 1 min.', 'Long round — 1 min');
-  String get blitzLong60Desc => _pick(
-      'Daugiau laiko, daugiau klausimų, didesnės serijos',
-      'More time, more questions, bigger streaks');
+  String get blitzStart => _pick('PRADĖTI', 'START');
   String get blitzChangeDuration => _pick('Keisti trukmę', 'Change length');
   String get blitzRuleCombo =>
       _pick('Serija be klaidų — taškai iki ×2', 'No-mistake streak — up to ×2 points');

@@ -319,19 +319,42 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
                 fontSize: 14,
                 letterSpacing: 1.2),
           ),
-          const SizedBox(height: 16),
-          _durationCard(
-            emoji: '⚡',
-            title: s.blitzFast30,
-            subtitle: s.blitzFast30Desc,
-            durationSec: 30,
+          const SizedBox(height: 14),
+          // TAS PATS žaidimas — tik trukmės jungiklis (30 s / 1 min).
+          Row(
+            children: [
+              Expanded(child: _durationChip('⚡ 30 s', 30)),
+              const SizedBox(width: 10),
+              Expanded(child: _durationChip('⏱ 1 min.', 60)),
+            ],
           ),
-          const SizedBox(height: 12),
-          _durationCard(
-            emoji: '⏱',
-            title: s.blitzLong60,
-            subtitle: s.blitzLong60Desc,
-            durationSec: 60,
+          const SizedBox(height: 16),
+          GestureDetector(
+            onTap: () {
+              SoundService.instance.tap();
+              _load();
+            },
+            child: Container(
+              width: double.infinity,
+              height: 64,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: AppColors.surface,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: _accent, width: 2),
+                boxShadow: [
+                  BoxShadow(
+                      color: _accent.withValues(alpha: 0.25),
+                      blurRadius: 16),
+                ],
+              ),
+              child: Text('▶ ${s.blitzStart}',
+                  style: const TextStyle(
+                      color: _accent,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      letterSpacing: 1.4)),
+            ),
           ),
           const SizedBox(height: 18),
           Container(
@@ -357,55 +380,34 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
     );
   }
 
-  Widget _durationCard({
-    required String emoji,
-    required String title,
-    required String subtitle,
-    required int durationSec,
-  }) {
+  Widget _durationChip(String label, int durationSec) {
+    final selected = _chosenDuration == durationSec;
     return GestureDetector(
       onTap: () {
         SoundService.instance.tap();
-        _chosenDuration = durationSec;
-        _load();
+        setState(() => _chosenDuration = durationSec);
       },
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150),
+        height: 58,
+        alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: _accent.withValues(alpha: 0.6), width: 1.6),
-          boxShadow: [
-            BoxShadow(
-                color: _accent.withValues(alpha: 0.15),
-                blurRadius: 14,
-                spreadRadius: 1),
-          ],
+          color:
+              selected ? _accent.withValues(alpha: 0.18) : AppColors.surface,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+              color: selected
+                  ? _accent
+                  : AppColors.textSecondary.withValues(alpha: 0.5),
+              width: selected ? 2 : 1.2),
         ),
-        child: Row(
-          children: [
-            Text(emoji, style: const TextStyle(fontSize: 34)),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title,
-                      style: const TextStyle(
-                          color: _accent,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22)),
-                  const SizedBox(height: 4),
-                  Text(subtitle,
-                      style: const TextStyle(
-                          color: AppColors.textSecondary, fontSize: 13)),
-                ],
-              ),
-            ),
-            Icon(Icons.chevron_right,
-                color: _accent.withValues(alpha: 0.8), size: 26),
-          ],
+        child: Text(
+          label,
+          style: TextStyle(
+            color: selected ? _accent : AppColors.textSecondary,
+            fontWeight: FontWeight.bold,
+            fontSize: 19,
+          ),
         ),
       ),
     );

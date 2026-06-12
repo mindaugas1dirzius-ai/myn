@@ -258,6 +258,33 @@ bendra taškų sistema → klausimų pildymas/profiliai/dizainai.
 - Nupirkto atsakymo chip'as iššoka elasticOut animacija (✓ TAIP / ✗ NE).
 - Laimėjimo dialogas 🎉.
 
+## ✅ 7 RATAS (2026-06-12 naktis): Blitz jungiklis + 🧐 „TIESA AR MITAS?"
+
+### Blitz patikslinimas (savininko „ne ne, tas pats žaidimas"):
+Trukmės pasirinkimas — ne dvi kortelės, o JUNGIKLIS (⚡ 30 s / ⏱ 1 min chip'ai,
+default 1 min) + didelis „▶ PRADĖTI". Tas pats žaidimas, tik trukmė keičiasi.
+
+### 🧐 NAUJAS ŽAIDIMAS „Tiesa ar mitas?" (savininko „ta kita taip ne, mūsų paruošti"):
+- MŪSŲ RANKA PARUOŠTI teiginiai (ne generuojami): žaidėjas mato teiginį ir
+  sprendžia ✅ TIESA ar ❌ MITAS; po atsakymo — VERDIKTAS + trumpas paaiškinimas
+  KODĖL (mokomasis „oho"); savo tempu (be laikmačio ekrane), bet greitesnis
+  atsakymas = daugiau taškų (laikas matuojamas tyliai).
+- SERVERIS: mythContent.ts (40 teiginių LT+EN: po 10 lygiui pagal amžiaus
+  skalę; populiarūs mitai = geriausi) + mythFunctions.ts startMythGame (mode
+  "myth_<lygis>", rotacija cat_myth, įrašas active_games TUO PAČIU formatu
+  su bool[] answers) → ATSISKAITYMAS PER ESAMĄ submitScore (nulis regresijos;
+  bool palyginimas veikia). Deploy'inta.
+- KLIENTAS: myth_models / GameApi.startMythGame+submitMythScore /
+  myth_game_screen (lygio chip'ai + PRADĖTI → teiginio kortelė su 🧐 vandens
+  ženklu → ❌MITAS/✅TIESA → verdikto chip + paaiškinimas → TOLIAU → rezultatų
+  dialogas su rekordu/monetomis/raidėmis). Katalogo NAUJA kortelė 🧐 „Tiesa
+  ar mitas?" (code myth, ThemeKind.myth, open:true).
+- ⚠️ LT KABUČIŲ SPĄSTAI VĖL SUVEIKĖ: turinyje buvau įrašęs ASCII " uždarymą
+  („gaudo") → ~200 tsc klaidų kaskada. Taisyklė: U+201E „ atidaro, U+201D ”
+  uždaro — VISADA, taip pat ir naujuose failuose!
+- Turinio pildymo prioritetai dabar TRYS: detektyvo bylos + „klausimas"
+  mįslės + mitų teiginiai (visi pagal amžiaus skalę).
+
 ## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
 
 1. **#50 — 1 banga: potemių papildymas** (TURINIO_PLANAS.md) — naujos potemės

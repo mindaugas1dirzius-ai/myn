@@ -606,3 +606,9 @@ export {
   guessDetective,
   abandonDetective,
 } from "./detectiveFunctions";
+
+// =================================================================
+// 11) 🧐 TIESA AR MITAS? (IZOLIUOTAS modulis). Mūsų paruošti teiginiai,
+//     ✅/❌ atsakymai + paaiškinimai; atsiskaitymas per esamą submitScore.
+// =================================================================
+export { startMythGame } from "./mythFunctions";

@@ -17,7 +17,8 @@ enum ThemeKind {
   nature,  // gamta (trivija su potemėmis) → potemių ekranas
   mystery, // „Atspėk paslaptį" (meta-žaidimas) → paslapties ekranas
   trivia,  // bendra žinių trivija → universalus lygių ekranas
-  blitz,   // „Taip/Ne" greitis (atskira mechanika) → kol kas „Greitai"
+  blitz,   // ⚡ „Taip/Ne" greitis (30 s / 1 min raundai)
+  myth,    // 🧐 „Tiesa ar mitas?" (mūsų paruošti teiginiai + paaiškinimai)
 }
 
 /// Vienos temos aprašas pradiniam ekranui ir maršrutams.
@@ -159,5 +160,14 @@ final List<GameTheme> kThemes = <GameTheme>[
     open: true, // ⚡ TAIP/NE blitz VEIKIA (2026-06-12)
     title: (s) => s.categoryBlitz,
     subtitle: (s) => s.categoryBlitzDesc,
+  ),
+  GameTheme(
+    code: 'myth',
+    emoji: '🧐',
+    accent: AppColors.neonBlue,
+    kind: ThemeKind.myth,
+    open: true, // 🧐 Tiesa ar mitas? VEIKIA (2026-06-12)
+    title: (s) => s.categoryMyth,
+    subtitle: (s) => s.categoryMythDesc,
   ),
 ];
