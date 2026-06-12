@@ -1,33 +1,45 @@
 /**
- * detectiveFunctions — 🕵️ DETEKTYVO serverio funkcijos (IZOLIUOTAS modulis).
+ * detectiveFunctions — 🕵️ DETEKTYVO v2 SERVERIO funkcijos (IZOLIUOTAS modulis).
  *
- * Mechanika: slaptas žodis + perkamų TAIP/NE klausimų turgus (3 kainų lygiai)
- * + 3 gyvybės. Laiko spaudimo nėra. Žodis PERDEGA po vieno žaidimo.
- * Nemokamai — DETECTIVE_FREE_PER_DAY bylų per parą; premium — be ribos.
+ * v2 (savininko spec, docs/planai/DETEKTYVAS_PLANAS.md):
+ *  - LAIKAS TIKSI: award = bankas − pirkimai − sek×koef (grindys MIN_AWARD);
+ *  - atsakymai TAIP / NE / "both" + paaiškinimas (rodomas IŠKART nupirkus);
+ *  - SOS mįslė (atrakinama likus 1 gyvybei, vienkartinė, −120);
+ *  - 2 spėjimo variantai: ✍️ tekstu (premija ×1,25 kai lenta buvo galima)
+ *    arba 🎯 lentos kortelė (pick — indeksas sumaišytoje lentoje);
+ *  - po bylos grąžinama ANALIZĖ: visi atsakymai + rangas + išskaidymas.
  *
- * SAUGUMAS (taisyklė #1):
- *  - žodis, atsakymai, bankas, gyvybės — TIK serveryje (users/{uid}.detective);
- *  - klausimo atsakymas grąžinamas TIK nupirkus (transakcija, bankas ≥ grindų);
- *  - spėjimas tikrinamas serveryje (normalizeGuess); perdegusios bylos
- *    nekartojamos (detectiveSolved) — replay neįmanomas;
- *  - enforceAppCheck: true visur. Esama ekonomika NELIESTA.
+ * SAUGUMAS (taisyklė #1): žodis, atsakymai, bankas, gyvybės, laikas — TIK
+ * serveryje (users/{uid}.detective). Atsakymas grąžinamas TIK nupirkus
+ * (transakcija). Funkcijų vardai NEKEIČIAMI (deploy/invoker stabilumas).
  */
 
 import { onCall, HttpsError } from "firebase-functions/v2/https";
 import * as admin from "firebase-admin";
 
 import { Lang } from "./triviaTypes";
-import { buildMask, buildPool, letterIndices, normalizeGuess } from "./mysteryTypes";
+import {
+  buildMask,
+  buildPool,
+  letterIndices,
+  normalizeGuess,
+  shuffle,
+} from "./mysteryTypes";
 import {
   DetectiveState,
   DetectiveText,
   DETECTIVE_FLOOR,
   DETECTIVE_FREE_PER_DAY,
   DETECTIVE_LIVES,
+  DETECTIVE_MIN_AWARD,
   DETECTIVE_SOLVED_CAP,
+  DETECTIVE_SOS_PRICE,
   canBuyClue,
+  detectiveAward,
   detectiveBank,
   detectivePricesFor,
+  detectiveRank,
+  detectiveTimeCoef,
 } from "./detectiveTypes";
 import { findDetectiveCase, pickDetectiveCase } from "./detectiveContent";
 
@@ -73,29 +85,64 @@ function detectivePayload(
 ) {
   const empty = new Set<number>();
   const boughtSet = new Set(state.bought);
+  const now = Date.now();
+  const hasBoard = !!text.board && text.board.length > 0;
+  // Lenta siunčiama SUMAIŠYTA pagal starte fiksuotą boardOrder (žodis nėra
+  // visada pirmas!). Spėjimas lentoje = indeksas ŠIOJE tvarkoje.
+  const order = hasBoard
+    ? (state.boardOrder ?? text.board!.map((_, i) => i))
+    : [];
   return {
     caseId: state.caseId,
     level: state.level,
     categoryLabel: text.categoryLabel,
+    intro: text.intro ?? "",
     mask: buildMask(text.word, empty),
     pool: buildPool(text.word, empty),
     totalLetters: letterIndices(text.word).length,
-    bank: detectiveBank(state.level, state.spent),
+    bank: detectiveBank(state.spent),
     floor: DETECTIVE_FLOOR,
     lives: state.lives,
     maxLives: DETECTIVE_LIVES,
-    prices: detectivePricesFor(state.level),
+    prices: detectivePricesFor(text.questions.length),
     // Klausimų TEKSTAI matomi visi (turgaus esmė) — atsakymas tik nupirktų.
     questions: text.questions.map((q, i) => ({
       i,
       t: q.t,
       q: q.q,
-      ...(boughtSet.has(i) ? { a: q.a } : {}),
+      ...(boughtSet.has(i) ? { a: q.a, ...(q.note ? { note: q.note } : {}) } : {}),
     })),
     keys,
     freeLeft,
     resumed,
+    // v2: laikrodis + variantai + SOS.
+    startedAt: state.startedAt,
+    serverNow: now,
+    timeCoef: detectiveTimeCoef(state.level),
+    minAward: DETECTIVE_MIN_AWARD,
+    potentialNow: detectiveAward(
+      state.level, state.spent, now - state.startedAt, false
+    ),
+    variant: state.variant ?? (hasBoard ? 2 : 1),
+    hasBoard,
+    board: hasBoard ? order.map((oi) => text.board![oi]) : [],
+    boardEmoji: hasBoard && text.boardEmoji
+      ? order.map((oi) => text.boardEmoji![oi])
+      : [],
+    sosExists: !!text.sos,
+    sosPrice: DETECTIVE_SOS_PRICE,
+    sosAvailable:
+      !!text.sos && state.lives === 1 && !state.sosBought &&
+      canBuyClue(state.spent, DETECTIVE_SOS_PRICE),
+    ...(state.sosBought && text.sos ? { sosText: text.sos } : {}),
   };
+}
+
+/** Analizei po bylos: visi klausimai su atsakymais ir paaiškinimais. */
+function answersFor(text: DetectiveText) {
+  return text.questions.map((q, i) => ({
+    i, t: q.t, q: q.q, a: q.a, ...(q.note ? { note: q.note } : {}),
+  }));
 }
 
 /** Bylos perdegimas: įrašoma į detectiveSolved (cap), būsena trinama. */
@@ -140,6 +187,8 @@ export const startDetective = onCall(
       typeof levelRaw === "number" && [1, 2, 3, 4].includes(levelRaw)
         ? levelRaw
         : 1;
+    const variantRaw = request.data?.variant;
+    const wantVariant = variantRaw === 1 || variantRaw === 2 ? variantRaw : null;
 
     const db = admin.firestore();
     const userRef = db.collection("users").doc(uid);
@@ -189,6 +238,7 @@ export const startDetective = onCall(
         );
       }
       const text = picked.item.texts[picked.lang]!;
+      const hasBoard = !!text.board && text.board.length > 0;
 
       const state: DetectiveState = {
         caseId: picked.item.id,
@@ -198,6 +248,13 @@ export const startDetective = onCall(
         lives: DETECTIVE_LIVES,
         bought: [],
         startedAt: Date.now(),
+        // ✍️/🎯 variantas: lenta galima tik kai byla ją turi.
+        variant: hasBoard ? (wantVariant ?? 2) : 1,
+        ...(hasBoard
+          ? { boardOrder: shuffle(text.board!.map((_, i) => i)) }
+          : {}),
+        sosBought: false,
+        wrongGuesses: 0,
       };
 
       tx.set(
@@ -219,7 +276,7 @@ export const startDetective = onCall(
 );
 
 // =================================================================
-// 2) buyDetectiveClue — perka klausimo atsakymą iš bylos banko
+// 2) buyDetectiveClue — perka atsakymą iš bylos banko (i=-1 → SOS)
 // =================================================================
 export const buyDetectiveClue = onCall(
   { enforceAppCheck: true, minInstances: 0, region: REGION },
@@ -229,7 +286,7 @@ export const buyDetectiveClue = onCall(
     }
     const uid = request.auth.uid;
     const iRaw = request.data?.i;
-    if (typeof iRaw !== "number" || !Number.isInteger(iRaw) || iRaw < 0) {
+    if (typeof iRaw !== "number" || !Number.isInteger(iRaw) || iRaw < -1) {
       throw new HttpsError("invalid-argument", "Netinkamas klausimas.");
     }
 
@@ -245,20 +302,58 @@ export const buyDetectiveClue = onCall(
       }
       const item = findDetectiveCase(state.caseId);
       const text = item?.texts[state.lang];
-      if (!item || !text || iRaw >= text.questions.length) {
+      if (!item || !text) {
+        burnWrites(tx, userRef, data, state.caseId);
+        throw new HttpsError("failed-precondition", "Byla nebegalioja.");
+      }
+
+      // SOS mįslė: tik likus 1 gyvybei, vienkartinė.
+      if (iRaw === -1) {
+        if (!text.sos) {
+          throw new HttpsError("failed-precondition", "Ši byla SOS neturi.");
+        }
+        if (state.sosBought) {
+          return {
+            i: -1, sos: text.sos,
+            bank: detectiveBank(state.spent), lives: state.lives,
+          };
+        }
+        if (state.lives !== 1) {
+          throw new HttpsError(
+            "failed-precondition", "SOS atrakinamas likus 1 gyvybei."
+          );
+        }
+        if (!canBuyClue(state.spent, DETECTIVE_SOS_PRICE)) {
+          throw new HttpsError(
+            "failed-precondition", "Banke per mažai SOS mįslei."
+          );
+        }
+        const newState: DetectiveState = {
+          ...state,
+          spent: state.spent + DETECTIVE_SOS_PRICE,
+          sosBought: true,
+        };
+        tx.set(userRef, { detective: newState }, { merge: true });
+        return {
+          i: -1, sos: text.sos,
+          bank: detectiveBank(newState.spent), lives: newState.lives,
+        };
+      }
+
+      if (iRaw >= text.questions.length) {
         throw new HttpsError("invalid-argument", "Netinkamas klausimas.");
       }
       if (state.bought.includes(iRaw)) {
         // Jau nupirktas — grąžinam atsakymą be mokesčio (idempotentiška).
+        const q = text.questions[iRaw];
         return {
-          i: iRaw,
-          a: text.questions[iRaw].a,
-          bank: detectiveBank(state.level, state.spent),
-          lives: state.lives,
+          i: iRaw, a: q.a, ...(q.note ? { note: q.note } : {}),
+          bank: detectiveBank(state.spent), lives: state.lives,
         };
       }
-      const price = detectivePricesFor(state.level)[text.questions[iRaw].t];
-      if (!canBuyClue(state.level, state.spent, price)) {
+      const price =
+        detectivePricesFor(text.questions.length)[text.questions[iRaw].t];
+      if (!canBuyClue(state.spent, price)) {
         throw new HttpsError(
           "failed-precondition",
           "Banke per mažai — spėk iš to, ką žinai!"
@@ -270,18 +365,17 @@ export const buyDetectiveClue = onCall(
         bought: [...state.bought, iRaw],
       };
       tx.set(userRef, { detective: newState }, { merge: true });
+      const q = text.questions[iRaw];
       return {
-        i: iRaw,
-        a: text.questions[iRaw].a,
-        bank: detectiveBank(newState.level, newState.spent),
-        lives: newState.lives,
+        i: iRaw, a: q.a, ...(q.note ? { note: q.note } : {}),
+        bank: detectiveBank(newState.spent), lives: newState.lives,
       };
     });
   }
 );
 
 // =================================================================
-// 3) guessDetective — spėjimas; atspėjus bankas → mysteryKeys
+// 3) guessDetective — spėjimas tekstu (guess) ARBA lentoje (pick)
 // =================================================================
 export const guessDetective = onCall(
   { enforceAppCheck: true, minInstances: 0, region: REGION },
@@ -291,7 +385,10 @@ export const guessDetective = onCall(
     }
     const uid = request.auth.uid;
     const guessRaw = request.data?.guess;
-    if (typeof guessRaw !== "string" || guessRaw.trim().length === 0) {
+    const pickRaw = request.data?.pick;
+    const typed = typeof guessRaw === "string" && guessRaw.trim().length > 0;
+    const picked = typeof pickRaw === "number" && Number.isInteger(pickRaw);
+    if (!typed && !picked) {
       throw new HttpsError("invalid-argument", "Tuščias spėjimas.");
     }
 
@@ -312,20 +409,55 @@ export const guessDetective = onCall(
         throw new HttpsError("failed-precondition", "Byla nebegalioja.");
       }
 
-      const correct =
-        normalizeGuess(guessRaw) === normalizeGuess(text.word);
+      const hasBoard = !!text.board && text.board.length > 0;
+      let correct: boolean;
+      if (typed) {
+        correct = normalizeGuess(guessRaw) === normalizeGuess(text.word);
+      } else {
+        // Lentos spėjimas: pick — indeksas SUMAIŠYTOJE tvarkoje.
+        if (!hasBoard || !state.boardOrder) {
+          throw new HttpsError("failed-precondition", "Ši byla lentos neturi.");
+        }
+        if (pickRaw < 0 || pickRaw >= state.boardOrder.length) {
+          throw new HttpsError("invalid-argument", "Netinkama kortelė.");
+        }
+        const orig = state.boardOrder[pickRaw];
+        correct =
+          normalizeGuess(text.board![orig]) === normalizeGuess(text.word);
+      }
+
+      const now = Date.now();
       if (correct) {
-        const awarded = detectiveBank(state.level, state.spent);
+        // ✍️ premija tik kai lenta BUVO galima, bet žaidėjas rašė pats.
+        const typedBonus = typed && hasBoard;
+        const awarded = detectiveAward(
+          state.level, state.spent, now - state.startedAt, typedBonus
+        );
         const totalKeys = ((data.mysteryKeys as number) ?? 0) + awarded;
         burnWrites(tx, userRef, data, state.caseId, {
           mysteryKeys: totalKeys,
         });
+        const elapsedSec = Math.floor((now - state.startedAt) / 1000);
+        const boughtCount =
+          state.bought.length + (state.sosBought ? 1 : 0);
         return {
           correct: true,
           dead: false,
           word: text.word,
           awarded,
           totalKeys,
+          breakdown: {
+            bankLeft: detectiveBank(state.spent),
+            spent: state.spent,
+            elapsedSec,
+            timeCoef: detectiveTimeCoef(state.level),
+            timePenalty: elapsedSec * detectiveTimeCoef(state.level),
+            typedBonus,
+            minAward: DETECTIVE_MIN_AWARD,
+          },
+          rank: detectiveRank(boughtCount, state.wrongGuesses ?? 0),
+          boughtCount,
+          answers: answersFor(text),
         };
       }
 
@@ -333,14 +465,31 @@ export const guessDetective = onCall(
       if (newLives <= 0) {
         // Gyvybės baigėsi: byla žlugo, žodis parodomas ir VIS TIEK perdega.
         burnWrites(tx, userRef, data, state.caseId);
-        return { correct: false, dead: true, word: text.word, lives: 0 };
+        return {
+          correct: false, dead: true, word: text.word, lives: 0,
+          answers: answersFor(text),
+        };
       }
       tx.set(
         userRef,
-        { detective: { ...state, lives: newLives } },
+        {
+          detective: {
+            ...state,
+            lives: newLives,
+            wrongGuesses: (state.wrongGuesses ?? 0) + 1,
+          },
+        },
         { merge: true }
       );
-      return { correct: false, dead: false, lives: newLives };
+      return {
+        correct: false,
+        dead: false,
+        lives: newLives,
+        // SOS pasiūlymas atsiranda likus 1 gyvybei.
+        sosAvailable:
+          !!text.sos && newLives === 1 && !state.sosBought &&
+          canBuyClue(state.spent, DETECTIVE_SOS_PRICE),
+      };
     });
   }
 );

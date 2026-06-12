@@ -31,13 +31,24 @@ class DetectiveApi {
     return DetectiveClueOutcome.fromJson(_decode(r.data));
   }
 
-  /// Spėja slaptą žodį.
+  /// Spėja slaptą žodį TEKSTU (✍️ — premija, kai byla turi lentą).
   static Future<DetectiveGuessOutcome> guess(String guess) async {
     final r = await _functions
         .httpsCallable('guessDetective')
         .call(<String, dynamic>{'guess': guess});
     return DetectiveGuessOutcome.fromJson(_decode(r.data));
   }
+
+  /// Spėja LENTOS kortele (🎯 pick — indeksas serverio atsiųstoje tvarkoje).
+  static Future<DetectiveGuessOutcome> pick(int index) async {
+    final r = await _functions
+        .httpsCallable('guessDetective')
+        .call(<String, dynamic>{'pick': index});
+    return DetectiveGuessOutcome.fromJson(_decode(r.data));
+  }
+
+  /// Perka SOS mįslę (atrakinama likus 1 gyvybei; i = -1 serveryje).
+  static Future<DetectiveClueOutcome> buySos() => buyClue(-1);
 
   /// Pasiduoda (žodis parodomas, byla perdega).
   static Future<String?> abandon() async {

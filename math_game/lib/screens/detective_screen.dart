@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import '../l10n/app_strings.dart';
@@ -9,14 +10,15 @@ import '../widgets/app_background.dart';
 import '../widgets/banner_ad_widget.dart';
 import '../widgets/neumorphic_button.dart';
 
-/// 🕵️ DETEKTYVAS — slaptas žodis + perkamų TAIP/NE klausimų turgus.
+/// 🕵️ DETEKTYVAS v2 — slaptas žodis + perkamų klausimų turgus + laikrodis.
 ///
-/// MĄSTYMO žaidimas (be laikrodžio): matai kategoriją, žodžio ilgį ir VISUS
-/// klausimų tekstus, bet atsakymas (TAIP/NE) kainuoja iš bylos banko.
-/// Kuo mažiau pirkimų — tuo didesnis atlygis. 3 gyvybės. Žodis perdega
-/// po vieno žaidimo (nemokamai — 3 bylos per parą; premium be ribos).
+/// SAVININKO SPEC: laikas tiksi NUOLAT (laimėjimas = bankas − pirkimai −
+/// laikas×koef, bet niekada < minAward); atsakymai TAIP / NE / „TAIP, BET…"
+/// su paaiškinimu; 3 gyvybės 🔍; likus 1 — SOS mįslė; spėjimas ✍️ tekstu
+/// (premija ×1,25) arba 🎯 „įtariamųjų lentoje" (30 kortelių, braukai
+/// netinkamus, ilgu paspaudimu KALTINI).
 ///
-/// VISA TIESA SERVERYJE: žodis, atsakymai, bankas ir gyvybės — tik ten.
+/// VISA TIESA SERVERYJE: žodis, atsakymai, bankas, gyvybės ir laikas — tik ten.
 class DetectiveScreen extends StatefulWidget {
   const DetectiveScreen({super.key});
 
@@ -33,14 +35,39 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
   DetectiveView? _view;
   bool _busy = false;
   int? _buyingI; // kurios užuominos pirkimas keliauja į serverį (suktukui)
+  bool _finished = false;
 
-  /// Žaidėjo įrašytos raidės pagal kaukės indeksą (kaip tirpime).
+  /// Žaidėjo įrašytos raidės pagal kaukės indeksą (✍️ variantas).
   final Map<int, String> _typed = {};
   int? _cursor;
+
+  /// 🎯 lentos būsena: žaidėjo išbrauktos kortelės (TIK kosmetika, kliente).
+  final Set<int> _eliminated = {};
+  bool _typingMode = false; // ✍️ vietoj lentos (kai byla lentą turi)
+
+  String? _sosText; // nupirkta SOS mįslė
+  bool _sosAvailable = false;
+
+  Timer? _ticker; // gyvas taksometras (1 s)
+  int _serverOffsetMs = 0;
 
   AppLang _appLang = AppLang.en;
   bool get _isLt => _appLang == AppLang.lt;
   String _t(String lt, String en) => _isLt ? lt : en;
+
+  @override
+  void initState() {
+    super.initState();
+    _ticker = Timer.periodic(const Duration(seconds: 1), (_) {
+      if (mounted && _phase == _Phase.playing && !_finished) setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _ticker?.cancel();
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
@@ -48,7 +75,22 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
     _appLang = AppStrings.of(context).lang;
   }
 
-  // ── Lentos pozicijos (kaip tirpime) ──
+  // ── Gyvas laikrodis (serverio laiko veidrodis) ──
+
+  int get _nowServerMs =>
+      DateTime.now().millisecondsSinceEpoch + _serverOffsetMs;
+
+  /// Kiek laimėtų atspėjęs DABAR (savininko formulė su grindimis).
+  int get _potentialNow {
+    final v = _view;
+    if (v == null) return 0;
+    final elapsedSec =
+        ((_nowServerMs - v.startedAt) / 1000).floor().clamp(0, 1 << 30);
+    final raw = v.bank - elapsedSec * v.timeCoef;
+    return raw < v.minAward ? v.minAward : raw;
+  }
+
+  // ── Lentos pozicijos (✍️ variantas — kaip tirpime) ──
 
   List<int> get _hiddenIdx => [
         for (var i = 0; i < (_view?.mask.length ?? 0); i++)
@@ -106,8 +148,12 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
   Future<void> _start(int level) async {
     setState(() {
       _phase = _Phase.loading;
+      _finished = false;
       _typed.clear();
       _cursor = null;
+      _eliminated.clear();
+      _sosText = null;
+      _sosAvailable = false;
     });
     try {
       final lang = _isLt ? 'lt' : 'en';
@@ -116,6 +162,11 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
       SoundService.instance.swoosh();
       setState(() {
         _view = v;
+        _serverOffsetMs =
+            v.serverNow - DateTime.now().millisecondsSinceEpoch;
+        _typingMode = !v.hasBoard || v.variant == 1;
+        _sosAvailable = v.sosAvailable;
+        _sosText = v.sosText;
         _phase = _Phase.playing;
         _cursor = _firstEmpty();
       });
@@ -141,7 +192,7 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
   }
 
   Future<void> _buy(DetectiveClue c) async {
-    if (_busy || c.a != null) return;
+    if (_busy || c.bought) return;
     final price = _view!.prices[c.t] ?? 0;
     if (_view!.bank - price < _view!.floor) {
       _feedback(
@@ -162,25 +213,9 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
       SoundService.instance.points();
       setState(() {
         final qs = _view!.questions
-            .map((q) => q.i == r.i ? q.withAnswer(r.a) : q)
+            .map((q) => q.i == r.i ? q.withAnswer(r.ans, r.note) : q)
             .toList();
-        _view = DetectiveView(
-          caseId: _view!.caseId,
-          level: _view!.level,
-          categoryLabel: _view!.categoryLabel,
-          mask: _view!.mask,
-          pool: _view!.pool,
-          totalLetters: _view!.totalLetters,
-          bank: r.bank,
-          floor: _view!.floor,
-          lives: _view!.lives,
-          maxLives: _view!.maxLives,
-          prices: _view!.prices,
-          questions: qs,
-          keys: _view!.keys,
-          freeLeft: _view!.freeLeft,
-          resumed: _view!.resumed,
-        );
+        _view = _view!.copyWith(bank: r.bank, questions: qs);
       });
     } catch (_) {
       if (!mounted) return;
@@ -196,29 +231,68 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
     }
   }
 
-  Future<void> _submitGuess() async {
-    if (!_canGuess || _busy) return;
+  Future<void> _buySos() async {
+    if (_busy || _sosText != null) return;
+    SoundService.instance.tap();
+    setState(() => _busy = true);
+    try {
+      final r = await DetectiveApi.buySos();
+      if (!mounted) return;
+      SoundService.instance.points();
+      setState(() {
+        _sosText = r.sos;
+        _sosAvailable = false;
+        _view = _view!.copyWith(bank: r.bank, sosText: r.sos);
+      });
+    } catch (_) {
+      if (!mounted) return;
+      _feedback(_t('Nepavyko. Bandyk vėl.', 'Failed. Try again.'),
+          good: false);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _handleOutcome(DetectiveGuessOutcome r,
+      {int? pickedIdx}) async {
+    if (r.correct) {
+      _finished = true;
+      SoundService.instance.win();
+      await _showWinDialog(r);
+      if (mounted) setState(() => _phase = _Phase.levelSelect);
+      return;
+    }
+    if (r.dead) {
+      _finished = true;
+      SoundService.instance.wrong();
+      await _showCaseEndDialog(
+          title: '💥 ${_t('Byla žlugo', 'Case failed')}',
+          titleColor: AppColors.wrong,
+          word: r.word ?? '',
+          answers: r.answers);
+      if (mounted) setState(() => _phase = _Phase.levelSelect);
+      return;
+    }
+    SoundService.instance.wrong();
+    setState(() {
+      _view = _view!.copyWith(lives: r.lives);
+      _sosAvailable = r.sosAvailable;
+      _typed.clear();
+      _cursor = _firstEmpty();
+      if (pickedIdx != null) _eliminated.add(pickedIdx); // kortelė „sudegė"
+    });
+    _feedback(
+        _t('Ne! Liko ${r.lives} 🔍', 'No! ${r.lives} 🔍 left'),
+        good: false);
+  }
+
+  Future<void> _submitTyped() async {
+    if (!_canGuess || _busy || _finished) return;
     setState(() => _busy = true);
     try {
       final r = await DetectiveApi.guess(_buildGuess());
       if (!mounted) return;
-      if (r.correct) {
-        SoundService.instance.win();
-        await _showWinDialog(r);
-      } else if (r.dead) {
-        SoundService.instance.wrong();
-        await _showDeadDialog(r.word ?? '');
-      } else {
-        SoundService.instance.wrong();
-        setState(() {
-          _view = _viewWithLives(r.lives);
-          _typed.clear();
-          _cursor = _firstEmpty();
-        });
-        _feedback(
-            _t('Ne! Liko ${r.lives} ❤️', 'No! ${r.lives} ❤️ left'),
-            good: false);
-      }
+      await _handleOutcome(r);
     } catch (_) {
       if (!mounted) return;
       _feedback(_t('Ryšio klaida. Bandyk vėl.', 'Connection error. Try again.'),
@@ -228,23 +302,48 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
     }
   }
 
-  DetectiveView _viewWithLives(int lives) => DetectiveView(
-        caseId: _view!.caseId,
-        level: _view!.level,
-        categoryLabel: _view!.categoryLabel,
-        mask: _view!.mask,
-        pool: _view!.pool,
-        totalLetters: _view!.totalLetters,
-        bank: _view!.bank,
-        floor: _view!.floor,
-        lives: lives,
-        maxLives: _view!.maxLives,
-        prices: _view!.prices,
-        questions: _view!.questions,
-        keys: _view!.keys,
-        freeLeft: _view!.freeLeft,
-        resumed: _view!.resumed,
-      );
+  Future<void> _accuse(int idx) async {
+    if (_busy || _finished) return;
+    final v = _view!;
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppColors.surface,
+        title: Text(
+            '${v.boardEmoji.length > idx ? v.boardEmoji[idx] : '🎯'} '
+            '${v.board[idx]}',
+            style: const TextStyle(color: AppColors.textPrimary)),
+        content: Text(
+          _t('Kaltinti ŠITĄ? Klaida kainuos 1 🔍',
+              'Accuse THIS one? A mistake costs 1 🔍'),
+          style: const TextStyle(color: AppColors.textSecondary),
+        ),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: Text(_t('Dar galvoju', 'Still thinking'))),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: Text(_t('KALTINU!', 'ACCUSE!'),
+                  style: const TextStyle(
+                      color: AppColors.wrong, fontWeight: FontWeight.bold))),
+        ],
+      ),
+    );
+    if (ok != true || !mounted) return;
+    setState(() => _busy = true);
+    try {
+      final r = await DetectiveApi.pick(idx);
+      if (!mounted) return;
+      await _handleOutcome(r, pickedIdx: idx);
+    } catch (_) {
+      if (!mounted) return;
+      _feedback(_t('Ryšio klaida. Bandyk vėl.', 'Connection error. Try again.'),
+          good: false);
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
 
   Future<void> _abandon() async {
     final ok = await showDialog<bool>(
@@ -270,12 +369,69 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
       ),
     );
     if (ok != true || !mounted) return;
+    _finished = true;
     final word = await DetectiveApi.abandon();
     if (!mounted) return;
-    await _showDeadDialog(word ?? '');
+    await _showCaseEndDialog(
+        title: '📁 ${_t('Byla uždaryta', 'Case closed')}',
+        titleColor: AppColors.textSecondary,
+        word: word ?? '',
+        answers: const []);
+    if (mounted) setState(() => _phase = _Phase.levelSelect);
   }
 
   // ── Dialogai ──
+
+  String _rankLabel(int rank) {
+    switch (rank) {
+      case 1:
+        return '🥇 ${_t('Šerlokas', 'Sherlock')}';
+      case 2:
+        return '🥈 ${_t('Inspektorius', 'Inspector')}';
+      default:
+        return '🥉 ${_t('Naujokas', 'Rookie')}';
+    }
+  }
+
+  Widget _answersList(List<DetectiveAnswer> answers) {
+    if (answers.isEmpty) return const SizedBox.shrink();
+    return SizedBox(
+      width: double.maxFinite,
+      height: 220,
+      child: ListView.builder(
+        itemCount: answers.length,
+        itemBuilder: (ctx, i) {
+          final a = answers[i];
+          final (chip, color) = switch (a.ans) {
+            'y' => ('✓', AppColors.correct),
+            'b' => ('⚠', AppColors.levelMedium),
+            _ => ('✗', AppColors.wrong),
+          };
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 6),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(chip,
+                    style: TextStyle(
+                        color: color, fontWeight: FontWeight.bold)),
+                const SizedBox(width: 6),
+                Expanded(
+                  child: Text(
+                    a.note == null ? a.q : '${a.q}\n${a.note}',
+                    style: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 12,
+                        height: 1.25),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
 
   Future<void> _showWinDialog(DetectiveGuessOutcome r) async {
     await showDialog<void>(
@@ -294,18 +450,42 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
                     color: AppColors.textPrimary,
                     fontSize: 20,
                     fontWeight: FontWeight.bold)),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             Text('+${r.awarded} 🔑',
                 style: const TextStyle(
                     color: AppColors.levelMedium,
                     fontWeight: FontWeight.bold,
                     fontSize: 24)),
             const SizedBox(height: 4),
+            Text(_rankLabel(r.rank),
+                style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 15)),
+            const SizedBox(height: 6),
+            Text(
+              _t(
+                  'Užuominų pirkta: ${r.boughtCount} · laikas: ${r.elapsedSec}s '
+                  '(−${r.timePenalty})${r.typedBonus ? ' · ✍️ ×1,25' : ''}',
+                  'Clues bought: ${r.boughtCount} · time: ${r.elapsedSec}s '
+                  '(−${r.timePenalty})${r.typedBonus ? ' · ✍️ ×1.25' : ''}'),
+              style: const TextStyle(
+                  color: AppColors.textSecondary, fontSize: 12),
+            ),
             Text(
               _t('Raktų banke dabar: ${r.totalKeys} 🔑',
                   'Your key bank now: ${r.totalKeys} 🔑'),
-              style: const TextStyle(color: AppColors.textSecondary),
+              style:
+                  const TextStyle(color: AppColors.textSecondary, fontSize: 12),
             ),
+            const SizedBox(height: 10),
+            Text(_t('Visi atsakymai:', 'All answers:'),
+                style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13)),
+            const SizedBox(height: 6),
+            _answersList(r.answers),
           ],
         ),
         actions: [
@@ -315,17 +495,20 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
         ],
       ),
     );
-    if (mounted) setState(() => _phase = _Phase.levelSelect);
   }
 
-  Future<void> _showDeadDialog(String word) async {
+  Future<void> _showCaseEndDialog({
+    required String title,
+    required Color titleColor,
+    required String word,
+    required List<DetectiveAnswer> answers,
+  }) async {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: Text('💥 ${_t('Byla žlugo', 'Case failed')}',
-            style: const TextStyle(color: AppColors.wrong)),
+        title: Text(title, style: TextStyle(color: titleColor)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -339,6 +522,16 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
                       color: AppColors.textPrimary,
                       fontSize: 20,
                       fontWeight: FontWeight.bold)),
+            if (answers.isNotEmpty) ...[
+              const SizedBox(height: 10),
+              Text(_t('Visi atsakymai:', 'All answers:'),
+                  style: const TextStyle(
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13)),
+              const SizedBox(height: 6),
+              _answersList(answers),
+            ],
           ],
         ),
         actions: [
@@ -348,7 +541,6 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
         ],
       ),
     );
-    if (mounted) setState(() => _phase = _Phase.levelSelect);
   }
 
   void _feedback(String msg, {required bool good}) {
@@ -423,13 +615,13 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
   Widget _levelSelect() {
     final levels = [
       (1, '🟢', _t('Naujokas', 'Rookie'),
-          _t('Lengvos bylos — atspės ir vaikas', 'Easy cases — even kids can crack them'), 200),
+          _t('Lengvos bylos — atspės ir vaikas', 'Easy cases — even kids can crack them'), 1),
       (2, '🟡', _t('Seklys', 'Sleuth'),
-          _t('Reikia šiek tiek nuovokos', 'Takes a bit of wit'), 300),
+          _t('Reikia šiek tiek nuovokos', 'Takes a bit of wit'), 2),
       (3, '🟠', _t('Inspektorius', 'Inspector'),
-          _t('Rimtos bylos patyrusiems', 'Serious cases for the experienced'), 400),
+          _t('Rimtos bylos patyrusiems', 'Serious cases for the experienced'), 3),
       (4, '🔴', _t('Šerlokas', 'Sherlock'),
-          _t('Tik tikriems žinovams', 'For true masterminds only'), 500),
+          _t('Tik tikriems žinovams', 'For true masterminds only'), 4),
     ];
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
@@ -446,13 +638,15 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
           ),
           const SizedBox(height: 6),
           Text(
-            _t('Perki užuominas iš bylos banko — kuo mažiau pirksi, tuo daugiau 🔑 laimėsi',
-                'Buy clues from the case bank — the fewer you buy, the more 🔑 you win'),
+            _t('Bylos bankas 1000 🔑. Perki užuominas, o laikrodis tiksi — '
+                'kuo greičiau įminsi, tuo daugiau laimėsi (mažiausiai 20 🔑)',
+                'Case bank 1000 🔑. Buy clues while the clock ticks — '
+                'solve faster to win more (at least 20 🔑)'),
             textAlign: TextAlign.center,
             style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
           ),
           const SizedBox(height: 14),
-          for (final (lvl, emoji, name, desc, bank) in levels) ...[
+          for (final (lvl, emoji, name, desc, coef) in levels) ...[
             GestureDetector(
               onTap: () => _start(lvl),
               child: Container(
@@ -503,7 +697,7 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
                             color: AppColors.levelMedium
                                 .withValues(alpha: 0.7)),
                       ),
-                      child: Text('$bank 🔑',
+                      child: Text('⏱ −$coef/s',
                           style: const TextStyle(
                               color: AppColors.levelMedium,
                               fontWeight: FontWeight.bold,
@@ -521,11 +715,24 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
 
   Widget _caseView() {
     final v = _view!;
+    final boardMode = v.hasBoard && !_typingMode;
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 6, 16, 8),
       child: Column(
         children: [
           _statusRow(v),
+          if (v.intro.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              v.intro,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 12.5,
+                  fontStyle: FontStyle.italic,
+                  height: 1.3),
+            ),
+          ],
           const SizedBox(height: 12),
           // „Bylos segtuvas": žodžio lenta su 🔍 vandens ženklu fone.
           Container(
@@ -553,9 +760,25 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
             ),
           ),
           const SizedBox(height: 12),
-          _poolArea(v),
-          const SizedBox(height: 10),
-          _guessRow(),
+          if (_sosText != null) _sosStrip(),
+          if (_sosText == null && _sosAvailable) _sosCard(v),
+          if (boardMode) ...[
+            _suspectBoard(v),
+            const SizedBox(height: 10),
+            _modeToggle(
+                '✍️ ${_t('RAŠYTI PAČIAM (+25 %)', 'TYPE IT MYSELF (+25%)')}',
+                () => setState(() => _typingMode = true)),
+          ] else ...[
+            _poolArea(v),
+            const SizedBox(height: 10),
+            _guessRow(),
+            if (v.hasBoard) ...[
+              const SizedBox(height: 8),
+              _modeToggle(
+                  '🎯 ${_t('ĮTARIAMŲJŲ LENTA', 'SUSPECT BOARD')}',
+                  () => setState(() => _typingMode = false)),
+            ],
+          ],
           const SizedBox(height: 16),
           _market(v),
           if (v.freeLeft >= 0) ...[
@@ -588,16 +811,198 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
               style: const TextStyle(
                   color: _accent, fontWeight: FontWeight.bold, fontSize: 14)),
         ),
-        Text('${v.bank} 🔑',
-            style: const TextStyle(
-                color: AppColors.levelMedium,
-                fontWeight: FontWeight.bold,
-                fontSize: 22)),
+        Column(
+          children: [
+            Text(_t('LAIMĖSI', 'PRIZE'),
+                style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 10,
+                    letterSpacing: 1.5)),
+            Text('$_potentialNow 🔑',
+                style: const TextStyle(
+                    color: AppColors.levelMedium,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 22)),
+          ],
+        ),
         Text(
-          '${'❤️' * v.lives}${'🖤' * (v.maxLives - v.lives)}',
+          '${'🔍' * v.lives}${'💥' * (v.maxLives - v.lives)}',
           style: const TextStyle(fontSize: 18),
         ),
       ],
+    );
+  }
+
+  // 🆘 SOS mįslė: kortelė pirkimui ir juosta nupirkus.
+  Widget _sosCard(DetectiveView v) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: _busy ? null : _buySos,
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        decoration: BoxDecoration(
+          color: AppColors.wrong.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: AppColors.wrong, width: 1.6),
+        ),
+        child: Row(
+          children: [
+            const Text('🆘', style: TextStyle(fontSize: 24)),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                _t('Slaptas informatorius — paskutinė užuomina!',
+                    'Secret informant — one last clue!'),
+                style: const TextStyle(
+                    color: AppColors.textPrimary,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13.5),
+              ),
+            ),
+            Text('−${v.sosPrice} 🔑',
+                style: const TextStyle(
+                    color: AppColors.wrong,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _sosStrip() {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+      decoration: BoxDecoration(
+        color: AppColors.neonBlue.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.neonBlue.withValues(alpha: 0.6)),
+      ),
+      child: Text(
+        '🆘 $_sosText',
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+            color: AppColors.textPrimary, fontSize: 14, height: 1.3),
+      ),
+    );
+  }
+
+  // 🎯 ĮTARIAMŲJŲ LENTA: brūkšt — išbraukti, ilgas paspaudimas — KALTINTI.
+  Widget _suspectBoard(DetectiveView v) {
+    final remaining = v.board.length - _eliminated.length;
+    final cellW = (MediaQuery.of(context).size.width - 32 - 16) / 3;
+    return Column(
+      children: [
+        Text(
+          _t('Spustelk — išbraukti/grąžinti · LAIKYK — kaltinti',
+              'Tap — cross out/restore · HOLD — accuse'),
+          style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          _t('Įtariamųjų liko: $remaining', 'Suspects left: $remaining'),
+          style: TextStyle(
+              color: remaining <= 3 ? AppColors.wrong : _accent,
+              fontWeight: FontWeight.bold,
+              fontSize: 13),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: [
+            for (var i = 0; i < v.board.length; i++)
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: _busy || _finished
+                    ? null
+                    : () {
+                        SoundService.instance.tap();
+                        setState(() {
+                          if (_eliminated.contains(i)) {
+                            _eliminated.remove(i);
+                          } else {
+                            _eliminated.add(i);
+                          }
+                        });
+                      },
+                onLongPress: _busy || _finished || _eliminated.contains(i)
+                    ? null
+                    : () => _accuse(i),
+                child: AnimatedOpacity(
+                  opacity: _eliminated.contains(i) ? 0.25 : 1.0,
+                  duration: const Duration(milliseconds: 150),
+                  child: Container(
+                    width: cellW,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 6, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: AppColors.surface,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                          color: _eliminated.contains(i)
+                              ? AppColors.wrong.withValues(alpha: 0.6)
+                              : _accent.withValues(alpha: 0.45)),
+                    ),
+                    child: Column(
+                      children: [
+                        Text(
+                          v.boardEmoji.length > i ? v.boardEmoji[i] : '❓',
+                          style: const TextStyle(fontSize: 22),
+                        ),
+                        const SizedBox(height: 3),
+                        Text(
+                          _eliminated.contains(i)
+                              ? '✗ ${v.board[i]}'
+                              : v.board[i],
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: _eliminated.contains(i)
+                                ? AppColors.wrong
+                                : AppColors.textPrimary,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            decoration: _eliminated.contains(i)
+                                ? TextDecoration.lineThrough
+                                : null,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _modeToggle(String label, VoidCallback onTap) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: _busy ? null : onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          border:
+              Border.all(color: AppColors.neonBlue.withValues(alpha: 0.55)),
+        ),
+        child: Text(label,
+            style: const TextStyle(
+                color: AppColors.neonBlue,
+                fontWeight: FontWeight.bold,
+                fontSize: 12.5,
+                letterSpacing: 0.6)),
+      ),
     );
   }
 
@@ -760,7 +1165,7 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
           child: NeumorphicButton(
             accent: ready ? _accent : AppColors.textSecondary,
             padding: const EdgeInsets.symmetric(vertical: 15),
-            onTap: ready ? _submitGuess : null,
+            onTap: ready ? _submitTyped : null,
             child: Text(
               _t('SPĖTI ŽODĮ', 'GUESS THE WORD'),
               textAlign: TextAlign.center,
@@ -800,7 +1205,7 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
     final tiers = [
       (1, '🟢', _t('Pigios užuominos', 'Cheap clues')),
       (2, '🟡', _t('Vidutinės užuominos', 'Medium clues')),
-      (3, '🔴', _t('Stiprios užuominos', 'Strong clues')),
+      (3, '🔴', _t('Protingos užuominos', 'Clever clues')),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -836,12 +1241,16 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
   }
 
   Widget _clueCard(DetectiveView v, DetectiveClue c) {
-    final bought = c.a != null;
+    final bought = c.bought;
     final price = v.prices[c.t] ?? 0;
     final affordable = v.bank - price >= v.floor;
     final buying = _buyingI == c.i;
+    final ansColor = switch (c.ans) {
+      'y' => AppColors.correct,
+      'b' => AppColors.levelMedium,
+      _ => AppColors.wrong,
+    };
     // VISA kortelė — mygtukas (ne tik mažas kainos ženkliukas!).
-    // behavior: opaque — paspaudimas veikia ir ant „tuščios" kortelės vietos.
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: bought || _busy ? null : () => _buy(c),
@@ -854,79 +1263,110 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: bought
-                ? (c.a! ? AppColors.correct : AppColors.wrong)
-                    .withValues(alpha: 0.7)
+                ? ansColor.withValues(alpha: 0.7)
                 : _accent.withValues(alpha: buying ? 0.9 : 0.35),
             width: bought || buying ? 1.8 : 1.2,
           ),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Text(
-                c.q,
-                style: const TextStyle(
-                    color: AppColors.textPrimary, fontSize: 14.5, height: 1.25),
-              ),
-            ),
-            const SizedBox(width: 10),
-            if (bought)
-              // Atsakymo „atvertimo" animacija — chip'as iššoka.
-              TweenAnimationBuilder<double>(
-                tween: Tween(begin: 0.4, end: 1),
-                duration: const Duration(milliseconds: 320),
-                curve: Curves.elasticOut,
-                builder: (context, sc, child) =>
-                    Transform.scale(scale: sc, child: child),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: (c.a! ? AppColors.correct : AppColors.wrong)
-                        .withValues(alpha: 0.16),
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                        color: c.a! ? AppColors.correct : AppColors.wrong),
-                  ),
+            Row(
+              children: [
+                Expanded(
                   child: Text(
-                    c.a! ? '✓ ${_t('TAIP', 'YES')}' : '✗ ${_t('NE', 'NO')}',
-                    style: TextStyle(
-                        color: c.a! ? AppColors.correct : AppColors.wrong,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14),
+                    c.q,
+                    style: const TextStyle(
+                        color: AppColors.textPrimary,
+                        fontSize: 14.5,
+                        height: 1.25),
                   ),
                 ),
-              )
-            else if (buying)
-              const SizedBox(
-                width: 22,
-                height: 22,
-                child: CircularProgressIndicator(
-                    strokeWidth: 2.5, color: AppColors.levelMedium),
-              )
-            else
+                const SizedBox(width: 10),
+                if (bought)
+                  // Atsakymo „antspaudas" — chip'as iššoka.
+                  TweenAnimationBuilder<double>(
+                    tween: Tween(begin: 0.4, end: 1),
+                    duration: const Duration(milliseconds: 320),
+                    curve: Curves.elasticOut,
+                    builder: (context, sc, child) =>
+                        Transform.scale(scale: sc, child: child),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: ansColor.withValues(alpha: 0.16),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: ansColor),
+                      ),
+                      child: Text(
+                        switch (c.ans) {
+                          'y' => '✓ ${_t('TAIP', 'YES')}',
+                          'b' => '⚠ ${_t('TAIP/NE', 'YES/NO')}',
+                          _ => '✗ ${_t('NE', 'NO')}',
+                        },
+                        style: TextStyle(
+                            color: ansColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14),
+                      ),
+                    ),
+                  )
+                else if (buying)
+                  const SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CircularProgressIndicator(
+                        strokeWidth: 2.5, color: AppColors.levelMedium),
+                  )
+                else
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: AppColors.levelMedium
+                          .withValues(alpha: affordable ? 0.16 : 0.06),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          color: affordable
+                              ? AppColors.levelMedium
+                              : AppColors.textSecondary),
+                    ),
+                    child: Text(
+                      '🔓 $price',
+                      style: TextStyle(
+                          color: affordable
+                              ? AppColors.levelMedium
+                              : AppColors.textSecondary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
+                    ),
+                  ),
+              ],
+            ),
+            // „TAIP, BET…" paaiškinimo juostelė (rodoma iškart nupirkus).
+            if (bought && c.note != null) ...[
+              const SizedBox(height: 8),
               Container(
+                width: double.infinity,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
                 decoration: BoxDecoration(
-                  color: AppColors.levelMedium
-                      .withValues(alpha: affordable ? 0.16 : 0.06),
-                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.levelMedium.withValues(alpha: 0.10),
+                  borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                      color: affordable
-                          ? AppColors.levelMedium
-                          : AppColors.textSecondary),
+                      color: AppColors.levelMedium.withValues(alpha: 0.45)),
                 ),
                 child: Text(
-                  '🔓 $price',
-                  style: TextStyle(
-                      color: affordable
-                          ? AppColors.levelMedium
-                          : AppColors.textSecondary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14),
+                  c.note!,
+                  style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 12.5,
+                      fontStyle: FontStyle.italic,
+                      height: 1.25),
                 ),
               ),
+            ],
           ],
         ),
       ),
