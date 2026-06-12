@@ -40,6 +40,7 @@ class MeltView {
   final int lockMsUsed; // ankstesnių langų susikaupęs užšaldytas laikas ms
   final int freezesLeft; // kiek spėjimo langų liko šioje partijoje
   final int wrongPenalty; // bauda 🔑 už klaidingą spėjimą (rodymui)
+  final int freezeMs; // lango trukmė ms (pagal atsakymo žodžių kiekį)
 
   const MeltView({
     required this.mysteryId,
@@ -68,6 +69,7 @@ class MeltView {
     this.lockMsUsed = 0,
     this.freezesLeft = 0,
     this.wrongPenalty = 0,
+    this.freezeMs = 30000,
   });
 
   factory MeltView.fromJson(Map<String, dynamic> j) {
@@ -102,6 +104,7 @@ class MeltView {
       lockMsUsed: (j['lockMsUsed'] as num?)?.toInt() ?? 0,
       freezesLeft: (j['freezesLeft'] as num?)?.toInt() ?? 0,
       wrongPenalty: (j['wrongPenalty'] as num?)?.toInt() ?? 0,
+      freezeMs: (j['freezeMs'] as num?)?.toInt() ?? 30000,
     );
   }
 }

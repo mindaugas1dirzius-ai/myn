@@ -2065,14 +2065,24 @@ export const MYSTERIES: MysteryItem[] = [
  * Vengiama jau išspręstų; jei visos išspręstos — leidžiama kartoti.
  */
 /**
- * ĮDOMUMO SVORIS (savininko pastaba 2026-06-12: „citatos/posakiai neįdomu"):
- * ~80 % partijų parenkama iš įdomiųjų kategorijų (klausimas/faktas — orientyrai,
- * kosmosas, gyvūnai, „oho" faktai), o citatos/patarlės/istorijos lieka retu
- * paįvairinimu (~20 %). Jei įdomiųjų fonde nebėra — krentam į visą fondą.
+ * KATEGORIJŲ TAISYKLĖ (savininko valia 2026-06-12, SUSTIPRINTA):
+ * citatos ir patarlės/posakiai — NEĮDOMŪS ir kultūriškai neišverčiami
+ * (patarlės skiriasi pagal tautas: „9 kartus pamatuok" vs „3 kartus") —
+ * VISIŠKAI IŠIMTI iš parinkimo (turinys faile lieka, bet nebenaudojamas;
+ * NAUJŲ NEKURTI). Lieka: klausimas / faktas (pagrindas) + istorija (retai).
+ */
+const EXCLUDED_CATEGORIES = new Set<string>(["citata", "patarle"]);
+const PICKABLE_MYSTERIES = MYSTERIES.filter(
+  (m) => !EXCLUDED_CATEGORIES.has(m.category)
+);
+
+/**
+ * ĮDOMUMO SVORIS: ~80 % partijų — klausimas/faktas (orientyrai, kosmosas,
+ * gyvūnai, „oho" faktai); istorija lieka retu paįvairinimu (~20 %).
  */
 const FUN_CATEGORIES = new Set<string>(["klausimas", "faktas"]);
 function preferFun(pool: MysteryItem[]): MysteryItem[] {
-  if (Math.random() >= 0.8) return pool; // ~20 % — bet kuri kategorija
+  if (Math.random() >= 0.8) return pool; // ~20 % — bet kuri likusi kategorija
   const fun = pool.filter((m) => FUN_CATEGORIES.has(m.category));
   return fun.length > 0 ? fun : pool;
 }
@@ -2083,13 +2093,13 @@ export function pickMystery(
 ): { item: MysteryItem; lang: Lang; content: MysteryText } | null {
   const solved = new Set(solvedIds);
 
-  // 1) Griežtai tos kalbos vienetai (be maišymo).
-  let usable = MYSTERIES.filter((m) => m.texts[lang]);
+  // 1) Griežtai tos kalbos vienetai (be maišymo; be citatų/patarlių).
+  let usable = PICKABLE_MYSTERIES.filter((m) => m.texts[lang]);
   let useLangBase: Lang = lang;
 
   // 2) Saugiklis: jei tos kalbos visai nėra — anglų atsarga.
   if (usable.length === 0) {
-    usable = MYSTERIES.filter((m) => m.texts.en);
+    usable = PICKABLE_MYSTERIES.filter((m) => m.texts.en);
     useLangBase = "en";
   }
   if (usable.length === 0) return null;
@@ -2132,10 +2142,12 @@ export function pickMeltMystery(
   };
 
   const tryPick = (filter: (m: MysteryItem, l: Lang) => boolean) => {
-    let usable = MYSTERIES.filter((m) => m.texts[lang] && filter(m, lang));
+    let usable = PICKABLE_MYSTERIES.filter(
+      (m) => m.texts[lang] && filter(m, lang)
+    );
     let useLangBase: Lang = lang;
     if (usable.length === 0) {
-      usable = MYSTERIES.filter((m) => m.texts.en && filter(m, "en"));
+      usable = PICKABLE_MYSTERIES.filter((m) => m.texts.en && filter(m, "en"));
       useLangBase = "en";
     }
     if (usable.length === 0) return null;

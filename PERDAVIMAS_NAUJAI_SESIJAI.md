@@ -44,6 +44,26 @@ L1=15 · L2=45 · L3=35 · **L4=6 (per mažai — pildant mįsles pirmiausia L4!
 
 Deploy'inta 11 funkcijų (visos mystery+melt), APK perbudavotas ir įdiegtas.
 
+### C. PATIKSLINIMAI po savininko atsakymo (2026-06-12 naktis, 2 ratas):
+1. **Bauda 10 % pMax — savininkas PATVIRTINO** („pirmas pritariu 10 proc").
+2. **SPĖJIMO LANGO trukmė pagal atsakymo ŽODŽIŲ kiekį** (savininko spec):
+   1 žodis → 30 s · 2–3 žodžiai → 1 min · 4+ → 1 min 30 s („1.3" supratau
+   kaip 1:30 — jei norėjo kitaip, keisti `meltFreezeMsFor` meltTypes.ts).
+   `MeltState.freezeMs` fiksuojamas starte; klientas gauna `freezeMs` payload'e.
+3. **CITATOS ir PATARLĖS IŠIMTOS iš parinkimo VISUR** (klasikinis + tirpimas):
+   `EXCLUDED_CATEGORIES=["citata","patarle"]` mysteryContent.ts; turinys faile
+   liko, bet NEBENAUDOJAMAS. Savininko valia: citatos neįdomu; patarlės/posakiai
+   neverčiami tarp kultūrų („9 kartus pamatuok" vs „3 kartus") — **NEKURTI JŲ
+   NIEKADA**. Lieka: klausimas/faktas (pagrindas, ~80 %) + istorija (~20 %).
+   Mįslių fondas po išėmimo: 73 vnt. (klausimas 42 + faktas 22 + istorija 9).
+4. **TURINIO TAISYKLĖ (galioja VISKAM, ir naujoms temoms):** klausimai įdomūs,
+   įtraukiantys, IŠ GYVENIMO, populiarūs pasaulyje; faktai TIK iš profesionalių
+   patikimų šaltinių (ne FB/straipsniai); jokios politikos/rasės/tikėjimo;
+   suprantami VIENODAI visoms tautoms (pvz. NE „koks įrankis beisbole" —
+   JAV „bat", LT „lazda" — kultūriškai skiriasi formuluotės).
+5. **Leidimai:** `.claude/settings.json` → `"defaultMode": "dontAsk"` —
+   savininkas suteikė pilnus leidimus, patvirtinimo langų NEBĖRA.
+
 ## 📅 KAS PADARYTA 2026-06-12 (visi commitai push'inti)
 
 1. **Mystery EN „The"** orientyrams + kableliai citatose (deploy ✅).

@@ -40,6 +40,7 @@ import {
   deriveMelt,
   isValidMeltConfig,
   meltCooldownMs,
+  meltFreezeMsFor,
   meltPMax,
   meltPoints,
   meltWrongPenalty,
@@ -67,9 +68,10 @@ function meltPayload(
   const total = letterIndices(content.text).length;
   const d = deriveMelt(state, total, nowMs);
   // Spėjimo lango būsena klientui: kiek ms dar užšaldyta ir kiek langų liko.
+  const windowMs = state.freezeMs ?? MELT_FREEZE_MS;
   const frozenLeftMs =
     state.lockedAt != null
-      ? Math.max(0, MELT_FREEZE_MS - (nowMs - state.lockedAt))
+      ? Math.max(0, windowMs - (nowMs - state.lockedAt))
       : 0;
   return {
     mysteryId: state.id,
@@ -96,13 +98,15 @@ function meltPayload(
     lockMsUsed: state.lockMsUsed ?? 0,
     freezesLeft: Math.max(0, MELT_MAX_FREEZES - (state.freezeCount ?? 0)),
     wrongPenalty: meltWrongPenalty(meltPMax(state.level, state.intervalSec)),
+    freezeMs: windowMs,
   };
 }
 
 /** Uždaro aktyvų spėjimo langą: jo laikas perkeliamas į lockMsUsed. */
 function foldLock(state: MeltState, nowMs: number): MeltState {
   if (state.lockedAt == null) return state;
-  const used = Math.min(Math.max(0, nowMs - state.lockedAt), MELT_FREEZE_MS);
+  const windowMs = state.freezeMs ?? MELT_FREEZE_MS;
+  const used = Math.min(Math.max(0, nowMs - state.lockedAt), windowMs);
   return {
     ...state,
     lockMsUsed: (state.lockMsUsed ?? 0) + used,
@@ -203,6 +207,10 @@ export const startMelt = onCall(
         wrongGuesses: 0,
         lockMsUsed: 0,
         freezeCount: 0,
+        // Lango trukmė pagal atsakymo žodžių kiekį (30 s / 1 min / 1,5 min).
+        freezeMs: meltFreezeMsFor(
+          picked.content.text.trim().split(/\s+/).length
+        ),
       };
 
       tx.set(
@@ -430,8 +438,9 @@ export const freezeMelt = onCall(
 
       // Langas jau aktyvus — grąžinam esamą būseną (pakartotinis paspaudimas
       // nekainuoja naujo lango ir nemeta klaidos).
+      const windowMs = state.freezeMs ?? MELT_FREEZE_MS;
       const activeLeft =
-        state.lockedAt != null ? MELT_FREEZE_MS - (now - state.lockedAt) : 0;
+        state.lockedAt != null ? windowMs - (now - state.lockedAt) : 0;
       if (activeLeft > 0) {
         return {
           expired: false,

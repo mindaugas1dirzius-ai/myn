@@ -44,10 +44,20 @@ export const MELT_GUESS_COOLDOWN_MS = 2500;
 /** Nemokamų raidžių lubos: frazė niekada ne „pre-solved" (liks bent tiek paslėptų). */
 export const MELT_FREE_KEEP_HIDDEN = 3;
 
-/** SPĖJIMO LANGAS: paspaudus SPĖTI laikas sustoja 30 sekundžių, kad žaidėjas
- *  ramiai suvestų atsakymą — taškai ir raidės tuo metu netirpsta. Langą
- *  „suvartoja" spėjimas (teisingas ar ne) arba jis baigiasi pats po 30 s. */
+/** SPĖJIMO LANGAS: paspaudus SPĖTI laikas sustoja, kad žaidėjas ramiai
+ *  suvestų atsakymą — taškai ir raidės tuo metu netirpsta. Langą „suvartoja"
+ *  spėjimas (teisingas ar ne) arba jis baigiasi pats.
+ *  Numatytoji trukmė (1 žodis / senos partijos be freezeMs lauko). */
 export const MELT_FREEZE_MS = 30000;
+
+/** Lango trukmė pagal ATSAKYMO ŽODŽIŲ kiekį (savininko taisyklė 2026-06-12):
+ *  1 žodis → 30 s; 2–3 žodžiai → 1 min; 4+ žodžiai → 1 min 30 s —
+ *  kad ilgesnį atsakymą žmogus spėtų surinkti. */
+export function meltFreezeMsFor(wordCount: number): number {
+  if (wordCount <= 1) return 30000;
+  if (wordCount <= 3) return 60000;
+  return 90000;
+}
 
 /** Kiek kartų per partiją SPĖTI gali stabdyti laiką — saugiklis, kad nebūtų
  *  galima „pauzuoti amžinai" be spėjimo (5 langai = 150 s ramybės, sąžiningam
@@ -119,6 +129,9 @@ export interface MeltState {
   lockMsUsed?: number;
   /** Kiek spėjimo langų jau atidaryta šioje partijoje (lubos MELT_MAX_FREEZES). */
   freezeCount?: number;
+  /** Šios partijos spėjimo lango trukmė ms (pagal atsakymo žodžių kiekį,
+   *  fiksuojama starte; nesant — MELT_FREEZE_MS). */
+  freezeMs?: number;
 }
 
 // ---------------------------------------------------------------------------
@@ -164,10 +177,12 @@ export function deriveMelt(
 ): MeltDerived {
   const limitMs = state.limitSec * 1000;
   const intervalMs = state.intervalSec * 1000;
-  // Laiko stabdymas: susikaupęs ankstesnių langų laikas + aktyvus langas (iki 30 s).
+  // Laiko stabdymas: susikaupęs ankstesnių langų laikas + aktyvus langas
+  // (iki šios partijos lango trukmės).
+  const freezeMs = state.freezeMs ?? MELT_FREEZE_MS;
   const activeLockMs =
     state.lockedAt != null
-      ? Math.min(Math.max(0, nowMs - state.lockedAt), MELT_FREEZE_MS)
+      ? Math.min(Math.max(0, nowMs - state.lockedAt), freezeMs)
       : 0;
   const lockExtra = (state.lockMsUsed ?? 0) + activeLockMs;
   const elapsedMs = Math.max(0, nowMs - state.startedAt - lockExtra);

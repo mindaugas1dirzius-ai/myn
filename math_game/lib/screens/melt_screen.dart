@@ -129,7 +129,19 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
 
   // --- Gyvas laikas (su laiko stabdymo veidrodžiu) ---
 
-  static const _freezeMs = 30000;
+  /// Spėjimo lango trukmė — iš serverio (30 s / 1 min / 1,5 min pagal
+  /// atsakymo žodžių kiekį).
+  int get _freezeMs => _view.freezeMs;
+
+  /// Lango trukmė žmogui: „30 sek." / „1 min." / „1 min. 30 sek."
+  String get _windowLabel {
+    final s = _freezeMs ~/ 1000;
+    if (s < 60) return _t('$s sek.', '$s sec');
+    final m = s ~/ 60;
+    final rest = s % 60;
+    if (rest == 0) return _t('$m min.', '$m min');
+    return _t('$m min. $rest sek.', '$m min $rest sec');
+  }
 
   int get _nowServerMs =>
       DateTime.now().millisecondsSinceEpoch + _serverOffsetMs;
@@ -394,8 +406,8 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
       if (_frozenNow) {
         SoundService.instance.points();
         _feedback(
-            _t('⏸ Laikas sustojo 30 sek. — suvesk atsakymą ir spausk SPĖTI!',
-                '⏸ Time paused for 30 s — type the answer and press GUESS!'),
+            _t('⏸ Laikas sustojo $_windowLabel — suvesk atsakymą ir spausk SPĖTI!',
+                '⏸ Time paused for $_windowLabel — type the answer and press GUESS!'),
             good: true);
       } else {
         // Langų limitas išnaudotas — žaisti galima, bet laikas tiksi.

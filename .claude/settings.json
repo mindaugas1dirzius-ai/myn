@@ -1,5 +1,6 @@
 {
   "permissions": {
+    "defaultMode": "dontAsk",
     "allow": [
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
@@ -28,7 +29,25 @@
       "PowerShell(& \"C:\\Users\\minda\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe\"*)",
       "PowerShell(& 'C:\\Users\\minda\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe'*)",
       "PowerShell(& \"C:\\Users\\minda\\flutter\\bin\\flutter.bat\"*)",
-      "PowerShell(& 'C:\\Users\\minda\\flutter\\bin\\flutter.bat'*)"
+      "PowerShell(& 'C:\\Users\\minda\\flutter\\bin\\flutter.bat'*)",
+      "PowerShell(git *)",
+      "PowerShell(cd *)",
+      "PowerShell(node *)",
+      "PowerShell(npm *)",
+      "PowerShell(npx *)",
+      "PowerShell($adb*)",
+      "PowerShell(Get-Content *)",
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(Get-Item *)",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Select-String *)",
+      "PowerShell(Measure-Object *)",
+      "PowerShell(Write-Output *)",
+      "PowerShell(echo *)",
+      "PowerShell(Remove-Item *)",
+      "PowerShell(Copy-Item *)",
+      "PowerShell(Move-Item *)",
+      "PowerShell(New-Item *)"
     ]
   }
 }
