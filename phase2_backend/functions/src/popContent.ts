@@ -2543,13 +2543,13 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
       en: {
         question: "Who composed The Well-Tempered Clavier?",
         correct: "Johann Sebastian Bach",
-        distractors: ["Handel", "Vivaldi", "Telemann", "Scarlatti", "Corelli"],
+        distractors: ["George Frideric Handel", "Vivaldi", "Telemann", "Scarlatti", "Corelli"],
         explanation: "The Well-Tempered Clavier was composed by J. S. Bach.",
       },
       lt: {
         question: "Kas sukūrė „Gerai temperuotą klavyrą”?",
         correct: "Johanas Sebastijonas Bachas",
-        distractors: ["Hendelis", "Vivaldis", "Telemanas", "Skarlatis", "Korelis"],
+        distractors: ["Georgas Frydrichas Hendelis", "Vivaldis", "Telemanas", "Skarlatis", "Korelis"],
         explanation: "„Gerai temperuotą klavyrą” sukūrė J. S. Bachas.",
       },
     },

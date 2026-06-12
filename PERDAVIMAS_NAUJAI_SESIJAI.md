@@ -351,6 +351,29 @@ kai jis yra — gamta/trivijos). NIEKAS funkciškai nekeista — tik vaizdas.
    paaiškinimu, NUOLAT tiksintis laikas, taškai = bankas − laikas×koef,
    chat-srauto UI, pasiūlymai 1–6 laukia savininko OK).
 
+## 🔍 10 RATAS (2026-06-13): „ILGIO KVAPAS" — savininkas atrado, kad TEISINGAS
+## atsakymas dažnai ILGIAUSIAS („kur ilgesnis tekstas spaudžiu — pataikau")
+
+- AUDITAS (visos 8 temos, LT+EN, 4692 variantų rinkiniai): teisingas griežtai
+  ilgiausias 27 % (atsitiktinai būtų ~17 %); RYŠKIAI ilgiausias (≥6 simb. už
+  ilgiausią distraktorių) — **397 rinkiniai**: gamta 223 · istorija 50 · pop 29 ·
+  tech 27 · food 25 · sport 24 · body 15 · geo 4 (geo/sport ≈ norma).
+- ✅ IŠTAISYTA 52 pataisymais TOP 22 klausimai (skirtumas ≥17): metodas —
+  PAILGINTI 1–2 distraktorius iki teisingo ilgio (saugiausia: faktų tikrinti
+  nereikia, jie ir taip klaidingi; stilius suvienodėja, pvz. lotyniški
+  skliaustai ir distraktoriams). Po pataisos „ryškių" liko 357 (top +17).
+- ĮRANKIAI (lokalūs, necommit'inami): functions/_audit_len.js (matavimas) ir
+  _fix_len.js (bloko-scoped pataisymų šablonas — saugu, keičia TIK nurodyto
+  id bloke, tikrina ≤46 simb.).
+- ⏭️ #45c TURINIO PRAVAŽIAVIMAS (daryti partijomis po ~40-60 pataisymų):
+  likę 357 „ryškūs" — prioritetas gamta (187) ir istorija (50). Metodika kaip
+  aukščiau; po kiekvienos partijos perleisti _audit_len.js + deploy
+  startNatureGame/startTriviaGame.
+- 🆕 GELEŽINĖ TURINIO TAISYKLĖ (visiems NAUJIEMS klausimams + gen.js patikrai):
+  teisingas atsakymas NEGALI būti ilgiausias daugiau nei +5 simboliais —
+  bent vienas distraktorius privalo būti panašaus ilgio ar ilgesnis (ABIEM
+  kalbom tikrinti atskirai!).
+
 ## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
 
 1. **#50 — 1 banga: potemių papildymas** (TURINIO_PLANAS.md) — naujos potemės

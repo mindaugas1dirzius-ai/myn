@@ -3770,13 +3770,13 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
       en: {
         question: "How do butter and margarine differ by origin?",
         correct: "Butter is animal, margarine plant-based",
-        distractors: ["Both are plant-based", "Both are animal-based", "Margarine is made from milk", "Butter is made from oil", "Only the color differs"],
+        distractors: ["Both are plant-based", "Both are animal-based", "Margarine is churned from cow's milk", "Butter is pressed from vegetable oil", "Only the color differs"],
         explanation: "Butter comes from cream; margarine from vegetable oils.",
       },
       lt: {
         question: "Kuo pagal kilmę skiriasi sviestas ir margarinas?",
         correct: "Sviestas gyvūninis, margarinas augalinis",
-        distractors: ["Abu augaliniai", "Abu gyvūniniai", "Margarinas iš pieno", "Sviestas iš aliejaus", "Skiriasi tik spalva"],
+        distractors: ["Abu augaliniai", "Abu gyvūniniai", "Margarinas gaminamas iš karvių pieno", "Sviestas spaudžiamas iš augalinio aliejaus", "Skiriasi tik spalva"],
         explanation: "Sviestas — iš grietinėlės, margarinas — iš augalinių aliejų.",
       },
     },
