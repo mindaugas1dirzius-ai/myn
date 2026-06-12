@@ -172,7 +172,7 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
    - ✅ tech 🚀 **Kosmosas (space)** — ĮGYVENDINTA: +19 kl. (10/lygiui = 40),
      adversariai patikrinta (18/19 OK, Veneros klausimas performuluotas dėl
      „para" dviprasmybės), potemė registruota (subThemeConfig.tech), kortelė
-     atrakinta (open:true), deploy startTriviaGame + debug APK įdiegta. Commit ?.
+     atrakinta (open:true), deploy startTriviaGame + debug APK įdiegta. Commit a3ed45c.
    - ⬜ tech 🤖 **AI+robotai** (9→40); pop 🦸 **Superherojai** (4→40, atskirti iš
      „stories"); kūnas 👀 **Pojūčiai** (8→40). Tie patys žingsniai.
 3. Lygiagrečiai galima: #45c ilgio-kvapo partijos; mįslių „klausimas"+L4; mitai.
