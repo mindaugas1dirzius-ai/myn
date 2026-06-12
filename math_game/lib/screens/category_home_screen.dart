@@ -10,6 +10,7 @@ import '../widgets/neumorphic_button.dart';
 import '../services/mystery_api.dart';
 import 'blitz_placeholder_screen.dart';
 import 'home_screen.dart';
+import 'melt_setup_screen.dart';
 import 'mystery_screen.dart';
 import 'nature_topic_screen.dart';
 import 'profile_screen.dart';
@@ -162,8 +163,68 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
         );
         break;
       case ThemeKind.mystery:
+        // Du režimai vienoje kortelėje: klasikinis ir „Raidžių tirpimas".
+        final s = AppStrings.of(context);
+        final isLt = s.lang == AppLang.lt;
+        final mode = await showModalBottomSheet<String>(
+          context: context,
+          backgroundColor: AppColors.surface,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          builder: (ctx) => SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 14),
+                Text(
+                  isLt ? 'Pasirink režimą' : 'Choose a mode',
+                  style: const TextStyle(
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+                ListTile(
+                  leading: const Text('🕵️', style: TextStyle(fontSize: 26)),
+                  title: Text(isLt ? 'Klasikinis' : 'Classic',
+                      style: const TextStyle(
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.bold)),
+                  subtitle: Text(
+                      isLt
+                          ? 'Rink raides žaisdamas ir spėk posakį'
+                          : 'Earn letters by playing and guess the phrase',
+                      style:
+                          const TextStyle(color: AppColors.textSecondary)),
+                  onTap: () => Navigator.pop(ctx, 'classic'),
+                ),
+                ListTile(
+                  leading: const Text('⏳', style: TextStyle(fontSize: 26)),
+                  title: Text(isLt ? 'Raidžių tirpimas' : 'Letter Melt',
+                      style: const TextStyle(
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.bold)),
+                  subtitle: Text(
+                      isLt
+                          ? 'Prieš laikrodį: pats pasirink tempą'
+                          : 'Against the clock: pick your own pace',
+                      style:
+                          const TextStyle(color: AppColors.textSecondary)),
+                  onTap: () => Navigator.pop(ctx, 'melt'),
+                ),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+        );
+        if (mode == null || !context.mounted) break;
         await Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const MysteryScreen()),
+          MaterialPageRoute(
+            builder: (_) => mode == 'melt'
+                ? const MeltSetupScreen()
+                : const MysteryScreen(),
+          ),
         );
         // Grįžus — atnaujinam ženkliuką (galėjo atverti/išspręsti raides).
         _loadMysteryStatus();
