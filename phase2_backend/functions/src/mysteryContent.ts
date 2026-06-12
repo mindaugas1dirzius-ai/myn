@@ -1554,6 +1554,508 @@ export const MYSTERIES: MysteryItem[] = [
       },
     },
   },
+
+  // ===== ĮDOMIOSIOS MĮSLĖS (2026-06-12): orientyrai, kosmosas, gyvūnai =====
+  {
+    id: "mys_klaus_029",
+    category: "klausimas",
+    level: 3,
+    sourceVerified: "Bermudų trikampis — Atlanto regionas, garsus dingimų legendomis",
+    texts: {
+      en: {
+        text: "The Bermuda Triangle",
+        hint: "In which legendary ocean area are ships and planes said to vanish?",
+        hint1: "It is in the Atlantic Ocean.",
+        hint2: "It is named after an island and has three corners.",
+      },
+      lt: {
+        text: "Bermudų trikampis",
+        hint: "Kurioje legendinėje vandenyno zonoje esą paslaptingai dingsta laivai ir lėktuvai?",
+        hint1: "Ji yra Atlanto vandenyne.",
+        hint2: "Pavadinta pagal salą ir turi tris kampus.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_030",
+    category: "klausimas",
+    level: 2,
+    sourceVerified: "Didysis kanjonas — Kolorado upės išgraužtas tarpeklis JAV",
+    texts: {
+      en: {
+        text: "The Grand Canyon",
+        hint: "Which giant US gorge was carved by the Colorado River?",
+        hint1: "It is in Arizona.",
+        hint2: "It is up to 1.8 km deep.",
+      },
+      lt: {
+        text: "Didysis kanjonas",
+        hint: "Kokį milžinišką tarpeklį JAV išgraužė Kolorado upė?",
+        hint1: "Jis yra Arizonoje.",
+        hint2: "Jo gylis siekia iki 1,8 km.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_031",
+    category: "klausimas",
+    level: 3,
+    sourceVerified: "Terakotos armija saugo imperatoriaus Cin Ši Huangdžio kapą",
+    texts: {
+      en: {
+        text: "The Terracotta Army",
+        hint: "What clay guardians were buried with China's first emperor?",
+        hint1: "There are about 8,000 of them.",
+        hint2: "Each soldier has a different face.",
+      },
+      lt: {
+        text: "Terakotos armija",
+        hint: "Kokie moliniai sargybiniai palaidoti su pirmuoju Kinijos imperatoriumi?",
+        hint1: "Jų yra apie 8000.",
+        hint2: "Kiekvieno kario veidas skirtingas.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_032",
+    category: "klausimas",
+    level: 1,
+    sourceVerified: "Žemės drebėjimų stiprumas matuojamas Richterio skale",
+    texts: {
+      en: {
+        text: "An earthquake",
+        hint: "Which natural event is measured on the Richter scale?",
+        hint1: "The ground shakes during it.",
+        hint2: "Strong ones can topple buildings.",
+      },
+      lt: {
+        text: "Žemės drebėjimas",
+        hint: "Koks gamtos reiškinys matuojamas Richterio skale?",
+        hint1: "Jo metu dreba žemė.",
+        hint2: "Stiprus gali nugriauti pastatus.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_033",
+    category: "klausimas",
+    level: 1,
+    sourceVerified: "Saulės užtemimas — Mėnulis uždengia Saulę",
+    texts: {
+      en: {
+        text: "A solar eclipse",
+        hint: "What happens when the Moon hides the Sun in the middle of the day?",
+        hint1: "The day suddenly becomes dark.",
+        hint2: "You must never watch it without protection.",
+      },
+      lt: {
+        text: "Saulės užtemimas",
+        hint: "Kas vyksta, kai Mėnulis vidury dienos uždengia Saulę?",
+        hint1: "Diena staiga aptemsta.",
+        hint2: "Į jį negalima žiūrėti be apsaugos.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_034",
+    category: "klausimas",
+    level: 2,
+    sourceVerified: "Meteorų lietus — daug „krentančių žvaigždžių” vienu metu",
+    texts: {
+      en: {
+        text: "A meteor shower",
+        hint: "What do we call a night when many shooting stars streak across the sky?",
+        hint1: "People make wishes when they see them.",
+        hint2: "They are space dust burning in the air.",
+      },
+      lt: {
+        text: "Meteorų lietus",
+        hint: "Kaip vadinama naktis, kai dangumi krenta daugybė „žvaigždžių”?",
+        hint1: "Žmonės jas pamatę sugalvoja norą.",
+        hint2: "Tai ore sudegančios kosmoso dulkės.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_035",
+    category: "klausimas",
+    level: 2,
+    sourceVerified: "Didžiojo sprogimo teorija aiškina Visatos pradžią",
+    texts: {
+      en: {
+        text: "The Big Bang",
+        hint: "What is the theory about the very beginning of the Universe called?",
+        hint1: "It happened about 13.8 billion years ago.",
+        hint2: "The Universe has been expanding ever since.",
+      },
+      lt: {
+        text: "Didysis sprogimas",
+        hint: "Kaip vadinama teorija apie pačią Visatos pradžią?",
+        hint1: "Tai įvyko maždaug prieš 13,8 mlrd. metų.",
+        hint2: "Nuo tada Visata vis plečiasi.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_036",
+    category: "klausimas",
+    level: 2,
+    sourceVerified: "Stounhendžas — priešistorinis akmenų ratas Anglijoje",
+    texts: {
+      en: {
+        text: "Stonehenge",
+        hint: "What mysterious ring of giant stones stands in England?",
+        hint1: "It is about 5,000 years old.",
+        hint2: "Nobody knows exactly how it was built.",
+      },
+      lt: {
+        text: "Stounhendžas",
+        hint: "Koks paslaptingas milžiniškų akmenų ratas stovi Anglijoje?",
+        hint1: "Jam apie 5000 metų.",
+        hint2: "Niekas tiksliai nežino, kaip jis pastatytas.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_037",
+    category: "klausimas",
+    level: 2,
+    sourceVerified: "Trojos arklys — graikų gudrybė Trojos karui laimėti",
+    texts: {
+      en: {
+        text: "The Trojan Horse",
+        hint: "With what wooden gift did the Greeks trick the city of Troy?",
+        hint1: "Soldiers were hiding inside it.",
+        hint2: "The city pulled it through its own gates.",
+      },
+      lt: {
+        text: "Trojos arklys",
+        hint: "Kokia medine dovana graikai apgavo Trojos miestą?",
+        hint1: "Jos viduje slėpėsi kariai.",
+        hint2: "Miestas pats įsitempė ją pro vartus.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_038",
+    category: "klausimas",
+    level: 1,
+    sourceVerified: "Saturnas garsėja ryškiausiais žiedais Saulės sistemoje",
+    texts: {
+      en: {
+        text: "The rings of Saturn",
+        hint: "What famous 'jewelry' circles the sixth planet from the Sun?",
+        hint1: "They are made of ice and rock.",
+        hint2: "You can see them through a small telescope.",
+      },
+      lt: {
+        text: "Saturno žiedai",
+        hint: "Koks garsus „papuošalas” juosia šeštąją planetą nuo Saulės?",
+        hint1: "Jie sudaryti iš ledo ir uolienų.",
+        hint2: "Juos matysi net pro nedidelį teleskopą.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_039",
+    category: "klausimas",
+    level: 3,
+    sourceVerified: "TKS — didžiausias žmonijos statinys Žemės orbitoje",
+    texts: {
+      en: {
+        text: "The space station",
+        hint: "What is the biggest structure humans have built in orbit?",
+        hint1: "Astronauts live there for months.",
+        hint2: "It circles the Earth every 90 minutes.",
+      },
+      lt: {
+        text: "Kosminė stotis",
+        hint: "Koks didžiausias žmonijos statinys skrieja orbitoje aplink Žemę?",
+        hint1: "Astronautai joje gyvena mėnesius.",
+        hint2: "Žemę ji apskrieja kas 90 minučių.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_040",
+    category: "klausimas",
+    level: 3,
+    sourceVerified: "Galapagų salos įkvėpė Darvino evoliucijos teoriją",
+    texts: {
+      en: {
+        text: "The Galapagos Islands",
+        hint: "Which islands with giant tortoises inspired Darwin's big idea?",
+        hint1: "They belong to Ecuador.",
+        hint2: "Many animals there live nowhere else.",
+      },
+      lt: {
+        text: "Galapagų salos",
+        hint: "Kurios salos su milžiniškais vėžliais įkvėpė Darvino teoriją?",
+        hint1: "Jos priklauso Ekvadorui.",
+        hint2: "Daug ten gyvenančių gyvūnų daugiau niekur nerasi.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_041",
+    category: "klausimas",
+    level: 3,
+    sourceVerified: "Sikstos koplyčios lubas ištapė Mikelandželas",
+    texts: {
+      en: {
+        text: "The Sistine Chapel",
+        hint: "On whose famous ceiling did Michelangelo paint for four years?",
+        hint1: "It is in the Vatican.",
+        hint2: "He painted it lying on scaffolding.",
+      },
+      lt: {
+        text: "Sikstos koplyčia",
+        hint: "Kieno garsiąsias lubas Mikelandželas tapė ketverius metus?",
+        hint1: "Ji yra Vatikane.",
+        hint2: "Tapė gulėdamas ant pastolių.",
+      },
+    },
+  },
+  {
+    id: "mys_klaus_042",
+    category: "klausimas",
+    level: 2,
+    sourceVerified: "Atlantida — Platono aprašytas legendinis nuskendęs miestas",
+    texts: {
+      en: {
+        text: "Atlantis",
+        hint: "What legendary island city is said to have sunk into the sea?",
+        hint1: "The ancient Greek Plato wrote about it.",
+        hint2: "People still search for it today.",
+      },
+      lt: {
+        text: "Atlantida",
+        hint: "Koks legendinis salos miestas esą nugrimzdo į jūrą?",
+        hint1: "Apie jį rašė senovės graikas Platonas.",
+        hint2: "Žmonės jo ieško iki šiol.",
+      },
+    },
+  },
+  {
+    id: "mys_fakt_012",
+    category: "faktas",
+    level: 3,
+    sourceVerified: "Aštuonkojų kraujas mėlynas dėl hemocianino",
+    texts: {
+      en: {
+        text: "Octopus blood is blue",
+        hint: "A surprising fact about the blood of an eight-armed sea creature.",
+        hint1: "It is about a color.",
+        hint2: "Copper, not iron, carries its oxygen.",
+      },
+      lt: {
+        text: "Aštuonkojo kraujas yra mėlynas",
+        hint: "Stebinantis faktas apie aštuonrankio jūrų gyvūno kraują.",
+        hint1: "Tai apie spalvą.",
+        hint2: "Deguonį jame nešioja varis, ne geležis.",
+      },
+    },
+  },
+  {
+    id: "mys_fakt_013",
+    category: "faktas",
+    level: 3,
+    sourceVerified: "Antarktida — didžiausia dykuma pagal kritulių kiekį",
+    texts: {
+      en: {
+        text: "Antarctica is the largest desert",
+        hint: "A surprising fact about the coldest continent and deserts.",
+        hint1: "Deserts are defined by lack of rain, not heat.",
+        hint2: "It beats the Sahara in size.",
+      },
+      lt: {
+        text: "Antarktida yra didžiausia dykuma",
+        hint: "Stebinantis faktas apie šalčiausią žemyną ir dykumas.",
+        hint1: "Dykumą apibrėžia kritulių trūkumas, ne karštis.",
+        hint2: "Dydžiu ji lenkia Sacharą.",
+      },
+    },
+  },
+  {
+    id: "mys_fakt_014",
+    category: "faktas",
+    level: 3,
+    sourceVerified: "Venera sukasi priešinga kryptimi nei dauguma planetų",
+    texts: {
+      en: {
+        text: "Venus spins backwards",
+        hint: "A strange fact about how one planet rotates.",
+        hint1: "There the Sun rises in the west.",
+        hint2: "It is the second planet from the Sun.",
+      },
+      lt: {
+        text: "Venera sukasi atbulai",
+        hint: "Keistas faktas apie vienos planetos sukimąsi.",
+        hint1: "Ten Saulė pateka vakaruose.",
+        hint2: "Tai antroji planeta nuo Saulės.",
+      },
+    },
+  },
+  {
+    id: "mys_fakt_015",
+    category: "faktas",
+    level: 2,
+    sourceVerified: "Drambliai — vieninteliai žinduoliai, negalintys pašokti",
+    texts: {
+      en: {
+        text: "Elephants cannot jump",
+        hint: "A fun fact about the biggest land animal and jumping.",
+        hint1: "Their legs are built only for walking.",
+        hint2: "They always keep one foot on the ground.",
+      },
+      lt: {
+        text: "Drambliai negali pašokti",
+        hint: "Smagus faktas apie didžiausią sausumos gyvūną ir šuolius.",
+        hint1: "Jų kojos skirtos tik vaikščioti.",
+        hint2: "Viena koja visada lieka ant žemės.",
+      },
+    },
+  },
+  {
+    id: "mys_fakt_016",
+    category: "faktas",
+    level: 4,
+    sourceVerified: "Perlai sudaryti iš kalcio karbonato, kurį actas ištirpdo",
+    texts: {
+      en: {
+        text: "Pearls dissolve in vinegar",
+        hint: "A surprising fact about precious sea gems and a kitchen liquid.",
+        hint1: "Cleopatra allegedly used this trick.",
+        hint2: "They are made of the same stuff as chalk.",
+      },
+      lt: {
+        text: "Perlai ištirpsta acte",
+        hint: "Stebinantis faktas apie brangius jūros perlus ir virtuvės skystį.",
+        hint1: "Šį triuką esą naudojo Kleopatra.",
+        hint2: "Jie sudaryti iš tos pačios medžiagos kaip kreida.",
+      },
+    },
+  },
+  {
+    id: "mys_fakt_017",
+    category: "faktas",
+    level: 3,
+    sourceVerified: "Bitės „šokio” judesiais praneša kitoms kelią iki nektaro",
+    texts: {
+      en: {
+        text: "Bees dance to give directions",
+        hint: "A wonderful fact about how striped insects share a map.",
+        hint1: "It is called the waggle dance.",
+        hint2: "The dance shows direction and distance to flowers.",
+      },
+      lt: {
+        text: "Bitės šokiu rodo kryptį",
+        hint: "Nuostabus faktas apie tai, kaip dryžuoti vabzdžiai dalijasi žemėlapiu.",
+        hint1: "Tai vadinama bičių šokiu.",
+        hint2: "Šokis parodo kryptį ir atstumą iki žiedų.",
+      },
+    },
+  },
+  {
+    id: "mys_fakt_018",
+    category: "faktas",
+    level: 3,
+    sourceVerified: "Mėnulis kasmet nutolsta nuo Žemės ~3,8 cm",
+    texts: {
+      en: {
+        text: "The Moon drifts away from Earth",
+        hint: "A quiet fact about our night companion slowly leaving.",
+        hint1: "About four centimeters every year.",
+        hint2: "Astronauts left mirrors there to measure it.",
+      },
+      lt: {
+        text: "Mėnulis tolsta nuo Žemės",
+        hint: "Tylus faktas apie pamažu besitraukiantį nakties palydovą.",
+        hint1: "Maždaug po keturis centimetrus kasmet.",
+        hint2: "Astronautai ten paliko veidrodžius matavimams.",
+      },
+    },
+  },
+  {
+    id: "mys_fakt_019",
+    category: "faktas",
+    level: 3,
+    sourceVerified: "Tigrų dryžuota ne tik kailis, bet ir oda",
+    texts: {
+      en: {
+        text: "Tiger skin is striped too",
+        hint: "A hidden fact about the big striped cat under its fur.",
+        hint1: "It is not only about the fur.",
+        hint2: "Even shaved, the pattern would remain.",
+      },
+      lt: {
+        text: "Tigro oda taip pat dryžuota",
+        hint: "Paslėptas faktas apie didžiąją dryžuotą katę po jos kailiu.",
+        hint1: "Kalbama ne tik apie kailį.",
+        hint2: "Net nuskustas raštas išliktų.",
+      },
+    },
+  },
+  {
+    id: "mys_fakt_020",
+    category: "faktas",
+    level: 2,
+    sourceVerified: "Koalos miega iki 20 valandų per parą",
+    texts: {
+      en: {
+        text: "Koalas sleep almost all day",
+        hint: "A sleepy fact about a gray tree-hugging animal.",
+        hint1: "Up to 20 hours daily.",
+        hint2: "Their eucalyptus food gives little energy.",
+      },
+      lt: {
+        text: "Koalos miega beveik visą parą",
+        hint: "Mieguistas faktas apie pilką medžių gyventoją.",
+        hint1: "Iki 20 valandų kasdien.",
+        hint2: "Jų eukaliptų maistas duoda mažai energijos.",
+      },
+    },
+  },
+  {
+    id: "mys_fakt_021",
+    category: "faktas",
+    level: 3,
+    sourceVerified: "Delfinai miega pakaitomis viena smegenų puse, akis atmerkta",
+    texts: {
+      en: {
+        text: "Dolphins sleep with one eye open",
+        hint: "A clever fact about how sea acrobats rest.",
+        hint1: "Half of the brain stays awake.",
+        hint2: "Otherwise they would forget to breathe.",
+      },
+      lt: {
+        text: "Delfinai miega atmerkę vieną akį",
+        hint: "Gudrus faktas apie tai, kaip ilsisi jūros akrobatai.",
+        hint1: "Pusė smegenų lieka budri.",
+        hint2: "Kitaip jie pamirštų kvėpuoti.",
+      },
+    },
+  },
+  {
+    id: "mys_fakt_022",
+    category: "faktas",
+    level: 3,
+    sourceVerified: "Bananas botaniškai auga ant žolinio augalo, ne medžio",
+    texts: {
+      en: {
+        text: "Bananas grow on giant herbs",
+        hint: "A twisty fact about where a yellow fruit really grows.",
+        hint1: "It is not a tree, despite its size.",
+        hint2: "The 'trunk' is made of tightly rolled leaves.",
+      },
+      lt: {
+        text: "Bananai auga ant milžiniškos žolės",
+        hint: "Netikėtas faktas apie tai, kur iš tiesų auga geltonas vaisius.",
+        hint1: "Tai ne medis, nors ir didelis.",
+        hint2: "„Kamienas” — iš susisukusių lapų.",
+      },
+    },
+  },
 ];
 
 /**
@@ -1562,6 +2064,19 @@ export const MYSTERIES: MysteryItem[] = [
  *   2) jei tos kalbos nėra nė vieno — TIK tada anglų atsarga.
  * Vengiama jau išspręstų; jei visos išspręstos — leidžiama kartoti.
  */
+/**
+ * ĮDOMUMO SVORIS (savininko pastaba 2026-06-12: „citatos/posakiai neįdomu"):
+ * ~80 % partijų parenkama iš įdomiųjų kategorijų (klausimas/faktas — orientyrai,
+ * kosmosas, gyvūnai, „oho" faktai), o citatos/patarlės/istorijos lieka retu
+ * paįvairinimu (~20 %). Jei įdomiųjų fonde nebėra — krentam į visą fondą.
+ */
+const FUN_CATEGORIES = new Set<string>(["klausimas", "faktas"]);
+function preferFun(pool: MysteryItem[]): MysteryItem[] {
+  if (Math.random() >= 0.8) return pool; // ~20 % — bet kuri kategorija
+  const fun = pool.filter((m) => FUN_CATEGORIES.has(m.category));
+  return fun.length > 0 ? fun : pool;
+}
+
 export function pickMystery(
   lang: Lang,
   solvedIds: string[]
@@ -1581,7 +2096,7 @@ export function pickMystery(
 
   // Pirmenybė neišspręstoms; jei visos išspręstos — visos tinka (kartojam).
   const fresh = usable.filter((m) => !solved.has(m.id));
-  const pool = fresh.length > 0 ? fresh : usable;
+  const pool = preferFun(fresh.length > 0 ? fresh : usable);
 
   const item = pool[Math.floor(Math.random() * pool.length)];
   const content = item.texts[useLangBase]!;
@@ -1625,7 +2140,7 @@ export function pickMeltMystery(
     }
     if (usable.length === 0) return null;
     const fresh = usable.filter((m) => !solved.has(m.id));
-    const pool = fresh.length > 0 ? fresh : usable;
+    const pool = preferFun(fresh.length > 0 ? fresh : usable);
     const item = pool[Math.floor(Math.random() * pool.length)];
     return { item, lang: useLangBase, content: item.texts[useLangBase]! };
   };
