@@ -144,8 +144,8 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 
 ## 8. DABARTINĖ BŪSENA (2026-06-13)
 
-- **Turinys:** trivijos+gamta 2 365 kl. (gamta 720 · sport 270 · body 255 ·
-  history 244 · pop 243 · geo 240 · **tech 217** · food 176) · 40 mitų teiginių ·
+- **Turinys:** trivijos+gamta 2 405 kl. (gamta 720 · sport 270 · body 255 ·
+  history 244 · pop 243 · geo 240 · tech 217 · food 176 · **cosmos 40 NAUJA**) · 40 mitų ·
   101 mįslė (pool 73 be citatų/patarlių; lygiai L1=15/L2=45/L3=35/**L4=6** —
   pildant pirmiausia L4 ir „klausimas" tipo 42) · **16 detektyvo bylų** (v2).
 - **Įrankiai functions/:** `_appcheck_fix.js` (App Check per API),
@@ -180,6 +180,15 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 **GRIAUČIAI (po detektyvo testo):**
 3. #51 NAUJOS TEMOS: 🌌 Kosmosas, 🏺 Mitologija, 📏 Rekordai, 🏷️ Prekių ženklai,
    🚂 Transportas (potemės — TURINIO_PLANAS.md; startui ~120 kl./temai).
+   - ⏳ **🌌 KOSMOSAS PRADĖTA (2026-06-13, savininko „darom"):** ATSKIRA tema
+     (kodas `cosmos`, kortelė meniu) su 4 potemėmis. ✅ 🪐 **Planetos** pilna
+     (cos_pla_001–040, 10/lygiui, faktai švieži — NEkartoja tech „space"; mažas
+     failas `cosmosPlanets.ts` + indeksas `cosmosContent.ts`). ⬜ 🧑‍🚀 Astronautai ·
+     🔭 Visata · 🛰️ Raketos — open:false „Greitai", pildoma partijomis (po 40).
+     Wiring: triviaTypes(+cosmos) · triviaRegistry · subThemeConfig · unlockConfig ·
+     themeEmoji(🌌) · theme_catalog · trivia_topic_screen · app_strings.
+     tech „Kosmoso lenktynės" potemė LIEKA (savininkas: „viskas gerai").
+     ⚠️ APK pastatytas, bet telefonas testo metu buvo ATJUNGTAS — įdiegti, kai prijungs.
 4. #50 potemių pildymas esamoms (naujos potemės turi tik ~10 kl./lygiui → iki 40+).
    → **GRIAUČIAI PILNI.**
 

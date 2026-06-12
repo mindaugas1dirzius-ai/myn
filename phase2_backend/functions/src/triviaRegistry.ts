@@ -20,6 +20,7 @@ import { TECH_QUESTIONS } from "./techContent";
 import { FOOD_QUESTIONS } from "./foodContent";
 import { SPORT_QUESTIONS } from "./sportContent";
 import { BODY_QUESTIONS } from "./bodyContent";
+import { COSMOS_QUESTIONS } from "./cosmosContent";
 
 /**
  * Temos, kurias aptarnauja BENDRAS startTriviaGame (be „nature" — ji atskira).
@@ -36,6 +37,7 @@ export const TRIVIA_REGISTRY: Record<GenericTriviaCategory, TriviaQuestion[]> = 
   food: FOOD_QUESTIONS,
   sport: SPORT_QUESTIONS,
   body: BODY_QUESTIONS,
+  cosmos: COSMOS_QUESTIONS,
 };
 
 /** Ar duotas tekstas yra žinoma bendro variklio tema? (type guard) */

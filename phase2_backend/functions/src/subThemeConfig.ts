@@ -109,6 +109,16 @@ export const TRIVIA_SUBTHEMES: Record<
     brain: ["brain"],
     bones: ["bones"],
   },
+  // Kosmosas: 4 potemės (2026-06-13). Visi klausimai turi vieną šių žymų, tad
+  // „facts" puodas tuščias — klientas rodo 4 potemes + „Mix" (be „facts" kortelės).
+  //   🪐 planets — Planetos ir Saulės sistema (ĮGYVENDINTA);
+  //   🧑‍🚀 astronauts / 🔭 universe / 🛰️ rockets — pildoma partijomis (Greitai).
+  cosmos: {
+    planets: ["planets"],
+    astronauts: ["astronauts"],
+    universe: ["universe"],
+    rockets: ["rockets"],
+  },
 };
 
 /** Ar tema turi bent vieną potemę (klientui — rodyti potemių parinkiklį)? */

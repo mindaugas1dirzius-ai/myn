@@ -57,7 +57,7 @@ export const TRIVIA_THEME_UNLOCK_COST = 150;
  * srautą (startNatureGame) — jos čia liesti nereikia.
  */
 export const OPEN_TRIVIA_CATEGORIES = new Set<string>([
-  // kol kas tuščia — visos naujos temos „Greitai"
+  "cosmos", // 🌌 Kosmosas — atrakinta 2026-06-13 (planets potemė turi turinio)
 ]);
 
 /** Ar žinių tema užrakinta pagal nutylėjimą? (kol nėra turinio → taip). */

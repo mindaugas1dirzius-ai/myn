@@ -30,6 +30,7 @@ const THEME_FALLBACK: Record<TriviaCategory, string> = {
   sport: "🏅",
   body: "⚕️",
   pop: "⭐",
+  cosmos: "🌌",
 };
 
 export function themeFallback(category: TriviaCategory): string {

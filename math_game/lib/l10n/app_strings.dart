@@ -59,6 +59,9 @@ class AppStrings {
   String get categoryBody => _pick('Žmogaus kūnas', 'Human body');
   String get categoryBodyDesc =>
       _pick('Kaip veikia mūsų kūnas', 'How our body works');
+  String get categoryCosmos => _pick('Kosmosas', 'Space');
+  String get categoryCosmosDesc =>
+      _pick('Planetos, žvaigždės ir misijos', 'Planets, stars and missions');
   String get categoryBlitz => _pick('Blitz', 'Blitz');
   String get categoryBlitzDesc =>
       _pick('Taip ar ne — greičiui', 'Yes or no — beat the clock');
@@ -158,6 +161,21 @@ class AppStrings {
   String get subTechAi => _pick('AI, robotai ir virusai', 'AI, robots & viruses');
   String get subTechAiDesc => _pick(
       'Dirbtinis intelektas, hakeriai, virusai', 'AI, hackers, computer viruses');
+  // Kosmosas — potemės
+  String get subCosmosPlanets =>
+      _pick('Planetos ir Saulės sistema', 'Planets & Solar System');
+  String get subCosmosPlanetsDesc =>
+      _pick('Planetos, mėnuliai, žiedai, rekordai', 'Planets, moons, rings, records');
+  String get subCosmosAstronauts =>
+      _pick('Astronautai ir misijos', 'Astronauts & missions');
+  String get subCosmosAstronautsDesc =>
+      _pick('Žmonės kosmose, stotys, žygiai', 'People in space, stations, walks');
+  String get subCosmosUniverse => _pick('Visata ir žvaigždės', 'Universe & stars');
+  String get subCosmosUniverseDesc =>
+      _pick('Galaktikos, juodosios skylės, žvaigždės', 'Galaxies, black holes, stars');
+  String get subCosmosRockets => _pick('Raketos ir tyrimai', 'Rockets & exploration');
+  String get subCosmosRocketsDesc =>
+      _pick('Raketos, zondai, teleskopai', 'Rockets, probes, telescopes');
   // Žmogaus kūnas — potemės „protmūšio" stiliumi (įdomu, ne vadovėlis)
   String get subBodyBrain => _pick('Smegenų paslaptys', 'Brain secrets');
   String get subBodyBrainDesc =>

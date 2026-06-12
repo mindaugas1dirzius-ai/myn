@@ -153,6 +153,15 @@ final List<GameTheme> kThemes = <GameTheme>[
     subtitle: (s) => s.categoryBodyDesc,
   ),
   GameTheme(
+    code: 'cosmos',
+    emoji: '🌌',
+    accent: AppColors.levelExtreme,
+    kind: ThemeKind.trivia,
+    open: true, // 🌌 Kosmosas — nauja tema (2026-06-13), potemė „Planetos" pilna
+    title: (s) => s.categoryCosmos,
+    subtitle: (s) => s.categoryCosmosDesc,
+  ),
+  GameTheme(
     code: 'blitz',
     emoji: '⚡',
     accent: AppColors.levelMedium,

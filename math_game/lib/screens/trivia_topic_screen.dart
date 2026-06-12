@@ -41,7 +41,8 @@ class TriviaTopicScreen extends StatelessWidget {
       code == 'geo' ||
       code == 'history' ||
       code == 'pop' ||
-      code == 'sport';
+      code == 'sport' ||
+      code == 'cosmos';
 
   /// Tos temos potemių sąrašas žaidėjo kalba.
   List<_SubTheme> _subThemesFor(AppStrings s) {
@@ -167,6 +168,49 @@ class TriviaTopicScreen extends StatelessWidget {
             subtitle: s.subFoodProductionDesc,
             accent: AppColors.neonBlue,
             open: true,
+          ),
+          _SubTheme(
+            id: 'mix',
+            emoji: '🎲',
+            title: s.topicMix,
+            subtitle: s.topicMixDesc,
+            accent: AppColors.neonBlue,
+            open: true,
+          ),
+        ];
+      case 'cosmos':
+        return [
+          _SubTheme(
+            id: 'planets',
+            emoji: '🪐',
+            title: s.subCosmosPlanets,
+            subtitle: s.subCosmosPlanetsDesc,
+            accent: AppColors.levelHard,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'astronauts',
+            emoji: '🧑‍🚀',
+            title: s.subCosmosAstronauts,
+            subtitle: s.subCosmosAstronautsDesc,
+            accent: AppColors.levelMedium,
+            open: false,
+          ),
+          _SubTheme(
+            id: 'universe',
+            emoji: '🔭',
+            title: s.subCosmosUniverse,
+            subtitle: s.subCosmosUniverseDesc,
+            accent: AppColors.levelExtreme,
+            open: false,
+          ),
+          _SubTheme(
+            id: 'rockets',
+            emoji: '🛰️',
+            title: s.subCosmosRockets,
+            subtitle: s.subCosmosRocketsDesc,
+            accent: AppColors.neonBlue,
+            open: false,
           ),
           _SubTheme(
             id: 'mix',
