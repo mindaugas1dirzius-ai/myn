@@ -33,10 +33,13 @@ class MeltView {
   final int keys;
   final bool resumed;
   final int pendingApplied; // kiek nemokamų raidžių pritaikyta starte
-  // Laiko stabdymas (vienkartinis per partiją).
+  // Spėjimo langas: SPĖTI sustabdo laiką 30 s atsakymui suvesti.
   final bool freezeUsed;
   final int frozenLeftMs; // kiek ms dar užšaldyta (0 — nešaldoma)
-  final int lockedAt; // 0 — nenaudotas; kitaip serverio ms
+  final int lockedAt; // 0 — langas neatidarytas; kitaip serverio ms
+  final int lockMsUsed; // ankstesnių langų susikaupęs užšaldytas laikas ms
+  final int freezesLeft; // kiek spėjimo langų liko šioje partijoje
+  final int wrongPenalty; // bauda 🔑 už klaidingą spėjimą (rodymui)
 
   const MeltView({
     required this.mysteryId,
@@ -62,6 +65,9 @@ class MeltView {
     this.freezeUsed = false,
     this.frozenLeftMs = 0,
     this.lockedAt = 0,
+    this.lockMsUsed = 0,
+    this.freezesLeft = 0,
+    this.wrongPenalty = 0,
   });
 
   factory MeltView.fromJson(Map<String, dynamic> j) {
@@ -93,6 +99,9 @@ class MeltView {
       freezeUsed: j['freezeUsed'] as bool? ?? false,
       frozenLeftMs: (j['frozenLeftMs'] as num?)?.toInt() ?? 0,
       lockedAt: (j['lockedAt'] as num?)?.toInt() ?? 0,
+      lockMsUsed: (j['lockMsUsed'] as num?)?.toInt() ?? 0,
+      freezesLeft: (j['freezesLeft'] as num?)?.toInt() ?? 0,
+      wrongPenalty: (j['wrongPenalty'] as num?)?.toInt() ?? 0,
     );
   }
 }
@@ -123,6 +132,8 @@ class MeltGuessOutcome {
   final int awarded;
   final int totalKeys;
   final int nextGuessInMs; // cooldown iki kito spėjimo (po klaidos)
+  final int penalty; // nominali bauda už klaidą 🔑
+  final int penaltyApplied; // kiek realiai nuskaičiuota (balansas ne <0)
   // Sąžiningas laimėjimo paaiškinimas.
   final int pMax;
   final int elapsedMs;
@@ -137,6 +148,8 @@ class MeltGuessOutcome {
     this.awarded = 0,
     this.totalKeys = 0,
     this.nextGuessInMs = 0,
+    this.penalty = 0,
+    this.penaltyApplied = 0,
     this.pMax = 0,
     this.elapsedMs = 0,
     this.limitMs = 0,
@@ -153,6 +166,8 @@ class MeltGuessOutcome {
       awarded: (j['awarded'] as num?)?.toInt() ?? 0,
       totalKeys: (j['totalKeys'] as num?)?.toInt() ?? 0,
       nextGuessInMs: (j['nextGuessInMs'] as num?)?.toInt() ?? 0,
+      penalty: (j['penalty'] as num?)?.toInt() ?? 0,
+      penaltyApplied: (j['penaltyApplied'] as num?)?.toInt() ?? 0,
       pMax: (b['pMax'] as num?)?.toInt() ?? 0,
       elapsedMs: (b['elapsedMs'] as num?)?.toInt() ?? 0,
       limitMs: (b['limitMs'] as num?)?.toInt() ?? 0,

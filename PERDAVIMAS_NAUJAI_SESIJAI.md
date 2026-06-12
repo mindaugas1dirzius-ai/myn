@@ -1,39 +1,48 @@
-# 🔄 PERDAVIMAS NAUJAI SESIJAI (Handoff) — v3 (2026-06-12 vakaras)
+# 🔄 PERDAVIMAS NAUJAI SESIJAI (Handoff) — v4 (2026-06-12 naktis)
 
 > Šis dokumentas perduoda VISKĄ naujai Claude sesijai. **Perskaityk VISĄ prieš dirbant.**
-> Git: branch `claude/android-app-monetization-ads-RORMZ`, paskutinis commit `ee12616`.
+> Git: branch `claude/android-app-monetization-ads-RORMZ` (naujausią commit žiūrėk `git log --oneline -3`).
 
-## 🚨 PIRMAS DARBAS naujai sesijai (vartotojo spec 2026-06-12 vakaras)
+## 🆕 DVI NAUJOS SAVININKO TAISYKLĖS (2026-06-12, PRIVALOMA)
 
-### A. „Raidžių tirpimo" SPĖTI pertvarka (vartotojo TIKSLI specifikacija):
-1. **SPĖTI mygtukas spaudžiamas VISADA** (dabar aktyvuojasi tik užpildžius visus
-   langelius — vartotojas skundėsi „spėti nesispaudžia").
-2. **Paspaudus SPĖTI — VISAS laikas SUSTOJA** ir žmogus turi **30 sekundžių**
-   suvesti atsakymą (kad nenervintų taškų tirpimas vedant).
-3. **Neteisingai spėjus — MINUS taškų bauda**, BET balansas (mysteryKeys) negali
-   nukristi žemiau 0 — minusuojama tik tiek, kiek žaidėjas turi. Baudos dydį
-   SUDERINTI su vartotoju (pasiūlymas: ~10 % pMax arba fiksuota ~25 🔑).
-4. Atskiras ❄ mygtukas (dabartinis vienkartinis užšaldymas) — PERŽIŪRĖTI: pagal
-   naują spec jis tikriausiai NEBEREIKALINGAS (užšaldymą daro pats SPĖTI).
-   Vartotojas klausė „kas ta snaigė" — UI jam neaiškus.
-   ĮGYVENDINIMAS: pernaudoti freezeMelt mechanizmą (state.lockedAt, deriveMelt
-   atima lockExtra) — tik trigger perkelti į SPĖTI; bauda — guessMelt wrong šakoje
-   `mysteryKeys = max(0, keys - bauda)`.
+1. **ŠĮ dokumentą pildyk NUOLAT darbo eigoje** — po kiekvieno užbaigto gabalo,
+   ne tik sesijos gale. Commit'ink kartu su darbo failais, kad GitHub'e visada
+   būtų šviežias. „Kai reikės perduoti — būtų paprasta."
+2. **JOKIŲ patvirtinimo langų/klausimų savininkui.** Jo žodžiais: „kuo mažiau
+   man mėtyk patvirtinimo langų, geriau išvis nemetyk; ką gali padaryti pats —
+   daryk pats be mano patvirtinimų, aš suteikiu leidimus." T. y. PILNA
+   AUTONOMIJA: aptartiems/užsakytiems darbams imk protingą default'ą, daryk
+   IKI GALO (kodas→deploy→commit→push) ir tada aiškiai PRANEŠK, ką pasirinkai
+   ir kaip pakeisti, jei nepatiks. Leidimus pildyk `.claude/settings.json`.
 
-### B. NEPRITAIKYTAS paslapčių lygių sulygiavimas pagal amžių (vartotojas nutraukė
-įrankį, bet PRINCIPĄ patvirtino: L1=9–12 m. vaikai, L2=paaugliai, L3=suaugę,
-L4=žinovai). Mano paruoštas ir peržiūrėtas perkėlimų sąrašas — TAIKYTI:
-- → L1: mys_klaus_016 (Saulės sistema), mys_klaus_017 (Mėlynasis banginis),
-  mys_klaus_028 (Ugnikalnis), mys_fakt_015 (Drambliai negali pašokti),
-  mys_fakt_020 (Koalos miega)
-- → L2: mys_klaus_004 (Oda), 010 (Didžioji kinų siena), 011 (Laisvės statula),
-  013 (Šiaurės pašvaistė), 015 (Sachara), 018 (Amazonė), 019 (Mona Liza),
-  020 (Pizos bokštas), 024 (Juodoji skylė), 029 (Bermudų trikampis),
-  039 (Kosminė stotis)
-Po A+B: `npx tsc --noEmit` → deploy VISŲ mystery+melt funkcijų (turinys įkompiliuotas):
-startMystery, revealLetters, guessMystery, resetMystery, mysteryPowerup,
-startMelt, syncMelt, guessMelt, freezeMelt, abandonMelt → APK perbūti TIK jei
-keistas klientas → commit+push → PRANEŠTI vartotojui ką patikrinti.
+## ✅ PIRMAS DARBAS ĮGYVENDINTAS (ši sesija, 2026-06-12 naktis)
+
+### A. Melt SPĖTI pertvarka — PADARYTA pagal savininko spec:
+1. **SPĖTI spaudžiamas VISADA** (nebe tik užpildžius langelius).
+2. Paspaudus SPĖTI, kai atsakymas dar nesuvestas → atsidaro **SPĖJIMO LANGAS**:
+   laikas/taškai/raidės SUSTOJA 30 s; suvedi ir spaudi SPĖTI dar kartą = spėjimas.
+   Jei langeliai jau užpildyti — SPĖTI siunčia spėjimą iškart.
+3. **Bauda už klaidą: 10 % nuo pMax** (`MELT_WRONG_PENALTY_FRAC=0.10`,
+   L1 ≈ 20–30 🔑, L4 ≈ 50–75 🔑); `mysteryKeys = max(0, keys − bauda)` — žemiau 0
+   nekrenta. Klientas rodo „Ne! −X 🔑 (banke liko Y)". DYDŽIO SAVININKAS DAR
+   NEPATVIRTINO — pasirinktas rekomenduotas default; jei nepatiks, keisti vieną
+   konstantą meltTypes.ts.
+4. **❄ snaigės mygtukas PAŠALINTAS** — jo darbą daro SPĖTI.
+5. Saugiklis nuo „amžinos pauzės": **MELT_MAX_FREEZES=5** langų/partiją;
+   išnaudojus SPĖTI veikia, bet laikas tiksi (klientas praneša).
+6. PATAISYTAS bug'as: laimėjimo taškai dabar skaičiuojami iš laiko BE užšaldytų
+   tarpų (anksčiau freeze laikas mažino laimėjimą — SPĖTI baustų pats save).
+- Mechanika: `lockedAt` (aktyvus langas) + NAUJAS `lockMsUsed` (susikaupęs
+  uždarytų langų laikas) + `freezeCount`; langą „suvartoja" spėjimas (foldLock)
+  arba jis baigiasi pats po 30 s. Failai: meltTypes.ts, meltFunctions.ts,
+  melt_models.dart, melt_screen.dart.
+
+### B. Paslapčių lygiai pagal amžių — PRITAIKYTA ir DEPLOY'INTA:
+16 perkėlimų (5→L1: mys_klaus_016/017/028, mys_fakt_015/020; 11→L2:
+mys_klaus_004/010/011/013/015/018/019/020/024/029/039). Mįslių lygiai dabar:
+L1=15 · L2=45 · L3=35 · **L4=6 (per mažai — pildant mįsles pirmiausia L4!)**.
+
+Deploy'inta 11 funkcijų (visos mystery+melt), APK perbudavotas ir įdiegtas.
 
 ## 📅 KAS PADARYTA 2026-06-12 (visi commitai push'inti)
 
@@ -168,8 +177,9 @@ Realiai niekas nedingo (sujungėm per `merge`), bet sugaišom laiko.
   jas pagauti ir tiesiai pasakyti, ne aklai pritarti.
 - **NEMĖGSTA patvirtinimo mygtukų langų** (`AskUserQuestion`) — JŲ NENAUDOTI. Klausk
   paprastu tekstu („Sutinki? a/b/c"), jis atsako tekstu.
-- **Geležinė taisyklė:** be aiškaus **„OK, darom"** Claude NIEKO nekuria/nekeičia kode.
-  Pirma išdiskutuojam (kaip veiks, sauga, ar nepažeidžia principų), tada — kodas.
+- **Geležinė taisyklė (patikslinta 2026-06-12):** NAUJIEMS dideliems sumanymams —
+  pirma išdiskutuojam (kaip veiks, sauga), tada kodas. Jau APTARTIEMS/užsakytiems
+  darbams — PILNA AUTONOMIJA be patvirtinimų (žr. taisykles dokumento viršuje).
 - Sprendimus dėl IAM/Google konsolės **daro pats** (žr. 4 skyrių). Tu jam paaiškini, ką paspausti.
 
 ---
@@ -223,7 +233,8 @@ Dirbi **TIESIOGIAI savininko Windows kompiuteryje** (NE debesų Linux!). Detalė
 ## 🧩 5. DARBO PRINCIPAI (kaip mes dirbam) — ŠIE SVARBŪS SAVININKUI
 
 ### 💻 Programavimo
-1. **Jokio kodo be „OK, darom".** Pirma planas + sauga, tada kodas.
+1. **Naujiems sumanymams — pirma planas + sauga, tada kodas.** Aptartiems
+   darbams — autonomija iki galo be patvirtinimų (taisyklė dokumento viršuje).
 2. **Maži, sufokusuoti failai (SRP):** viena atsakomybė viename faile (didžiausi ~280–426 eil.).
    Dizainas (widgets) atskirai nuo logikos (services/providers). NEKURTI monolitų.
 3. **Maži dokumentai, ne vienas didelis:** info skaidom į atskirus `.md`. Atmintis — irgi maži temų failai (13 sk.).

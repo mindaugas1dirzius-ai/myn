@@ -370,7 +370,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_004",
     category: "klausimas",
-    level: 1,
+    level: 2,
     sourceVerified: "Anatomija: oda — didžiausias žmogaus organas",
     texts: {
       en: {
@@ -487,7 +487,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_010",
     category: "klausimas",
-    level: 3,
+    level: 2,
     sourceVerified: "Istorija/architektūra: Didžioji kinų siena (tūkst. km)",
     texts: {
       en: {
@@ -507,7 +507,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_011",
     category: "klausimas",
-    level: 3,
+    level: 2,
     sourceVerified: "Istorija: Laisvės statula — Prancūzijos dovana JAV, 1886",
     texts: {
       en: {
@@ -547,7 +547,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_013",
     category: "klausimas",
-    level: 3,
+    level: 2,
     sourceVerified: "Fizika/astronomija: šiaurės pašvaistė (aurora borealis)",
     texts: {
       en: {
@@ -587,7 +587,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_015",
     category: "klausimas",
-    level: 3,
+    level: 2,
     sourceVerified: "Geografija: Sacharos dykuma — didžiausia karštoji dykuma",
     texts: {
       en: {
@@ -607,7 +607,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_016",
     category: "klausimas",
-    level: 2,
+    level: 1,
     sourceVerified: "Astronomija: Saulės sistema (Saulė + 8 planetos)",
     texts: {
       en: {
@@ -627,7 +627,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_017",
     category: "klausimas",
-    level: 2,
+    level: 1,
     sourceVerified: "Biologija: mėlynasis banginis — didžiausias kada nors gyvenęs gyvūnas",
     texts: {
       en: {
@@ -647,7 +647,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_018",
     category: "klausimas",
-    level: 3,
+    level: 2,
     sourceVerified: "Geografija: Amazonės upė — daugiausia vandens nešanti upė",
     texts: {
       en: {
@@ -667,7 +667,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_019",
     category: "klausimas",
-    level: 3,
+    level: 2,
     sourceVerified: "Menas: Mona Liza — Leonardo da Vinčio portretas, Luvras",
     texts: {
       en: {
@@ -1157,7 +1157,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_020",
     category: "klausimas",
-    level: 3,
+    level: 2,
     sourceVerified: "Geografija/architektūra: Pizos bokštas, Italija",
     texts: {
       en: {
@@ -1237,7 +1237,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_024",
     category: "klausimas",
-    level: 3,
+    level: 2,
     sourceVerified: "Astrofizika: juodoji skylė – objektas, iš kurio neištrūksta net šviesa",
     texts: {
       en: {
@@ -1537,7 +1537,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_028",
     category: "klausimas",
-    level: 2,
+    level: 1,
     sourceVerified: "Geologija: ugnikalnis – kalnas, išmetantis lavą",
     texts: {
       en: {
@@ -1559,7 +1559,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_029",
     category: "klausimas",
-    level: 3,
+    level: 2,
     sourceVerified: "Bermudų trikampis — Atlanto regionas, garsus dingimų legendomis",
     texts: {
       en: {
@@ -1759,7 +1759,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_klaus_039",
     category: "klausimas",
-    level: 3,
+    level: 2,
     sourceVerified: "TKS — didžiausias žmonijos statinys Žemės orbitoje",
     texts: {
       en: {
@@ -1899,7 +1899,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_fakt_015",
     category: "faktas",
-    level: 2,
+    level: 1,
     sourceVerified: "Drambliai — vieninteliai žinduoliai, negalintys pašokti",
     texts: {
       en: {
@@ -1999,7 +1999,7 @@ export const MYSTERIES: MysteryItem[] = [
   {
     id: "mys_fakt_020",
     category: "faktas",
-    level: 2,
+    level: 1,
     sourceVerified: "Koalos miega iki 20 valandų per parą",
     texts: {
       en: {

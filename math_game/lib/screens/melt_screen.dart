@@ -134,10 +134,12 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
   int get _nowServerMs =>
       DateTime.now().millisecondsSinceEpoch + _serverOffsetMs;
 
-  /// Užšaldyto laiko tarpas (iki 30 s) — atimamas iš praėjusio laiko.
-  int get _lockExtra => _view.lockedAt > 0
-      ? (_nowServerMs - _view.lockedAt).clamp(0, _freezeMs)
-      : 0;
+  /// Užšaldytas laikas: ankstesni langai (lockMsUsed) + aktyvus langas (iki 30 s).
+  int get _lockExtra =>
+      _view.lockMsUsed +
+      (_view.lockedAt > 0
+          ? (_nowServerMs - _view.lockedAt).clamp(0, _freezeMs)
+          : 0);
 
   /// Ar laikas ŠIUO METU užšaldytas.
   bool get _frozenNow =>
@@ -336,9 +338,14 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
         _guessLockUntil = DateTime.now()
             .add(Duration(milliseconds: math.max(r.nextGuessInMs, 1500)));
       });
-      _feedback(
-          _t('Ne! Laikrodis tiksi toliau…', 'No! The clock keeps ticking…'),
-          good: false);
+      // Bauda už klaidą: serveris nuskaičiavo iš raktų banko (ne žemiau 0).
+      final msg = r.penaltyApplied > 0
+          ? _t('Ne! −${r.penaltyApplied} 🔑 (banke liko ${r.totalKeys})',
+              'No! −${r.penaltyApplied} 🔑 (${r.totalKeys} left in bank)')
+          : _t('Ne! Laikrodis tiksi toliau…',
+              'No! The clock keeps ticking…');
+      _feedback(msg, good: false);
+      _sync(); // langas uždarytas serveryje — atsinaujinam laikrodį
     } on FirebaseFunctionsException catch (e) {
       if (!mounted) return;
       final msg = e.code == 'resource-exhausted'
@@ -354,8 +361,25 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
     }
   }
 
-  Future<void> _freeze() async {
-    if (_finished || _view.freezeUsed || _busy) return;
+  /// SPĖTI paspaustas: jei atsakymas suvestas — siunčiam spėjimą; kitaip
+  /// atidarom SPĖJIMO LANGĄ (laikas sustoja 30 s atsakymui suvesti).
+  Future<void> _onGuessPressed() async {
+    if (_busy || _finished || _guessLocked) return;
+    if (_canGuess) {
+      await _submitGuess();
+      return;
+    }
+    if (_frozenNow) {
+      // Langas jau atidarytas, bet dar ne visi langeliai užpildyti.
+      _feedback(_t('Užpildyk visus langelius!', 'Fill in all the boxes!'),
+          good: false);
+      return;
+    }
+    await _openGuessWindow();
+  }
+
+  Future<void> _openGuessWindow() async {
+    setState(() => _busy = true);
     try {
       final s = await MeltApi.freeze();
       if (!mounted) return;
@@ -366,16 +390,26 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
         if (mounted) Navigator.of(context).pop();
         return;
       }
-      SoundService.instance.points();
       setState(() => _applyView(s.view!));
-      _feedback(
-          _t('❄️ Laikas sustabdytas 30 sek. — vesk ramiai!',
-              '❄️ Time frozen for 30 s — type calmly!'),
-          good: true);
+      if (_frozenNow) {
+        SoundService.instance.points();
+        _feedback(
+            _t('⏸ Laikas sustojo 30 sek. — suvesk atsakymą ir spausk SPĖTI!',
+                '⏸ Time paused for 30 s — type the answer and press GUESS!'),
+            good: true);
+      } else {
+        // Langų limitas išnaudotas — žaisti galima, bet laikas tiksi.
+        _feedback(
+            _t('Stabdymai išnaudoti — laikas tiksi! Suvesk ir spausk SPĖTI.',
+                'No pauses left — the clock is ticking! Type and press GUESS.'),
+            good: false);
+      }
     } catch (_) {
       if (!mounted) return;
       _feedback(_t('Nepavyko. Bandyk vėl.', 'Failed. Try again.'),
           good: false);
+    } finally {
+      if (mounted) setState(() => _busy = false);
     }
   }
 
@@ -643,7 +677,7 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
           children: [
             Text(
                 frozen
-                    ? _t('ŠALDYMAS', 'FREEZE')
+                    ? _t('SUVESK PER', 'TYPE IN')
                     : _t('KITA RAIDĖ', 'NEXT LETTER'),
                 style: TextStyle(
                     color: frozen
@@ -855,30 +889,32 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
   }
 
   Widget _buttonsRow() {
-    final ready = _canGuess && !_busy && !_finished && !_guessLocked;
-    final canFreeze = !_view.freezeUsed && !_finished;
+    // SPĖTI spaudžiamas VISADA (išskyrus cooldown po klaidos / siuntimą):
+    // neužpildžius — atidaro spėjimo langą (laikas sustoja 30 s),
+    // užpildžius — siunčia spėjimą.
+    final tappable = !_busy && !_finished && !_guessLocked;
+    final ready = tappable && _canGuess;
+    final accent = ready
+        ? AppColors.correct
+        : (tappable ? _accent : AppColors.textSecondary);
     return Row(
       children: [
         _iconBtn(Icons.backspace_outlined, _backspace),
         const SizedBox(width: 8),
         _iconBtn(Icons.clear, _clear),
         const SizedBox(width: 8),
-        // ❄ VIENKARTINIS laiko stabdymas (30 s) — vesk raides be streso.
-        _iconBtn(Icons.ac_unit, canFreeze ? _freeze : null,
-            color: canFreeze ? AppColors.neonBlue : AppColors.textSecondary),
-        const SizedBox(width: 8),
         Expanded(
           child: NeumorphicButton(
-            accent: ready ? AppColors.correct : AppColors.textSecondary,
+            accent: accent,
             padding: const EdgeInsets.symmetric(vertical: 16),
-            onTap: ready ? _submitGuess : null,
+            onTap: tappable ? _onGuessPressed : null,
             child: Text(
               _guessLocked
                   ? _t('PALAUK…', 'WAIT…')
                   : _t('SPĖTI', 'GUESS'),
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: ready ? AppColors.correct : AppColors.textSecondary,
+                color: accent,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
                 letterSpacing: 2,

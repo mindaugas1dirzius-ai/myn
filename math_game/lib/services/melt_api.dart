@@ -34,7 +34,8 @@ class MeltApi {
     return MeltSync.fromJson(_decode(r.data));
   }
 
-  /// VIENKARTINIS laiko stabdymas (30 s) — taškai ir raidės sustoja.
+  /// SPĖJIMO LANGAS: SPĖTI sustabdo laiką 30 s atsakymui suvesti
+  /// (iki MELT_MAX_FREEZES langų per partiją; langą uždaro spėjimas).
   static Future<MeltSync> freeze() async {
     final r = await _functions.httpsCallable('freezeMelt').call();
     return MeltSync.fromJson(_decode(r.data));

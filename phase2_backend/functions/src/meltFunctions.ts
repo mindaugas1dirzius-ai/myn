@@ -36,11 +36,13 @@ import {
   MELT_MAX_LETTERS,
   MELT_FREE_KEEP_HIDDEN,
   MELT_FREEZE_MS,
+  MELT_MAX_FREEZES,
   deriveMelt,
   isValidMeltConfig,
   meltCooldownMs,
   meltPMax,
   meltPoints,
+  meltWrongPenalty,
 } from "./meltTypes";
 
 const REGION = "europe-west1";
@@ -64,7 +66,7 @@ function meltPayload(
 ) {
   const total = letterIndices(content.text).length;
   const d = deriveMelt(state, total, nowMs);
-  // Laiko stabdymo būsena klientui: ar panaudotas ir kiek ms dar užšaldyta.
+  // Spėjimo lango būsena klientui: kiek ms dar užšaldyta ir kiek langų liko.
   const frozenLeftMs =
     state.lockedAt != null
       ? Math.max(0, MELT_FREEZE_MS - (nowMs - state.lockedAt))
@@ -91,6 +93,20 @@ function meltPayload(
     freezeUsed: state.lockedAt != null,
     frozenLeftMs,
     lockedAt: state.lockedAt ?? null,
+    lockMsUsed: state.lockMsUsed ?? 0,
+    freezesLeft: Math.max(0, MELT_MAX_FREEZES - (state.freezeCount ?? 0)),
+    wrongPenalty: meltWrongPenalty(meltPMax(state.level, state.intervalSec)),
+  };
+}
+
+/** Uždaro aktyvų spėjimo langą: jo laikas perkeliamas į lockMsUsed. */
+function foldLock(state: MeltState, nowMs: number): MeltState {
+  if (state.lockedAt == null) return state;
+  const used = Math.min(Math.max(0, nowMs - state.lockedAt), MELT_FREEZE_MS);
+  return {
+    ...state,
+    lockMsUsed: (state.lockMsUsed ?? 0) + used,
+    lockedAt: null,
   };
 }
 
@@ -185,6 +201,8 @@ export const startMelt = onCall(
         intervalSec: intervalSec as number,
         lastGuessTs: 0,
         wrongGuesses: 0,
+        lockMsUsed: 0,
+        freezeCount: 0,
       };
 
       tx.set(
@@ -299,8 +317,10 @@ export const guessMelt = onCall(
 
       const correct = normalizeGuess(guessRaw) === normalizeGuess(content.text);
       if (correct) {
-        const elapsedMs = now - state.startedAt;
+        // Praėjęs laikas BE užšaldytų tarpų (kaip deriveMelt) — spėjimo
+        // langas taškų netirpdo, kitaip SPĖTI baustų pats save.
         const limitMs = state.limitSec * 1000;
+        const elapsedMs = limitMs - d.remainingMs;
         const pMax = meltPMax(state.level, state.intervalSec);
         const awarded = meltPoints(pMax, elapsedMs, limitMs, d.autoPenaltyCount, total);
         const newKeys = ((data.mysteryKeys as number) ?? 0) + awarded;
@@ -339,12 +359,19 @@ export const guessMelt = onCall(
         };
       }
 
-      // Klaida: jokios baudos taškais — tik cooldown auga; laikas tiksi toliau.
+      // KLAIDA: minus raktų bauda (balansas niekada nekrenta žemiau 0),
+      // spėjimo langas uždaromas (laikas vėl tiksi), cooldown auga.
+      const pMaxW = meltPMax(state.level, state.intervalSec);
+      const penalty = meltWrongPenalty(pMaxW);
+      const keysNow = (data.mysteryKeys as number) ?? 0;
+      const keysAfter = Math.max(0, keysNow - penalty);
+      const folded = foldLock(state, now);
       tx.set(
         userRef,
         {
+          mysteryKeys: keysAfter,
           mysteryMelt: {
-            ...state,
+            ...folded,
             lastGuessTs: now,
             wrongGuesses: (state.wrongGuesses ?? 0) + 1,
           },
@@ -355,15 +382,19 @@ export const guessMelt = onCall(
         correct: false,
         expired: false,
         nextGuessInMs: meltCooldownMs((state.wrongGuesses ?? 0) + 1),
+        penalty,
+        penaltyApplied: keysNow - keysAfter,
+        totalKeys: keysAfter,
       };
     });
   }
 );
 
 // =================================================================
-// 3b) freezeMelt — VIENKARTINIS laiko stabdymas (30 s) raidėms suvesti.
-//     Taškai ir raidžių tirpimas sustoja; po 30 s laikas tęsiasi nuo tos
-//     pačios vietos (deterviacija per deriveMelt, jokių laikmačių).
+// 3b) freezeMelt — SPĖJIMO LANGAS: paspaudus SPĖTI laikas sustoja 30 s
+//     atsakymui suvesti. Langą uždaro spėjimas arba jis baigiasi pats.
+//     Saugiklis MELT_MAX_FREEZES — negalima „pauzuoti amžinai" be spėjimo;
+//     išnaudojus langus SPĖTI veikia toliau, tik laikas tiksi (frozen:false).
 // =================================================================
 export const freezeMelt = onCall(
   { enforceAppCheck: true, minInstances: 0, region: REGION },
@@ -382,12 +413,6 @@ export const freezeMelt = onCall(
       if (!state) {
         throw new HttpsError("failed-precondition", "Nėra aktyvios partijos.");
       }
-      if (state.lockedAt != null) {
-        throw new HttpsError(
-          "failed-precondition",
-          "Laiko stabdymas jau panaudotas šioje partijoje."
-        );
-      }
       const item = findMystery(state.id);
       const content = item?.texts[state.lang];
       if (!item || !content) {
@@ -401,12 +426,45 @@ export const freezeMelt = onCall(
         settleLossWrites(tx, userRef);
         return { expired: true, answer: content.text };
       }
-      const newState: MeltState = { ...state, lockedAt: now };
+      const keys = (data.mysteryKeys as number) ?? 0;
+
+      // Langas jau aktyvus — grąžinam esamą būseną (pakartotinis paspaudimas
+      // nekainuoja naujo lango ir nemeta klaidos).
+      const activeLeft =
+        state.lockedAt != null ? MELT_FREEZE_MS - (now - state.lockedAt) : 0;
+      if (activeLeft > 0) {
+        return {
+          expired: false,
+          frozen: true,
+          ...meltPayload(state, content, item.category, now, keys),
+        };
+      }
+
+      // Langų limitas išnaudotas — laikas tiksi, bet žaisti galima toliau.
+      const used = state.freezeCount ?? 0;
+      if (used >= MELT_MAX_FREEZES) {
+        const folded = foldLock(state, now);
+        if (folded !== state) {
+          tx.set(userRef, { mysteryMelt: folded }, { merge: true });
+        }
+        return {
+          expired: false,
+          frozen: false,
+          ...meltPayload(folded, content, item.category, now, keys),
+        };
+      }
+
+      // Atidaram naują langą: pasibaigusio lango laikas — į lockMsUsed.
+      const newState: MeltState = {
+        ...foldLock(state, now),
+        lockedAt: now,
+        freezeCount: used + 1,
+      };
       tx.set(userRef, { mysteryMelt: newState }, { merge: true });
       return {
         expired: false,
-        ...meltPayload(newState, content, item.category, now,
-          (data.mysteryKeys as number) ?? 0),
+        frozen: true,
+        ...meltPayload(newState, content, item.category, now, keys),
       };
     });
   }

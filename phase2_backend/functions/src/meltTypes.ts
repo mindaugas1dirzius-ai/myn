@@ -44,9 +44,24 @@ export const MELT_GUESS_COOLDOWN_MS = 2500;
 /** Nemokamų raidžių lubos: frazė niekada ne „pre-solved" (liks bent tiek paslėptų). */
 export const MELT_FREE_KEEP_HIDDEN = 3;
 
-/** „Laiko stabdymo" langas: kartą per partiją žaidėjas gali užšaldyti laiką
- *  30 sekundžių raidėms ramiai suvesti — taškai ir raidės tuo metu netirpsta. */
+/** SPĖJIMO LANGAS: paspaudus SPĖTI laikas sustoja 30 sekundžių, kad žaidėjas
+ *  ramiai suvestų atsakymą — taškai ir raidės tuo metu netirpsta. Langą
+ *  „suvartoja" spėjimas (teisingas ar ne) arba jis baigiasi pats po 30 s. */
 export const MELT_FREEZE_MS = 30000;
+
+/** Kiek kartų per partiją SPĖTI gali stabdyti laiką — saugiklis, kad nebūtų
+ *  galima „pauzuoti amžinai" be spėjimo (5 langai = 150 s ramybės, sąžiningam
+ *  žaidėjui daugiau nei reikia). Išnaudojus — SPĖTI veikia, bet laikas tiksi. */
+export const MELT_MAX_FREEZES = 5;
+
+/** Bauda už KLAIDINGĄ spėjimą — dalis nuo pMax (lygis 1 ≈ 20–30 🔑,
+ *  lygis 4 ≈ 50–75 🔑). Balansas niekada nekrenta žemiau 0. */
+export const MELT_WRONG_PENALTY_FRAC = 0.10;
+
+/** Baudos dydis raktais už klaidingą spėjimą. */
+export function meltWrongPenalty(pMax: number): number {
+  return Math.round(pMax * MELT_WRONG_PENALTY_FRAC);
+}
 
 /** Bazinis laimėjimas pagal lygį 1..4 — sąmoningai sutampa su klasikinio
  *  režimo banko dydžiais (200/300/400/500), kad ekonomika būtų pažįstama. */
@@ -94,11 +109,16 @@ export interface MeltState {
   intervalSec: number;
   lastGuessTs: number;
   wrongGuesses: number;
-  /** Kada įjungtas vienkartinis laiko stabdymas (null/undefined — dar nenaudotas).
-   *  Visa derivacija atima min(now − lockedAt, MELT_FREEZE_MS) iš praėjusio laiko,
-   *  todėl užšaldymo metu laikas, taškai ir raidės sustoja, o jam pasibaigus —
-   *  tęsiasi lygiai nuo tos pačios vietos (deterministiškai, be papildomų įrašų). */
+  /** AKTYVAUS spėjimo lango pradžia (null — langas neatidarytas). Derivacija
+   *  atima min(now − lockedAt, MELT_FREEZE_MS) iš praėjusio laiko, todėl lango
+   *  metu laikas, taškai ir raidės sustoja. Langą uždaro spėjimas (laikas
+   *  perkeliamas į lockMsUsed) arba jis baigiasi pats po 30 s. */
   lockedAt?: number | null;
+  /** ANKSTESNIŲ (uždarytų/pasibaigusių) langų susikaupęs užšaldytas laikas ms —
+   *  visam laikui atimamas iš praėjusio laiko (deterministiška, be laikmačių). */
+  lockMsUsed?: number;
+  /** Kiek spėjimo langų jau atidaryta šioje partijoje (lubos MELT_MAX_FREEZES). */
+  freezeCount?: number;
 }
 
 // ---------------------------------------------------------------------------
@@ -144,11 +164,12 @@ export function deriveMelt(
 ): MeltDerived {
   const limitMs = state.limitSec * 1000;
   const intervalMs = state.intervalSec * 1000;
-  // Laiko stabdymas: iš praėjusio laiko atimame užšaldytą tarpą (iki 30 s).
-  const lockExtra =
+  // Laiko stabdymas: susikaupęs ankstesnių langų laikas + aktyvus langas (iki 30 s).
+  const activeLockMs =
     state.lockedAt != null
       ? Math.min(Math.max(0, nowMs - state.lockedAt), MELT_FREEZE_MS)
       : 0;
+  const lockExtra = (state.lockMsUsed ?? 0) + activeLockMs;
   const elapsedMs = Math.max(0, nowMs - state.startedAt - lockExtra);
   const expired = elapsedMs >= limitMs;
 

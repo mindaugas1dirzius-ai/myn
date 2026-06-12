@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(git merge *)",
+      "Bash(git rm *)",
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git show*)",
+      "Bash(git checkout *)",
+      "Bash(git branch*)",
+      "Bash(git stash*)",
+      "Bash(git restore *)",
+      "Bash(git ls-files*)",
+      "Bash(cd *)",
+      "Bash(node *)",
+      "Bash(npx tsc*)",
+      "Bash(npx firebase-tools *)",
+      "Bash(npm run *)",
+      "Bash(flutter *)",
+      "Bash(dart *)",
+      "PowerShell(& \"C:\\Users\\minda\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe\"*)",
+      "PowerShell(& 'C:\\Users\\minda\\AppData\\Local\\Android\\Sdk\\platform-tools\\adb.exe'*)",
+      "PowerShell(& \"C:\\Users\\minda\\flutter\\bin\\flutter.bat\"*)",
+      "PowerShell(& 'C:\\Users\\minda\\flutter\\bin\\flutter.bat'*)"
+    ]
+  }
+}
