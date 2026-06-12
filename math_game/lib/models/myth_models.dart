@@ -10,15 +10,20 @@ class MythStatementView {
   final String st; // teiginys
   final String ex; // paaiškinimas (rodomas PO atsakymo)
   final bool isTrue; // ✅ tiesa ar ❌ mitas
+  final String emoji; // subjekto paveikslėlis (🐝/🌙/⚡) — kortelės vaizdui
 
   const MythStatementView(
-      {required this.st, required this.ex, required this.isTrue});
+      {required this.st,
+      required this.ex,
+      required this.isTrue,
+      this.emoji = ''});
 
   factory MythStatementView.fromJson(Map<String, dynamic> j) =>
       MythStatementView(
         st: j['st'] as String? ?? '',
         ex: j['ex'] as String? ?? '',
         isTrue: j['isTrue'] as bool? ?? false,
+        emoji: j['emoji'] as String? ?? '',
       );
 }
 

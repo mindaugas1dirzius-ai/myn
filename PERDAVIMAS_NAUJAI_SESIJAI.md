@@ -285,6 +285,26 @@ default 1 min) + didelis „▶ PRADĖTI". Tas pats žaidimas, tik trukmė keič
 - Turinio pildymo prioritetai dabar TRYS: detektyvo bylos + „klausimas"
   mįslės + mitų teiginiai (visi pagal amžiaus skalę).
 
+## ✅ 8 RATAS (2026-06-12 vėlai): „Tiesa ar mitas?" dizainas v2 (savininkas:
+## „tuščias langas labai liūdna… nustebink mane")
+
+- KIEKVIENAS teiginys gavo SUBJEKTO EMOJI (mythContent `emoji` laukas, visi 40:
+  🐝☀️🐧… — neišduoda atsakymo, tik temą; payload + klientas).
+- Kortelė dabar GYVA: didelis 64 px emoji viršuje (keičiasi su animacija) +
+  tas pats emoji kaip vandens ženklas fone + spalvotas švytėjimas.
+- VERDIKTO ANTSPAUDAS: ✅TIESA/❌MITAS „trinkteli" ant kortelės elasticOut
+  su pasukimu (kaip teismo antspaudas) + „Atspėjai! 🎯/Nepavyko 😅".
+- Paaiškinimas — atskiroje 💡 kortelėje (nebe plikas tekstas).
+- „EGZAMINO LAPAS": 10 taškučių progresas (žalias/raudonas/aktyvus) vietoj
+  juostos; 🔥 „N iš eilės" serijos ženkliukas.
+- PABAIGOS TITULAI pagal rezultatą (staigmena): 10/10 🏆 „Mitų griovėjas!" ·
+  80 %+ 🥇 „Faktų medžiotojas" · 60 %+ 🥈 „Tiesos sekėjas" · 40 %+ 🥉
+  „Smalsuolis" · kitaip 🔎 „Pradedantis tyrėjas" — titulas iššoka elasticOut,
+  rezultate ir taškučių lapas.
+- Savininkas sakė „žaidimas įdomus, palik" — žaidimas TAS PATS, tik dizainas.
+  (Jo „ne tą turėjau omeny" — užfiksuota; jei paaiškės kita TAIP/NE idėja,
+  klausti jo aprašymo prieš kuriant.)
+
 ## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
 
 1. **#50 — 1 banga: potemių papildymas** (TURINIO_PLANAS.md) — naujos potemės

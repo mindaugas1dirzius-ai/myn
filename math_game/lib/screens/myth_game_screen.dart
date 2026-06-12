@@ -35,8 +35,10 @@ class _MythGameScreenState extends State<MythGameScreen> {
   int _idx = 0;
   bool? _picked; // žaidėjo pasirinkimas šiam teiginiui (null — dar nespausta)
   final List<bool> _answers = [];
+  final List<bool> _results = []; // ar i-tas atsakymas teisingas (taškučiams)
   final List<int> _times = [];
   int _correctSoFar = 0;
+  int _streak = 0; // teisingų iš eilės — 🔥 serijai
   DateTime _qStart = DateTime.now();
 
   AppLang _appLang = AppLang.en;
@@ -55,8 +57,10 @@ class _MythGameScreenState extends State<MythGameScreen> {
       _idx = 0;
       _picked = null;
       _answers.clear();
+      _results.clear();
       _times.clear();
       _correctSoFar = 0;
+      _streak = 0;
     });
     try {
       final lang = _isLt ? 'lt' : 'en';
@@ -83,16 +87,34 @@ class _MythGameScreenState extends State<MythGameScreen> {
     final st = _session!.statements[_idx];
     final ok = st.isTrue == val;
     _answers.add(val);
+    _results.add(ok);
     _times.add(DateTime.now().difference(_qStart).inMilliseconds);
     if (ok) {
       _correctSoFar++;
+      _streak++;
       HapticFeedback.lightImpact();
       SoundService.instance.correct();
     } else {
+      _streak = 0;
       HapticFeedback.heavyImpact();
       SoundService.instance.wrong();
     }
     setState(() => _picked = val);
+  }
+
+  /// Detektyvinis titulas pagal rezultatą — smagi staigmena pabaigoje.
+  (String, String) _rankFor(int correct, int total) {
+    final frac = total > 0 ? correct / total : 0.0;
+    if (frac >= 1.0) {
+      return ('🏆', _t('Mitų griovėjas!', 'Mythbuster!'));
+    } else if (frac >= 0.8) {
+      return ('🥇', _t('Faktų medžiotojas', 'Fact hunter'));
+    } else if (frac >= 0.6) {
+      return ('🥈', _t('Tiesos sekėjas', 'Truth seeker'));
+    } else if (frac >= 0.4) {
+      return ('🥉', _t('Smalsuolis', 'Curious mind'));
+    }
+    return ('🔎', _t('Pradedantis tyrėjas', 'Rookie investigator'));
   }
 
   Future<void> _next() async {
@@ -138,29 +160,65 @@ class _MythGameScreenState extends State<MythGameScreen> {
   }
 
   Future<void> _showResultDialog(GameResult r) async {
+    final total = _session!.statements.length;
+    final (rankEmoji, rankTitle) = _rankFor(r.correct, total);
     final again = await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (ctx) {
-        final total = _session!.statements.length;
         return AlertDialog(
           backgroundColor: AppColors.surface,
-          title: Text('🧐 ${_t('Partija baigta!', 'Round over!')}',
-              style: const TextStyle(color: AppColors.textPrimary)),
+          title: Column(
+            children: [
+              // Titulas „iššoka" — smagi pabaigos staigmena.
+              TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0.3, end: 1),
+                duration: const Duration(milliseconds: 550),
+                curve: Curves.elasticOut,
+                builder: (context, sc, child) =>
+                    Transform.scale(scale: sc, child: child),
+                child:
+                    Text(rankEmoji, style: const TextStyle(fontSize: 46)),
+              ),
+              const SizedBox(height: 4),
+              Text(rankTitle,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20)),
+            ],
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('${r.finalScore}',
                   style: const TextStyle(
                       color: _accent,
-                      fontSize: 40,
+                      fontSize: 42,
                       fontWeight: FontWeight.bold)),
               if (r.isNewRecord)
                 Text(_t('🏆 Naujas rekordas!', '🏆 New record!'),
                     style: const TextStyle(
                         color: AppColors.correct,
                         fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              // Atsakymų „egzamino lapas" — žali/raudoni taškučiai.
+              Wrap(
+                spacing: 5,
+                children: [
+                  for (final ok in _results)
+                    Container(
+                      width: 14,
+                      height: 14,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: (ok ? AppColors.correct : AppColors.wrong)
+                            .withValues(alpha: 0.85),
+                      ),
+                    ),
+                ],
+              ),
               const SizedBox(height: 8),
               Text('${_t('Teisingi', 'Correct')}: ${r.correct} / $total',
                   style: const TextStyle(color: AppColors.textPrimary)),
@@ -348,12 +406,13 @@ class _MythGameScreenState extends State<MythGameScreen> {
     final total = _session!.statements.length;
     final answered = _picked != null;
     final ok = answered && _picked == st.isTrue;
+    final verdictColor = st.isTrue ? AppColors.correct : AppColors.wrong;
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(16, 4, 16, 10),
       child: Column(
         children: [
-          // Progresas + teisingų skaitliukas.
+          // Viršus: progresas · 🔥 serija · teisingi.
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -362,6 +421,26 @@ class _MythGameScreenState extends State<MythGameScreen> {
                       color: AppColors.textSecondary,
                       fontWeight: FontWeight.bold,
                       fontSize: 16)),
+              AnimatedScale(
+                scale: _streak >= 2 ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 220),
+                curve: Curves.easeOutBack,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  decoration: BoxDecoration(
+                    color: AppColors.correct.withValues(alpha: 0.14),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                        color: AppColors.correct.withValues(alpha: 0.7)),
+                  ),
+                  child: Text('🔥 $_streak ${_t('iš eilės', 'in a row')}',
+                      style: const TextStyle(
+                          color: AppColors.correct,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13)),
+                ),
+              ),
               Text('✅ $_correctSoFar',
                   style: const TextStyle(
                       color: AppColors.correct,
@@ -369,104 +448,163 @@ class _MythGameScreenState extends State<MythGameScreen> {
                       fontSize: 16)),
             ],
           ),
-          const SizedBox(height: 6),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: LinearProgressIndicator(
-              value: (_idx + (answered ? 1 : 0)) / total,
-              minHeight: 8,
-              backgroundColor: AppColors.shadowDark,
-              valueColor: const AlwaysStoppedAnimation(_accent),
-            ),
+          const SizedBox(height: 8),
+          // „Egzamino lapas" — 10 taškučių (žalias/raudonas/aktyvus/būsimi).
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (var i = 0; i < total; i++)
+                Container(
+                  width: i == _idx && !answered ? 16 : 12,
+                  height: i == _idx && !answered ? 16 : 12,
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: i < _results.length
+                        ? (_results[i] ? AppColors.correct : AppColors.wrong)
+                        : (i == _idx
+                            ? _accent.withValues(alpha: 0.9)
+                            : AppColors.shadowDark),
+                    border: i == _idx && !answered
+                        ? Border.all(color: _accent, width: 2)
+                        : null,
+                  ),
+                ),
+            ],
           ),
           const SizedBox(height: 12),
-          // Teiginio kortelė su 🧐 vandens ženklu.
+          // Teiginio kortelė: didelis subjekto emoji + tekstas + antspaudas.
           Expanded(
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
                 color: AppColors.surface,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(22),
                 border: Border.all(
                   color: answered
-                      ? (ok ? AppColors.correct : AppColors.wrong)
-                          .withValues(alpha: 0.8)
+                      ? verdictColor.withValues(alpha: 0.85)
                       : _accent.withValues(alpha: 0.5),
-                  width: answered ? 2 : 1.5,
+                  width: answered ? 2.2 : 1.5,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                      color: (answered ? verdictColor : _accent)
+                          .withValues(alpha: 0.14),
+                      blurRadius: 18,
+                      spreadRadius: 2),
+                ],
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(22),
                 child: Stack(
+                  alignment: Alignment.center,
                   children: [
+                    // Subjekto emoji fone — didelis, vos matomas.
                     Positioned(
-                      right: -12,
-                      bottom: -16,
+                      right: -18,
+                      bottom: -22,
                       child: Opacity(
-                        opacity: 0.07,
-                        child:
-                            const Text('🧐', style: TextStyle(fontSize: 120)),
+                        opacity: 0.08,
+                        child: Text(st.emoji.isNotEmpty ? st.emoji : '🧐',
+                            style: const TextStyle(fontSize: 150)),
                       ),
                     ),
-                    Padding(
+                    SingleChildScrollView(
                       padding: const EdgeInsets.all(18),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          // Didelis subjekto paveikslėlis — kortelė gyva.
+                          AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 250),
+                            transitionBuilder: (child, anim) =>
+                                ScaleTransition(
+                                    scale: anim,
+                                    child: FadeTransition(
+                                        opacity: anim, child: child)),
+                            child: Text(
+                              st.emoji.isNotEmpty ? st.emoji : '🧐',
+                              key: ValueKey(_idx),
+                              style: const TextStyle(fontSize: 64),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
                           AutoSizeText(
                             st.st,
                             maxLines: 5,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 color: AppColors.textPrimary,
-                                fontSize: 24,
+                                fontSize: 23,
                                 height: 1.3,
                                 fontWeight: FontWeight.w600),
                           ),
-                          // Verdiktas + paaiškinimas (po atsakymo).
+                          // VERDIKTO ANTSPAUDAS + paaiškinimo kortelė.
                           if (answered) ...[
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 14),
                             TweenAnimationBuilder<double>(
-                              tween: Tween(begin: 0.6, end: 1),
-                              duration: const Duration(milliseconds: 320),
-                              curve: Curves.easeOutBack,
-                              builder: (context, sc, child) =>
-                                  Transform.scale(scale: sc, child: child),
+                              tween: Tween(begin: 0, end: 1),
+                              duration: const Duration(milliseconds: 360),
+                              curve: Curves.elasticOut,
+                              builder: (context, t, child) =>
+                                  Transform.rotate(
+                                angle: -0.10 * t,
+                                child: Transform.scale(
+                                    scale: 0.4 + 1.2 * t - 0.6 * t * t,
+                                    child: child),
+                              ),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 14, vertical: 6),
+                                    horizontal: 18, vertical: 8),
                                 decoration: BoxDecoration(
-                                  color: (st.isTrue
-                                          ? AppColors.correct
-                                          : AppColors.wrong)
-                                      .withValues(alpha: 0.16),
+                                  color:
+                                      verdictColor.withValues(alpha: 0.14),
                                   borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
-                                      color: st.isTrue
-                                          ? AppColors.correct
-                                          : AppColors.wrong),
+                                      color: verdictColor, width: 2.5),
                                 ),
                                 child: Text(
                                   st.isTrue
                                       ? '✅ ${_t('TIESA', 'FACT')}'
                                       : '❌ ${_t('MITAS', 'MYTH')}',
                                   style: TextStyle(
-                                      color: st.isTrue
-                                          ? AppColors.correct
-                                          : AppColors.wrong,
+                                      color: verdictColor,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 18),
+                                      fontSize: 22,
+                                      letterSpacing: 1.5),
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 6),
                             Text(
-                              st.ex,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 14.5,
-                                  height: 1.35),
+                              ok
+                                  ? _t('Atspėjai! 🎯', 'You got it! 🎯')
+                                  : _t('Nepavyko 😅', 'Not this time 😅'),
+                              style: TextStyle(
+                                  color: ok
+                                      ? AppColors.correct
+                                      : AppColors.wrong,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 13),
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: _accent.withValues(alpha: 0.08),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                    color:
+                                        _accent.withValues(alpha: 0.35)),
+                              ),
+                              child: Text(
+                                '💡 ${st.ex}',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                    color: AppColors.textPrimary,
+                                    fontSize: 14.5,
+                                    height: 1.35),
+                              ),
                             ),
                           ],
                         ],

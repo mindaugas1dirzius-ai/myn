@@ -127,8 +127,9 @@ export const startMythGame = onCall(
         const t = m.texts[lang] ?? m.texts.en!;
         // isTrue/ex siunčiami klientui (variantas C, kaip trivijos answer):
         // momentinei reakcijai + paaiškinimui; taškus skaičiuoja serveris
-        // pagal LAIKĄ, tad žinojimas sukčiui nieko neduoda.
-        return { st: t.st, ex: t.ex, isTrue: m.isTrue };
+        // pagal LAIKĄ, tad žinojimas sukčiui nieko neduoda. emoji — subjekto
+        // paveikslėlis kortelei (neišduoda, tiesa ar mitas).
+        return { st: t.st, ex: t.ex, isTrue: m.isTrue, emoji: m.emoji };
       }),
     };
   }
