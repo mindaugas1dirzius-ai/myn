@@ -393,6 +393,22 @@ kai jis yra — gamta/trivijos). NIEKAS funkciškai nekeista — tik vaizdas.
 - PRINCIPAS ateičiai: kiekviena bauda/apribojimas ŽAIDĖJUI PAAIŠKINAMAS
   rezultatuose — „tylus nulis" atrodo kaip bug'as ir griauna pasitikėjimą.
 
+## ⚖️ 12 RATAS (2026-06-13): SAVININKO BAUDŲ FORMULĖ („klaida = dviguba
+## teisingo vertė, bet 9/1 NEGALI būti nulis — turi būti logika")
+
+- 🧐 MITAI — dinaminė proporcinė formulė (NE fiksuota konstanta; MYTH_WRONG_PENALTY
+  PAŠALINTA): `taškai = uždirbta × max(0, teisingi − 2×klaidos) / teisingi`.
+  Skalė: 10/0=100 % · 9/1≈78 % · 8/2=50 % · 7/3≈14 % · ≤6/4=0 (2 mygtukų
+  žaidime 5/5 = atsitiktinumas, tad logiška). Atlygiai už persvarą liko.
+- ⚡ BLITZ: BLITZ_WRONG_PENALTY 150 → **200** (= 2× bazė 100, savininko
+  „dvigubai"); gap-gate 600 ms liko; kombo viršuje, tad 9/1 lieka aukštai.
+- 🎯 6 VARIANTŲ: liko −25 (jau atitinka logiką: 9/1≈830, spamas→0) — NEKEISTA.
+- Klientai: blitz −200 floatas/taisyklė; mitų tekstai „klaida nubraukia
+  dvigubą atsakymo vertę" (pick/in-game/dialoge). Išskaidymas ✅+/💥− rodo
+  faktinius skaičius automatiškai (pointsPenalty = earned − final).
+- PRINCIPAS: baudos PROPORCINGOS (no cliff) — geras rezultatas su 1 klaida
+  niekada nenulinamas; atsitiktinumas visada ≈ 0.
+
 ## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
 
 1. **#50 — 1 banga: potemių papildymas** (TURINIO_PLANAS.md) — naujos potemės

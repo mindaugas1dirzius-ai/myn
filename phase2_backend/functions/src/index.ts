@@ -27,7 +27,6 @@ import {
   ROTATION_KEEP,
   ROTATION_KEEP_CAT,
   MATH_FAMILIES,
-  MYTH_WRONG_PENALTY,
   QUIZ_WRONG_PENALTY,
   QUIZ_REWARD_MIN_CORRECT,
 } from "./gameConfig";
@@ -273,10 +272,21 @@ export const submitScore = onCall(
       const pointsEarned = score; // uždirbta UŽ TEISINGUS (prieš baudas)
       let rewardCorrect = correct; // kiek „užskaitom" atlygiams (monetos/raidės)
       if ((game.mode as string).startsWith("myth")) {
-        // 🧐 Mitai (2 mygtukai, ~50 % atsitiktinai): bauda už klaidą +
-        // atlygiai tik už PERSVARĄ, be greičio bonuso (savo tempu).
+        // 🧐 Mitai (2 mygtukai, ~50 % atsitiktinai). SAVININKO LOGIKA
+        // (2026-06-13): klaida nubraukia DVIGUBĄ teisingo atsakymo vertę,
+        // PROPORCINGAI šio raundo uždarbiui — 9/1 lieka aukštai (~78 %),
+        // 8/2 = 50 %, o 6/4 ir blogiau (≈atsitiktinumas) = 0.
+        //   taškai = uždirbta × max(0, teisingi − 2×klaidos) / teisingi
         const wrong = serverAnswers.length - correct;
-        score = Math.max(0, score - wrong * MYTH_WRONG_PENALTY);
+        score = correct > 0
+          ? Math.max(
+              0,
+              Math.round(
+                (pointsEarned * Math.max(0, correct - 2 * wrong)) / correct
+              )
+            )
+          : 0;
+        // Atlygiai — už PERSVARĄ, be greičio bonuso (savo tempu).
         rewardCorrect = Math.max(0, correct - wrong);
         coinsEarned = rewardCorrect;
       } else {

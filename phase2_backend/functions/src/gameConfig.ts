@@ -75,20 +75,21 @@ export const BLITZ_FINAL_X2_LAST_MS = 5000;
 export const BLITZ_CAND_MAX_CHARS = 30;
 /** Klausimo ilgio lubos blitz'ui. */
 export const BLITZ_Q_MAX_CHARS = 100;
-/** BAUDA už klaidingą blitz atsakymą (savininkas 2026-06-13, sugriežtinta
- *  po jo testo „spaudinėjau vieną mygtuką — gavau 350"): turi viršyti
- *  vidutinį laimėjimą su kombo, kad atsitiktinio spaudymo vidurkis būtų
- *  NEIGIAMAS. Galutinis rezultatas niekada nekrenta žemiau 0. */
-export const BLITZ_WRONG_PENALTY = 150;
+/** BAUDA už klaidingą blitz atsakymą — SAVININKO LOGIKA (2026-06-13):
+ *  klaida kainuoja DVIGUBĄ teisingo atsakymo vertę (2 × bazė 100).
+ *  Atsitiktinio spaudymo vidurkis neigiamas; 9/1 lieka aukštai.
+ *  Galutinis rezultatas niekada nekrenta žemiau 0. */
+export const BLITZ_WRONG_PENALTY = 200;
 
 /** Mažiausias tarpas tarp blitz atsakymų, kad atsakymas DUOTŲ taškų:
  *  per <0,6 s žmogus klausimo neperskaito — tai spaudinėjimas. Tokie
  *  atsakymai taškų neduoda (bet klaidos bauda vis tiek galioja). */
 export const BLITZ_MIN_GAP_MS = 600;
 
-/** BAUDA už klaidą „Tiesa ar mitas?" (ta pati spaudinėjimo apsauga):
- *  atimama iš galutinių taškų po wrong × bauda, grindys 0. */
-export const MYTH_WRONG_PENALTY = 60;
+/** „Tiesa ar mitas?" bauda — SAVININKO FORMULĖ (2026-06-13, žr. submitScore):
+ *  klaida nubraukia DVIGUBĄ teisingo vertę proporcingai:
+ *  taškai = uždirbta × max(0, teisingi − 2×klaidos) / teisingi.
+ *  (Fiksuotos konstantos nebėra — formulė dinaminė.) */
 
 /** BAUDA už ATSAKYTĄ klaidingai 6 variantų žaidimuose (matematika/gamta/
  *  trivijos; savininkas 2026-06-13: „už neatspėtus niekas nenuraso — tada

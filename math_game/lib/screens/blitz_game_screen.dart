@@ -185,10 +185,10 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
       HapticFeedback.heavyImpact();
       SoundService.instance.wrong();
       _streak = 0;
-      // BAUDA už klaidą (veidrodis serverio formulės): spaudinėjimas
-      // nebeapsimoka. Eigoje suma gali būti minusinė — rodome nuo 0.
-      _lastGain = -150;
-      _liveScore -= 150;
+      // BAUDA už klaidą = 2× bazė (veidrodis serverio formulės):
+      // spaudinėjimas nebeapsimoka. Eigos suma gali būti minusinė — rodome nuo 0.
+      _lastGain = -200;
+      _liveScore -= 200;
     }
     setState(() {
       _lastOk = ok;

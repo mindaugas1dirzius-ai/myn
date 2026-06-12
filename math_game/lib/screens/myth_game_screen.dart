@@ -206,8 +206,8 @@ class _MythGameScreenState extends State<MythGameScreen> {
                         fontSize: 14,
                         fontWeight: FontWeight.bold)),
                 Text(
-                  _t('Kiekviena klaida nubraukia 60 taškų',
-                      'Each mistake deducts 60 points'),
+                  _t('Klaida nubraukia dvigubą teisingo atsakymo vertę',
+                      'A mistake deducts double a correct answer\'s value'),
                   style: const TextStyle(
                       color: AppColors.textSecondary, fontSize: 11),
                 ),
@@ -350,8 +350,8 @@ class _MythGameScreenState extends State<MythGameScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            _t('10 teiginių · po atsakymo sužinosi KODĖL · greitas atsakymas = daugiau taškų · klaida = −60',
-                '10 statements · learn WHY after each answer · fast answer = more points · mistake = −60'),
+            _t('10 teiginių · po atsakymo sužinosi KODĖL · klaida nubraukia dvigubą atsakymo vertę',
+                '10 statements · learn WHY after each answer · a mistake costs double an answer'),
             textAlign: TextAlign.center,
             style:
                 const TextStyle(color: AppColors.textSecondary, fontSize: 12),
@@ -604,8 +604,8 @@ class _MythGameScreenState extends State<MythGameScreen> {
                             Text(
                               ok
                                   ? _t('Atspėjai! 🎯', 'You got it! 🎯')
-                                  : _t('Nepavyko 😅  −60 taškų',
-                                      'Not this time 😅  −60 points'),
+                                  : _t('Nepavyko 😅 — klaida kainuoja dvigubai',
+                                      'Not this time 😅 — a mistake costs double'),
                               style: TextStyle(
                                   color: ok
                                       ? AppColors.correct
