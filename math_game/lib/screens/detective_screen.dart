@@ -287,7 +287,17 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
   }
 
   Future<void> _submitTyped() async {
-    if (!_canGuess || _busy || _finished) return;
+    if (_busy || _finished) return;
+    // Mygtukas spaudžiamas VISADA — jei langeliai neužpildyti, paaiškinam.
+    if (!_canGuess) {
+      SoundService.instance.tap();
+      setState(() => _cursor = _firstEmpty());
+      _feedback(
+          _t('Užpildyk visus langelius raidėmis ir spausk dar kartą!',
+              'Fill in all the boxes with letters, then press again!'),
+          good: false);
+      return;
+    }
     setState(() => _busy = true);
     try {
       final r = await DetectiveApi.guess(_buildGuess());
@@ -302,35 +312,78 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
     }
   }
 
-  Future<void> _accuse(int idx) async {
-    if (_busy || _finished) return;
+  /// Paspaudus kortelę — aiškus pasirinkimas: KALTINTI ar išbraukti.
+  Future<void> _cardAction(int idx) async {
     final v = _view!;
-    final ok = await showDialog<bool>(
+    final emoji = v.boardEmoji.length > idx ? v.boardEmoji[idx] : '🎯';
+    final action = await showDialog<String>(
       context: context,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: Text(
-            '${v.boardEmoji.length > idx ? v.boardEmoji[idx] : '🎯'} '
-            '${v.board[idx]}',
+        title: Text('$emoji ${v.board[idx]}',
             style: const TextStyle(color: AppColors.textPrimary)),
         content: Text(
-          _t('Kaltinti ŠITĄ? Klaida kainuos 1 🔍',
-              'Accuse THIS one? A mistake costs 1 🔍'),
+          _t('Kaltinti šitą įtariamąjį? Klaida kainuos 1 🔍',
+              'Accuse this suspect? A mistake costs 1 🔍'),
           style: const TextStyle(color: AppColors.textSecondary),
         ),
         actions: [
           TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: Text(_t('Dar galvoju', 'Still thinking'))),
+              onPressed: () => Navigator.pop(ctx, 'cancel'),
+              child: Text(_t('Atšaukti', 'Cancel'))),
           TextButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: Text(_t('KALTINU!', 'ACCUSE!'),
+              onPressed: () => Navigator.pop(ctx, 'eliminate'),
+              child: Text('❌ ${_t('Išbraukti', 'Cross out')}',
+                  style: const TextStyle(color: AppColors.textSecondary))),
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, 'accuse'),
+              child: Text('🎯 ${_t('KALTINU!', 'ACCUSE!')}',
                   style: const TextStyle(
                       color: AppColors.wrong, fontWeight: FontWeight.bold))),
         ],
       ),
     );
-    if (ok != true || !mounted) return;
+    if (!mounted) return;
+    if (action == 'eliminate') {
+      SoundService.instance.tap();
+      setState(() => _eliminated.add(idx));
+      return;
+    }
+    if (action == 'accuse') await _accuse(idx, confirm: false);
+  }
+
+  Future<void> _accuse(int idx, {bool confirm = true}) async {
+    if (_busy || _finished) return;
+    final v = _view!;
+    if (confirm) {
+      final ok = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          backgroundColor: AppColors.surface,
+          title: Text(
+              '${v.boardEmoji.length > idx ? v.boardEmoji[idx] : '🎯'} '
+              '${v.board[idx]}',
+              style: const TextStyle(color: AppColors.textPrimary)),
+          content: Text(
+            _t('Kaltinti ŠITĄ? Klaida kainuos 1 🔍',
+                'Accuse THIS one? A mistake costs 1 🔍'),
+            style: const TextStyle(color: AppColors.textSecondary),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(ctx, false),
+                child: Text(_t('Dar galvoju', 'Still thinking'))),
+            TextButton(
+                onPressed: () => Navigator.pop(ctx, true),
+                child: Text(_t('KALTINU!', 'ACCUSE!'),
+                    style: const TextStyle(
+                        color: AppColors.wrong,
+                        fontWeight: FontWeight.bold))),
+          ],
+        ),
+      );
+      if (ok != true || !mounted) return;
+    }
     setState(() => _busy = true);
     try {
       final r = await DetectiveApi.pick(idx);
@@ -898,8 +951,8 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
     return Column(
       children: [
         Text(
-          _t('Spustelk — išbraukti/grąžinti · LAIKYK — kaltinti',
-              'Tap — cross out/restore · HOLD — accuse'),
+          _t('Spausk kortelę — KALTINTI arba išbraukti',
+              'Tap a card — ACCUSE or cross out'),
           style: const TextStyle(color: AppColors.textSecondary, fontSize: 11),
         ),
         const SizedBox(height: 4),
@@ -921,14 +974,14 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
                 onTap: _busy || _finished
                     ? null
                     : () {
-                        SoundService.instance.tap();
-                        setState(() {
-                          if (_eliminated.contains(i)) {
-                            _eliminated.remove(i);
-                          } else {
-                            _eliminated.add(i);
-                          }
-                        });
+                        if (_eliminated.contains(i)) {
+                          SoundService.instance.tap();
+                          setState(() => _eliminated.remove(i));
+                        } else {
+                          // Paspaudimas atveria aiškų pasirinkimą:
+                          // 🎯 KALTINTI arba ❌ išbraukti.
+                          _cardAction(i);
+                        }
                       },
                 onLongPress: _busy || _finished || _eliminated.contains(i)
                     ? null
@@ -1134,7 +1187,9 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
   }
 
   Widget _guessRow() {
-    final ready = _canGuess && !_busy;
+    // SPĖTI spaudžiamas VISADA (neužpildžius — paaiškinimas, ne tyla).
+    final tappable = !_busy && !_finished;
+    final ready = tappable && _canGuess;
     return Row(
       children: [
         _iconBtn(Icons.backspace_outlined, () {
@@ -1163,14 +1218,20 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
         const SizedBox(width: 8),
         Expanded(
           child: NeumorphicButton(
-            accent: ready ? _accent : AppColors.textSecondary,
+            accent: ready
+                ? _accent
+                : (tappable ? AppColors.levelMedium : AppColors.textSecondary),
             padding: const EdgeInsets.symmetric(vertical: 15),
-            onTap: ready ? _submitTyped : null,
+            onTap: tappable ? _submitTyped : null,
             child: Text(
               _t('SPĖTI ŽODĮ', 'GUESS THE WORD'),
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: ready ? _accent : AppColors.textSecondary,
+                color: ready
+                    ? _accent
+                    : (tappable
+                        ? AppColors.levelMedium
+                        : AppColors.textSecondary),
                 fontWeight: FontWeight.bold,
                 fontSize: 17,
                 letterSpacing: 1.6,
