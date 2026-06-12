@@ -1458,7 +1458,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "Mont Blanc is the highest mountain in the Alps.",
       },
       lt: {
-        question: "Monblanas yra aukščiausia kurių kalnų viršūnė?",
+        question: "Kurie kalnai turi aukščiausią viršūnę Monblaną?",
         correct: "Alpės",
         distractors: ["Pirėnai", "Andai", "Karpatai", "Uralas", "Kaukazas"],
         explanation: "Monblanas — aukščiausias Alpių kalnas.",
@@ -1839,7 +1839,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "Venice with its canals is in Italy.",
       },
       lt: {
-        question: "Venecija, kanalų miestas, yra kurioje šalyje?",
+        question: "Kuri šalis garsėja kanalų miestu Venecija?",
         correct: "Italija",
         distractors: ["Prancūzija", "Ispanija", "Graikija", "Portugalija", "Austrija"],
         explanation: "Venecija su kanalais yra Italijoje.",
@@ -1897,7 +1897,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "Big Ben is a famous clock tower in London.",
       },
       lt: {
-        question: "Garsus laikrodis „Big Ben” yra kuriame mieste?",
+        question: "Kuris miestas garsėja laikrodžiu „Big Ben”?",
         correct: "Londonas",
         distractors: ["Paryžius", "Roma", "Madridas", "Berlynas", "Dublinas"],
         explanation: "„Big Ben” — garsus laikrodžio bokštas Londone.",
@@ -2380,7 +2380,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "The Volga flows through Russia.",
       },
       lt: {
-        question: "Volga, ilgiausia Europos upė, yra kurioje šalyje?",
+        question: "Kuri šalis garsėja ilgiausia Europos upe Volga?",
         correct: "Rusija",
         distractors: ["Ukraina", "Lenkija", "Vokietija", "Rumunija", "Baltarusija"],
         explanation: "Volga teka per Rusiją.",
@@ -2449,7 +2449,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "Lake Victoria is the largest lake in Africa.",
       },
       lt: {
-        question: "Viktorijos ežeras, didžiulis ežeras, yra kuriame žemyne?",
+        question: "Kuris žemynas garsėja didžiuliu Viktorijos ežeru?",
         correct: "Afrika",
         distractors: ["Azija", "Pietų Amerika", "Šiaurės Amerika", "Europa", "Australija"],
         explanation: "Viktorijos ežeras — didžiausias Afrikos ežeras.",
@@ -2772,7 +2772,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "Aconcagua stands in Argentina's Andes.",
       },
       lt: {
-        question: "Akonkagva, aukščiausia Amerikų viršūnė, yra kurioje šalyje?",
+        question: "Kuri šalis didžiuojasi aukščiausia Amerikų viršūne Akonkagva?",
         correct: "Argentina",
         distractors: ["Čilė", "Peru", "Bolivija", "Ekvadoras", "Kolumbija"],
         explanation: "Akonkagva yra Argentinos Anduose.",
@@ -3003,7 +3003,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "Angel Falls plunges from a plateau in Venezuela.",
       },
       lt: {
-        question: "Andželo krioklys, aukščiausias pasaulyje, yra kurioje šalyje?",
+        question: "Kuri šalis garsėja aukščiausiu pasaulyje Andželo kriokliu?",
         correct: "Venesuela",
         distractors: ["Brazilija", "Kolumbija", "Peru", "Gajana", "Ekvadoras"],
         explanation: "Andželo krioklys krenta nuo plokščiakalnio Venesueloje.",
@@ -3399,7 +3399,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "Everest's peak sits exactly on the Nepal–China line.",
       },
       lt: {
-        question: "Everesto viršūnė yra ant Nepalo ir kurios šalies sienos?",
+        question: "Kuri šalis kartu su Nepalu dalijasi Everesto viršūnės siena?",
         correct: "Kinija",
         distractors: ["Indija", "Butanas", "Pakistanas", "Bangladešas", "Mianmaras"],
         explanation: "Everesto smaigalys yra tiksliai ant Nepalo ir Kinijos ribos.",
@@ -3516,10 +3516,10 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "Baarle's border weaves through houses, splitting some in two.",
       },
       lt: {
-        question: "Bãrlės miestelis garsus susipynusiais kurių dviejų šalių enklavais?",
+        question: "Kurios dvi šalys turi susipynusius enklavus Baarlės miestelyje?",
         correct: "Belgija ir Nyderlandai",
         distractors: ["Prancūzija ir Ispanija", "Vokietija ir Lenkija", "Šveicarija ir Italija", "Austrija ir Vengrija", "Norvegija ir Švedija"],
-        explanation: "Bãrlės siena vingiuoja per namus, kai kuriuos perskirdama pusiau.",
+        explanation: "Baarlės siena vingiuoja per namus, kai kuriuos perskirdama pusiau.",
       },
     },
   },
@@ -3794,7 +3794,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "The Eurasian pole of inaccessibility is in China's Xinjiang.",
       },
       lt: {
-        question: "Sausumos taškas, labiausiai nutolęs nuo bet kurio vandenyno, yra šiaurės vakarų kurioje šalyje?",
+        question: "Kuri šalis savo šiaurės vakaruose turi sausumos tašką, labiausiai nutolusį nuo vandenyno?",
         correct: "Kinija",
         distractors: ["Rusija", "Kazachstanas", "Mongolija", "Kanada", "Australija"],
         explanation: "Eurazijos nepasiekiamumo polius yra Kinijos Sindziange.",
@@ -4213,7 +4213,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "Chichén Itzá's step pyramid stands in Mexico's Yucatán.",
       },
       lt: {
-        question: "Majų piramidė Čičen Ica kyla kurioje šalyje?",
+        question: "Kuri šalis garsėja majų piramide Čičen Ica?",
         correct: "Meksika",
         distractors: ["Gvatemala", "Hondūras", "Belizas", "Peru", "Bolivija"],
         explanation: "Čičen Icos laiptuota piramidė stovi Meksikos Jukatane.",
@@ -4259,7 +4259,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "Begun in 1882, the Sagrada Família is still being built.",
       },
       lt: {
-        question: "Gaudžio nebaigta Sagrada Familijos bažnyčia yra kuriame mieste?",
+        question: "Kuris miestas garsėja Gaudžio nebaigta Sagrada Familijos bažnyčia?",
         correct: "Barselona",
         distractors: ["Madridas", "Valensija", "Sevilija", "Lisabona", "Bilbao"],
         explanation: "Pradėta 1882 m., Sagrada Familija tebestatoma iki šiol.",
@@ -4399,7 +4399,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
       lt: {
         question: "Kurioje sostinėje gyvena beveik pusė Pietų Korėjos gyventojų?",
         correct: "Seulas",
-        distractors: ["Busanas", "Inčonas", "Tegu", "Pchenjanas", "Osaka"],
+        distractors: ["Pusanas", "Inčchonas", "Tegu", "Pchenjanas", "Osaka"],
         explanation: "Seulo metropolijoje gyvena maždaug pusė Pietų Korėjos.",
       },
     },
@@ -4445,7 +4445,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
         explanation: "Troy's ruins lie at Hisarlik on Turkey's Aegean coast.",
       },
       lt: {
-        question: "Legendinis Trojos miestas stovėjo dabartinėje kurioje šalyje?",
+        question: "Kuri dabartinė šalis kadaise turėjo legendinį Trojos miestą?",
         correct: "Turkija",
         distractors: ["Graikija", "Italija", "Kipras", "Libanas", "Egiptas"],
         explanation: "Trojos griuvėsiai yra Hisarlike, Turkijos Egėjo pakrantėje.",

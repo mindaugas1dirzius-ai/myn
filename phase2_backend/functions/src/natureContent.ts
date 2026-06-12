@@ -1613,7 +1613,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         explanation: "Tusks are very long incisor teeth that keep growing through the elephant's life.",
       },
       lt: {
-        question: "Dramblio iltys iš tikrųjų yra kas?",
+        question: "Kas iš tikrųjų yra dramblio iltys?",
         correct: "Dantys",
         distractors: ["Kaulai", "Ragai", "Nagai", "Letenų nagai", "Plaukai"],
         explanation: "Iltys yra labai ilgi priekiniai dantys, kurie auga visą dramblio gyvenimą.",
@@ -1636,7 +1636,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         explanation: "A narwhal's spiral 'horn' is really a very long tooth that grows out through its lip.",
       },
       lt: {
-        question: "Narvalo ilgas „ragas” iš tikrųjų yra kas?",
+        question: "Kas iš tikrųjų yra narvalo ilgas „ragas”?",
         correct: "Dantis",
         distractors: ["Kaulas", "Ragas", "Elnio ragas", "Nosis", "Pelekas"],
         explanation: "Narvalo spiralinis „ragas” yra labai ilgas dantis, išaugantis pro lūpą.",
@@ -2079,7 +2079,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         explanation: "A snake flicks its tongue to catch scent particles, then 'smells' them inside its mouth.",
       },
       lt: {
-        question: "Gyvatės daugiausia uodžia naudodamos ką?",
+        question: "Kurią kūno dalį gyvatės naudoja kvapams užuosti?",
         correct: "Liežuvį",
         distractors: ["Nosį", "Ausis", "Akis", "Odą", "Uodegą"],
         explanation: "Gyvatė kaišioja liežuvį, sugauna kvapo daleles ir „uodžia” jas burnoje.",
@@ -2102,7 +2102,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         explanation: "Spiders are arachnids: they have 8 legs and no antennae, unlike 6-legged insects.",
       },
       lt: {
-        question: "Voras nėra vabzdys – jis yra kas?",
+        question: "Jei voras nėra vabzdys, tai kas jis?",
         correct: "Voragyvis",
         distractors: ["Vabzdys", "Roplys", "Vėžiagyvis", "Varliagyvis", "Žinduolis"],
         explanation: "Vorai yra voragyviai: turi 8 kojas ir neturi čiuptuvėlių, skirtingai nei 6 kojų vabzdžiai.",
@@ -2426,7 +2426,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         explanation: "For its weight, spider silk is stronger than steel and very stretchy too.",
       },
       lt: {
-        question: "Pagal svorį voro tinklo siūlas yra stipresnis už ką?",
+        question: "Už ką pagal svorį stipresnis voro tinklo siūlas?",
         correct: "Plieną",
         distractors: ["Popierių", "Medvilnę", "Vandenį", "Stiklą", "Medieną"],
         explanation: "Pagal svorį voro siūlas stipresnis už plieną ir dar labai tamprus.",
@@ -2520,7 +2520,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         explanation: "Jellyfish are about 95% water and have no brain, heart or bones.",
       },
       lt: {
-        question: "Medūza maždaug 95% sudaryta iš ko?",
+        question: "Iš ko maždaug 95% sudaryta medūza?",
         correct: "Vandens",
         distractors: ["Druskos", "Riebalų", "Raumenų", "Kaulų", "Oro"],
         explanation: "Medūzos maždaug 95% sudarytos iš vandens ir neturi nei smegenų, nei širdies, nei kaulų.",
@@ -2543,7 +2543,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         explanation: "Coral reefs are built by tiny animals called polyps, not by plants or rocks.",
       },
       lt: {
-        question: "Koralas iš tikrųjų yra kas?",
+        question: "Kas iš tikrųjų yra koralas?",
         correct: "Gyvūnas",
         distractors: ["Augalas", "Uoliena", "Grybas", "Kriauklė", "Jūros dumblis"],
         explanation: "Koralų rifus stato mažyčiai gyvūnai – polipai, o ne augalai ar uolienos.",
@@ -2800,9 +2800,9 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         explanation: "Mushrooms are not plants — they are fungi and don't make food from sunlight.",
       },
       lt: {
-        question: "Grybas yra kokios rūšies organizmas?",
-        correct: "Grybas",
-        distractors: ["Augalas", "Gyvūnas", "Uoliena", "Samana", "Dumblis"],
+        question: "Musmirė ir baravykas priklauso kokiai organizmų grupei?",
+        correct: "Grybai",
+        distractors: ["Augalai", "Gyvūnai", "Uolienos", "Samanos", "Dumbliai"],
         explanation: "Grybai nėra augalai – tai atskira grybų karalystė, jie negamina maisto iš saulės šviesos.",
       },
     },
@@ -3308,7 +3308,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         explanation: "Barnacles are crustaceans, related to crabs and shrimp, even though they look like shells.",
       },
       lt: {
-        question: "Žąsų kojelė (vėžiagyvis) iš tikrųjų yra kas?",
+        question: "Kas iš tikrųjų yra prie laivų prilipęs jūrų balanas?",
         correct: "Vėžiagyvis",
         distractors: ["Moliuskas", "Kriauklė", "Augalas", "Uoliena", "Žuvis"],
         explanation: "Šie gyvūnai yra vėžiagyviai, giminingi krabams ir krevetėms, nors atrodo kaip kriauklės.",
@@ -8125,9 +8125,9 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
       },
       lt: {
         question: "Kuris vienintelis žinduolis visas padengtas kietais žvynais?",
-        correct: "Skujuotis",
-        distractors: ["Šarvuotis", "Ežiuolė", "Ežys", "Orikteropas", "Dygliuotis"],
-        explanation: "Skujuotis – vienintelis žinduolis, visas padengtas keratino žvynais.",
+        correct: "Pangolinas",
+        distractors: ["Šarvuotis", "Echidna", "Ežys", "Orikteropas", "Dygliuotis"],
+        explanation: "Pangolinas – vienintelis žinduolis, visas padengtas keratino žvynais.",
       },
     },
   },
@@ -9274,7 +9274,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         explanation: "A rainbow appears when sunlight shines through raindrops.",
       },
       lt: {
-        question: "Kas atsiranda danguje su daug spalvų po lietaus?",
+        question: "Kas po lietaus danguje pasirodo su daugybe spalvų?",
         correct: "Vaivorykštė",
         distractors: ["Debesis", "Žaibas", "Žvaigždė", "Mėnulis", "Šešėlis"],
         explanation: "Vaivorykštė atsiranda, kai saulė šviečia pro lietaus lašus.",
@@ -12402,10 +12402,10 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
         explanation: "The mimic octopus copies the look of several dangerous animals.",
       },
       lt: {
-        question: "Kuris aštonkojis imituoja jūrų gyvates, žuvis ir plekšnes apgaudamas plėšrūnus?",
-        correct: "Imituojantis aštonkojis",
-        distractors: ["Mėlynžiedis aštonkojis", "Sepija", "Kalmaras", "Plekšnė", "Akmenžuvė"],
-        explanation: "Imituojantis aštonkojis nukopijuoja kelių pavojingų gyvūnų išvaizdą.",
+        question: "Kuris aštuonkojis imituoja jūrų gyvates, žuvis ir plekšnes apgaudamas plėšrūnus?",
+        correct: "Imituojantis aštuonkojis",
+        distractors: ["Mėlynžiedis aštuonkojis", "Sepija", "Kalmaras", "Plekšnė", "Akmenžuvė"],
+        explanation: "Imituojantis aštuonkojis nukopijuoja kelių pavojingų gyvūnų išvaizdą.",
       },
     },
   },
@@ -14666,9 +14666,9 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
       },
       lt: {
         question: "Amonitai, dažnos spiralinės fosilijos, buvo kurių gyvūnų giminaičiai?",
-        correct: "Kalmarų ir aštonkojų",
+        correct: "Kalmarų ir aštuonkojų",
         distractors: ["Sraigių", "Vėžių", "Jūrų žvaigždžių", "Koralų", "Žuvų"],
-        explanation: "Amonitai – kiautuoti galvakojai, kalmarų ir aštonkojų giminaičiai.",
+        explanation: "Amonitai – kiautuoti galvakojai, kalmarų ir aštuonkojų giminaičiai.",
       },
     },
   },

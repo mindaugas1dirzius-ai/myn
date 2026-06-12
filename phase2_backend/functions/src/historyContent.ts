@@ -2024,13 +2024,13 @@ export const HISTORY_QUESTIONS: TriviaQuestion[] = [
     emoji: "🌿",
     translations: {
       en: {
-        question: "The Hanging Gardens, an ancient wonder, were said to be in?",
+        question: "In which city were the Hanging Gardens, an ancient wonder, said to be?",
         correct: "Babylon",
         distractors: ["Athens", "Rome", "Cairo", "Persepolis", "Nineveh"],
         explanation: "The Hanging Gardens were linked to ancient Babylon.",
       },
       lt: {
-        question: "Kabantieji sodai, senovės stebuklas, esą buvo kur?",
+        question: "Kuriame mieste, kaip pasakojama, buvo Kabantieji sodai?",
         correct: "Babilone",
         distractors: ["Atėnuose", "Romoje", "Kaire", "Persepolyje", "Ninevėje"],
         explanation: "Kabantieji sodai siejami su senovės Babilonu.",
@@ -2070,13 +2070,13 @@ export const HISTORY_QUESTIONS: TriviaQuestion[] = [
     emoji: "❄️",
     translations: {
       en: {
-        question: "The Cold War was mainly a rivalry between the USA and?",
+        question: "The Cold War was mainly a rivalry between the USA and which country?",
         correct: "Soviet Union",
         distractors: ["China", "Germany", "Cuba", "France", "Japan"],
         explanation: "The Cold War was between the USA and the USSR.",
       },
       lt: {
-        question: "Šaltasis karas daugiausia buvo varžybos tarp JAV ir?",
+        question: "Tarp JAV ir kurios šalies daugiausia vyko Šaltasis karas?",
         correct: "Sovietų Sąjungos",
         distractors: ["Kinijos", "Vokietijos", "Kubos", "Prancūzijos", "Japonijos"],
         explanation: "Šaltasis karas vyko tarp JAV ir Sovietų Sąjungos.",
@@ -2116,13 +2116,13 @@ export const HISTORY_QUESTIONS: TriviaQuestion[] = [
     emoji: "🏛️",
     translations: {
       en: {
-        question: "The Renaissance revived interest in ancient Greece and?",
+        question: "Besides ancient Greece, the Renaissance revived interest in which civilization?",
         correct: "Rome",
         distractors: ["Egypt", "China", "India", "Persia", "Babylon"],
         explanation: "The Renaissance looked back to Greece and Rome.",
       },
       lt: {
-        question: "Renesansas atgaivino domėjimąsi senovės Graikija ir?",
+        question: "Renesansas atgaivino domėjimąsi senovės Graikija ir dar kuo?",
         correct: "Roma",
         distractors: ["Egiptu", "Kinija", "Indija", "Persija", "Babilonu"],
         explanation: "Renesansas grįžo prie Graikijos ir Romos.",
@@ -4890,7 +4890,7 @@ export const HISTORY_QUESTIONS: TriviaQuestion[] = [
         explanation: "Wu Zetian ruled as China's only female emperor around 690 AD.",
       },
       lt: {
-        question: "Kuri tapo vienintele moterimi, valdžiusia Kiniją kaip imperatorė?",
+        question: "Kuri vienintelė moteris valdė Kiniją kaip tikra imperatorė?",
         correct: "Vu Dzetian",
         distractors: ["Cysi", "Mulan", "Ledi Mei", "Jang Gveifei", "Vang Džaodzun"],
         explanation: "Vu Dzetian apie 690 m. valdė kaip vienintelė Kinijos imperatorė.",
@@ -4985,7 +4985,7 @@ export const HISTORY_QUESTIONS: TriviaQuestion[] = [
       },
       lt: {
         question: "Koks paplitęs mitas apie Albertą Einšteiną yra klaidingas?",
-        correct: "Kad jis kirto matematiką",
+        correct: "Nemokėjo matematikos",
         distractors: ["Buvo fizikas", "Gavo Nobelį", "Turėjo vešlius plaukus", "Grojo smuiku", "Persikėlė į JAV"],
         explanation: "Einšteinas matematiką puikiai mokėjo nuo mažens.",
       },
@@ -5280,13 +5280,13 @@ export const HISTORY_QUESTIONS: TriviaQuestion[] = [
         question: "How did Catherine the Great really die?",
         correct: "A stroke",
         distractors: ["Crushed by a horse", "In a duel", "Poisoned", "In battle", "By drowning"],
-        explanation: "The horse rumor is a vile myth; she died of a stroke in 1796.",
+        explanation: "The horse rumor is just a myth; she died of a stroke in 1796.",
       },
       lt: {
-        question: "Kaip iš tikro mirė Jekaterina Didžioji?",
+        question: "Kaip iš tikrųjų mirė Jekaterina Didžioji?",
         correct: "Nuo insulto",
         distractors: ["Prislėgta žirgo", "Dvikovoje", "Nunuodyta", "Mūšyje", "Paskendusi"],
-        explanation: "Gandas apie žirgą yra šlykštus mitas; ji mirė nuo insulto 1796 m.",
+        explanation: "Gandas apie žirgą yra tik mitas; ji mirė nuo insulto 1796 m.",
       },
     },
   },

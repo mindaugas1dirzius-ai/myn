@@ -287,7 +287,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Minecraft is built from cube-shaped blocks.",
       },
       lt: {
-        question: "Žaidimas „Minecraft” garsus statymu iš ko?",
+        question: "Iš ko statoma žaidime „Minecraft”?",
         correct: "Blokų",
         distractors: ["Kortų", "Kamuolių", "Virvių", "Aukso plytų", "Popieriaus"],
         explanation: "„Minecraft” statoma iš kubo formos blokų.",
@@ -680,10 +680,10 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Pac-Man eats dots while avoiding ghosts.",
       },
       lt: {
-        question: "Žaidime „Pac-Man” herojus ėda taškus ir vengia ko?",
+        question: "Ko vengia herojus žaidime „Pac-Man”, rydamas taškus?",
         correct: "Vaiduoklių",
         distractors: ["Robotų", "Gyvačių", "Vorų", "Automobilių", "Bombų"],
-        explanation: "„Pac-Man” ėda taškus vengdamas vaiduoklių.",
+        explanation: "„Pac-Man” ryja taškus vengdamas vaiduoklių.",
       },
     },
   },
@@ -745,13 +745,13 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     emoji: "🎼",
     translations: {
       en: {
-        question: "Wolfgang Amadeus Mozart is famous as a what?",
+        question: "What profession is Wolfgang Amadeus Mozart most famous for?",
         correct: "Composer",
         distractors: ["Painter", "Poet", "Actor", "Sculptor", "Architect"],
         explanation: "Mozart was a famous classical music composer.",
       },
       lt: {
-        question: "Volfgangas Amadėjus Mocartas labiausiai žinomas kaip...?",
+        question: "Kas pagal profesiją buvo Volfgangas Amadėjus Mocartas?",
         correct: "Kompozitorius",
         distractors: ["Dailininkas", "Poetas", "Aktorius", "Skulptorius", "Architektas"],
         explanation: "Mocartas — garsus klasikinės muzikos kompozitorius.",
@@ -1075,7 +1075,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Early films were silent; sync sound arrived around 1927.",
       },
       lt: {
-        question: "Ankstyvame kine iki XX a. 3-iojo dešimtmečio pabaigos dažniausiai trūko ko?",
+        question: "Ko dažniausiai trūko ankstyvame kine iki XX a. 3-iojo dešimtmečio pabaigos?",
         correct: "Garso",
         distractors: ["Aktorių", "Kamerų", "Juostos", "Scenarijų", "Šviesų"],
         explanation: "Ankstyvi filmai buvo nebylūs; garsas atėjo apie 1927 m.",
@@ -1121,7 +1121,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Tetris was created in 1984 in the Soviet Union.",
       },
       lt: {
-        question: "Galvosūkis „Tetris” iš pradžių sukurtas kurioje šalyje?",
+        question: "Kurioje šalyje iš pradžių sukurtas galvosūkis „Tetris”?",
         correct: "Sovietų Sąjungoje",
         distractors: ["Japonijoje", "JAV", "Vokietijoje", "Prancūzijoje", "Švedijoje"],
         explanation: "„Tetris” sukurtas 1984 m. Sovietų Sąjungoje.",
@@ -1259,7 +1259,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "Pong simulates simple table tennis.",
       },
       lt: {
-        question: "Ankstyvas žaidimas „Pong” pagrįstas kuriuo sportu?",
+        question: "Kuriuo sportu pagrįstas ankstyvas žaidimas „Pong”?",
         correct: "Stalo tenisu",
         distractors: ["Futbolu", "Boksu", "Golfu", "Lenktynėmis", "Boulingu"],
         explanation: "„Pong” imituoja paprastą stalo tenisą.",
@@ -1483,7 +1483,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     emoji: "7️⃣",
     translations: {
       en: {
-        question: "Snow White is befriended by how many dwarfs?",
+        question: "How many dwarfs become friends with Snow White?",
         correct: "Seven",
         distractors: ["Five", "Six", "Three", "Eight", "Ten"],
         explanation: "Snow White lives with seven dwarfs.",
@@ -2357,13 +2357,13 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     emoji: "💍",
     translations: {
       en: {
-        question: "The Bridal Chorus, Here Comes the Bride, is from an opera by whom?",
+        question: "Which composer wrote the opera with the Bridal Chorus, Here Comes the Bride?",
         correct: "Wagner",
         distractors: ["Mendelssohn", "Bach", "Mozart", "Handel", "Verdi"],
         explanation: "Here Comes the Bride is Wagner's Bridal Chorus from Lohengrin.",
       },
       lt: {
-        question: "„Štai ateina nuotaka” vestuvių choras yra iš kurio kompozitoriaus operos?",
+        question: "Kuris kompozitorius sukūrė operą su vestuvių choru „Štai ateina nuotaka”?",
         correct: "Vagneris",
         distractors: ["Mendelsonas", "Bachas", "Mocartas", "Hendelis", "Verdis"],
         explanation: "Šis choras — Vagnerio kūrinys iš operos „Loengrinas”.",
@@ -2409,7 +2409,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
         explanation: "The Scream was painted by Edvard Munch.",
       },
       lt: {
-        question: "Garsųjį paveikslą „Klyksmas” sukūrė kuris dailininkas?",
+        question: "Kuris dailininkas sukūrė garsųjį paveikslą „Klyksmas”?",
         correct: "Edvardas Munkas",
         distractors: ["Van Gogas", "Pikasas", "Dali", "Klimtas", "Monė"],
         explanation: "„Klyksmą” nutapė Edvardas Munkas.",
@@ -2572,7 +2572,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
       lt: {
         question: "Skandinavų mite kaip vadinamas vaivorykštės tiltas į Asgardą?",
         correct: "Bifrostas",
-        distractors: ["Valhala", "Igdrasilis", "Midgardas", "Ragnarokas", "Mjölniras"],
+        distractors: ["Valhala", "Igdrasilis", "Midgardas", "Ragnarokas", "Mjolniras"],
         explanation: "Bifrostas — vaivorykštės tiltas skandinavų mitologijoje.",
       },
     },

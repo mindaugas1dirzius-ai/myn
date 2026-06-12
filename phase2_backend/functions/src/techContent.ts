@@ -350,7 +350,7 @@ export const TECH_QUESTIONS: TriviaQuestion[] = [
     emoji: "🧱",
     translations: {
       en: {
-        question: "Tetris is a game about fitting what?",
+        question: "In Tetris, what do you stack and fit together?",
         correct: "Falling blocks",
         distractors: ["Cards", "Bubbles", "Words", "Cars", "Animals"],
         explanation: "In Tetris you rotate and stack falling blocks.",
@@ -651,13 +651,13 @@ export const TECH_QUESTIONS: TriviaQuestion[] = [
     emoji: "💬",
     translations: {
       en: {
-        question: "A program that chats like a person is a...?",
+        question: "What do you call a program that chats like a person?",
         correct: "Chatbot",
         distractors: ["Firewall", "Browser", "Spreadsheet", "Compiler", "Database"],
         explanation: "A chatbot talks with users in plain language.",
       },
       lt: {
-        question: "Programa, kalbanti kaip žmogus, yra...?",
+        question: "Kaip vadinama programa, kalbanti kaip žmogus?",
         correct: "Pokalbių robotas",
         distractors: ["Ugniasienė", "Naršyklė", "Skaičiuoklė", "Kompiliatorius", "Duomenų bazė"],
         explanation: "Pokalbių robotas bendrauja su vartotojais žmogaus kalba.",
@@ -1466,7 +1466,7 @@ export const TECH_QUESTIONS: TriviaQuestion[] = [
         explanation: "A camera takes photos (pictures).",
       },
       lt: {
-        question: "Ką darote fotoaparatu?",
+        question: "Ką darote su fotoaparatu?",
         correct: "Nuotraukas",
         distractors: ["Sumuštinius", "Dušą", "Pietų miegą", "Skambučius", "Šukuoseną"],
         explanation: "Fotoaparatu daromos nuotraukos.",
@@ -3106,7 +3106,7 @@ export const TECH_QUESTIONS: TriviaQuestion[] = [
         explanation: "Lara Croft stars in the Tomb Raider games.",
       },
       lt: {
-        question: "Lara Croft yra kurios žaidimų serijos herojė?",
+        question: "Kurios žaidimų serijos herojė yra Lara Croft?",
         correct: "Tomb Raider",
         distractors: ["Uncharted", "Resident Evil", "Hitman", "Far Cry", "Halo"],
         explanation: "Lara Croft — Tomb Raider serijos herojė.",
@@ -3152,7 +3152,7 @@ export const TECH_QUESTIONS: TriviaQuestion[] = [
         explanation: "Master Chief leads the Halo games.",
       },
       lt: {
-        question: "Master Chief yra kurios serijos herojus?",
+        question: "Kurios serijos herojus yra Master Chief?",
         correct: "Halo",
         distractors: ["Doom", "Gears of War", "Call of Duty", "Destiny", "Crysis"],
         explanation: "Master Chief — Halo žaidimų herojus.",

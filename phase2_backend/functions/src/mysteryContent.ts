@@ -434,7 +434,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Geografija: Ramusis vandenynas — didžiausias ir giliausias",
     texts: {
       en: {
-        text: "Pacific Ocean",
+        text: "The Pacific Ocean",
         hint: "What is the largest and deepest ocean on Earth?",
         hint1: "It separates Asia from the Americas.",
         hint2: "It holds the Mariana Trench, the deepest point.",
@@ -491,7 +491,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Istorija/architektūra: Didžioji kinų siena (tūkst. km)",
     texts: {
       en: {
-        text: "Great Wall of China",
+        text: "The Great Wall of China",
         hint: "Which massive structure, built over many centuries, winds for thousands of kilometres across northern China?",
         hint1: "It was built to defend against invaders from the north.",
         hint2: "It is often (wrongly) said to be visible from the Moon.",
@@ -511,7 +511,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Istorija: Laisvės statula — Prancūzijos dovana JAV, 1886",
     texts: {
       en: {
-        text: "Statue of Liberty",
+        text: "The Statue of Liberty",
         hint: "Which monument, a gift from France in 1886, stands in New York harbour holding up a torch?",
         hint1: "It stands on an island near New York City.",
         hint2: "France gave it to the United States as a gift.",
@@ -531,7 +531,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Istorija: Eifelio bokštas — 1889 m. pasaulinei parodai",
     texts: {
       en: {
-        text: "Eiffel Tower",
+        text: "The Eiffel Tower",
         hint: "Which iron tower in Paris was built for the 1889 World's Fair?",
         hint1: "It is the best-known symbol of Paris.",
         hint2: "It is named after the engineer who built it.",
@@ -551,7 +551,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Fizika/astronomija: šiaurės pašvaistė (aurora borealis)",
     texts: {
       en: {
-        text: "Northern Lights",
+        text: "The Northern Lights",
         hint: "What is the colourful natural glow that lights up the night sky near the North Pole?",
         hint1: "It happens when particles from the Sun hit the atmosphere.",
         hint2: "Its Latin name is aurora borealis.",
@@ -591,7 +591,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Geografija: Sacharos dykuma — didžiausia karštoji dykuma",
     texts: {
       en: {
-        text: "Sahara Desert",
+        text: "The Sahara Desert",
         hint: "What is the largest hot desert on Earth, covering much of North Africa?",
         hint1: "It is famous for its endless sand dunes.",
         hint2: "It is roughly the size of the United States.",
@@ -611,7 +611,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Astronomija: Saulės sistema (Saulė + 8 planetos)",
     texts: {
       en: {
-        text: "Solar System",
+        text: "The Solar System",
         hint: "What do we call the Sun together with all the planets that orbit around it?",
         hint1: "It has eight planets.",
         hint2: "We live on its third planet.",
@@ -651,7 +651,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Geografija: Amazonės upė — daugiausia vandens nešanti upė",
     texts: {
       en: {
-        text: "Amazon River",
+        text: "The Amazon River",
         hint: "Which South American river carries more water than any other river on Earth?",
         hint1: "It flows mostly through Brazil.",
         hint2: "It runs through the world's largest rainforest.",
@@ -884,7 +884,7 @@ export const MYSTERIES: MysteryItem[] = [
         text: "Eureka",
         hint: "Garsus Archimedo atradimo šūksnis",
         hint1: "Graikiškai reiškia „radau”.",
-        hint2: "Tariama, kad jis tai sušuko vonioje.",
+        hint2: "Pasakojama, kad jis tai sušuko vonioje.",
       },
     },
   },
@@ -1161,7 +1161,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Geografija/architektūra: Pizos bokštas, Italija",
     texts: {
       en: {
-        text: "Leaning Tower of Pisa",
+        text: "The Leaning Tower of Pisa",
         hint: "Which Italian tower is famous for tilting to one side?",
         hint1: "It stands in the city of Pisa.",
         hint2: "It leans because of soft ground beneath it.",
@@ -1181,7 +1181,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Geografija: Didysis barjerinis rifas, Australija (didžiausia koralų sistema)",
     texts: {
       en: {
-        text: "Great Barrier Reef",
+        text: "The Great Barrier Reef",
         hint: "What is the world's largest coral reef system, near Australia?",
         hint1: "It is so big it can be seen from space.",
         hint2: "It lies off the coast of Australia.",
@@ -1221,7 +1221,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Astronomija: mūsų galaktika – Paukščių Takas",
     texts: {
       en: {
-        text: "Milky Way",
+        text: "The Milky Way",
         hint: "What is the name of the galaxy our Solar System is in?",
         hint1: "On a dark night it looks like a band of light across the sky.",
         hint2: "A popular chocolate bar shares its name.",
@@ -1347,7 +1347,7 @@ export const MYSTERIES: MysteryItem[] = [
         hint2: "Panic itself, it warns, does more harm than the danger we dread.",
       },
       lt: {
-        text: "Vienintelis dalykas kurio turime bijoti yra pati baimė",
+        text: "Vienintelis dalykas, kurio turime bijoti, yra pati baimė",
         hint: "Garsi 1933 m. inauguracinės kalbos frazė apie drąsą",
         hint1: "Joje sakoma, kad tikrasis priešas – emocija, o ne išorinė grėsmė.",
         hint2: "Pati panika, įspėja ji, kenkia labiau nei pavojus, kurio bijome.",
@@ -1367,7 +1367,7 @@ export const MYSTERIES: MysteryItem[] = [
         hint2: "Think of what you can contribute to your nation, rather than demand from it.",
       },
       lt: {
-        text: "Klausk ne ką tavo šalis gali padaryti dėl tavęs",
+        text: "Klausk ne, ką tavo šalis gali padaryti dėl tavęs",
         hint: "Garsus 1961 m. inauguracinės kalbos raginimas tarnauti",
         hint1: "Ji ragina duoti, o ne tik gauti.",
         hint2: "Galvok, ką gali duoti savo valstybei, o ne ko iš jos reikalauti.",
@@ -1407,7 +1407,7 @@ export const MYSTERIES: MysteryItem[] = [
         hint2: "Rise before everyone else and the best chances are still yours to take.",
       },
       lt: {
-        text: "Kas anksti kelia tas duoną valgo",
+        text: "Kas anksti kelias, tas duoną valgo",
         hint: "Patarlė apie ankstų kėlimąsi",
         hint1: "Kas pirmas, tas laimi.",
         hint2: "Atsikelk anksčiau už visus ir geriausios progos – tavo.",
@@ -1501,7 +1501,7 @@ export const MYSTERIES: MysteryItem[] = [
     sourceVerified: "Istorija/architektūra: Gizos piramidės Egipte",
     texts: {
       en: {
-        text: "Pyramids of Giza",
+        text: "The Pyramids of Giza",
         hint: "Which ancient stone monuments in Egypt were tombs for pharaohs?",
         hint1: "They have a triangular shape.",
         hint2: "They rise from the desert sands just outside Egypt's capital.",

@@ -796,7 +796,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Risotto is a creamy slow-cooked rice dish.",
       },
       lt: {
-        question: "Italų patiekalas rizotas gaminamas iš ko?",
+        question: "Iš ko gaminamas italų patiekalas rizotas?",
         correct: "Ryžių",
         distractors: ["Makaronų", "Bulvių", "Duonos", "Kuskuso", "Miežių"],
         explanation: "Rizotas — kreminis lėtai virtas ryžių patiekalas.",
@@ -911,7 +911,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Pasteurization heats milk to destroy pathogens.",
       },
       lt: {
-        question: "Pieno kaitinimas mikrobams sunaikinti vadinamas kaip?",
+        question: "Kaip vadinamas pieno kaitinimas mikrobams sunaikinti?",
         correct: "Pasterizacija",
         distractors: ["Fermentacija", "Homogenizacija", "Sutraukimas", "Distiliacija", "Rūkymas"],
         explanation: "Pasterizacija kaitina pieną, kad žūtų patogenai.",
@@ -1281,7 +1281,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Pierogi are filled dumplings traditional to Poland.",
       },
       lt: {
-        question: "Koldūnai pierogi — kurios šalies tradicinis patiekalas?",
+        question: "Kurios šalies tradicinis patiekalas yra koldūnai pierogi?",
         correct: "Lenkija",
         distractors: ["Rusija", "Vokietija", "Vengrija", "Čekija", "Lietuva"],
         explanation: "Pierogi — įdaryti koldūnai, tradiciniai Lenkijoje.",
@@ -1379,13 +1379,13 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     emoji: "🥔",
     translations: {
       en: {
-        question: "Cepelinai, large potato dumplings, are a national dish of where?",
+        question: "Cepelinai, large potato dumplings, are the national dish of which country?",
         correct: "Lithuania",
         distractors: ["Latvia", "Poland", "Estonia", "Belarus", "Ukraine"],
         explanation: "Cepelinai are a traditional Lithuanian dish.",
       },
       lt: {
-        question: "Cepelinai — dideli bulviniai kukuliai — kurios šalies patiekalas?",
+        question: "Kurios šalies patiekalas yra cepelinai – dideli bulviniai kukuliai?",
         correct: "Lietuva",
         distractors: ["Latvija", "Lenkija", "Estija", "Baltarusija", "Ukraina"],
         explanation: "Cepelinai — tradicinis lietuvių patiekalas.",
@@ -1477,7 +1477,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Spaghetti is a long, thin pasta.",
       },
       lt: {
-        question: "Spagečiai yra kokio maisto rūšis?",
+        question: "Kokios maisto rūšies yra spagečiai?",
         correct: "Makaronai",
         distractors: ["Duona", "Ryžiai", "Sūris", "Sriuba", "Mėsa"],
         explanation: "Spagečiai — ilgi ploni makaronai.",
@@ -1914,7 +1914,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Basmati is a long-grain aromatic rice.",
       },
       lt: {
-        question: "Basmati yra garsi kurio grūdo veislė?",
+        question: "Kuris grūdas turi garsią veislę basmati?",
         correct: "Ryžiai",
         distractors: ["Kviečiai", "Miežiai", "Avižos", "Kukurūzai", "Soros"],
         explanation: "Basmati — ilgagrūdžiai aromatingi ryžiai.",
@@ -2466,7 +2466,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Maillard browning needs amino acids and reducing sugars.",
       },
       lt: {
-        question: "Majaro reakcija vyksta tarp aminorūgščių ir ko?",
+        question: "Tarp ko ir aminorūgščių vyksta Majaro reakcija?",
         correct: "Redukuojančių cukrų",
         distractors: ["Druskos", "Vandens", "Riebalų", "Rūgščių", "Mineralų"],
         explanation: "Majaro parudimui reikia aminorūgščių ir redukuojančių cukrų.",
@@ -2598,7 +2598,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     emoji: "🛢️",
     translations: {
       en: {
-        question: "An oil's smoke point is the temperature at which it begins to what?",
+        question: "At its smoke point, what does an oil start to do?",
         correct: "Smoke",
         distractors: ["Freeze", "Boil", "Solidify", "Evaporate", "Crystallize"],
         explanation: "At the smoke point oil starts to smoke and break down.",
@@ -2722,7 +2722,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         question: "Dėl reakcijos su kuo atsiranda rožinė sūdyto kumpio spalva?",
         correct: "Nitritais",
         distractors: ["Geležimi", "Paprika", "Burokėlių sultimis", "Vitaminu C", "Druska"],
-        explanation: "Nitritai įtvirtina rožinę vytintos mėsos spalvą.",
+        explanation: "Nitritai įtvirtina rožinę sūdytos mėsos spalvą.",
       },
     },
   },
@@ -2765,7 +2765,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
         explanation: "Caramelization is the browning of sugar alone.",
       },
       lt: {
-        question: "Ką vienintelį apima karamelizacija, skirtingai nei Majaro reakcija?",
+        question: "Kurią vieną medžiagą veikia karamelizacija, skirtingai nei Majaro reakcija?",
         correct: "Cukrų",
         distractors: ["Baltymą", "Riebalus", "Vandenį", "Druską", "Rūgštį"],
         explanation: "Karamelizacija — tai vien cukraus parudimas.",

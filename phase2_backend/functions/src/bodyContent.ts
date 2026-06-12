@@ -3441,7 +3441,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
       lt: {
         question: "Kuri smegenų pusė daugiausia valdo dešinę ranką?",
         correct: "Kairioji pusė",
-        distractors: ["Dešinioji pusė", "Abi vienodai", "Nė viena", "Priekis", "Užpakalis"],
+        distractors: ["Dešinioji pusė", "Abi vienodai", "Nė viena", "Priekinė dalis", "Užpakalinė dalis"],
         explanation: "Kiekvienas pusrutulis valdo priešingą kūno pusę.",
       },
     },

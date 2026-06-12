@@ -104,7 +104,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
       lt: {
         question: "Kuo mušamas teniso kamuoliukas?",
         correct: "Rakete",
-        distractors: ["Lazda", "Bita", "Pagaliuku", "Mentele", "Kiju"],
+        distractors: ["Lazda", "Vėzdu", "Pagaliuku", "Mentele", "Kiju"],
         explanation: "Tenisas žaidžiamas su rakete.",
       },
     },
@@ -280,16 +280,16 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
     emoji: "⚾",
     translations: {
       en: {
-        question: "In baseball, the ball is hit with a what?",
+        question: "In baseball, what is used to hit the ball?",
         correct: "Bat",
         distractors: ["Racket", "Club", "Stick", "Paddle", "Cue"],
         explanation: "Baseball batters swing a wooden or metal bat.",
       },
       lt: {
         question: "Kuo beisbole mušamas kamuolys?",
-        correct: "Bita",
-        distractors: ["Rakete", "Lazda", "Pagaliuku", "Mentele", "Kiju"],
-        explanation: "Beisbolo mušėjai naudoja medinę ar metalinę bitą.",
+        correct: "Lazda",
+        distractors: ["Rakete", "Vėzdu", "Pagaliuku", "Mentele", "Kiju"],
+        explanation: "Beisbolo mušėjai naudoja medinę ar metalinę lazdą.",
       },
     },
   },
