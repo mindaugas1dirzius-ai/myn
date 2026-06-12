@@ -197,6 +197,32 @@ class _MythGameScreenState extends State<MythGameScreen> {
                       color: _accent,
                       fontSize: 42,
                       fontWeight: FontWeight.bold)),
+              // Skaidrumas: iš kur toks skaičius (kad 0 neatrodytų klaida).
+              if (r.pointsPenalty > 0) ...[
+                const SizedBox(height: 4),
+                Text('✅ +${r.pointsEarned}   💥 −${r.pointsPenalty}',
+                    style: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold)),
+                Text(
+                  _t('Kiekviena klaida nubraukia 60 taškų',
+                      'Each mistake deducts 60 points'),
+                  style: const TextStyle(
+                      color: AppColors.textSecondary, fontSize: 11),
+                ),
+              ],
+              if (r.coinsEarned == 0 && r.correct > 0)
+                Padding(
+                  padding: const EdgeInsets.only(top: 4),
+                  child: Text(
+                    _t('🪙 Monetos — kai teisingų daugiau nei klaidų',
+                        '🪙 Coins — when correct outnumber mistakes'),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        color: AppColors.textSecondary, fontSize: 11),
+                  ),
+                ),
               if (r.isNewRecord)
                 Text(_t('🏆 Naujas rekordas!', '🏆 New record!'),
                     style: const TextStyle(

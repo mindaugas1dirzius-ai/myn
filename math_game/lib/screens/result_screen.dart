@@ -52,6 +52,10 @@ class ResultScreen extends StatelessWidget {
   final List<AnswerReview>? review; // gamtos klausimų apžvalga (arba null)
   final int earnedLetters; // „Atspėk paslaptį": raidės, uždirbtos šiame žaidime
   final int pendingMysteryLetters; // kiek iš viso laukia neatvertų raidžių
+  // Skaidrumas: +už teisingus / −už klaidas. Rodome, kai penalty > 0 —
+  // kitaip „2 teisingi, o 0 taškų" atrodo kaip sistemos klaida (savininkas).
+  final int pointsEarned;
+  final int pointsPenalty;
 
   const ResultScreen({
     super.key,
@@ -67,6 +71,8 @@ class ResultScreen extends StatelessWidget {
     this.review,
     this.earnedLetters = 0,
     this.pendingMysteryLetters = 0,
+    this.pointsEarned = 0,
+    this.pointsPenalty = 0,
   });
 
   @override
@@ -154,6 +160,46 @@ class ResultScreen extends StatelessWidget {
                   ),
                 ),
               ),
+
+              // SKAIDRUS IŠSKAIDYMAS: +už teisingus · −už klaidas, kad 0
+              // taškų neatrodytų kaip sistemos klaida.
+              if (pointsPenalty > 0) ...[
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('✅ +$pointsEarned',
+                        style: const TextStyle(
+                            color: AppColors.levelEasy,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold)),
+                    const SizedBox(width: 14),
+                    Text('💥 −$pointsPenalty',
+                        style: const TextStyle(
+                            color: AppColors.wrong,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold)),
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(s.penaltyExplain,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        color: AppColors.textSecondary, fontSize: 12)),
+              ],
+
+              // Kodėl be monetų: aiški taisyklė vietoj „tylaus nulio".
+              if (online && coinsEarned == 0 && correct > 0) ...[
+                const SizedBox(height: 8),
+                Text(
+                  modeId.startsWith('myth_')
+                      ? s.mythRewardsNote
+                      : s.quizRewardsNote,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: AppColors.textSecondary, fontSize: 12),
+                ),
+              ],
 
               // Uždirbtos monetos (jei online)
               if (online && coinsEarned > 0) ...[

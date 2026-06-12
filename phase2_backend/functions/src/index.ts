@@ -267,6 +267,10 @@ export const submitScore = onCall(
 
       // 🛡️ SPAUDINĖJIMO APSAUGA (savininkas 2026-06-13: „už neatspėtus niekas
       // nenuraso — tada spaudinėji bele ką, gal pataikysi").
+      // pointsEarned/pointsPenalty grąžinami klientui, kad ŽAIDĖJAS MATYTŲ,
+      // kur dingo taškai (savininkas: „žmonėm turim paaiškinti kodėl 2
+      // atsakei, o nulis") — kitaip atrodo kaip sistemos klaida.
+      const pointsEarned = score; // uždirbta UŽ TEISINGUS (prieš baudas)
       let rewardCorrect = correct; // kiek „užskaitom" atlygiams (monetos/raidės)
       if ((game.mode as string).startsWith("myth")) {
         // 🧐 Mitai (2 mygtukai, ~50 % atsitiktinai): bauda už klaidą +
@@ -287,6 +291,8 @@ export const submitScore = onCall(
           rewardCorrect = 0;
         }
       }
+      // Faktiškai nubraukta (su grindų 0 įvertinimu) — rodymui rezultatuose.
+      const pointsPenalty = pointsEarned - score;
 
       // ---- RAŠYMAI ----
       transaction.delete(gameRef); // replay apsauga + švari DB
@@ -413,6 +419,10 @@ export const submitScore = onCall(
       return {
         success: true,
         finalScore: score,
+        // Skaidrumas žaidėjui: kiek uždirbo už teisingus ir kiek nubraukė
+        // klaidos (kad 0 neatrodytų kaip sistemos klaida).
+        pointsEarned,
+        pointsPenalty,
         correct,
         isNewRecord,
         coinsEarned,

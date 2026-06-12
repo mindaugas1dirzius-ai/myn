@@ -68,6 +68,15 @@ class AppStrings {
   String get lockedThemeNote => _pick(
       'Ši tema dar ruošiama — greitai!',
       'This theme is being prepared — coming soon!');
+  String get penaltyExplain => _pick(
+      'Kiekviena klaida nubraukia taškus',
+      'Each mistake deducts points');
+  String get quizRewardsNote => _pick(
+      '🪙 Monetos ir 🔤 raidės skiriamos surinkus bent 4 teisingus',
+      '🪙 Coins and 🔤 letters are awarded from 4 correct answers');
+  String get mythRewardsNote => _pick(
+      '🪙 Monetos skiriamos, kai teisingų daugiau nei klaidų',
+      '🪙 Coins are awarded when correct answers outnumber mistakes');
 
   // --- ⚡ TAIP/NE Blitz ---
   String get blitzGetReady => _pick('Pasiruošk!', 'Get ready!');

@@ -181,6 +181,8 @@ class _NatureGameScreenState extends State<NatureGameScreen>
             promptName: result?.promptName ?? false,
             earnedLetters: result?.earnedLetters ?? 0,
             pendingMysteryLetters: result?.pendingMysteryLetters ?? 0,
+            pointsEarned: result?.pointsEarned ?? 0,
+            pointsPenalty: result?.pointsPenalty ?? 0,
             review: review,
           ),
         ),

@@ -64,6 +64,9 @@ class BlitzAnswer {
 class BlitzResult {
   final bool success;
   final int finalScore;
+  // Skaidrumas: +už teisingus / −už klaidas (kad 0 neatrodytų kaip klaida).
+  final int pointsEarned;
+  final int pointsPenalty;
   final int correct;
   final int answered;
   final int bestCombo;
@@ -77,6 +80,8 @@ class BlitzResult {
   const BlitzResult({
     required this.success,
     required this.finalScore,
+    this.pointsEarned = 0,
+    this.pointsPenalty = 0,
     required this.correct,
     required this.answered,
     required this.bestCombo,
@@ -91,6 +96,9 @@ class BlitzResult {
   factory BlitzResult.fromJson(Map<String, dynamic> j) => BlitzResult(
         success: j['success'] as bool? ?? false,
         finalScore: (j['finalScore'] as num?)?.toInt() ?? 0,
+        pointsEarned: (j['pointsEarned'] as num?)?.toInt() ??
+            ((j['finalScore'] as num?)?.toInt() ?? 0),
+        pointsPenalty: (j['pointsPenalty'] as num?)?.toInt() ?? 0,
         correct: (j['correct'] as num?)?.toInt() ?? 0,
         answered: (j['answered'] as num?)?.toInt() ?? 0,
         bestCombo: (j['bestCombo'] as num?)?.toInt() ?? 0,

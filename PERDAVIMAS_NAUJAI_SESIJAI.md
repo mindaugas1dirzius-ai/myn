@@ -374,6 +374,25 @@ kai jis yra — gamta/trivijos). NIEKAS funkciškai nekeista — tik vaizdas.
   bent vienas distraktorius privalo būti panašaus ilgio ar ilgesnis (ABIEM
   kalbom tikrinti atskirai!).
 
+## 💬 11 RATAS (2026-06-13): BAUDŲ SKAIDRUMAS (savininkas: „atsakiau 2,
+## gavau 0 — žmonėm turim paaiškinti KODĖL", kitaip atrodo kaip sistemos klaida)
+
+- SERVERIS grąžina išskaidymą: submitScore ir submitBlitzScore → `pointsEarned`
+  (už teisingus, prieš baudas) + `pointsPenalty` (faktiškai nubraukta su
+  grindų 0 įvertinimu). finalScore = earned − penalty.
+- KLIENTAS rodo, kai penalty > 0:
+  - ResultScreen (matematika+gamta+trivijos+mitai): „✅ +X   💥 −Y" + caption
+    „Kiekviena klaida nubraukia taškus"; kai coinsEarned==0 && correct>0 —
+    paaiškinimas: quiz „🪙 Monetos ir 🔤 raidės skiriamos surinkus bent 4
+    teisingus" / myth „kai teisingų daugiau nei klaidų" (pagal modeId prefiksą).
+  - Mitų dialogas: „✅ +X 💥 −Y" + „Kiekviena klaida nubraukia 60 taškų" + monetų
+    pastaba. Blitz rezultatų panelė: tas pats + penaltyExplain.
+- Modeliai: GameResult/BlitzResult +pointsEarned/+pointsPenalty (senas serveris
+  be laukų → earned=final, penalty=0 — nieko nerodom, atgaliniai suderinama).
+- Kvietėjai atnaujinti: game_screen + nature_game_screen perduoda į ResultScreen.
+- PRINCIPAS ateičiai: kiekviena bauda/apribojimas ŽAIDĖJUI PAAIŠKINAMAS
+  rezultatuose — „tylus nulis" atrodo kaip bug'as ir griauna pasitikėjimą.
+
 ## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
 
 1. **#50 — 1 banga: potemių papildymas** (TURINIO_PLANAS.md) — naujos potemės

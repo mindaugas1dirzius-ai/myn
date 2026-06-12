@@ -67,6 +67,10 @@ class GameResult {
   final bool promptName; // raginti įvesti vardą (rekordas + dar auto-vardas)
   final int earnedLetters; // „Atspėk paslaptį": kiek raidžių uždirbta šiame žaidime
   final int pendingMysteryLetters; // kiek iš viso laukia neatvertų raidžių
+  // Skaidrumas: kiek uždirbta už teisingus ir kiek nubraukė klaidos
+  // (kad 0 taškų neatrodytų kaip sistemos klaida).
+  final int pointsEarned;
+  final int pointsPenalty;
 
   const GameResult({
     required this.success,
@@ -78,12 +82,15 @@ class GameResult {
     required this.promptName,
     this.earnedLetters = 0,
     this.pendingMysteryLetters = 0,
+    this.pointsEarned = 0,
+    this.pointsPenalty = 0,
   });
 
   factory GameResult.fromJson(Map<String, dynamic> json) {
+    final fs = (json['finalScore'] as num?)?.toInt() ?? 0;
     return GameResult(
       success: json['success'] as bool? ?? false,
-      finalScore: (json['finalScore'] as num?)?.toInt() ?? 0,
+      finalScore: fs,
       correct: (json['correct'] as num?)?.toInt() ?? 0,
       isNewRecord: json['isNewRecord'] as bool? ?? false,
       coinsEarned: (json['coinsEarned'] as num?)?.toInt() ?? 0,
@@ -91,6 +98,9 @@ class GameResult {
       promptName: json['promptName'] as bool? ?? false,
       earnedLetters: (json['earnedLetters'] as num?)?.toInt() ?? 0,
       pendingMysteryLetters: (json['pendingMysteryLetters'] as num?)?.toInt() ?? 0,
+      // Senas serveris be šių laukų → earned=final, penalty=0 (nieko nerodom).
+      pointsEarned: (json['pointsEarned'] as num?)?.toInt() ?? fs,
+      pointsPenalty: (json['pointsPenalty'] as num?)?.toInt() ?? 0,
     );
   }
 }

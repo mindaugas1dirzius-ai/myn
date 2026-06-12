@@ -927,6 +927,27 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
                   color: _accent, fontSize: 64, fontWeight: FontWeight.bold),
             ),
           ),
+          // Skaidrumas: iš kur toks skaičius (kad 0 neatrodytų klaida).
+          if (r.pointsPenalty > 0) ...[
+            Text('✅ +${r.pointsEarned}   💥 −${r.pointsPenalty}',
+                style: const TextStyle(
+                    color: AppColors.textSecondary,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold)),
+            const SizedBox(height: 2),
+            Text(s.penaltyExplain,
+                style: const TextStyle(
+                    color: AppColors.textSecondary, fontSize: 11)),
+            const SizedBox(height: 4),
+          ],
+          if (r.coinsEarned == 0 && r.correct > 0)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4),
+              child: Text(s.mythRewardsNote,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: AppColors.textSecondary, fontSize: 11)),
+            ),
           if (r.isNewRecord)
             TweenAnimationBuilder<double>(
               tween: Tween(begin: 0.6, end: 1),

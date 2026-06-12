@@ -296,7 +296,8 @@ export const submitBlitzScore = onCall(
       // greičiau nei BLITZ_MIN_GAP_MS po ankstesnio, TAŠKŲ NEDUODA ir kombo
       // nedidina (žmogus per tiek neperskaito) — bet klaidos bauda galioja.
       // Eigos suma gali būti minusinė; galutinė — clamp ≥0.
-      let score = 0;
+      let pointsEarned = 0; // uždirbta už teisingus (rodymui)
+      let wrongCount = 0;
       let correct = 0;
       let streak = 0;
       let bestCombo = 0;
@@ -312,15 +313,20 @@ export const submitBlitzScore = onCall(
             let pts =
               BLITZ_BASE_POINTS * (1 + 0.1 * Math.min(streak - 1, 10));
             if (a.tMs >= finalX2FromMs) pts *= 2;
-            score += Math.round(pts);
+            pointsEarned += Math.round(pts);
           }
           // per greitas teisingas: 0 taškų, kombo nesikeičia.
         } else {
           streak = 0; // kombo nulinasi
-          score -= BLITZ_WRONG_PENALTY;
+          wrongCount++;
         }
       }
-      score = Math.max(0, score);
+      const score = Math.max(
+        0,
+        pointsEarned - wrongCount * BLITZ_WRONG_PENALTY
+      );
+      // Faktiškai nubraukta (rodymui — kad 0 neatrodytų kaip klaida).
+      const pointsPenalty = pointsEarned - score;
       // Persvara atlygiams: spaudinėjant correct≈wrong → atlygis ≈ 0.
       const netCorrect = Math.max(0, correct - (answers.length - correct));
 
@@ -405,6 +411,8 @@ export const submitBlitzScore = onCall(
       return {
         success: true,
         finalScore: score,
+        pointsEarned,
+        pointsPenalty,
         correct,
         answered: answers.length,
         bestCombo,
