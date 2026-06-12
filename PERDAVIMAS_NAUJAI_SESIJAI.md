@@ -324,6 +324,16 @@ gavau 350 taškų ir 20 monetų be galvojimo") — dabar TRYS sluoksniai servery
   + atlygiai už persvarą (užrašyta ir atmintyje).
 - Deploy'inta: submitScore + submitBlitzScore (×2).
 
+### 🎯 IR 6 VARIANTŲ ŽAIDIMAI (savininkas: „už neatspėtus niekas nenuraso —
+### spaudinėji bele ką"). submitScore VISIEMS lygiams (mat./gamta/trivijos):
+- −QUIZ_WRONG_PENALTY(25) už kiekvieną AKTYVIAI atsakytą klaidą; PRALEISTI
+  dėl laiko (tuščias "" / null / −1 atsakymas) NEBAUDŽIAMI; galutinis clamp ≥0.
+  Atsitiktinis spaudymas: ~1,7×95 − ~8,3×25 ≈ 0.
+- Monetos/raidės — tik surinkus ≥ QUIZ_REWARD_MIN_CORRECT(4) teisingų
+  (atsitiktinai ~1,7/10 → atlygiai 0; sąžiningam nieko nesikeičia).
+- KLIENTO KEISTI NEREIKĖJO (viskas serveryje; rezultatų ekranas rodo serverio
+  skaičius). APK neperdiegtas — nebūtina.
+
 ### Rezultatų ekrano (BENDRO matematikai+trivijoms) titulai:
 result_screen.dart: rango emoji (🏆/🥇/🥈/🔎) iššoka elasticOut + įvertinimo
 tekstas paryškintas + „egzamino lapas" (žali/raudoni taškučiai iš review,

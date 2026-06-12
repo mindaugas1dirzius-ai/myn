@@ -28,6 +28,8 @@ import {
   ROTATION_KEEP_CAT,
   MATH_FAMILIES,
   MYTH_WRONG_PENALTY,
+  QUIZ_WRONG_PENALTY,
+  QUIZ_REWARD_MIN_CORRECT,
 } from "./gameConfig";
 import { mergeRecent } from "./triviaEngine";
 import {
@@ -247,27 +249,43 @@ export const submitScore = onCall(
       // Skaičiuojama SERVERYJE (sauga). Kaupiama users/{uid}.coins.
       let score = 0;
       let coinsEarned = 0;
+      // wrongAnswered — AKTYVIAI atsakyta klaidingai (tuščias/praleistas dėl
+      // laiko atsakymas NEskaičiuojamas — laiko pritrūkusio žaidėjo nebaudžiam).
+      let wrongAnswered = 0;
       for (let i = 0; i < serverAnswers.length; i++) {
         if (clientAnswers[i] === serverAnswers[i]) {
           correct++;
           score += pointsForAnswer(maxPoints, times[i]);
           coinsEarned += 1;
           if (times[i] < 3000) coinsEarned += 1; // greičio bonusas
+        } else {
+          const a = clientAnswers[i];
+          const answered = a !== null && a !== undefined && a !== "" && a !== -1;
+          if (answered) wrongAnswered++;
         }
       }
 
-      // 🧐 „Tiesa ar mitas?" spaudinėjimo apsauga (savininkas 2026-06-13):
-      // dviejų mygtukų žaidime atsitiktinis spaudinėjimas pataiko ~50 %, tad
-      // be baudos jis APSIMOKĖTŲ. (1) Už kiekvieną klaidą — taškų bauda;
-      // (2) monetos/raidės — TIK už persvarą (teisingi − klaidos) ir BE
-      // greičio bonuso (žaidimas savo tempu; greitis čia = spaudinėjimas).
-      // Kiti režimai (6 variantų trivija, matematika) NEPALIESTI.
+      // 🛡️ SPAUDINĖJIMO APSAUGA (savininkas 2026-06-13: „už neatspėtus niekas
+      // nenuraso — tada spaudinėji bele ką, gal pataikysi").
       let rewardCorrect = correct; // kiek „užskaitom" atlygiams (monetos/raidės)
       if ((game.mode as string).startsWith("myth")) {
+        // 🧐 Mitai (2 mygtukai, ~50 % atsitiktinai): bauda už klaidą +
+        // atlygiai tik už PERSVARĄ, be greičio bonuso (savo tempu).
         const wrong = serverAnswers.length - correct;
         score = Math.max(0, score - wrong * MYTH_WRONG_PENALTY);
         rewardCorrect = Math.max(0, correct - wrong);
         coinsEarned = rewardCorrect;
+      } else {
+        // 🎯 6 variantų žaidimai (matematika/gamta/trivijos, visi lygiai):
+        // −QUIZ_WRONG_PENALTY už kiekvieną ATSAKYTĄ klaidą (atsitiktinio
+        // spaudymo vidurkis ≤ 0), o monetos/raidės — tik surinkus bent
+        // QUIZ_REWARD_MIN_CORRECT teisingų. Sąžiningam žaidėjui pokytis
+        // minimalus; spaudinėtojui — nulis.
+        score = Math.max(0, score - wrongAnswered * QUIZ_WRONG_PENALTY);
+        if (correct < QUIZ_REWARD_MIN_CORRECT) {
+          coinsEarned = 0;
+          rewardCorrect = 0;
+        }
       }
 
       // ---- RAŠYMAI ----

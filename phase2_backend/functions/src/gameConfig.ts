@@ -90,6 +90,18 @@ export const BLITZ_MIN_GAP_MS = 600;
  *  atimama iš galutinių taškų po wrong × bauda, grindys 0. */
 export const MYTH_WRONG_PENALTY = 60;
 
+/** BAUDA už ATSAKYTĄ klaidingai 6 variantų žaidimuose (matematika/gamta/
+ *  trivijos; savininkas 2026-06-13: „už neatspėtus niekas nenuraso — tada
+ *  spaudinėji bele ką"). Atsitiktinis spaudymas pataiko ~1/6, tad su šia
+ *  bauda jo vidurkis ≤ 0. PRALEISTI dėl laiko (tuščias atsakymas) —
+ *  NEbaudžiami. Galutinis rezultatas niekada nekrenta žemiau 0. */
+export const QUIZ_WRONG_PENALTY = 25;
+
+/** Monetos/raidės 6 variantų žaidimuose duodamos tik surinkus bent tiek
+ *  teisingų (atsitiktinai ~1,7/10 — atlygių nefarmina; sąžiningam nieko
+ *  nekeičia). */
+export const QUIZ_REWARD_MIN_CORRECT = 4;
+
 /** Patikrina mode eilutę (pvz. "mul_sunkus", "mix_lengvas").
  *  Grąžina šeimą (add/sub/mul/div/mix) ir lygį. Validuoja prieš registrą. */
 export function parseMode(
