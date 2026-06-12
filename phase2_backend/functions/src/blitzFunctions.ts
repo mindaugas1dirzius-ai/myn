@@ -28,7 +28,8 @@ import {
   BLITZ_BASE_POINTS,
   BLITZ_CAND_MAX_CHARS,
   BLITZ_DURATION_MS,
-  BLITZ_FINAL_X2_FROM_MS,
+  BLITZ_DURATIONS_SEC,
+  BLITZ_FINAL_X2_LAST_MS,
   BLITZ_MIN_ANSWER_MS,
   BLITZ_Q_MAX_CHARS,
   BLITZ_SUBMIT_GRACE_MS,
@@ -102,6 +103,17 @@ export const startBlitz = onCall(
     const uid = request.auth.uid;
     const lang = parseLang(request.data?.lang);
 
+    // Trukmė pagal žaidėjo pasirinkimą (whitelist 30/60 s); 60 s raundas
+    // gauna dvigubą teiginių paketą.
+    const durRaw = request.data?.durationSec;
+    const durationSec = (BLITZ_DURATIONS_SEC as readonly number[]).includes(
+      durRaw as number
+    )
+      ? (durRaw as number)
+      : 30;
+    const durationMs = durationSec * 1000;
+    const batch = Math.round(BLITZ_BATCH * (durationSec / 30));
+
     // SUJUNGTAS fondas: gamta + visos 7 trivijos temos.
     const merged: TriviaQuestion[] = [
       ...NATURE_QUESTIONS,
@@ -121,18 +133,18 @@ export const startBlitz = onCall(
     // Svoris į lengvus (60/40) — skubantis skaitymas.
     const easyPool = merged.filter((q) => q.level === "lengvas");
     const medPool = merged.filter((q) => q.level === "vidutinis");
-    const wantEasy = Math.round(BLITZ_BATCH * 0.6);
+    const wantEasy = Math.round(batch * 0.6);
     let picked = [
       ...takeSome(easyPool, recent, wantEasy),
-      ...takeSome(medPool, recent, BLITZ_BATCH - wantEasy),
+      ...takeSome(medPool, recent, batch - wantEasy),
     ];
     // Jei kurio lygio pritrūko — papildom kitu (be dublikatų).
-    if (picked.length < BLITZ_BATCH) {
+    if (picked.length < batch) {
       const have = new Set(picked.map((q) => q.id));
       const extra = takeSome(
         merged.filter((q) => !have.has(q.id)),
         recent,
-        BLITZ_BATCH - picked.length
+        batch - picked.length
       );
       picked = [...picked, ...extra];
     }
@@ -161,6 +173,7 @@ export const startBlitz = onCall(
     await gameRef.set({
       uid,
       mode: "blitz",
+      durationMs,
       isTrue: statements.map((s) => s.isTrue),
       actions: picked.map((q) => q.id),
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -182,7 +195,7 @@ export const startBlitz = onCall(
 
     return {
       gameId: gameRef.id,
-      durationMs: BLITZ_DURATION_MS,
+      durationMs,
       statements,
     };
   }
@@ -225,6 +238,9 @@ export const submitBlitzScore = onCall(
       // ---- skaitymai baigti ----
 
       const isTrue = (game.isTrue as boolean[]) ?? [];
+      // Raundo trukmė iš žaidimo įrašo (seni įrašai be lauko → 30 s).
+      const durationMs = (game.durationMs as number) ?? BLITZ_DURATION_MS;
+      const finalX2FromMs = durationMs - BLITZ_FINAL_X2_LAST_MS;
 
       // Atsakymų validacija: unikalūs indeksai ribose, val bool, tMs skaičius.
       type Ans = { i: number; val: boolean; tMs: number };
@@ -251,7 +267,7 @@ export const submitBlitzScore = onCall(
         answers.push({
           i,
           val,
-          tMs: Math.min(Math.max(tMs, 0), BLITZ_DURATION_MS),
+          tMs: Math.min(Math.max(tMs, 0), durationMs),
         });
       }
       answers.sort((a, b) => a.i - b.i);
@@ -266,7 +282,7 @@ export const submitBlitzScore = onCall(
       }
       if (
         serverDurationMs >
-        BLITZ_DURATION_MS + BLITZ_SUBMIT_GRACE_MS + TIME_TOLERANCE_MS
+        durationMs + BLITZ_SUBMIT_GRACE_MS + TIME_TOLERANCE_MS
       ) {
         tx.delete(gameRef); // pavėluotas — raundas nebegalioja
         throw new HttpsError("failed-precondition", "Raundas nebegalioja.");
@@ -283,7 +299,7 @@ export const submitBlitzScore = onCall(
           streak++;
           if (streak > bestCombo) bestCombo = streak;
           let pts = BLITZ_BASE_POINTS * (1 + 0.1 * Math.min(streak - 1, 10));
-          if (a.tMs >= BLITZ_FINAL_X2_FROM_MS) pts *= 2;
+          if (a.tMs >= finalX2FromMs) pts *= 2;
           score += Math.round(pts);
         } else {
           streak = 0; // klaida = 0 taškų ir kombo nulinasi

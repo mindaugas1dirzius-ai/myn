@@ -146,12 +146,13 @@ class GameApi {
   // Vertinimą daro TIK serveris (submitBlitzScore) iš savo isTrue[].
   // ---------------------------------------------------------------------------
 
-  /// Pradeda blitz raundą: serveris paruošia ~40 teiginių paketą.
-  static Future<BlitzSession> startBlitz(String lang) {
+  /// Pradeda blitz raundą: serveris paruošia teiginių paketą.
+  /// [durationSec] — 30 arba 60 (žaidėjo pasirinkimas; 60 s = dvigubas paketas).
+  static Future<BlitzSession> startBlitz(String lang, int durationSec) {
     return _withRetry(() async {
       final result = await _functions
           .httpsCallable('startBlitz')
-          .call(<String, dynamic>{'lang': lang});
+          .call(<String, dynamic>{'lang': lang, 'durationSec': durationSec});
       final data = jsonDecode(jsonEncode(result.data)) as Map<String, dynamic>;
       return BlitzSession.fromJson(data);
     });

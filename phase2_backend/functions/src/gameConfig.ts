@@ -56,9 +56,12 @@ export const MIN_TIME_PER_Q_MS = 200; // greičiau = botas
 export const TIME_TOLERANCE_MS = 3000; // tinklo/latency paklaida lyginant laikus
 
 // ── ⚡ TAIP/NE BLITZ (planas docs/planai/TAIP_NE_BLITZ_PLANAS.md) ──────────────
-/** Raundo trukmė — vienas bendras 30 s laikmatis (ne per klausimą). */
+/** Numatytoji raundo trukmė (senas klientas be pasirinkimo). */
 export const BLITZ_DURATION_MS = 30000;
-/** Kiek teiginių paruošiama raundui (su atsarga — niekas tiek nespės). */
+/** Leidžiamos raundo trukmės (savininkas 2026-06-12: „30 sek labai greitai
+ *  praeina" → pridėtas 1 min pasirinkimas). */
+export const BLITZ_DURATIONS_SEC = [30, 60] as const;
+/** Kiek teiginių paruošiama 30 s raundui (60 s gauna dvigubai). */
 export const BLITZ_BATCH = 40;
 /** Greičiau nei tiek vienam atsakymui = botas (žmogus skaito ~0,5–2 s). */
 export const BLITZ_MIN_ANSWER_MS = 250;
@@ -66,8 +69,8 @@ export const BLITZ_MIN_ANSWER_MS = 250;
 export const BLITZ_SUBMIT_GRACE_MS = 10000;
 /** Bazė už teisingą atsakymą (kombo daugina, žr. submitBlitzScore). */
 export const BLITZ_BASE_POINTS = 100;
-/** Nuo kurios raundo ms taškai dvigubinami („paskutinės 5 s ×2"). */
-export const BLITZ_FINAL_X2_FROM_MS = 25000;
+/** Kiek paskutinių ms taškai dvigubinami („paskutinės 5 s ×2"). */
+export const BLITZ_FINAL_X2_LAST_MS = 5000;
 /** Kandidato (atsakymo varianto) ilgio lubos — turi būti perskaitomas žaibiškai. */
 export const BLITZ_CAND_MAX_CHARS = 30;
 /** Klausimo ilgio lubos blitz'ui. */

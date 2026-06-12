@@ -82,8 +82,17 @@ class AppStrings {
       'Raundas nebegalioja (per ilga pauzė) — taškai neįskaityti.',
       'Round expired (paused too long) — score not counted.');
   String get blitzFinalX2 => _pick('FINALAS ×2!', 'FINALE ×2!');
-  String get blitzRule30s =>
-      _pick('30 sekundžių — kuo daugiau atsakymų', '30 seconds — answer as many as you can');
+  String get blitzPickDuration =>
+      _pick('Pasirink raundo trukmę', 'Pick your round length');
+  String get blitzFast30 => _pick('Žaibo raundas — 30 s', 'Lightning — 30 s');
+  String get blitzFast30Desc => _pick(
+      'Trumpas ir aštrus: kiekviena sekundė auksinė',
+      'Short and sharp: every second counts');
+  String get blitzLong60 => _pick('Ilgas raundas — 1 min.', 'Long round — 1 min');
+  String get blitzLong60Desc => _pick(
+      'Daugiau laiko, daugiau klausimų, didesnės serijos',
+      'More time, more questions, bigger streaks');
+  String get blitzChangeDuration => _pick('Keisti trukmę', 'Change length');
   String get blitzRuleCombo =>
       _pick('Serija be klaidų — taškai iki ×2', 'No-mistake streak — up to ×2 points');
   String get blitzRuleFinal =>

@@ -240,6 +240,24 @@ bendra taškų sistema → klausimų pildymas/profiliai/dizainai.
   perdegusios bylos nekartojamos, tad bylų reikia DAUG — pildymo prioritetas
   kartu su „klausimas" mįslėmis.
 
+## ✅ 6 RATAS (2026-06-12 naktis): Blitz 1 MIN pasirinkimas + Detektyvo dizainas
+
+### Blitz trukmės pasirinkimas (savininkas: „30 sek labai greitai praeina"):
+- Serveris: `startBlitz` priima `durationSec` (whitelist BLITZ_DURATIONS_SEC
+  [30,60]); 60 s = dvigubas paketas (80 teiginių); `durationMs` saugomas
+  active_games doc'e; `submitBlitzScore` vartus ir finalo ×2 langą
+  (BLITZ_FINAL_X2_LAST_MS=5000 — paskutinės 5 s) skaičiuoja iš doc trukmės.
+- Klientas: NAUJAS pasirinkimo ekranas prieš raundą (⚡ Žaibo 30 s / ⏱ Ilgas
+  1 min, default 60) + taisyklių kortelė; rezultatuose „⏱ Keisti trukmę".
+  `_finalPhase`/`_pointsFor` dabar nuo `_durationMs - 5000`.
+
+### Detektyvo dizaino poliravimas (savininkas: „patogiai, gražiai, nenuobodžiai"):
+- Lygiai su aprašymais (Naujokas „atspės ir vaikas" … Šerlokas „tik žinovams"),
+  banko chip'ai, švytėjimai; 🕵️ antraštė.
+- Žodžio lenta — „bylos segtuvo" kortelė su 🔍 vandens ženklu fone.
+- Nupirkto atsakymo chip'as iššoka elasticOut animacija (✓ TAIP / ✗ NE).
+- Laimėjimo dialogas 🎉.
+
 ## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
 
 1. **#50 — 1 banga: potemių papildymas** (TURINIO_PLANAS.md) — naujos potemės

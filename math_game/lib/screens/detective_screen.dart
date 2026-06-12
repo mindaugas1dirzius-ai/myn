@@ -272,7 +272,7 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
       barrierDismissible: false,
       builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.surface,
-        title: Text('🕵️ ${_t('Byla išspręsta!', 'Case solved!')}',
+        title: Text('🎉 ${_t('Byla išspręsta!', 'Case solved!')}',
             style: const TextStyle(color: AppColors.correct)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -411,15 +411,21 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
 
   Widget _levelSelect() {
     final levels = [
-      (1, '🟢', _t('Naujokas', 'Rookie'), 200),
-      (2, '🟡', _t('Seklys', 'Sleuth'), 300),
-      (3, '🟠', _t('Inspektorius', 'Inspector'), 400),
-      (4, '🔴', _t('Šerlokas', 'Sherlock'), 500),
+      (1, '🟢', _t('Naujokas', 'Rookie'),
+          _t('Lengvos bylos — atspės ir vaikas', 'Easy cases — even kids can crack them'), 200),
+      (2, '🟡', _t('Seklys', 'Sleuth'),
+          _t('Reikia šiek tiek nuovokos', 'Takes a bit of wit'), 300),
+      (3, '🟠', _t('Inspektorius', 'Inspector'),
+          _t('Rimtos bylos patyrusiems', 'Serious cases for the experienced'), 400),
+      (4, '🔴', _t('Šerlokas', 'Sherlock'),
+          _t('Tik tikriems žinovams', 'For true masterminds only'), 500),
     ];
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
       child: Column(
         children: [
+          const Text('🕵️', style: TextStyle(fontSize: 50)),
+          const SizedBox(height: 4),
           Text(
             _t('Pasirink bylos sunkumą', 'Pick your case difficulty'),
             style: const TextStyle(
@@ -435,36 +441,63 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
             style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
           ),
           const SizedBox(height: 14),
-          for (final (lvl, emoji, name, bank) in levels) ...[
+          for (final (lvl, emoji, name, desc, bank) in levels) ...[
             GestureDetector(
               onTap: () => _start(lvl),
               child: Container(
                 width: double.infinity,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+                    const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
                 margin: const EdgeInsets.only(bottom: 12),
                 decoration: BoxDecoration(
                   color: AppColors.surface,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(18),
                   border: Border.all(
                       color: _accent.withValues(alpha: 0.55), width: 1.4),
+                  boxShadow: [
+                    BoxShadow(
+                        color: _accent.withValues(alpha: 0.10),
+                        blurRadius: 12,
+                        spreadRadius: 1),
+                  ],
                 ),
                 child: Row(
                   children: [
-                    Text(emoji, style: const TextStyle(fontSize: 28)),
+                    Text(emoji, style: const TextStyle(fontSize: 30)),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: Text(name,
-                          style: const TextStyle(
-                              color: AppColors.textPrimary,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(name,
+                              style: const TextStyle(
+                                  color: AppColors.textPrimary,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20)),
+                          const SizedBox(height: 3),
+                          Text(desc,
+                              style: const TextStyle(
+                                  color: AppColors.textSecondary,
+                                  fontSize: 12)),
+                        ],
+                      ),
                     ),
-                    Text('$bank 🔑',
-                        style: const TextStyle(
-                            color: AppColors.levelMedium,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16)),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                        color: AppColors.levelMedium.withValues(alpha: 0.14),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(
+                            color: AppColors.levelMedium
+                                .withValues(alpha: 0.7)),
+                      ),
+                      child: Text('$bank 🔑',
+                          style: const TextStyle(
+                              color: AppColors.levelMedium,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15)),
+                    ),
                   ],
                 ),
               ),
@@ -482,8 +515,32 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
       child: Column(
         children: [
           _statusRow(v),
-          const SizedBox(height: 14),
-          _wordBoard(v),
+          const SizedBox(height: 12),
+          // „Bylos segtuvas": žodžio lenta su 🔍 vandens ženklu fone.
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 10),
+            decoration: BoxDecoration(
+              color: AppColors.surface.withValues(alpha: 0.55),
+              borderRadius: BorderRadius.circular(18),
+              border:
+                  Border.all(color: _accent.withValues(alpha: 0.35)),
+            ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Positioned(
+                  right: -6,
+                  bottom: -16,
+                  child: Opacity(
+                    opacity: 0.08,
+                    child: const Text('🔍', style: TextStyle(fontSize: 90)),
+                  ),
+                ),
+                _wordBoard(v),
+              ],
+            ),
+          ),
           const SizedBox(height: 12),
           _poolArea(v),
           const SizedBox(height: 10),
@@ -788,22 +845,30 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
           ),
           const SizedBox(width: 10),
           if (bought)
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: (c.a! ? AppColors.correct : AppColors.wrong)
-                    .withValues(alpha: 0.16),
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                    color: c.a! ? AppColors.correct : AppColors.wrong),
-              ),
-              child: Text(
-                c.a! ? _t('TAIP', 'YES') : _t('NE', 'NO'),
-                style: TextStyle(
-                    color: c.a! ? AppColors.correct : AppColors.wrong,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14),
+            // Atsakymo „atvertimo" animacija — chip'as iššoka.
+            TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0.4, end: 1),
+              duration: const Duration(milliseconds: 320),
+              curve: Curves.elasticOut,
+              builder: (context, sc, child) =>
+                  Transform.scale(scale: sc, child: child),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: (c.a! ? AppColors.correct : AppColors.wrong)
+                      .withValues(alpha: 0.16),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                      color: c.a! ? AppColors.correct : AppColors.wrong),
+                ),
+                child: Text(
+                  c.a! ? '✓ ${_t('TAIP', 'YES')}' : '✗ ${_t('NE', 'NO')}',
+                  style: TextStyle(
+                      color: c.a! ? AppColors.correct : AppColors.wrong,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14),
+                ),
               ),
             )
           else

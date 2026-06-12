@@ -31,12 +31,13 @@ class BlitzGameScreen extends StatefulWidget {
   State<BlitzGameScreen> createState() => _BlitzGameScreenState();
 }
 
-enum _Phase { loading, error, countdown, playing, submitting, result }
+enum _Phase { pick, loading, error, countdown, playing, submitting, result }
 
 class _BlitzGameScreenState extends State<BlitzGameScreen> {
   static const _accent = AppColors.levelMedium; // ⚡ geltona
 
-  _Phase _phase = _Phase.loading;
+  _Phase _phase = _Phase.pick; // pirmiausia — trukmės pasirinkimas
+  int _chosenDuration = 60; // savininko pastaba: 30 s per greit — default 1 min
   BlitzSession? _session;
   BlitzResult? _result;
   Timer? _ticker;
@@ -55,19 +56,14 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
   bool _pressedNo = false;
 
   AppLang _appLang = AppLang.en;
-  bool _started = false;
   AppStrings get _s => AppStrings.of(context);
 
-  // SVARBU: pirmas _load() kviečiamas IŠ didChangeDependencies (ne initState),
-  // nes programos kalba žinoma tik tada — kitaip klausimai išeitų anglų kalba.
+  // SVARBU: kalba žinoma tik po didChangeDependencies — užklausos eina vėliau
+  // (žaidėjui pasirinkus trukmę), tad klausimai visada teisinga kalba.
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _appLang = AppStrings.of(context).lang;
-    if (!_started) {
-      _started = true;
-      _load();
-    }
   }
 
   @override
@@ -85,7 +81,9 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
   int get _remainingMs => (_durationMs - _elapsedMs).clamp(0, 1 << 31);
 
   bool get _finalPhase =>
-      _phase == _Phase.playing && _elapsedMs >= 25000 && _remainingMs > 0;
+      _phase == _Phase.playing &&
+      _elapsedMs >= _durationMs - 5000 &&
+      _remainingMs > 0;
 
   /// Dabartinis kombo daugiklis (rodymui): 1.0 → 2.0.
   double get _multiplier => 1 + 0.1 * (_streak - 1).clamp(0, 10);
@@ -105,7 +103,7 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
     });
     try {
       final lang = _appLang == AppLang.lt ? 'lt' : 'en';
-      final s = await GameApi.startBlitz(lang);
+      final s = await GameApi.startBlitz(lang, _chosenDuration);
       if (!mounted) return;
       if (s.statements.isEmpty) {
         setState(() => _phase = _Phase.error);
@@ -154,7 +152,7 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
   /// Kliento taškų veidrodis — TA PATI formulė kaip serveryje (rodymui).
   int _pointsFor(int streakNow, int tMs) {
     var pts = 100 * (1 + 0.1 * (streakNow - 1).clamp(0, 10));
-    if (tMs >= 25000) pts *= 2;
+    if (tMs >= _durationMs - 5000) pts *= 2;
     return pts.round();
   }
 
@@ -290,6 +288,8 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
 
   Widget _body(AppStrings s) {
     switch (_phase) {
+      case _Phase.pick:
+        return _pickView(s);
       case _Phase.loading:
         return const Center(child: CircularProgressIndicator(color: _accent));
       case _Phase.error:
@@ -302,6 +302,113 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
       case _Phase.result:
         return _resultView(s, _result!);
     }
+  }
+
+  /// Trukmės pasirinkimas (savininkas: „30 sek labai greitai praeina").
+  Widget _pickView(AppStrings s) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.fromLTRB(20, 14, 20, 10),
+      child: Column(
+        children: [
+          const Text('⚡', style: TextStyle(fontSize: 52)),
+          const SizedBox(height: 6),
+          Text(
+            s.blitzPickDuration,
+            style: const TextStyle(
+                color: AppColors.textSecondary,
+                fontSize: 14,
+                letterSpacing: 1.2),
+          ),
+          const SizedBox(height: 16),
+          _durationCard(
+            emoji: '⚡',
+            title: s.blitzFast30,
+            subtitle: s.blitzFast30Desc,
+            durationSec: 30,
+          ),
+          const SizedBox(height: 12),
+          _durationCard(
+            emoji: '⏱',
+            title: s.blitzLong60,
+            subtitle: s.blitzLong60Desc,
+            durationSec: 60,
+          ),
+          const SizedBox(height: 18),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: _accent.withValues(alpha: 0.3)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _ruleRow('🔥', s.blitzRuleCombo),
+                const SizedBox(height: 6),
+                _ruleRow('⚡', s.blitzRuleFinal),
+                const SizedBox(height: 6),
+                _ruleRow('👆', s.blitzRuleSwipe),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _durationCard({
+    required String emoji,
+    required String title,
+    required String subtitle,
+    required int durationSec,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        SoundService.instance.tap();
+        _chosenDuration = durationSec;
+        _load();
+      },
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: _accent.withValues(alpha: 0.6), width: 1.6),
+          boxShadow: [
+            BoxShadow(
+                color: _accent.withValues(alpha: 0.15),
+                blurRadius: 14,
+                spreadRadius: 1),
+          ],
+        ),
+        child: Row(
+          children: [
+            Text(emoji, style: const TextStyle(fontSize: 34)),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: const TextStyle(
+                          color: _accent,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22)),
+                  const SizedBox(height: 4),
+                  Text(subtitle,
+                      style: const TextStyle(
+                          color: AppColors.textSecondary, fontSize: 13)),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right,
+                color: _accent.withValues(alpha: 0.8), size: 26),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _errorView(AppStrings s) {
@@ -345,27 +452,6 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
               key: ValueKey(_countdown),
               style: const TextStyle(
                   color: _accent, fontSize: 96, fontWeight: FontWeight.bold),
-            ),
-          ),
-          const SizedBox(height: 18),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-            decoration: BoxDecoration(
-              color: AppColors.surface,
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: _accent.withValues(alpha: 0.35)),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _ruleRow('⏱', s.blitzRule30s),
-                const SizedBox(height: 6),
-                _ruleRow('🔥', s.blitzRuleCombo),
-                const SizedBox(height: 6),
-                _ruleRow('⚡', s.blitzRuleFinal),
-                const SizedBox(height: 6),
-                _ruleRow('👆', s.blitzRuleSwipe),
-              ],
             ),
           ),
         ],
@@ -887,11 +973,21 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
                       letterSpacing: 1.2)),
             ),
           ),
-          const SizedBox(height: 10),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(s.blitzClose,
-                style: const TextStyle(color: AppColors.textSecondary)),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () => setState(() => _phase = _Phase.pick),
+                child: Text('⏱ ${s.blitzChangeDuration}',
+                    style: const TextStyle(color: AppColors.textSecondary)),
+              ),
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(s.blitzClose,
+                    style: const TextStyle(color: AppColors.textSecondary)),
+              ),
+            ],
           ),
         ],
       ),
