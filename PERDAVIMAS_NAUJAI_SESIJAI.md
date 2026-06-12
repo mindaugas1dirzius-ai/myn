@@ -181,6 +181,29 @@ atsiverti 1–2 raidės. Pataisa dviem pusėm:
   rezultatų panelė (ne dialogas) su skaičiuojančiais taškais, statistikos
   kortelėmis, „🏆 Naujas rekordas" ir dideliu „▶ Žaisti dar".
 
+## ✅ 4 RATAS (2026-06-12 ~20:30): Melt ATSPĖJAMUMAS + Blitz kalbos bug'as
+
+### Melt „neatspėjama, variantų milijonas" (savininko skundas su ekrano nuotrauka):
+Lengvame lygyje krito ilgas 3 žodžių FAKTAS („Drambliai negali pašokti") su
+miglota užuomina — fakto FORMULUOTĖS atspėti neįmanoma. Pataisyta:
+1. **Melt fondas = TIK kategorija „klausimas"** (`MELT_CATEGORY` mysteryContent.ts):
+   užuomina = aiškus klausimas, atsakymas = konkretus daiktas („Ugnikalnis").
+   Faktai/istorijos liko TIK klasikiniam „Atspėk paslaptį" (ten yra pagalbos).
+2. **Ilgis pagal lygį** (`meltLenBoundsFor` meltTypes.ts): L1 5–14 raidžių ≤2 žodžiai ·
+   L2 7–18 ≤2 ž. · L3 10–26 ≤3 ž. · L4 12–40 ≤5 ž. (+ švelnūs atsitraukimai).
+3. **LAIPSNIŠKOS UŽUOMINOS**: ties 40 % laiko serveris atveria `hint1`, ties 70 % —
+   `hint2` (payload null→tekstas; deterministiška iš elapsed, jokios būsenos;
+   klientas rodo 💡/🔎 korteles po pagrindine užuomina). Ilgiau lauki = aiškiau,
+   bet taškai aptirpę — sąžininga.
+⚠️ PASEKMĖ TURINIUI: melt'ui dabar reikia DAUG „klausimas" tipo mįslių KIEKVIENAM
+lygiui (ypač L1 trumpų vaikiškų ir L4) — pildant mįsles tai prioritetas #1.
+
+### Blitz klausimai ėjo ANGLIŠKAI (savininko radinys):
+Priežastis: `_load()` buvo kviečiamas iš initState, o kalba sužinoma tik
+didChangeDependencies → užklausa išeidavo su 'en'. PATAISYTA: pirmas `_load()`
+dabar iš didChangeDependencies (`_started` saugiklis). PAMOKA ateičiai: ekrano
+kalbą skaityti TIK po didChangeDependencies, ne initState!
+
 ## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
 
 1. **#50 — 1 banga: potemių papildymas** (TURINIO_PLANAS.md) — naujos potemės

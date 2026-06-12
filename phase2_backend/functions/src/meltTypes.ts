@@ -35,6 +35,24 @@ export const MELT_MIN_LETTERS = 12;
 /** Didžiausias raidžių kiekis — ilgos citatos (60+) beveik neįmenamos. */
 export const MELT_MAX_LETTERS = 40;
 
+/**
+ * ILGIO RIBOS PAGAL LYGĮ (savininko taisyklė 2026-06-12: „nerink tokių
+ * sudėtingų iš šešiolikos žodžių klausimų… lengvame lygyje be šansų atspėti"):
+ * lengvas = trumpa ir konkretu (vaikas atspėja), sunkesni — ilgiau.
+ */
+export function meltLenBoundsFor(level?: number): {
+  min: number;
+  max: number;
+  maxWords: number;
+} {
+  switch (level) {
+    case 4: return { min: 12, max: 40, maxWords: 5 };
+    case 3: return { min: 10, max: 26, maxWords: 3 };
+    case 2: return { min: 7, max: 18, maxWords: 2 };
+    default: return { min: 5, max: 14, maxWords: 2 };
+  }
+}
+
 /** Leidžiami sunkumo lygiai (1 lengvas … 4 ekstremalus) — lemia bazę 200–500. */
 export const MELT_LEVELS = [1, 2, 3, 4] as const;
 

@@ -54,18 +54,19 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
   bool _pressedNo = false;
 
   AppLang _appLang = AppLang.en;
+  bool _started = false;
   AppStrings get _s => AppStrings.of(context);
 
-  @override
-  void initState() {
-    super.initState();
-    _load();
-  }
-
+  // SVARBU: pirmas _load() kviečiamas IŠ didChangeDependencies (ne initState),
+  // nes programos kalba žinoma tik tada — kitaip klausimai išeitų anglų kalba.
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _appLang = AppStrings.of(context).lang;
+    if (!_started) {
+      _started = true;
+      _load();
+    }
   }
 
   @override

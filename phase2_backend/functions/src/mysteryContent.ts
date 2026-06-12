@@ -2119,48 +2119,66 @@ export function findMystery(id: string): MysteryItem | undefined {
 }
 
 /**
- * Parenka paslaptį „Raidžių tirpimo" režimui: kaip pickMystery, bet
- *  - tinka tik frazės su 12–40 raidžių (trumpos tirpsta žiauriai, ilgos
- *    citatos beveik neįmenamos);
- *  - jei nurodytas level (1..4) — pirmenybė TO sunkumo paslaptims (žaidėjas
- *    pats renkasi lygį). Jei to lygio tinkamų nėra — švelnūs atsitraukimai:
- *    ilgio filtras be lygio → bet kuri frazė.
+ * Parenka paslaptį „Raidžių tirpimo" režimui (savininko taisyklės 2026-06-12):
+ *  - TIK kategorija „klausimas" — užuomina yra AIŠKUS klausimas, atsakymas
+ *    konkretus daiktas/vieta (atspėjama!). Faktai-sakiniai NETINKA: jų
+ *    formuluotę („Drambliai negali pašokti" vs „Dramblys nešoka") atspėti
+ *    neįmanoma — „variantų milijonas";
+ *  - ilgis ir žodžių kiekis pagal lygį (meltLenBoundsFor) — lengvame tik
+ *    trumpi, vaikui atspėjami atsakymai;
+ *  - jei to lygio tinkamų nėra — švelnūs atsitraukimai (be lygio → bet kuris
+ *    klausimas), kad žaidimas niekada nestrigtų.
  */
+const MELT_CATEGORY = "klausimas";
+
 export function pickMeltMystery(
   lang: Lang,
   solvedIds: string[],
   minLetters: number,
   maxLetters: number,
-  level?: number
+  level?: number,
+  maxWords?: number
 ): { item: MysteryItem; lang: Lang; content: MysteryText } | null {
   const solved = new Set(solvedIds);
   const countLetters = (s: string) =>
     [...s].filter((ch) => /\p{L}/u.test(ch)).length;
+  const countWords = (s: string) => s.trim().split(/\s+/).length;
   const fitsLen = (m: MysteryItem, l: Lang) => {
-    const n = countLetters(m.texts[l]!.text);
-    return n >= minLetters && n <= maxLetters;
+    const t = m.texts[l]!.text;
+    const n = countLetters(t);
+    return (
+      n >= minLetters &&
+      n <= maxLetters &&
+      (maxWords === undefined || countWords(t) <= maxWords)
+    );
   };
 
+  const meltPool = PICKABLE_MYSTERIES.filter(
+    (m) => m.category === MELT_CATEGORY
+  );
+
   const tryPick = (filter: (m: MysteryItem, l: Lang) => boolean) => {
-    let usable = PICKABLE_MYSTERIES.filter(
-      (m) => m.texts[lang] && filter(m, lang)
-    );
+    let usable = meltPool.filter((m) => m.texts[lang] && filter(m, lang));
     let useLangBase: Lang = lang;
     if (usable.length === 0) {
-      usable = PICKABLE_MYSTERIES.filter((m) => m.texts.en && filter(m, "en"));
+      usable = meltPool.filter((m) => m.texts.en && filter(m, "en"));
       useLangBase = "en";
     }
     if (usable.length === 0) return null;
     const fresh = usable.filter((m) => !solved.has(m.id));
-    const pool = preferFun(fresh.length > 0 ? fresh : usable);
+    const pool = fresh.length > 0 ? fresh : usable;
     const item = pool[Math.floor(Math.random() * pool.length)];
     return { item, lang: useLangBase, content: item.texts[useLangBase]! };
   };
 
-  // 1) lygis + ilgis → 2) tik ilgis → 3) bet kas (saugiklis).
+  // 1) lygis + ilgis/žodžiai → 2) tik ilgis/žodžiai → 3) bet kuris klausimas.
   if (level) {
     const r = tryPick((m, l) => m.level === level && fitsLen(m, l));
     if (r) return r;
   }
-  return tryPick((m, l) => fitsLen(m, l)) ?? pickMystery(lang, solvedIds);
+  return (
+    tryPick((m, l) => fitsLen(m, l)) ??
+    tryPick(() => true) ??
+    pickMystery(lang, solvedIds)
+  );
 }

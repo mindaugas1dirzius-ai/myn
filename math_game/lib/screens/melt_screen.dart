@@ -746,20 +746,49 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
     final (emoji, label) = _categoryLabel(v.category);
     final prefix =
         v.category == 'klausimas' ? _t('Klausimas', 'Question') : label;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: _accent.withValues(alpha: 0.4)),
-      ),
-      child: Text(
-        '$emoji  $prefix: ${v.hint}',
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-            color: AppColors.textPrimary,
-            fontSize: 16,
-            fontWeight: FontWeight.w600),
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          decoration: BoxDecoration(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(color: _accent.withValues(alpha: 0.4)),
+          ),
+          child: Text(
+            '$emoji  $prefix: ${v.hint}',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+                color: AppColors.textPrimary,
+                fontSize: 16,
+                fontWeight: FontWeight.w600),
+          ),
+        ),
+        // Laipsniškos užuominos — atsiveria 40 % ir 70 % laiko (nemokamos).
+        if (v.hint1 != null && v.hint1!.isNotEmpty) _extraHint('💡', v.hint1!),
+        if (v.hint2 != null && v.hint2!.isNotEmpty) _extraHint('🔎', v.hint2!),
+      ],
+    );
+  }
+
+  Widget _extraHint(String emoji, String text) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 6),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          border:
+              Border.all(color: AppColors.neonBlue.withValues(alpha: 0.45)),
+        ),
+        child: Text(
+          '$emoji $text',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+              color: AppColors.textPrimary, fontSize: 14, height: 1.25),
+        ),
       ),
     );
   }

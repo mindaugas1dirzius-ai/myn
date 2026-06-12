@@ -32,8 +32,6 @@ import {
 import { findMystery, pickMeltMystery } from "./mysteryContent";
 import {
   MeltState,
-  MELT_MIN_LETTERS,
-  MELT_MAX_LETTERS,
   MELT_FREE_KEEP_HIDDEN,
   MELT_FREEZE_MS,
   MELT_FREEZE_GRACE_MS,
@@ -42,6 +40,7 @@ import {
   isValidMeltConfig,
   meltCooldownMs,
   meltFreezeMsFor,
+  meltLenBoundsFor,
   meltPMax,
   meltPoints,
   meltWrongPenalty,
@@ -100,7 +99,23 @@ function meltPayload(
     freezesLeft: Math.max(0, MELT_MAX_FREEZES - (state.freezeCount ?? 0)),
     wrongPenalty: meltWrongPenalty(meltPMax(state.level, state.intervalSec)),
     freezeMs: windowMs,
+    // LAIPSNIŠKOS UŽUOMINOS (savininko prašymu — „užuominos aiškesnės"):
+    // įpusėjus laikui (40 %) atsiveria hint1, link pabaigos (70 %) — hint2.
+    // Nemokama ir deterministiška (iš elapsed) — kuo ilgiau lauki, tuo
+    // aiškiau, bet taškai jau aptirpę. Jokios naujos būsenos.
+    hint1: progressFrac(state, d.remainingMs) >= 0.4
+      ? content.hint1 ?? null
+      : null,
+    hint2: progressFrac(state, d.remainingMs) >= 0.7
+      ? content.hint2 ?? null
+      : null,
   };
+}
+
+/** Kokia laiko dalis jau praėjo (0..1) — laipsniškoms užuominoms. */
+function progressFrac(state: MeltState, remainingMs: number): number {
+  const limitMs = state.limitSec * 1000;
+  return limitMs > 0 ? (limitMs - remainingMs) / limitMs : 0;
 }
 
 /** Uždaro aktyvų spėjimo langą: jo laikas perkeliamas į lockMsUsed. */
@@ -177,12 +192,15 @@ export const startMelt = onCall(
         throw new HttpsError("invalid-argument", "Netinkami režimo nustatymai.");
       }
 
+      // Ilgio/žodžių ribos pagal lygį: lengvame tik trumpi, atspėjami atsakymai.
+      const bounds = meltLenBoundsFor(level as number);
       const picked = pickMeltMystery(
         lang,
         solvedIds,
-        MELT_MIN_LETTERS,
-        MELT_MAX_LETTERS,
-        level as number
+        bounds.min,
+        bounds.max,
+        level as number,
+        bounds.maxWords
       );
       if (!picked) {
         throw new HttpsError("failed-precondition", "Paslapčių dar nėra.");
