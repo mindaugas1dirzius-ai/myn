@@ -34,11 +34,16 @@ export const TRIVIA_SUBTHEMES: Record<
   GenericTriviaCategory,
   Record<string, string[]>
 > = {
-  // Pop kultūra: 2 sodrios potemės iš esamų žymų.
-  //   • "cinema"  → 🎬 Kinas ir muzika (filmai, daina, animacija);
+  // Pop kultūra: 4 potemės pagal žaidėjo planą (2026-06-12).
+  //   • "films"   → 🎥 Filmai (movies + cartoons);
+  //   • "tv"      → 📺 TV ir serialai (nauja žyma "tv");
+  //   • "music"   → 🎵 Muzika;
   //   • "stories" → 📚 Herojai ir istorijos (knygos, menas, personažai, mitai, žaidimai).
+  // Pastaba: senas kodas "cinema" pakeistas testavimo fazėje (Top 10 dar tuščias).
   pop: {
-    cinema: ["movies", "music", "cartoons"],
+    films: ["movies", "cartoons"],
+    tv: ["tv"],
+    music: ["music"],
     stories: ["books", "art", "characters", "superheroes", "heroes", "myth", "games"],
   },
   // Geografija: 4 potemės pagal žaidėjo planą.

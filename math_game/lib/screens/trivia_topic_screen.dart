@@ -242,11 +242,27 @@ class TriviaTopicScreen extends StatelessWidget {
       case 'pop':
         return [
           _SubTheme(
-            id: 'cinema',
-            emoji: '🎬',
-            title: s.subPopCinema,
-            subtitle: s.subPopCinemaDesc,
+            id: 'films',
+            emoji: '🎥',
+            title: s.subPopFilms,
+            subtitle: s.subPopFilmsDesc,
             accent: AppColors.levelExtreme,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'tv',
+            emoji: '📺',
+            title: s.subPopTv,
+            subtitle: s.subPopTvDesc,
+            accent: AppColors.neonBlue,
+            open: true,
+          ),
+          _SubTheme(
+            id: 'music',
+            emoji: '🎵',
+            title: s.subPopMusic,
+            subtitle: s.subPopMusicDesc,
+            accent: AppColors.levelEasy,
             open: true,
           ),
           _SubTheme(

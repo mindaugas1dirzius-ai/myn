@@ -162,9 +162,15 @@ class AppStrings {
   String get subHistoryMythsDesc =>
       _pick('Populiarūs klaidingi įsitikinimai', 'Popular misconceptions debunked');
   // Pop kultūra — potemės
-  String get subPopCinema => _pick('Kinas ir muzika', 'Cinema & music');
-  String get subPopCinemaDesc =>
-      _pick('Filmai, dainos, animacija', 'Movies, songs, animation');
+  String get subPopFilms => _pick('Filmai', 'Movies');
+  String get subPopFilmsDesc =>
+      _pick('Kinas, aktoriai, animacija', 'Cinema, actors, animation');
+  String get subPopTv => _pick('TV ir serialai', 'TV & series');
+  String get subPopTvDesc =>
+      _pick('Serialai, laidos, TV istorija', 'Series, shows, TV history');
+  String get subPopMusic => _pick('Muzika', 'Music');
+  String get subPopMusicDesc =>
+      _pick('Atlikėjai, instrumentai, klasika', 'Artists, instruments, classics');
   String get subPopStories => _pick('Herojai ir istorijos', 'Heroes & stories');
   String get subPopStoriesDesc =>
       _pick('Knygos, personažai, mitai, menas', 'Books, characters, myths, art');
