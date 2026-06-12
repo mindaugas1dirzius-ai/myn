@@ -11,17 +11,20 @@ class BlitzStatement {
   final String q; // klausimas (žaidėjo kalba)
   final String cand; // kandidatas (atsakymo variantas)
   final bool isTrue; // ar kandidatas teisingas (UX reakcijai)
+  final String cat; // temos kodas (nature/geo/...) — kortelės dizainui
 
   const BlitzStatement({
     required this.q,
     required this.cand,
     required this.isTrue,
+    this.cat = '',
   });
 
   factory BlitzStatement.fromJson(Map<String, dynamic> j) => BlitzStatement(
         q: j['q'] as String? ?? '',
         cand: j['cand'] as String? ?? '',
         isTrue: j['isTrue'] as bool? ?? false,
+        cat: j['cat'] as String? ?? '',
       );
 }
 

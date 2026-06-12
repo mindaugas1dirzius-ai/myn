@@ -198,6 +198,15 @@ miglota užuomina — fakto FORMULUOTĖS atspėti neįmanoma. Pataisyta:
 ⚠️ PASEKMĖ TURINIUI: melt'ui dabar reikia DAUG „klausimas" tipo mįslių KIEKVIENAM
 lygiui (ypač L1 trumpų vaikiškų ir L4) — pildant mįsles tai prioritetas #1.
 
+### 🎨 Blitz kortelės TEMŲ DIZAINAS (savininko „ten tuščia atrodo"):
+Kiekviena kortelė dabar turi SAVO TEMOS VEIDĄ, besikeičiantį su kiekvienu
+klausimu: temos ženkliukas su pavadinimu (🌿 Gamta / 🗺️ Geografija…), temos
+SPALVOS rėmas+švytėjimas+kandidato tekstas, ir 2 dideli pusiau permatomi temos
+emoji kortelės fone (dekoracija „vietoj nuotraukos" — momentinė, be asset'ų,
+neutrali kalbai). Serveris siunčia `cat` (q.category) kiekvienam teiginiui —
+SAUGU (tema nesusijusi su atsakymo teisingumu). Klientas temos išvaizdą ima
+iš kThemes katalogo (`_themeFor`).
+
 ### Blitz klausimai ėjo ANGLIŠKAI (savininko radinys):
 Priežastis: `_load()` buvo kviečiamas iš initState, o kalba sužinoma tik
 didChangeDependencies → užklausa išeidavo su 'en'. PATAISYTA: pirmas `_load()`

@@ -151,7 +151,9 @@ export const startBlitz = onCall(
         );
         cand = shuffle(shortD)[0];
       }
-      return { q: c.question, cand, isTrue: flags[i] };
+      // `cat` — temos kodas kortelės dizainui (emoji+spalva kliente).
+      // SAUGU: tema nesusijusi su tuo, ar kandidatas teisingas.
+      return { q: c.question, cand, isTrue: flags[i], cat: q.category };
     });
 
     // active_games įrašas — vertinimui (isTrue) ir rotacijai (actions).

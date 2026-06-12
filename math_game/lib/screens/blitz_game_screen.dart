@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../config/theme_catalog.dart';
 import '../l10n/app_strings.dart';
 import '../models/blitz_models.dart';
 import '../services/game_api.dart';
@@ -560,8 +561,25 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
     );
   }
 
+  /// Temos aprašas kortelės dizainui (emoji + spalva + pavadinimas iš katalogo).
+  GameTheme? _themeFor(String cat) {
+    for (final t in kThemes) {
+      if (t.code == cat) return t;
+    }
+    return null;
+  }
+
   /// Teiginio kortelė: įskrenda su animacija; braukiama ← NE / TAIP →.
+  /// KIEKVIENA TEMA — SAVO VEIDAS (savininko prašymu, kad nebūtų tuščia):
+  /// temos ženkliukas su pavadinimu, temos spalvos rėmas/švytėjimas ir
+  /// didelis dekoratyvinis emoji kortelės fone — keičiasi su kiekvienu
+  /// klausimu (gamta žalia 🌿, geografija 🗺️ ir t. t.).
   Widget _statementCard(BlitzStatement st) {
+    final theme = _themeFor(st.cat);
+    final tColor = theme?.accent ?? _accent;
+    final tEmoji = theme?.emoji ?? '⚡';
+    final tTitle = theme?.title(_s) ?? '';
+
     return GestureDetector(
       onHorizontalDragEnd: (d) {
         final v = d.primaryVelocity ?? 0;
@@ -580,50 +598,99 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
         child: Container(
           key: ValueKey(_idx),
           width: double.infinity,
-          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: AppColors.surface,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-                color: _accent.withValues(alpha: 0.5), width: 1.5),
+                color: tColor.withValues(alpha: 0.65), width: 1.6),
             boxShadow: [
               BoxShadow(
-                  color: _accent.withValues(alpha: 0.10),
-                  blurRadius: 18,
+                  color: tColor.withValues(alpha: 0.16),
+                  blurRadius: 20,
                   spreadRadius: 2),
             ],
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AutoSizeText(
-                st.q,
-                maxLines: 4,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: AppColors.textPrimary,
-                    fontSize: 22,
-                    height: 1.25,
-                    fontWeight: FontWeight.w600),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                child: Container(
-                  height: 1.2,
-                  width: 90,
-                  color: _accent.withValues(alpha: 0.35),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Stack(
+              children: [
+                // Didelis dekoratyvinis temos emoji fone — „gyvas" vaizdas.
+                Positioned(
+                  right: -14,
+                  bottom: -18,
+                  child: Opacity(
+                    opacity: 0.10,
+                    child: Text(tEmoji,
+                        style: const TextStyle(fontSize: 130)),
+                  ),
                 ),
-              ),
-              AutoSizeText(
-                st.cand,
-                maxLines: 2,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: _accent,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
+                Positioned(
+                  left: -20,
+                  top: -24,
+                  child: Opacity(
+                    opacity: 0.06,
+                    child: Text(tEmoji,
+                        style: const TextStyle(fontSize: 100)),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(18),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Temos ženkliukas — keičiasi su kiekvienu klausimu.
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: tColor.withValues(alpha: 0.14),
+                          borderRadius: BorderRadius.circular(13),
+                          border: Border.all(
+                              color: tColor.withValues(alpha: 0.6)),
+                        ),
+                        child: Text(
+                          '$tEmoji $tTitle',
+                          style: TextStyle(
+                              color: tColor,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.4),
+                        ),
+                      ),
+                      const Spacer(),
+                      AutoSizeText(
+                        st.q,
+                        maxLines: 4,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                            color: AppColors.textPrimary,
+                            fontSize: 22,
+                            height: 1.25,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 13),
+                        child: Container(
+                          height: 1.2,
+                          width: 90,
+                          color: tColor.withValues(alpha: 0.4),
+                        ),
+                      ),
+                      AutoSizeText(
+                        st.cand,
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: tColor,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
