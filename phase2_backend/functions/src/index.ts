@@ -258,12 +258,16 @@ export const submitScore = onCall(
 
       // 🧐 „Tiesa ar mitas?" spaudinėjimo apsauga (savininkas 2026-06-13):
       // dviejų mygtukų žaidime atsitiktinis spaudinėjimas pataiko ~50 %, tad
-      // be baudos jis APSIMOKĖTŲ. Už kiekvieną klaidą atimama bauda — spamo
-      // vidurkis ≈ 0, o galutinis rezultatas niekada nekrenta žemiau 0.
+      // be baudos jis APSIMOKĖTŲ. (1) Už kiekvieną klaidą — taškų bauda;
+      // (2) monetos/raidės — TIK už persvarą (teisingi − klaidos) ir BE
+      // greičio bonuso (žaidimas savo tempu; greitis čia = spaudinėjimas).
       // Kiti režimai (6 variantų trivija, matematika) NEPALIESTI.
+      let rewardCorrect = correct; // kiek „užskaitom" atlygiams (monetos/raidės)
       if ((game.mode as string).startsWith("myth")) {
         const wrong = serverAnswers.length - correct;
         score = Math.max(0, score - wrong * MYTH_WRONG_PENALTY);
+        rewardCorrect = Math.max(0, correct - wrong);
+        coinsEarned = rewardCorrect;
       }
 
       // ---- RAŠYMAI ----
@@ -285,7 +289,7 @@ export const submitScore = onCall(
       // skaičių sukaupiam „pažadėtas" atveriamas raides. Vėliau revealLetters
       // jas suvartoja. ADITYVU — ekonomikos/taškų logika NEPALIESTA.
       const prevPendingLetters = (prevData.pendingMysteryLetters as number) ?? 0;
-      const newPendingLetters = prevPendingLetters + lettersFor(correct);
+      const newPendingLetters = prevPendingLetters + lettersFor(rewardCorrect);
 
       // ===== ETAPAS C: kaupiama profilio statistika (viskas SERVERYJE) =====
       // Kategorija pagal mode: "nature_*" → žinios, kita → matematika.
@@ -397,7 +401,7 @@ export const submitScore = onCall(
         totalCoins: newCoins,
         // „Atspėk paslaptį" kabliukas: kiek raidžių uždirbta ŠIAME žaidime ir
         // kiek iš viso laukia neatvertų — rezultatų ekranas tai parodo iškart.
-        earnedLetters: lettersFor(correct),
+        earnedLetters: lettersFor(rewardCorrect),
         pendingMysteryLetters: newPendingLetters,
         // Etapas C: nauja kaupiama statistika (klientas gali parodyti progresą).
         totalPoints: newTotal,

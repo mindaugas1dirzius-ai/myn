@@ -50,6 +50,7 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
   int _bestCombo = 0;
   int _liveScore = 0; // kliento veidrodis (tikrą skaičiuoja serveris)
   int _lastGain = 0; // skrendantys taškai (+130)
+  int _prevTMs = -600; // ankstesnio atsakymo laikas (spaudinėjimo saugiklis)
   bool? _lastOk; // ✓/✕ blyksniui (null — dar nieko)
   int _flashSeq = 0; // animacijų raktas (kiekvienam atsakymui naujas)
   bool _pressedYes = false; // mygtukų paspaudimo animacijai
@@ -98,6 +99,7 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
       _bestCombo = 0;
       _liveScore = 0;
       _lastGain = 0;
+      _prevTMs = -600;
       _lastOk = null;
       _flashSeq = 0;
     });
@@ -162,22 +164,31 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
     if (_idx >= st.length) return;
     final tMs = _elapsedMs.clamp(0, _durationMs);
     final ok = st[_idx].isTrue == val;
+    // Spaudinėjimo saugiklis (veidrodis serverio): atsakymas greičiau nei
+    // per 0,6 s po ankstesnio TAŠKŲ NEDUODA (žmogus tiek neperskaito).
+    final gapOk = tMs - _prevTMs >= 600;
+    _prevTMs = tMs;
     _answers.add(BlitzAnswer(i: _idx, val: val, tMs: tMs));
     if (ok) {
       HapticFeedback.lightImpact();
-      SoundService.instance.points();
-      _streak++;
-      if (_streak > _bestCombo) _bestCombo = _streak;
-      _lastGain = _pointsFor(_streak, tMs);
-      _liveScore += _lastGain;
+      if (gapOk) {
+        SoundService.instance.points();
+        _streak++;
+        if (_streak > _bestCombo) _bestCombo = _streak;
+        _lastGain = _pointsFor(_streak, tMs);
+        _liveScore += _lastGain;
+      } else {
+        SoundService.instance.tap();
+        _lastGain = 0; // per greitai — be taškų, kombo nesikeičia
+      }
     } else {
       HapticFeedback.heavyImpact();
       SoundService.instance.wrong();
       _streak = 0;
       // BAUDA už klaidą (veidrodis serverio formulės): spaudinėjimas
       // nebeapsimoka. Eigoje suma gali būti minusinė — rodome nuo 0.
-      _lastGain = -100;
-      _liveScore -= 100;
+      _lastGain = -150;
+      _liveScore -= 150;
     }
     setState(() {
       _lastOk = ok;

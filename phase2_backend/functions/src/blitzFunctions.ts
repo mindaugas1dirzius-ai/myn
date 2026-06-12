@@ -31,6 +31,7 @@ import {
   BLITZ_DURATIONS_SEC,
   BLITZ_FINAL_X2_LAST_MS,
   BLITZ_MIN_ANSWER_MS,
+  BLITZ_MIN_GAP_MS,
   BLITZ_Q_MAX_CHARS,
   BLITZ_SUBMIT_GRACE_MS,
   BLITZ_WRONG_PENALTY,
@@ -290,28 +291,38 @@ export const submitBlitzScore = onCall(
       }
 
       // Vertinimas + kombo (×1.0 → ×2.0 ties 10 iš eilės) + finalo ×2.
-      // KLAIDA = −BLITZ_WRONG_PENALTY (savininkas 2026-06-13: atsitiktinis
-      // spaudinėjimas pataiko ~50 % ir be baudos APSIMOKĖTŲ; su bauda jo
-      // vidurkis ≈ 0). Eigos suma gali nukristi žemiau nulio, bet galutinis
-      // rezultatas užapvalinamas iki 0 (balansas niekur nemažėja).
+      // SPAUDINĖJIMO APSAUGA (savininkas 2026-06-13, sugriežtinta po jo
+      // testo): (1) klaida = −BLITZ_WRONG_PENALTY; (2) atsakymas, atėjęs
+      // greičiau nei BLITZ_MIN_GAP_MS po ankstesnio, TAŠKŲ NEDUODA ir kombo
+      // nedidina (žmogus per tiek neperskaito) — bet klaidos bauda galioja.
+      // Eigos suma gali būti minusinė; galutinė — clamp ≥0.
       let score = 0;
       let correct = 0;
       let streak = 0;
       let bestCombo = 0;
+      let prevTMs = -BLITZ_MIN_GAP_MS; // pirmas atsakymas — be tarpo ribos
       for (const a of answers) {
+        const gapOk = a.tMs - prevTMs >= BLITZ_MIN_GAP_MS;
+        prevTMs = a.tMs;
         if (a.val === isTrue[a.i]) {
           correct++;
-          streak++;
-          if (streak > bestCombo) bestCombo = streak;
-          let pts = BLITZ_BASE_POINTS * (1 + 0.1 * Math.min(streak - 1, 10));
-          if (a.tMs >= finalX2FromMs) pts *= 2;
-          score += Math.round(pts);
+          if (gapOk) {
+            streak++;
+            if (streak > bestCombo) bestCombo = streak;
+            let pts =
+              BLITZ_BASE_POINTS * (1 + 0.1 * Math.min(streak - 1, 10));
+            if (a.tMs >= finalX2FromMs) pts *= 2;
+            score += Math.round(pts);
+          }
+          // per greitas teisingas: 0 taškų, kombo nesikeičia.
         } else {
           streak = 0; // kombo nulinasi
           score -= BLITZ_WRONG_PENALTY;
         }
       }
       score = Math.max(0, score);
+      // Persvara atlygiams: spaudinėjant correct≈wrong → atlygis ≈ 0.
+      const netCorrect = Math.max(0, correct - (answers.length - correct));
 
       // ---- RAŠYMAI ----
       tx.delete(gameRef); // no replay
@@ -322,12 +333,13 @@ export const submitBlitzScore = onCall(
         existingName ??
         `Player_${Math.floor(1000 + Math.random() * 9000)}`;
 
-      // Monetos santūriau nei trivijoj (raundas tik 30 s): 1 🪙 už 2 teisingus.
-      const coinsEarned = Math.floor(correct / 2);
+      // Monetos — TIK už persvarą (teisingi − klaidos): spaudinėjimas
+      // monetų nebefarmina (savininko radinys: „gavau 20 monetų be galvojimo").
+      const coinsEarned = Math.floor(netCorrect / 2);
       const newCoins = ((prevData.coins as number) ?? 0) + coinsEarned;
 
-      // Paslapčių raidės — puse tempo (kad 30 s raundai netaptų raidžių fabriku).
-      const earnedLetters = lettersFor(Math.floor(correct / 2));
+      // Paslapčių raidės — irgi tik už persvarą, puse tempo.
+      const earnedLetters = lettersFor(Math.floor(netCorrect / 2));
       const newPendingLetters =
         ((prevData.pendingMysteryLetters as number) ?? 0) + earnedLetters;
 

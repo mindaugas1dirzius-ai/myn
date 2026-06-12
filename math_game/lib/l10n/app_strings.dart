@@ -91,8 +91,9 @@ class AppStrings {
   String get blitzChangeDuration => _pick('Keisti trukmę', 'Change length');
   String get blitzRuleCombo =>
       _pick('Serija be klaidų — taškai iki ×2', 'No-mistake streak — up to ×2 points');
-  String get blitzRulePenalty =>
-      _pick('Klaida — minus 100 taškų!', 'A mistake costs 100 points!');
+  String get blitzRulePenalty => _pick(
+      'Klaida — minus 150! Per greiti atsakymai nesiskaito',
+      'A mistake costs 150! Too-fast answers don\'t count');
   String get blitzRuleFinal =>
       _pick('Paskutinės 5 sek. — viskas ×2', 'Final 5 seconds — everything ×2');
   String get blitzRuleSwipe =>

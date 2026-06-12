@@ -308,16 +308,21 @@ default 1 min) + didelis „▶ PRADĖTI". Tas pats žaidimas, tik trukmė keič
 ## ✅ 9 RATAS (2026-06-13): SPAUDINĖJIMO BAUDOS + rezultatų titulai
 
 ### Baudos už klaidas (savininkas rado exploitą — greitas spaudinėjimas!):
-- 🧐 Mitai: submitScore (index.ts) mode "myth_*" → `score = max(0, score −
-  wrong × MYTH_WRONG_PENALTY(60))`. Kiti režimai NEPALIESTI (6 variantų
-  trivijoje atsitiktinis spaudymas ir taip neapsimoka — 1/6).
-- ⚡ Blitz: submitBlitzScore klaida → `score −= BLITZ_WRONG_PENALTY(100)`;
-  eigos suma gali būti minusinė, galutinė clamp ≥0. Atsitiktinio spaudinėjimo
-  vidurkis ≈ 0 — apsimoka tik TIKSLUMAS.
-- Klientų veidrodžiai: blitz skrendantis raudonas „−100" + ekrano taškai
-  rodomi nuo 0; mitai — „Nepavyko 😅 −60 taškų" + taisyklė pick ekrane;
-  blitz taisyklių kortelė +💥 „Klaida — minus 100 taškų!".
-- Deploy'inta: submitScore + submitBlitzScore.
+⚠️ SUGRIEŽTINTA 2-Ą KARTĄ (savininkas: „spaudinėjau vieną mygtuką per 80 kl.
+gavau 350 taškų ir 20 monetų be galvojimo") — dabar TRYS sluoksniai serveryje:
+- ⚡ Blitz: (1) klaida → `score −= BLITZ_WRONG_PENALTY(150)`; (2) atsakymas
+  greičiau nei `BLITZ_MIN_GAP_MS(600)` po ankstesnio TAŠKŲ NEDUODA ir kombo
+  nedidina (žmogus neperskaito — tai spamas; klaidos bauda vis tiek galioja);
+  (3) monetos/raidės — TIK už PERSVARĄ: `netCorrect=max(0,correct−wrong)`,
+  coins=floor(net/2), letters=lettersFor(floor(net/2)). Galutinis score clamp ≥0.
+- 🧐 Mitai (submitScore mode "myth_*"): score −= wrong×MYTH_WRONG_PENALTY(60),
+  clamp ≥0; monetos = max(0, correct−wrong) BE greičio bonuso (savo tempu —
+  greitis čia = spamas); raidės lettersFor(persvaros). Kiti režimai NEPALIESTI.
+- Klientų veidrodžiai: blitz −150 floatas, <0,6 s atsakymas „tap" be taškų,
+  taisyklė „Klaida — minus 150! Per greiti atsakymai nesiskaito"; mitai −60.
+- TAISYKLĖ ateičiai: 2 mygtukų žaidimas = PRIVALOMA klaidos bauda + gap-gate
+  + atlygiai už persvarą (užrašyta ir atmintyje).
+- Deploy'inta: submitScore + submitBlitzScore (×2).
 
 ### Rezultatų ekrano (BENDRO matematikai+trivijoms) titulai:
 result_screen.dart: rango emoji (🏆/🥇/🥈/🔎) iššoka elasticOut + įvertinimo

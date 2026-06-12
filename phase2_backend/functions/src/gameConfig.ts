@@ -75,10 +75,16 @@ export const BLITZ_FINAL_X2_LAST_MS = 5000;
 export const BLITZ_CAND_MAX_CHARS = 30;
 /** Klausimo ilgio lubos blitz'ui. */
 export const BLITZ_Q_MAX_CHARS = 100;
-/** BAUDA už klaidingą blitz atsakymą (savininkas 2026-06-13: greitas
- *  spaudinėjimas be skaitymo NETURI apsimokėti — atsitiktinai spaudant
- *  vidurkis ~0). Galutinis rezultatas niekada nekrenta žemiau 0. */
-export const BLITZ_WRONG_PENALTY = 100;
+/** BAUDA už klaidingą blitz atsakymą (savininkas 2026-06-13, sugriežtinta
+ *  po jo testo „spaudinėjau vieną mygtuką — gavau 350"): turi viršyti
+ *  vidutinį laimėjimą su kombo, kad atsitiktinio spaudymo vidurkis būtų
+ *  NEIGIAMAS. Galutinis rezultatas niekada nekrenta žemiau 0. */
+export const BLITZ_WRONG_PENALTY = 150;
+
+/** Mažiausias tarpas tarp blitz atsakymų, kad atsakymas DUOTŲ taškų:
+ *  per <0,6 s žmogus klausimo neperskaito — tai spaudinėjimas. Tokie
+ *  atsakymai taškų neduoda (bet klaidos bauda vis tiek galioja). */
+export const BLITZ_MIN_GAP_MS = 600;
 
 /** BAUDA už klaidą „Tiesa ar mitas?" (ta pati spaudinėjimo apsauga):
  *  atimama iš galutinių taškų po wrong × bauda, grindys 0. */
