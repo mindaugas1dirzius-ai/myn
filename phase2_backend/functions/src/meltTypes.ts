@@ -64,6 +64,12 @@ export function meltFreezeMsFor(wordCount: number): number {
  *  žaidėjui daugiau nei reikia). Išnaudojus — SPĖTI veikia, bet laikas tiksi. */
 export const MELT_MAX_FREEZES = 5;
 
+/** SĄŽININGO STARTO malonė: raidė, iškritusi per šį tarpą iki freezeMelt
+ *  užklausos (kol žaidėjas spaudė SPĖTI ir užklausa keliavo), atšaukiama —
+ *  langas pradedamas prieš jos ribą. Daugiausia 1 raidė; klientas praneša,
+ *  kiek raidžių JAU matė (matytų neatšaukiam). */
+export const MELT_FREEZE_GRACE_MS = 2500;
+
 /** Bauda už KLAIDINGĄ spėjimą — dalis nuo pMax (lygis 1 ≈ 20–30 🔑,
  *  lygis 4 ≈ 50–75 🔑). Balansas niekada nekrenta žemiau 0. */
 export const MELT_WRONG_PENALTY_FRAC = 0.10;

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:cloud_functions/cloud_functions.dart';
+import '../models/blitz_models.dart';
 import '../models/game_models.dart';
 import '../models/trivia_models.dart';
 
@@ -137,6 +138,39 @@ class GameApi {
       });
       final data = jsonDecode(jsonEncode(result.data)) as Map<String, dynamic>;
       return GameResult.fromJson(data);
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // ⚡ TAIP/NE BLITZ — 30 s raundas, teiginiai „klausimas + kandidatas".
+  // Vertinimą daro TIK serveris (submitBlitzScore) iš savo isTrue[].
+  // ---------------------------------------------------------------------------
+
+  /// Pradeda blitz raundą: serveris paruošia ~40 teiginių paketą.
+  static Future<BlitzSession> startBlitz(String lang) {
+    return _withRetry(() async {
+      final result = await _functions
+          .httpsCallable('startBlitz')
+          .call(<String, dynamic>{'lang': lang});
+      final data = jsonDecode(jsonEncode(result.data)) as Map<String, dynamic>;
+      return BlitzSession.fromJson(data);
+    });
+  }
+
+  /// Pateikia blitz atsakymus raundo pabaigoje.
+  static Future<BlitzResult> submitBlitzScore(
+    String gameId,
+    List<BlitzAnswer> answers,
+  ) {
+    return _withRetry(() async {
+      final result = await _functions
+          .httpsCallable('submitBlitzScore')
+          .call(<String, dynamic>{
+        'gameId': gameId,
+        'answers': answers.map((a) => a.toJson()).toList(),
+      });
+      final data = jsonDecode(jsonEncode(result.data)) as Map<String, dynamic>;
+      return BlitzResult.fromJson(data);
     });
   }
 }

@@ -55,6 +55,24 @@ export const MATH_FAMILIES = new Set([
 export const MIN_TIME_PER_Q_MS = 200; // greičiau = botas
 export const TIME_TOLERANCE_MS = 3000; // tinklo/latency paklaida lyginant laikus
 
+// ── ⚡ TAIP/NE BLITZ (planas docs/planai/TAIP_NE_BLITZ_PLANAS.md) ──────────────
+/** Raundo trukmė — vienas bendras 30 s laikmatis (ne per klausimą). */
+export const BLITZ_DURATION_MS = 30000;
+/** Kiek teiginių paruošiama raundui (su atsarga — niekas tiek nespės). */
+export const BLITZ_BATCH = 40;
+/** Greičiau nei tiek vienam atsakymui = botas (žmogus skaito ~0,5–2 s). */
+export const BLITZ_MIN_ANSWER_MS = 250;
+/** Kiek vėliausiai po raundo pabaigos priimam submit (lėtas tinklas). */
+export const BLITZ_SUBMIT_GRACE_MS = 10000;
+/** Bazė už teisingą atsakymą (kombo daugina, žr. submitBlitzScore). */
+export const BLITZ_BASE_POINTS = 100;
+/** Nuo kurios raundo ms taškai dvigubinami („paskutinės 5 s ×2"). */
+export const BLITZ_FINAL_X2_FROM_MS = 25000;
+/** Kandidato (atsakymo varianto) ilgio lubos — turi būti perskaitomas žaibiškai. */
+export const BLITZ_CAND_MAX_CHARS = 30;
+/** Klausimo ilgio lubos blitz'ui. */
+export const BLITZ_Q_MAX_CHARS = 100;
+
 /** Patikrina mode eilutę (pvz. "mul_sunkus", "mix_lengvas").
  *  Grąžina šeimą (add/sub/mul/div/mix) ir lygį. Validuoja prieš registrą. */
 export function parseMode(

@@ -139,6 +139,42 @@ Deploy'inta 11 funkcijų (visos mystery+melt), APK perbudavotas ir įdiegtas.
    pilno ekrano MysteryModeScreen (vietoj bottom sheet), ❄ mygtukas,
    laimėjimo dialoge paaiškintas raktų bankas.
 
+## ✅ 3 RATAS (2026-06-12 vėlus vakaras): Melt lango lenktynių pataisa + ⚡ BLITZ
+
+### Melt SPĖTI „dar iškrenta raidė" — IŠTAISYTA (vartotojo skundas):
+Priežastis: tarp paspaudimo ir serverio transakcijos (tinklas/cold start) spėdavo
+atsiverti 1–2 raidės. Pataisa dviem pusėm:
+1. KLIENTAS: `_pendingFreezeClampMs` — laikrodis užšąla AKIMIRKSNIU paspaudus
+   (dar prieš serverio atsakymą); tick'as nesinchronizuoja kol laukiam.
+2. SERVERIS (freezeMelt): „sąžiningas startas" — jei raidė atsivėrė per
+   paskutines `MELT_FREEZE_GRACE_MS=2500` ms ir klientas jos DAR NEMATĖ
+   (klientas siunčia `seenAuto`), langas pradedamas PRIEŠ jos ribą → raidė
+   atšaukiama. Cap'ai: daugiausia 1 raidė; ne anksčiau starto/ankstesnio
+   lango pabaigos/paskutinio spėjimo (negalima piktnaudžiauti).
+
+### ⚡ #47 TAIP/NE BLITZ — ĮGYVENDINTA (savininko „darom taip ne"):
+- SERVERIS `blitzFunctions.ts`: `startBlitz` (40 teiginių paketas iš VISŲ temų
+  fondo: gamta+7 trivijos; tik lengvas/vidutinis 60/40; klausimas ≤100 simb.,
+  kandidatas ≤30; TAIP/NE balansas 50/50 fiksuotas; rotacija `cat_blitz`,
+  KEEP 800, rašoma starte) + `submitBlitzScore` (vertina TIK iš serverio
+  isTrue[]; laiko vartai: ≥atsakymų×250 ms, ≤30 s+10 s malonė+3 s tolerancija;
+  unikalių indeksų patikra; doc trinamas — no replay).
+- TAŠKAI (serveryje, klientas tik veidrodis): bazė 100 × kombo (1+0.1×serija,
+  lubos ×2 ties 10 iš eilės); paskutinės 5 s (nuo 25 000 ms) ×2; klaida = 0 ir
+  kombo nulinasi. Monetos: 1 🪙 / 2 teisingus. Raidės paslaptims: lettersFor(correct/2)
+  — puse tempo. Lentelė: mode "blitz" (viena globali, `{uid}_blitz`).
+- KONSTANTOS gameConfig.ts: BLITZ_DURATION_MS=30000, BLITZ_BATCH=40,
+  BLITZ_MIN_ANSWER_MS=250, BLITZ_SUBMIT_GRACE_MS=10000, BLITZ_BASE_POINTS=100,
+  BLITZ_FINAL_X2_FROM_MS=25000, BLITZ_CAND_MAX_CHARS=30, BLITZ_Q_MAX_CHARS=100.
+- KLIENTAS: `blitz_models.dart`, `game_api.dart` (+startBlitz/+submitBlitzScore),
+  `blitz_game_screen.dart` (3-2-1 startas → 30 s raundas: tirpstanti juosta,
+  klausimas + 👉 kandidatas (AutoSizeText), DIDELI ✕NE/✓TAIP mygtukai, haptics
+  (pirmą kartą programoje), kombo 🔥, FINALAS ×2 indikatorius, rezultatų dialogas
+  su „Žaisti dar"). Katalogas: blitz open:true; `blitz_placeholder_screen.dart`
+  IŠTRINTAS (nebenaudojamas), `blitzComingSoonBody` tekstas pašalintas.
+- `isTrue` klientui siunčiamas SĄMONINGAI (variantas C — kaip trivijos answer):
+  momentinei žaliai/raudonai reakcijai; vertinimas vis tiek tik serveryje.
+
 ## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
 
 1. **#50 — 1 banga: potemių papildymas** (TURINIO_PLANAS.md) — naujos potemės

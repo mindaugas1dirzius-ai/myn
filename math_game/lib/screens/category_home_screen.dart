@@ -8,7 +8,7 @@ import '../widgets/app_background.dart';
 import '../widgets/banner_ad_widget.dart';
 import '../widgets/neumorphic_button.dart';
 import '../services/mystery_api.dart';
-import 'blitz_placeholder_screen.dart';
+import 'blitz_game_screen.dart';
 import 'home_screen.dart';
 import 'mystery_mode_screen.dart';
 import 'nature_topic_screen.dart';
@@ -189,7 +189,7 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
         break;
       case ThemeKind.blitz:
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const BlitzPlaceholderScreen()),
+          MaterialPageRoute(builder: (_) => const BlitzGameScreen()),
         );
         break;
     }
@@ -265,17 +265,12 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
   }
 
   /// Užrakintos temos kortelė (skeletas). Pilka, su spynele ir „· Greitai".
-  /// Paspaudus: Blitz → atidaro „Greitai" ekraną (jo mechanika atskira);
-  /// kitos → tik žinutė (jokio serverio kvietimo — turinio dar nėra).
+  /// Paspaudus — tik žinutė (jokio serverio kvietimo — turinio dar nėra).
   Widget _lockedThemeCard(BuildContext context, GameTheme t, AppStrings s) {
     return NeumorphicButton(
       accent: AppColors.textSecondary,
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
       onTap: () {
-        if (t.kind == ThemeKind.blitz) {
-          _onThemeTap(context, t); // atidaro BlitzPlaceholderScreen
-          return;
-        }
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(s.lockedThemeNote),

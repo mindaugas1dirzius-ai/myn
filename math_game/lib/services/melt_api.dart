@@ -34,10 +34,14 @@ class MeltApi {
     return MeltSync.fromJson(_decode(r.data));
   }
 
-  /// SPĖJIMO LANGAS: SPĖTI sustabdo laiką 30 s atsakymui suvesti
-  /// (iki MELT_MAX_FREEZES langų per partiją; langą uždaro spėjimas).
-  static Future<MeltSync> freeze() async {
-    final r = await _functions.httpsCallable('freezeMelt').call();
+  /// SPĖJIMO LANGAS: SPĖTI sustabdo laiką atsakymui suvesti (trukmė pagal
+  /// žodžių kiekį; iki 5 langų per partiją; langą uždaro spėjimas).
+  /// [seenAuto] — kiek auto-raidžių klientas JAU matė: serveris kelionės
+  /// metu iškritusią nematytą raidę atšaukia (sąžiningas startas).
+  static Future<MeltSync> freeze({int? seenAuto}) async {
+    final r = await _functions
+        .httpsCallable('freezeMelt')
+        .call(<String, dynamic>{'seenAuto': ?seenAuto});
     return MeltSync.fromJson(_decode(r.data));
   }
 

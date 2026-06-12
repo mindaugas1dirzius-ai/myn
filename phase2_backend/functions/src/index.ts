@@ -588,3 +588,9 @@ export {
   freezeMelt,
   abandonMelt,
 } from "./meltFunctions";
+
+// =================================================================
+// 9) ⚡ TAIP/NE BLITZ (IZOLIUOTAS modulis). 30 s raundas, teiginiai
+//    „klausimas + kandidatas", vertinimas TIK iš serverio isTrue[].
+// =================================================================
+export { startBlitz, submitBlitzScore } from "./blitzFunctions";

@@ -156,7 +156,7 @@ final List<GameTheme> kThemes = <GameTheme>[
     emoji: '⚡',
     accent: AppColors.levelMedium,
     kind: ThemeKind.blitz,
-    open: false,
+    open: true, // ⚡ TAIP/NE blitz VEIKIA (2026-06-12)
     title: (s) => s.categoryBlitz,
     subtitle: (s) => s.categoryBlitzDesc,
   ),

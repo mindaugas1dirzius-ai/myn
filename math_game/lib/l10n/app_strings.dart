@@ -65,11 +65,28 @@ class AppStrings {
   String get lockedThemeNote => _pick(
       'Ši tema dar ruošiama — greitai!',
       'This theme is being prepared — coming soon!');
-  String get blitzComingSoonBody => _pick(
-      'Greitas „Taip ar Ne" režimas su gyvybėmis ir serija. '
-          'Ši mechanika dar kuriama — greitai!',
-      'A fast "Yes or No" mode with lives and streaks. '
-          'This mode is still being built — coming soon!');
+
+  // --- ⚡ TAIP/NE Blitz ---
+  String get blitzGetReady => _pick('Pasiruošk!', 'Get ready!');
+  String get blitzYes => _pick('TAIP', 'YES');
+  String get blitzNo => _pick('NE', 'NO');
+  String get blitzCombo => _pick('Serija', 'Streak');
+  String get blitzTimeUp => _pick('Laikas!', "Time's up!");
+  String get blitzAnswered => _pick('Atsakyta', 'Answered');
+  String get blitzCorrectLabel => _pick('Teisingi', 'Correct');
+  String get blitzBestCombo => _pick('Geriausia serija', 'Best streak');
+  String get blitzPlayAgain => _pick('Žaisti dar', 'Play again');
+  String get blitzClose => _pick('Uždaryti', 'Close');
+  String get blitzNewRecord => _pick('🏆 Naujas rekordas!', '🏆 New record!');
+  String get blitzExpired => _pick(
+      'Raundas nebegalioja (per ilga pauzė) — taškai neįskaityti.',
+      'Round expired (paused too long) — score not counted.');
+  String get blitzFinalX2 => _pick('FINALAS ×2!', 'FINALE ×2!');
+  String get blitzQuitTitle => _pick('Nutraukti raundą?', 'Quit the round?');
+  String get blitzQuitBody => _pick(
+      'Taškai nebus įskaityti.', 'Your score will not be counted.');
+  String get blitzQuitStay => _pick('Likti', 'Stay');
+  String get blitzQuitLeave => _pick('Nutraukti', 'Quit');
 
   // --- Gamtos žaidimas ---
   String get natureLoadError => _pick(

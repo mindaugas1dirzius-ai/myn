@@ -36,6 +36,7 @@ import {
   MELT_MAX_LETTERS,
   MELT_FREE_KEEP_HIDDEN,
   MELT_FREEZE_MS,
+  MELT_FREEZE_GRACE_MS,
   MELT_MAX_FREEZES,
   deriveMelt,
   isValidMeltConfig,
@@ -463,10 +464,39 @@ export const freezeMelt = onCall(
         };
       }
 
+      // SĄŽININGAS STARTAS: raidė, iškritusi kol SPĖTI užklausa keliavo
+      // (per paskutines GRACE ms), atšaukiama — langas pradedamas PRIEŠ jos
+      // ribą. Klientas siunčia seenAuto (kiek raidžių JAU matė ekrane):
+      // matytų neatšaukiam. Cap'ai: daugiausia 1 riba (intervalas ≥ 5 s),
+      // ne anksčiau partijos starto / ankstesnio lango pabaigos / spėjimo.
+      const seenAutoRaw = request.data?.seenAuto;
+      const seenAuto =
+        typeof seenAutoRaw === "number" && Number.isFinite(seenAutoRaw)
+          ? Math.max(0, Math.floor(seenAutoRaw))
+          : d.autoCount; // senas klientas nepraneša — nieko neatšaukiam
+      const intervalMs = state.intervalSec * 1000;
+      const elapsedNow = state.limitSec * 1000 - d.remainingMs;
+      const rawK = Math.floor(elapsedNow / intervalMs);
+      const sinceBoundary = elapsedNow - rawK * intervalMs;
+      let lockStart = now;
+      if (
+        rawK > 0 &&
+        rawK === d.autoCount && // lenta nepilna (skaičiai nesusikerta)
+        sinceBoundary <= MELT_FREEZE_GRACE_MS &&
+        seenAuto < d.autoCount
+      ) {
+        const floorTs = Math.max(
+          state.startedAt,
+          state.lastGuessTs ?? 0,
+          state.lockedAt != null ? state.lockedAt + windowMs : 0
+        );
+        lockStart = Math.max(now - sinceBoundary - 1, floorTs);
+      }
+
       // Atidaram naują langą: pasibaigusio lango laikas — į lockMsUsed.
       const newState: MeltState = {
         ...foldLock(state, now),
-        lockedAt: now,
+        lockedAt: lockStart,
         freezeCount: used + 1,
       };
       tx.set(userRef, { mysteryMelt: newState }, { merge: true });

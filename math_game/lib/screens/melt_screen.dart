@@ -146,23 +146,36 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
   int get _nowServerMs =>
       DateTime.now().millisecondsSinceEpoch + _serverOffsetMs;
 
-  /// Užšaldytas laikas: ankstesni langai (lockMsUsed) + aktyvus langas (iki 30 s).
+  /// Paspaudus SPĖTI laikrodis užšąla AKIMIRKSNIU (dar prieš serverio
+  /// atsakymą) — kol laukiam, niekas nesikeičia ir naujos raidės nekrenta.
+  int? _pendingFreezeClampMs;
+
+  /// Laikrodis visiems skaičiavimams: jei laukiam lango atidarymo —
+  /// užfiksuotas paspaudimo momentu.
+  int get _clockMs => _pendingFreezeClampMs ?? _nowServerMs;
+
+  /// Užšaldytas laikas: ankstesni langai (lockMsUsed) + aktyvus langas.
   int get _lockExtra =>
       _view.lockMsUsed +
       (_view.lockedAt > 0
-          ? (_nowServerMs - _view.lockedAt).clamp(0, _freezeMs)
+          ? (_clockMs - _view.lockedAt).clamp(0, _freezeMs)
           : 0);
 
-  /// Ar laikas ŠIUO METU užšaldytas.
+  /// Ar laikas ŠIUO METU užšaldytas (įskaitant momentinį laukimą).
   bool get _frozenNow =>
-      _view.lockedAt > 0 && (_nowServerMs - _view.lockedAt) < _freezeMs;
+      _pendingFreezeClampMs != null ||
+      (_view.lockedAt > 0 && (_clockMs - _view.lockedAt) < _freezeMs);
 
-  int get _frozenLeftMs => _frozenNow
-      ? _freezeMs - (_nowServerMs - _view.lockedAt)
-      : 0;
+  int get _frozenLeftMs {
+    if (_view.lockedAt > 0 && (_clockMs - _view.lockedAt) < _freezeMs) {
+      return _freezeMs - (_clockMs - _view.lockedAt);
+    }
+    // Laukiam serverio — rodome pilną langą (ne „0 s" mirksnį).
+    return _pendingFreezeClampMs != null ? _freezeMs : 0;
+  }
 
   int get _elapsedMs =>
-      (_nowServerMs - _view.startedAt - _lockExtra)
+      (_clockMs - _view.startedAt - _lockExtra)
           .clamp(0, _view.limitSec * 1000);
   int get _remainingMs => (_view.limitSec * 1000 - _elapsedMs).clamp(0, 1 << 31);
   int get _autoCountNow =>
@@ -183,6 +196,8 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
   void _tick() {
     if (!mounted || _finished) return;
     setState(() {});
+    // Laukiam lango atidarymo — laikrodis užfiksuotas, nieko nesinchronizuojam.
+    if (_pendingFreezeClampMs != null) return;
     if (_remainingMs <= 0) {
       _sync();
       return;
@@ -391,9 +406,15 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
   }
 
   Future<void> _openGuessWindow() async {
-    setState(() => _busy = true);
+    setState(() {
+      _busy = true;
+      // Laikrodis sustoja IŠKART (ne tik gavus serverio atsakymą).
+      _pendingFreezeClampMs = _nowServerMs;
+    });
     try {
-      final s = await MeltApi.freeze();
+      // seenAuto: kiek raidžių JAU matėme — serveris kelionės metu
+      // iškritusią (dar nematytą) raidę atšaukia.
+      final s = await MeltApi.freeze(seenAuto: _autoCountNow);
       if (!mounted) return;
       if (s.expired) {
         _finished = true;
@@ -402,7 +423,10 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
         if (mounted) Navigator.of(context).pop();
         return;
       }
-      setState(() => _applyView(s.view!));
+      setState(() {
+        _pendingFreezeClampMs = null; // perimam serverio užšaldymą
+        _applyView(s.view!);
+      });
       if (_frozenNow) {
         SoundService.instance.points();
         _feedback(
@@ -421,7 +445,12 @@ class _MeltScreenState extends State<MeltScreen> with WidgetsBindingObserver {
       _feedback(_t('Nepavyko. Bandyk vėl.', 'Failed. Try again.'),
           good: false);
     } finally {
-      if (mounted) setState(() => _busy = false);
+      if (mounted) {
+        setState(() {
+          _busy = false;
+          _pendingFreezeClampMs = null; // saugiklis (klaidos/expired keliai)
+        });
+      }
     }
   }
 
