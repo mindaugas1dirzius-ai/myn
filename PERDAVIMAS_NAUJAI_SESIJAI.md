@@ -144,8 +144,8 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 
 ## 8. DABARTINĖ BŪSENA (2026-06-13)
 
-- **Turinys:** trivijos+gamta 2 346 kl. (gamta 720 · sport 270 · body 255 ·
-  history 244 · pop 243 · geo 240 · tech 198 · food 176) · 40 mitų teiginių ·
+- **Turinys:** trivijos+gamta 2 365 kl. (gamta 720 · sport 270 · body 255 ·
+  history 244 · pop 243 · geo 240 · **tech 217** · food 176) · 40 mitų teiginių ·
   101 mįslė (pool 73 be citatų/patarlių; lygiai L1=15/L2=45/L3=35/**L4=6** —
   pildant pirmiausia L4 ir „klausimas" tipo 42) · **16 detektyvo bylų** (v2).
 - **Įrankiai functions/:** `_appcheck_fix.js` (App Check per API),
@@ -167,9 +167,15 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 ## 9. DARBŲ EILĖ (savininko patvirtinta 2026-06-13)
 
 **EINAMIEJI:**
-1. 🕵️ Detektyvas v2 (KITA SESIJA; po jos — savininko testas telefone).
-2. Lygiagrečiai galima (nekonfliktuoja): #45c ilgio-kvapo partijos;
-   mįslių „klausimas"+L4 pildymas; mitų teiginių pildymas.
+1. 🕵️ Detektyvas v2 (ĮGYVENDINTA; laukia savininko testo telefone).
+2. ⏳ **1 BANGA — sėklinės potemės (VYKSTA, savininko „darom" 2026-06-13):**
+   - ✅ tech 🚀 **Kosmosas (space)** — ĮGYVENDINTA: +19 kl. (10/lygiui = 40),
+     adversariai patikrinta (18/19 OK, Veneros klausimas performuluotas dėl
+     „para" dviprasmybės), potemė registruota (subThemeConfig.tech), kortelė
+     atrakinta (open:true), deploy startTriviaGame + debug APK įdiegta. Commit ?.
+   - ⬜ tech 🤖 **AI+robotai** (9→40); pop 🦸 **Superherojai** (4→40, atskirti iš
+     „stories"); kūnas 👀 **Pojūčiai** (8→40). Tie patys žingsniai.
+3. Lygiagrečiai galima: #45c ilgio-kvapo partijos; mįslių „klausimas"+L4; mitai.
 
 **GRIAUČIAI (po detektyvo testo):**
 3. #51 NAUJOS TEMOS: 🌌 Kosmosas, 🏺 Mitologija, 📏 Rekordai, 🏷️ Prekių ženklai,

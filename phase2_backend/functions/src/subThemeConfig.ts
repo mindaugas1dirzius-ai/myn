@@ -71,11 +71,13 @@ export const TRIVIA_SUBTHEMES: Record<
     rulers: ["rulers"],
     myths: ["myths"],
   },
-  // Technologijos: 2 potemės (NEKEISTI kodo „games").
+  // Technologijos: 3 potemės (NEKEISTI kodų „games"/„myths").
   //   • "myths" → 💻 Tech mitai ir išradimai (2026-06-12).
+  //   • "space" → 🚀 Kosmosas (2026-06-13: atrakinta, 40 kl. po 10/lygiui).
   tech: {
     games: ["games"],
     myths: ["myths"],
+    space: ["space"],
   },
   // Maistas: 4 žymėtos potemės (NEKEISTI kodų).
   //   • "production" → 🍳 Gamybos paslaptys (2026-06-12).

@@ -78,7 +78,7 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subTechSpace,
             subtitle: s.subTechSpaceDesc,
             accent: AppColors.levelExtreme,
-            open: false,
+            open: true,
           ),
           _SubTheme(
             id: 'ai',
