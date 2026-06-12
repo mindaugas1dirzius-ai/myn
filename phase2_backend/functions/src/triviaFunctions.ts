@@ -20,7 +20,7 @@ import * as admin from "firebase-admin";
 import {
   QUESTIONS_PER_GAME,
   MAX_TIME_PER_Q_MS,
-  ROTATION_KEEP,
+  ROTATION_KEEP_CAT,
   Level,
 } from "./gameConfig";
 import { NATURE_QUESTIONS } from "./natureContent";
@@ -91,11 +91,14 @@ export const startNatureGame = onCall(
     const db = admin.firestore();
     const userRef = db.collection("users").doc(uid);
     const userSnap = await userRef.get();
-    // Atmintis PER REŽIMĄ (recentByMode[modeRaw]): kiekviena gamtos potemė×lygis
-    // turi SAVO nepriklausomą istoriją — žaidžiant vieną neištrinsi kitos.
+    // Atmintis PER TEMĄ (2026-06-12): visa gamta dalijasi VIENA istorija —
+    // potemė ir „Mix" mato vienas kito klausimus, tad NIEKADA nerodo to paties.
+    // Suderinamumas: jei naujo rakto dar nėra, perimam seną per-režimo sąrašą.
+    const rotKey = "cat_nature";
     const recentByMode =
       (userSnap.data()?.recentByMode as Record<string, string[]>) ?? {};
-    const recent: string[] = recentByMode[modeRaw] ?? [];
+    const recent: string[] =
+      recentByMode[rotKey] ?? recentByMode[modeRaw] ?? [];
 
     // Parenkam 10 klausimų (vengiant neseniai matytų) + sudėliojam variantus.
     // topic filtras: "mix" → iš visų potemių; kitaip tik tos potemės klausimai.
@@ -131,7 +134,11 @@ export const startNatureGame = onCall(
     // pačius). mergeRecent: naujausi pirma, be dublikatų, apkarpyta. submitScore
     // vėliau dar kartą įrašys tuos pačius ID — dedup neleidžia dvigubinti.
     await userRef.set(
-      { recentByMode: { [modeRaw]: mergeRecent(pickedIds, recent, ROTATION_KEEP) } },
+      {
+        recentByMode: {
+          [rotKey]: mergeRecent(pickedIds, recent, ROTATION_KEEP_CAT),
+        },
+      },
       { merge: true }
     );
 
@@ -213,9 +220,13 @@ export const startTriviaGame = onCall(
     const db = admin.firestore();
     const userRef = db.collection("users").doc(uid);
     const userSnap = await userRef.get();
+    // Atmintis PER TEMĄ (2026-06-12): visos temos potemės ir „Mix" dalijasi
+    // VIENA istorija — tas pats klausimas neberodomas dviejuose srautuose.
+    const rotKey = `cat_${category}`;
     const recentByMode =
       (userSnap.data()?.recentByMode as Record<string, string[]>) ?? {};
-    const recent: string[] = recentByMode[modeRaw] ?? [];
+    const recent: string[] =
+      recentByMode[rotKey] ?? recentByMode[modeRaw] ?? [];
 
     // Baseinas pagal potemę: „facts" → bendri klausimai, „mix" → visi,
     // kitaip → tik tos potemės. (Atgaliniam suderinamumui: tema be potemių
@@ -244,7 +255,11 @@ export const startTriviaGame = onCall(
     });
 
     await userRef.set(
-      { recentByMode: { [modeRaw]: mergeRecent(pickedIds, recent, ROTATION_KEEP) } },
+      {
+        recentByMode: {
+          [rotKey]: mergeRecent(pickedIds, recent, ROTATION_KEEP_CAT),
+        },
+      },
       { merge: true }
     );
 

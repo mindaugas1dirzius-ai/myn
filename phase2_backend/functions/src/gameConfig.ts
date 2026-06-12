@@ -41,6 +41,17 @@ export const OPTIONS_PER_QUESTION = 6;
  *  Tai VIRŠUTINĖ riba; faktinį „vengimo" langą lanksčiai mažina pickQuestions
  *  pagal realų klausimų kiekį (kad mažam pool'ui visada liktų šviežių). */
 export const ROTATION_KEEP = 150;
+
+/** TEMOS atmintis (2026-06-12, savininko taisyklė „be pasikartojimų"):
+ *  trivijos/gamtos klausimų istorija laikoma PER TEMĄ (recentByMode["cat_sport"]),
+ *  o ne per režimą — žaidžiant potemę ir „Mix" tas pats klausimas nebepasirodys
+ *  abiejuose. Langas dengia net didžiausią temą (gamta ~720). */
+export const ROTATION_KEEP_CAT = 800;
+
+/** Matematikos šeimos (jų rotacija lieka per režimą — klausimai generuojami). */
+export const MATH_FAMILIES = new Set([
+  "add", "sub", "mul", "div", "mix", "brackets", "algebra",
+]);
 export const MIN_TIME_PER_Q_MS = 200; // greičiau = botas
 export const TIME_TOLERANCE_MS = 3000; // tinklo/latency paklaida lyginant laikus
 

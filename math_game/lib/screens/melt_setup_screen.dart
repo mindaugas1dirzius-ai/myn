@@ -25,6 +25,7 @@ class _MeltSetupScreenState extends State<MeltSetupScreen> {
 
   int _limitSec = 120;
   int _intervalSec = 10;
+  int _level = 1; // 1 lengvas … 4 ekstremalus (lemia bazę 200–500 🔑)
   bool _busy = false;
 
   AppLang _appLang = AppLang.en;
@@ -40,12 +41,15 @@ class _MeltSetupScreenState extends State<MeltSetupScreen> {
 
   double get _speedCoef =>
       _intervalSec <= 5 ? 1.5 : (_intervalSec <= 10 ? 1.25 : 1.0);
+  int get _baseFor => const [200, 300, 400, 500][_level - 1];
+  int get _pMaxPreview => (_baseFor * _speedCoef).round();
 
   Future<void> _start() async {
     if (_busy) return;
     setState(() => _busy = true);
     try {
-      final MeltView v = await MeltApi.start(_lang, _limitSec, _intervalSec);
+      final MeltView v =
+          await MeltApi.start(_lang, _limitSec, _intervalSec, _level);
       if (!mounted) return;
       if (v.resumed) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -107,6 +111,24 @@ class _MeltSetupScreenState extends State<MeltSetupScreen> {
                             fontWeight: FontWeight.w600),
                       ),
                       const SizedBox(height: 24),
+                      _sectionLabel(_t('SUNKUMAS', 'DIFFICULTY')),
+                      const SizedBox(height: 8),
+                      Row(children: [
+                        _choice(_t('Lengvas', 'Easy'), _level == 1,
+                            () => setState(() => _level = 1)),
+                        const SizedBox(width: 8),
+                        _choice(_t('Vidutinis', 'Medium'), _level == 2,
+                            () => setState(() => _level = 2)),
+                      ]),
+                      const SizedBox(height: 8),
+                      Row(children: [
+                        _choice(_t('Sunkus', 'Hard'), _level == 3,
+                            () => setState(() => _level = 3)),
+                        const SizedBox(width: 8),
+                        _choice(_t('Ekstremalus', 'Extreme'), _level == 4,
+                            () => setState(() => _level = 4)),
+                      ]),
+                      const SizedBox(height: 20),
                       _sectionLabel(_t('LAIKO LIMITAS', 'TIME LIMIT')),
                       const SizedBox(height: 8),
                       Row(children: [
@@ -145,8 +167,18 @@ class _MeltSetupScreenState extends State<MeltSetupScreen> {
                         child: Column(
                           children: [
                             Text(
-                              _t('Greitesnis tirpimas = didesnis maksimalus laimėjimas (×${_speedCoef.toStringAsFixed(2)})',
-                                  'Faster melt = bigger maximum prize (×${_speedCoef.toStringAsFixed(2)})'),
+                              _t('Maksimalus laimėjimas: $_pMaxPreview 🔑',
+                                  'Maximum prize: $_pMaxPreview 🔑'),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  color: AppColors.correct,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              _t('Sunkesnis lygis ir greitesnis tirpimas = didesnis prizas (×${_speedCoef.toStringAsFixed(2)})',
+                                  'Harder level and faster melt = bigger prize (×${_speedCoef.toStringAsFixed(2)})'),
                               textAlign: TextAlign.center,
                               style: const TextStyle(
                                   color: AppColors.textPrimary, fontSize: 13),

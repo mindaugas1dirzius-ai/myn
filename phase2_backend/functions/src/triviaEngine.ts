@@ -75,13 +75,6 @@ export function topicOf(q: TriviaQuestion): NatureTopic {
  * `topic` filtras: jei nenurodytas arba "mix" — imama iš VISŲ potemių; kitaip
  * tik tos potemės klausimai (DEFAULT_TOPIC, jei klausimas neturi `topic`).
  */
-/**
- * Papildoma „švieži" atsarga virš `count`: kiek klausimų DAR turi likti
- * neištrintų iš atminties, kad fresh rinkinys turėtų iš ko maišytis (kitaip
- * fresh būtų lygiai `count` ir kiekviena partija būtų ta pati). ~5 → įvairovė.
- */
-const FRESH_MARGIN = 5;
-
 export function pickQuestions(
   all: TriviaQuestion[],
   level: Level,
@@ -96,16 +89,28 @@ export function pickQuestions(
   );
   if (pool.length === 0) return [];
 
-  // LANKSTUS ATMINTIES LANGAS: niekada nevengiam tiek klausimų, kad neliktų
-  // bent `count` + atsarga ŠVIEŽIŲ. Mažam pool'ui (pvz. 51) langas automatiškai
-  // susitraukia (51 − 10 − 5 = vengiam max 36 naujausių → ≥15 šviežių visada).
-  // `recentIds` ateina naujausi-pirma, tad imam tik naujausią dalį.
-  const maxAvoid = Math.max(0, pool.length - count - FRESH_MARGIN);
+  // GRIEŽTA TAISYKLĖ (savininko, 2026-06-12): klausimas NIEKADA nesikartoja,
+  // kol neišnaudotas VISAS fondas. 100 klausimų fondas = 10 partijų be jokio
+  // pasikartojimo. Vengiam VISŲ atmintyje esančių (langas = pool − count, kad
+  // partijai visada užtektų), o kai kartotis NEIŠVENGIAMA (fondas išsėmė),
+  // pirmiausia grąžinami SENIAUSIAI matyti (LRU) — maksimalus atstumas tarp
+  // to paties klausimo pasirodymų net ir mažiausiame fonde.
+  const maxAvoid = Math.max(0, pool.length - count);
   const recent = new Set(recentIds.slice(0, maxAvoid));
 
+  // Seniausiai matyti pirmiausia: kuo TOLIAU recentIds sąraše (naujausi-pirma),
+  // tuo anksčiau grįžta. Nematyti recentIds'e iš viso → didžiausias prioritetas.
+  const recencyRank = new Map<string, number>();
+  recentIds.forEach((id, i) => recencyRank.set(id, i));
+
   const fresh = shuffle(pool.filter((q) => !recent.has(q.id)));
-  const seen = shuffle(pool.filter((q) => recent.has(q.id)));
-  // Eilė: pirma nematyti, paskui neseniai matyti.
+  const seen = pool
+    .filter((q) => recent.has(q.id))
+    .sort(
+      (a, b) =>
+        (recencyRank.get(b.id) ?? Infinity) - (recencyRank.get(a.id) ?? Infinity)
+    );
+  // Eilė: pirma nematyti (sumaišyti), paskui seniausiai matyti.
   const ordered = [...fresh, ...seen];
 
   const result: TriviaQuestion[] = [];

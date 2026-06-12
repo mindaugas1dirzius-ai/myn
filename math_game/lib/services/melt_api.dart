@@ -18,11 +18,12 @@ class MeltApi {
 
   /// Pradeda naują partiją (arba grąžina aktyvią — tada nustatymai ignoruojami).
   static Future<MeltView> start(
-      String lang, int limitSec, int intervalSec) async {
+      String lang, int limitSec, int intervalSec, int level) async {
     final r = await _functions.httpsCallable('startMelt').call(<String, dynamic>{
       'lang': lang,
       'limitSec': limitSec,
       'intervalSec': intervalSec,
+      'level': level,
     });
     return MeltView.fromJson(_decode(r.data));
   }

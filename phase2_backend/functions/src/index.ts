@@ -25,6 +25,8 @@ import {
   MAX_TIME_PER_Q_MS,
   TIME_TOLERANCE_MS,
   ROTATION_KEEP,
+  ROTATION_KEEP_CAT,
+  MATH_FAMILIES,
 } from "./gameConfig";
 import { mergeRecent } from "./triviaEngine";
 import {
@@ -329,20 +331,24 @@ export const submitScore = onCall(
         newStreak = 1; // nutrūko (arba pirmas kartas)
       }
 
-      // Rotacija PER REŽIMĄ + username + coins + ETAPO C statistika (vienas rašymas).
-      // recentByMode[mode] — atskira kiekvieno lygio/temos istorija; merge:true
-      // giliai sulieja žemėlapį, tad kitų režimų istorijos nepaliečia.
+      // Rotacijos raktas (2026-06-12): matematikai — per režimą (klausimai
+      // generuojami), trivijai/gamtai — PER TEMĄ ("cat_sport"), kad potemės ir
+      // „Mix" dalintųsi viena istorija ir klausimai nesikartotų tarp srautų.
       const gameMode = game.mode as string;
+      const fam = gameMode.split("_")[0];
+      const isMathMode = MATH_FAMILIES.has(fam);
+      const rotKey = isMathMode ? gameMode : `cat_${fam}`;
+      const rotKeep = isMathMode ? ROTATION_KEEP : ROTATION_KEEP_CAT;
       const prevByMode = (prevData.recentByMode as Record<string, string[]>) ?? {};
-      const prevRecent: string[] = prevByMode[gameMode] ?? [];
-      // mergeRecent: naujausi pirma, BE dublikatų. Gamtoj žaidimo ID jau įrašyti
-      // PRADŽIOJE (startNatureGame) — dedup užtikrina, kad jie neužims dviejų
+      const prevRecent: string[] = prevByMode[rotKey] ?? [];
+      // mergeRecent: naujausi pirma, BE dublikatų. Trivijoj žaidimo ID jau įrašyti
+      // PRADŽIOJE (start funkcijose) — dedup užtikrina, kad jie neužims dviejų
       // vietų lange. Matematikai elgesys nepakitęs (tiesiog be atsitiktinių dublių).
-      const newRecent = mergeRecent(game.actions as string[], prevRecent, ROTATION_KEEP);
+      const newRecent = mergeRecent(game.actions as string[], prevRecent, rotKeep);
       transaction.set(
         userRef,
         {
-          recentByMode: { [gameMode]: newRecent },
+          recentByMode: { [rotKey]: newRecent },
           username,
           coins: newCoins,
           pendingMysteryLetters: newPendingLetters,

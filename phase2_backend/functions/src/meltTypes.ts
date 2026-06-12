@@ -32,6 +32,12 @@ export const MELT_INTERVALS_SEC = [5, 10, 20] as const;
 /** Mažiausias raidžių kiekis frazei — trumpos frazės tirpsta per žiauriai. */
 export const MELT_MIN_LETTERS = 12;
 
+/** Didžiausias raidžių kiekis — ilgos citatos (60+) beveik neįmenamos. */
+export const MELT_MAX_LETTERS = 40;
+
+/** Leidžiami sunkumo lygiai (1 lengvas … 4 ekstremalus) — lemia bazę 200–500. */
+export const MELT_LEVELS = [1, 2, 3, 4] as const;
+
 /** Bazinė anti-spam pauzė tarp spėjimų (ms); auga su klaidomis (žr. žemiau). */
 export const MELT_GUESS_COOLDOWN_MS = 2500;
 
@@ -171,11 +177,17 @@ export function deriveMelt(
 }
 
 /** Ar nustatymai leidžiami (whitelist). */
-export function isValidMeltConfig(limitSec: unknown, intervalSec: unknown): boolean {
+export function isValidMeltConfig(
+  limitSec: unknown,
+  intervalSec: unknown,
+  level: unknown
+): boolean {
   return (
     typeof limitSec === "number" &&
     typeof intervalSec === "number" &&
+    typeof level === "number" &&
     (MELT_LIMITS_SEC as readonly number[]).includes(limitSec) &&
-    (MELT_INTERVALS_SEC as readonly number[]).includes(intervalSec)
+    (MELT_INTERVALS_SEC as readonly number[]).includes(intervalSec) &&
+    (MELT_LEVELS as readonly number[]).includes(level)
   );
 }

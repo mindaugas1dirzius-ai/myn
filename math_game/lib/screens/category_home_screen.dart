@@ -164,57 +164,53 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
         break;
       case ThemeKind.mystery:
         // Du režimai vienoje kortelėje: klasikinis ir „Raidžių tirpimas".
+        // Stilius — kaip potemių parinkiklio: neoninės kortelės, didelės raidės.
         final s = AppStrings.of(context);
         final isLt = s.lang == AppLang.lt;
         final mode = await showModalBottomSheet<String>(
           context: context,
-          backgroundColor: AppColors.surface,
+          backgroundColor: AppColors.background,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           builder: (ctx) => SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 14),
-                Text(
-                  isLt ? 'Pasirink režimą' : 'Choose a mode',
-                  style: const TextStyle(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16),
-                ),
-                const SizedBox(height: 8),
-                ListTile(
-                  leading: const Text('🕵️', style: TextStyle(fontSize: 26)),
-                  title: Text(isLt ? 'Klasikinis' : 'Classic',
-                      style: const TextStyle(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.bold)),
-                  subtitle: Text(
-                      isLt
-                          ? 'Rink raides žaisdamas ir spėk posakį'
-                          : 'Earn letters by playing and guess the phrase',
-                      style:
-                          const TextStyle(color: AppColors.textSecondary)),
-                  onTap: () => Navigator.pop(ctx, 'classic'),
-                ),
-                ListTile(
-                  leading: const Text('⏳', style: TextStyle(fontSize: 26)),
-                  title: Text(isLt ? 'Raidžių tirpimas' : 'Letter Melt',
-                      style: const TextStyle(
-                          color: AppColors.textPrimary,
-                          fontWeight: FontWeight.bold)),
-                  subtitle: Text(
-                      isLt
-                          ? 'Prieš laikrodį: pats pasirink tempą'
-                          : 'Against the clock: pick your own pace',
-                      style:
-                          const TextStyle(color: AppColors.textSecondary)),
-                  onTap: () => Navigator.pop(ctx, 'melt'),
-                ),
-                const SizedBox(height: 10),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(16, 18, 16, 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    isLt ? 'Pasirink režimą' : 'Choose a mode',
+                    style: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                        letterSpacing: 1.2),
+                  ),
+                  const SizedBox(height: 16),
+                  _modeCard(
+                    ctx,
+                    emoji: '🕵️',
+                    title: isLt ? 'Klasikinis' : 'Classic',
+                    subtitle: isLt
+                        ? 'Rink raides žaisdamas ir spėk posakį'
+                        : 'Earn letters by playing and guess the phrase',
+                    accent: AppColors.neonBlue,
+                    value: 'classic',
+                  ),
+                  const SizedBox(height: 12),
+                  _modeCard(
+                    ctx,
+                    emoji: '⏳',
+                    title: isLt ? 'Raidžių tirpimas' : 'Letter Melt',
+                    subtitle: isLt
+                        ? 'Prieš laikrodį — pats pasirink lygį ir tempą'
+                        : 'Against the clock — pick your level and pace',
+                    accent: AppColors.levelMedium,
+                    value: 'melt',
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -253,6 +249,66 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
         );
         break;
     }
+  }
+
+  /// Režimo kortelė pasirinkimo lange — žaidimo stiliaus (neono rėmas,
+  /// didelės spalvotos raidės), kaip potemių parinkiklyje.
+  Widget _modeCard(
+    BuildContext ctx, {
+    required String emoji,
+    required String title,
+    required String subtitle,
+    required Color accent,
+    required String value,
+  }) {
+    return GestureDetector(
+      onTap: () => Navigator.pop(ctx, value),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: accent.withValues(alpha: 0.7), width: 1.6),
+          boxShadow: [
+            BoxShadow(
+              color: accent.withValues(alpha: 0.18),
+              blurRadius: 14,
+              spreadRadius: 1,
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Text(emoji, style: const TextStyle(fontSize: 34)),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                        color: accent,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
+                        letterSpacing: 0.5),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                        color: AppColors.textSecondary, fontSize: 13.5),
+                  ),
+                ],
+              ),
+            ),
+            Icon(Icons.chevron_right,
+                color: accent.withValues(alpha: 0.8), size: 26),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _categoryCard({

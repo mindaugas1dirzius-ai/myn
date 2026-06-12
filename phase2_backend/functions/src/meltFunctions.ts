@@ -33,6 +33,7 @@ import { findMystery, pickMeltMystery } from "./mysteryContent";
 import {
   MeltState,
   MELT_MIN_LETTERS,
+  MELT_MAX_LETTERS,
   MELT_FREE_KEEP_HIDDEN,
   deriveMelt,
   isValidMeltConfig,
@@ -109,6 +110,7 @@ export const startMelt = onCall(
     const lang = parseLang(request.data?.lang);
     const limitSec = request.data?.limitSec;
     const intervalSec = request.data?.intervalSec;
+    const level = request.data?.level;
 
     const db = admin.firestore();
     const userRef = db.collection("users").doc(uid);
@@ -141,11 +143,17 @@ export const startMelt = onCall(
       }
 
       // Naujos partijos nustatymai privalomi ir tikrinami pagal whitelist.
-      if (!isValidMeltConfig(limitSec, intervalSec)) {
+      if (!isValidMeltConfig(limitSec, intervalSec, level)) {
         throw new HttpsError("invalid-argument", "Netinkami režimo nustatymai.");
       }
 
-      const picked = pickMeltMystery(lang, solvedIds, MELT_MIN_LETTERS);
+      const picked = pickMeltMystery(
+        lang,
+        solvedIds,
+        MELT_MIN_LETTERS,
+        MELT_MAX_LETTERS,
+        level as number
+      );
       if (!picked) {
         throw new HttpsError("failed-precondition", "Paslapčių dar nėra.");
       }
