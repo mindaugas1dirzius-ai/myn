@@ -27,6 +27,7 @@ import {
   ROTATION_KEEP,
   ROTATION_KEEP_CAT,
   MATH_FAMILIES,
+  MYTH_WRONG_PENALTY,
 } from "./gameConfig";
 import { mergeRecent } from "./triviaEngine";
 import {
@@ -253,6 +254,16 @@ export const submitScore = onCall(
           coinsEarned += 1;
           if (times[i] < 3000) coinsEarned += 1; // greičio bonusas
         }
+      }
+
+      // 🧐 „Tiesa ar mitas?" spaudinėjimo apsauga (savininkas 2026-06-13):
+      // dviejų mygtukų žaidime atsitiktinis spaudinėjimas pataiko ~50 %, tad
+      // be baudos jis APSIMOKĖTŲ. Už kiekvieną klaidą atimama bauda — spamo
+      // vidurkis ≈ 0, o galutinis rezultatas niekada nekrenta žemiau 0.
+      // Kiti režimai (6 variantų trivija, matematika) NEPALIESTI.
+      if ((game.mode as string).startsWith("myth")) {
+        const wrong = serverAnswers.length - correct;
+        score = Math.max(0, score - wrong * MYTH_WRONG_PENALTY);
       }
 
       // ---- RAŠYMAI ----

@@ -75,6 +75,14 @@ export const BLITZ_FINAL_X2_LAST_MS = 5000;
 export const BLITZ_CAND_MAX_CHARS = 30;
 /** Klausimo ilgio lubos blitz'ui. */
 export const BLITZ_Q_MAX_CHARS = 100;
+/** BAUDA už klaidingą blitz atsakymą (savininkas 2026-06-13: greitas
+ *  spaudinėjimas be skaitymo NETURI apsimokėti — atsitiktinai spaudant
+ *  vidurkis ~0). Galutinis rezultatas niekada nekrenta žemiau 0. */
+export const BLITZ_WRONG_PENALTY = 100;
+
+/** BAUDA už klaidą „Tiesa ar mitas?" (ta pati spaudinėjimo apsauga):
+ *  atimama iš galutinių taškų po wrong × bauda, grindys 0. */
+export const MYTH_WRONG_PENALTY = 60;
 
 /** Patikrina mode eilutę (pvz. "mul_sunkus", "mix_lengvas").
  *  Grąžina šeimą (add/sub/mul/div/mix) ir lygį. Validuoja prieš registrą. */

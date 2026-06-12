@@ -174,7 +174,10 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
       HapticFeedback.heavyImpact();
       SoundService.instance.wrong();
       _streak = 0;
-      _lastGain = 0;
+      // BAUDA už klaidą (veidrodis serverio formulės): spaudinėjimas
+      // nebeapsimoka. Eigoje suma gali būti minusinė — rodome nuo 0.
+      _lastGain = -100;
+      _liveScore -= 100;
     }
     setState(() {
       _lastOk = ok;
@@ -369,6 +372,8 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
               children: [
                 _ruleRow('🔥', s.blitzRuleCombo),
                 const SizedBox(height: 6),
+                _ruleRow('💥', s.blitzRulePenalty),
+                const SizedBox(height: 6),
                 _ruleRow('⚡', s.blitzRuleFinal),
                 const SizedBox(height: 6),
                 _ruleRow('👆', s.blitzRuleSwipe),
@@ -504,7 +509,7 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
                         fontSize: 26)),
               ),
               _comboPill(s),
-              Text('$_liveScore',
+              Text('${_liveScore < 0 ? 0 : _liveScore}',
                   style: const TextStyle(
                       color: _accent,
                       fontWeight: FontWeight.bold,
@@ -809,22 +814,23 @@ class _BlitzGameScreenState extends State<BlitzGameScreen> {
     );
   }
 
-  /// Skrendantys taškai „+130" virš kortelės (tik už teisingą).
+  /// Skrendantys taškai: „+130" žalias už teisingą, „−100" raudonas už klaidą.
   Widget _floatingPoints() {
-    if (_lastOk != true || _lastGain <= 0) return const SizedBox.shrink();
+    if (_lastOk == null || _lastGain == 0) return const SizedBox.shrink();
+    final gain = _lastGain > 0;
     return IgnorePointer(
       child: TweenAnimationBuilder<double>(
         key: ValueKey('gain_$_flashSeq'),
         tween: Tween(begin: 0, end: 1),
         duration: const Duration(milliseconds: 650),
         builder: (context, t, _) => Transform.translate(
-          offset: Offset(0, -30 - 70 * t),
+          offset: Offset(0, gain ? -30 - 70 * t : -30 + 50 * t),
           child: Opacity(
             opacity: (1 - t).clamp(0.0, 1.0),
             child: Text(
-              '+$_lastGain',
-              style: const TextStyle(
-                  color: AppColors.correct,
+              gain ? '+$_lastGain' : '−${-_lastGain}',
+              style: TextStyle(
+                  color: gain ? AppColors.correct : AppColors.wrong,
                   fontWeight: FontWeight.bold,
                   fontSize: 34),
             ),

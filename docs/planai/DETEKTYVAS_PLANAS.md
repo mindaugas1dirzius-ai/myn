@@ -1,47 +1,94 @@
-# 🕵️ DETEKTYVAS — įgyvendinimo planas (2026-06-12, savininko „kuriam kitą")
+# 🕵️ DETEKTYVAS (Klausimų turgus) — planas pagal SAVININKO specifikaciją
 
-## Idėja (savininko sprendimas 2026-06-12)
-Slaptas ŽODIS. Žaidėjas PERKA TAIP/NE klausimus iš „klausimų turgaus" (3 kainų
-lygiai) ir bando atspėti žodį. 3 gyvybės. Žodis PERDEGA po vieno žaidimo
-(turinys vienkartinis) → nemokamai ribotas dienos srautas, premium — daugiau.
+> 2026-06-13: dokumentas sulygiuotas su ORIGINALIA savininko specifikacija
+> (ankstesnė versija buvo savavališkai supaprastinta — 9 klausimai, be laikrodžio.
+> TAISYKLĖS ŽEMIAU YRA SAVININKO, jų nekeisti be jo OK).
 
-## Mechanika
-- BANKAS pagal lygį: L1 200 · L2 300 · L3 400 · L4 500 🔑 (kaip paslapčių). Grindys 50.
-- KLAUSIMŲ TURGUS: matai VISUS ~9 klausimų TEKSTUS, bet atsakymas (TAIP/NE)
-  kainuoja: 🟢 pigus −15 (platus: „Ar tai gyva būtybė?") · 🟡 vidutinis −30
-  (siaurinantis: „Ar gyvena Afrikoje?") · 🔴 brangus −60 (beveik pasako:
-  „Ar tai aukščiausias pasaulio gyvūnas?"). Pirkimas tirpdo banką (laiko
-  spaudimo NĖRA — tai MĄSTYMO žaidimas, kontrastas blitz/tirpimui).
-- ŽODŽIO LANGELIAI matomi (ilgis = nemokama užuomina) + raidžių pool
-  (mystery stiliaus, kalbai neutralu). SPĖTI galima bet kada.
-- ❤️❤️❤️ 3 gyvybės: klaidingas spėjimas −1. 0 → byla žlugo, žodis parodomas,
-  vis tiek PERDEGA. Atspėjus → likęs bankas + mysteryKeys.
-- Kategorijos kortelė (Gyvūnas/Vieta/Daiktas/Maistas…) — matoma nemokamai.
+## Idėja
+Slaptas ŽODIS pagal temą (pvz. „Maistas"). Žaidėjas PERKA paruoštus TAIP/NE
+klausimus iš „klausimų turgaus" ir bando atspėti žodį. Strateginis detektyvas:
+rizika prieš grąžą — pirkti brangų klausimą ar spėti pačiam ir rizikuoti gyvybe.
 
-## Monetizacija (savininko valia)
-- NEMOKAMAI: 3 bylos per parą (UTC; users.detectiveDate/detectiveCount).
-- PREMIUM (premiumUntil galioja): be ribos. Vėliau — perkami bylų paketai.
+## 30 KLAUSIMŲ TAISYKLĖ (savininko — geležinė)
+Kiekvienam slaptam žodžiui serveryje IŠ ANKSTO paruošta 30 klausimų ir atsakymų
+matrica — 3 lygiai po 10:
+- 🟢 **1 lygis (lengvi)** — nuima MAŽAI taškų; bendra informacija
+  („Ar tai valgoma?" → TAIP)
+- 🟡 **2 lygis (vidutiniai)** — nuima vidutiniškai; patikslina grupę
+  („Ar tai auga ant medžio?" → TAIP)
+- 🔴 **3 lygis (sunkūs/specifiniai)** — nuima DAUG, bet iškart atmeta daug
+  variantų („Ar tai gali būti susiję su Niujorku?" → TAIP (The Big Apple))
+
+BALANSO GARANTIJA: visi 30 paruošti būtent TAM žodžiui — loginių klaidų nėra.
+Išnaudojęs visus 30 žaidėjas 100 % žinos žodį, bet gaus labai mažai taškų.
+
+## ATSAKYMŲ TIPAI (savininko — svarbiausia dalis)
+Atsakymai NĖRA vien „taip/ne". Trys tipai:
+1. Griežtas **TAIP**
+2. Griežtas **NE**
+3. **TAIP/NE + PAAIŠKINIMAS** — kai objektas turi kelias būsenas. Pvz.
+   „Ar jis žalias?" → „TAIP, bet gali būti ir raudonas ar geltonas".
+   Būna visaip — tai apsaugo žaidėją nuo suklaidinimo.
+Duomenų modelis: questions[{tier, q, a: "yes"|"no"|"both", note?}].
+
+## Žaidimo eiga ir taškai (savininko formulė)
+1. Žaidėjas gauna TEMĄ + maksimalų taškų banką (orientyras ~1000; galutinius
+   dydžius derinsim balansuojant) + žodžio langelius (ilgis matomas).
+   LAIKAS PRADEDA TIKSĖTI ir tiksi NUOLAT (nestoja net spėjant!).
+2. Klausimo pirkimas: spusteli klausimą turguje → iš banko atimama jo kaina
+   → atsakymas iškart iššoka (žalias/raudonas burbulas + paaiškinimas jei yra).
+3. SPĖTI: bet kada; suvedi žodį klaviatūra (laikas tiksi toliau!).
+   - **Teisingai:** žaidimas stabdomas. Galutiniai taškai =
+     `Likę taškai − (praėjęs laikas × koeficientas)`.
+     Kuo greičiau — tuo daugiau išsaugojai.
+   - **Neteisingai:** −1 gyvybė iš ❤️❤️❤️. Žaidimas tęsiasi, galima pirkti toliau.
+     0 gyvybių → Game Over, žodis parodomas.
+
+## UI — 3 zonos (savininko)
+- **Viršus (būsena):** pulsuojantis laikmatis · taškų bankas (mažėja perkant) ·
+  3 gyvybės (sudega su animacija) · tema dideliu šriftu.
+- **Centras (turgus + istorija):** 3 kortelės/stulpeliai (Lygis 1/2/3, prie
+  kiekvieno klausimo aiški kaina „−10", „−30", „−60"); nupirkti klausimai
+  krenta į „pokalbio" (chat) srautą — klausimas kairėje, spalvotas atsakymo
+  burbulas dešinėje su paaiškinimu.
+- **Apačia (veiksmas):** didelis „SPĖTI ŽODĮ" → stilingas įvesties laukas.
+
+## Monetizacija (savininko sprendimas — uždarbis)
+- Žodis PERDEGA po vieno žaidimo (turinys vienkartinis).
+- NEMOKAMAI: ribotas bylų kiekis per parą (pvz. 3; users.detectiveDate/Count).
+- PREMIUM: be ribos / daugiau žodžių. Vėliau — perkami bylų paketai.
 
 ## Sauga (viskas serveryje)
-- Žodis, atsakymai, bankas, gyvybės, pirkimai — TIK serveryje (users.detective).
-- Atsakymas grąžinamas TIK nupirkus (transakcija: bank−kaina ≥ 50).
-- Spėjimas: normalizeGuess === word serveryje; replay neįmanomas (perdega
-  detectiveSolved sąraše, cap kaip mystery SOLVED_CAP).
+- Žodis, atsakymai, bankas, gyvybės, laikas, pirkimai — TIK serveryje
+  (users.detective; startedAt serverio laiku, kaip Melt).
+- Atsakymas grąžinamas TIK nupirkus (transakcija); replay neįmanomas
+  (detectiveSolved sąrašas su cap).
 - enforceAppCheck: true visoms funkcijoms.
 
 ## Failai
-- Serveris: detectiveTypes.ts (kainos/bankai/limitai) · detectiveContent.ts
-  (bylos: id, level, kategorija, texts{lang: word, categoryLabel,
-  questions[{t,q,a}]}) · detectiveFunctions.ts (startDetective, buyDetectiveClue,
-  guessDetective, abandonDetective) · index.ts eksportai.
-- Klientas: detective_models.dart · detective_api.dart · detective_screen.dart
-  („bylos segtuvo" dizainas: kategorija+bankas+gyvybės, žodžio langeliai,
-  turgaus kortelės su apverstimo animacija TAIP✅/NE❌, raidžių pool spėjimui)
-  · įėjimas iš mystery_mode_screen (3-ias režimas 🕵️).
-- Lygiai pagal amžiaus skalę: L1 vaikiški žodžiai (Žirafa), L4 žinovams.
-- Turinys v1: ~10 bylų LT+EN (L1×3, L2×3, L3×2, L4×2), klausimai įdomūs,
-  faktai tikri, universalūs visoms kalboms.
+- Serveris: detectiveTypes.ts · detectiveContent.ts (bylos: id, level,
+  kategorija, texts{lang: word, questions[30]}) · detectiveFunctions.ts
+  (startDetective, buyDetectiveClue, guessDetective, abandonDetective).
+- Klientas: detective_models.dart · detective_api.dart · detective_screen.dart ·
+  įėjimas iš mystery_mode_screen (3-ias režimas 🕵️).
+- Lygiai pagal amžiaus skalę: L1 vaikiški žodžiai (Žirafa) … L4 žinovams.
+- Turinys v1: ~10 bylų LT+EN po 30 klausimų (300 QA porų) — tik tada plėsti.
+
+## 💡 PASIŪLYMAI ĮDOMUMUI (laukia savininko OK — NEKODUOTI be jo)
+1. **Siaurėjantis įtariamųjų ratas:** po kiekvieno atsakymo indikatorius
+   „pagal atsakymus liko: DAUG → KELETAS → VOS KELI žodžiai" — detektyvo jausmas.
+2. **SOS klausimas:** praradus 2 gyvybes atsiranda specialus LABAI brangus
+   klausimas, kuris beveik pasako žodį — paskutinės progos drama.
+3. **Reklama už gyvybę 💰:** Game Over → pažiūrėk reklamą, gauk +1 gyvybę
+   (1×/byla) — tiesioginis uždarbis natūralioje vietoje.
+4. **Dienos byla:** visiems žaidėjams ta pati; pasidalinimo kortelė kaip Wordle
+   („Įminiau su 4 klausimais ir 1 gyvybe! 🕵️") — nemokama reklama + sugrįžimai.
+5. **Detektyvo analizė po bylos:** „Buvo galima įminti vos su 3 klausimais —
+   štai kuriais" → noras bandyti iš naujo protingiau.
+6. **Detektyvo rangai:** kuo mažiau klausimų nupirkai ir mažiau laiko sugaišai,
+   tuo aukštesnis bylos ženkliukas (🥉 Naujokas / 🥈 Inspektorius / 🥇 Šerlokas) —
+   kolekcija profilio ekrane.
 
 ## Eiga
-1. Serveris + 10 bylų + deploy. 2. Klientas + APK. 3. Testas telefone.
-4. v2: bylų paketai už 🔑/reklamas, kasdienė „dienos byla" su bonusu.
+1. Serveris + 10 bylų LT+EN + deploy. 2. Klientas + APK. 3. Testas telefone.
+4. v2: dienos byla, bylų paketai, reklamos taškai.

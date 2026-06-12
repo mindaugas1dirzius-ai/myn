@@ -305,6 +305,37 @@ default 1 min) + didelis „▶ PRADĖTI". Tas pats žaidimas, tik trukmė keič
   (Jo „ne tą turėjau omeny" — užfiksuota; jei paaiškės kita TAIP/NE idėja,
   klausti jo aprašymo prieš kuriant.)
 
+## ✅ 9 RATAS (2026-06-13): SPAUDINĖJIMO BAUDOS + rezultatų titulai
+
+### Baudos už klaidas (savininkas rado exploitą — greitas spaudinėjimas!):
+- 🧐 Mitai: submitScore (index.ts) mode "myth_*" → `score = max(0, score −
+  wrong × MYTH_WRONG_PENALTY(60))`. Kiti režimai NEPALIESTI (6 variantų
+  trivijoje atsitiktinis spaudymas ir taip neapsimoka — 1/6).
+- ⚡ Blitz: submitBlitzScore klaida → `score −= BLITZ_WRONG_PENALTY(100)`;
+  eigos suma gali būti minusinė, galutinė clamp ≥0. Atsitiktinio spaudinėjimo
+  vidurkis ≈ 0 — apsimoka tik TIKSLUMAS.
+- Klientų veidrodžiai: blitz skrendantis raudonas „−100" + ekrano taškai
+  rodomi nuo 0; mitai — „Nepavyko 😅 −60 taškų" + taisyklė pick ekrane;
+  blitz taisyklių kortelė +💥 „Klaida — minus 100 taškų!".
+- Deploy'inta: submitScore + submitBlitzScore.
+
+### Rezultatų ekrano (BENDRO matematikai+trivijoms) titulai:
+result_screen.dart: rango emoji (🏆/🥇/🥈/🔎) iššoka elasticOut + įvertinimo
+tekstas paryškintas + „egzamino lapas" (žali/raudoni taškučiai iš review,
+kai jis yra — gamta/trivijos). NIEKAS funkciškai nekeista — tik vaizdas.
+
+### ⏭️ LIKĘS DIZAINO DARBAS (savininko „padaryk ir kituose žaidimuose ir
+### lygiuose" — TĘSTI KITAI SESIJAI):
+1. nature_game_screen (visos trivijos): taškučiai viršuje + 🔥 serijos
+   ženkliukas žaidimo metu (ATSARGIAI — failas jautrus, žr. pamokas).
+2. game_screen (matematika): tas pats.
+3. Lygių pasirinkimo ekranai (level_select/trivia_level/nature_level):
+   gyvesnės kortelės su aprašymais pagal amžių (kaip detektyvo lygiai).
+4. 🕵️ DETEKTYVO PERTVARKA pagal docs/planai/DETEKTYVAS_PLANAS.md (savininko
+   ORIGINALI spec: 30 klausimų matrica 3×10, atsakymai yes/no/both su
+   paaiškinimu, NUOLAT tiksintis laikas, taškai = bankas − laikas×koef,
+   chat-srauto UI, pasiūlymai 1–6 laukia savininko OK).
+
 ## 📋 DARBŲ EILĖ TOLIAU (po PIRMO darbo)
 
 1. **#50 — 1 banga: potemių papildymas** (TURINIO_PLANAS.md) — naujos potemės

@@ -33,6 +33,7 @@ import {
   BLITZ_MIN_ANSWER_MS,
   BLITZ_Q_MAX_CHARS,
   BLITZ_SUBMIT_GRACE_MS,
+  BLITZ_WRONG_PENALTY,
   ROTATION_KEEP_CAT,
   TIME_TOLERANCE_MS,
 } from "./gameConfig";
@@ -289,6 +290,10 @@ export const submitBlitzScore = onCall(
       }
 
       // Vertinimas + kombo (×1.0 → ×2.0 ties 10 iš eilės) + finalo ×2.
+      // KLAIDA = −BLITZ_WRONG_PENALTY (savininkas 2026-06-13: atsitiktinis
+      // spaudinėjimas pataiko ~50 % ir be baudos APSIMOKĖTŲ; su bauda jo
+      // vidurkis ≈ 0). Eigos suma gali nukristi žemiau nulio, bet galutinis
+      // rezultatas užapvalinamas iki 0 (balansas niekur nemažėja).
       let score = 0;
       let correct = 0;
       let streak = 0;
@@ -302,9 +307,11 @@ export const submitBlitzScore = onCall(
           if (a.tMs >= finalX2FromMs) pts *= 2;
           score += Math.round(pts);
         } else {
-          streak = 0; // klaida = 0 taškų ir kombo nulinasi
+          streak = 0; // kombo nulinasi
+          score -= BLITZ_WRONG_PENALTY;
         }
       }
+      score = Math.max(0, score);
 
       // ---- RAŠYMAI ----
       tx.delete(gameRef); // no replay

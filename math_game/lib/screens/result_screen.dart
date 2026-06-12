@@ -91,16 +91,50 @@ class ResultScreen extends StatelessWidget {
                       color: accent,
                     ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
+              // TITULAS „iššoka" (kaip „Tiesa ar mitas?") — smagi pabaiga.
+              TweenAnimationBuilder<double>(
+                tween: Tween(begin: 0.3, end: 1),
+                duration: const Duration(milliseconds: 550),
+                curve: Curves.elasticOut,
+                builder: (context, sc, child) =>
+                    Transform.scale(scale: sc, child: child),
+                child: Text(_rankEmoji(),
+                    style: const TextStyle(fontSize: 44)),
+              ),
+              const SizedBox(height: 4),
               Text(_rating(s), style: const TextStyle(
-                color: AppColors.textSecondary, fontSize: 16)),
-              const SizedBox(height: 32),
+                color: AppColors.textPrimary,
+                fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 24),
 
               // Teisingų santykis
               Text('$correct / $total', style: const TextStyle(
                 color: AppColors.textPrimary,
                 fontSize: 52, fontWeight: FontWeight.bold,
                 fontFamily: kHeadingFont)),
+              // „Egzamino lapas" — žali/raudoni taškučiai (kai turim apžvalgą).
+              if (review != null && review!.isNotEmpty) ...[
+                const SizedBox(height: 10),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 5,
+                  children: [
+                    for (final r in review!)
+                      Container(
+                        width: 14,
+                        height: 14,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: (r.wasCorrect
+                                  ? AppColors.levelEasy
+                                  : AppColors.wrong)
+                              .withValues(alpha: 0.9),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
               const SizedBox(height: 16),
 
               // Animuotas taškų skaičius (0 -> score), dopamino efektas
@@ -245,6 +279,14 @@ class ResultScreen extends StatelessWidget {
     if (correct >= total * 0.7) return s.ratingGood;
     if (correct >= total * 0.4) return s.ratingOk;
     return s.ratingTryAgain;
+  }
+
+  /// Titulo emoji pagal rezultatą (kaip „Tiesa ar mitas?" rangai).
+  String _rankEmoji() {
+    if (correct == total) return '🏆';
+    if (correct >= total * 0.7) return '🥇';
+    if (correct >= total * 0.4) return '🥈';
+    return '🔎';
   }
 }
 

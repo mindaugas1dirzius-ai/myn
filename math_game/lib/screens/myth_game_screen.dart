@@ -324,8 +324,8 @@ class _MythGameScreenState extends State<MythGameScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            _t('10 teiginių · po atsakymo sužinosi KODĖL · greitesnis atsakymas = daugiau taškų',
-                '10 statements · learn WHY after each answer · faster answer = more points'),
+            _t('10 teiginių · po atsakymo sužinosi KODĖL · greitas atsakymas = daugiau taškų · klaida = −60',
+                '10 statements · learn WHY after each answer · fast answer = more points · mistake = −60'),
             textAlign: TextAlign.center,
             style:
                 const TextStyle(color: AppColors.textSecondary, fontSize: 12),
@@ -578,7 +578,8 @@ class _MythGameScreenState extends State<MythGameScreen> {
                             Text(
                               ok
                                   ? _t('Atspėjai! 🎯', 'You got it! 🎯')
-                                  : _t('Nepavyko 😅', 'Not this time 😅'),
+                                  : _t('Nepavyko 😅  −60 taškų',
+                                      'Not this time 😅  −60 points'),
                               style: TextStyle(
                                   color: ok
                                       ? AppColors.correct
