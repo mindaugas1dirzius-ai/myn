@@ -110,9 +110,12 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
   ≤12→1 min · ≤20→1,5 min · 21+→2 min; max 5 langai; kliento momentinis
   užšaldymas + serverio „sąžiningas startas" GRACE 2,5 s su seenAuto);
   laipsniškos užuominos hint1@40 % / hint2@70 % laiko; lockedAt+lockMsUsed+foldLock.
-- **🕵️ Detektyvas v2 — DARO KITA SESIJA** pagal `docs/planai/DETEKTYVAS_PLANAS.md`
-  (30 kl. matrica 3×10, TAIP/NE/„TAIP, BET…", kills validatorius, laikrodis,
-  lenta/rašymas, SOS). ŠIOS sesijos failų neliesti, kol ji nebaigė!
+- **🕵️ Detektyvas v2 — ĮGYVENDINTA** (kitos sesijos, perimta 2026-06-13; dabar
+  dirba VIENA sesija) pagal `docs/planai/DETEKTYVAS_PLANAS.md`: bankas 1000 −
+  laiko bauda (detectiveTimeCoef pagal lygį), DU atskiri žaidimai — Detektyvas
+  (įtariamųjų lenta) ir Detektyvas PRO (rašai pats, ×1,25), SOS 120, 3 ❤️,
+  SPĖTI langas 60 s (max 5), validateDetective.js, 16 bylų; lentos žaidime
+  žodžio brūkšnelių nebėra (ilgis išduodavo). LAUKIA savininko testo telefone.
 
 ## 7. TURINIO TAISYKLĖS (geležinės — VISKAM)
 
@@ -142,13 +145,20 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 ## 8. DABARTINĖ BŪSENA (2026-06-13)
 
 - **Turinys:** trivijos+gamta 2 346 kl. (gamta 720 · sport 270 · body 255 ·
-  history ~244 · pop 243 · geo 240 · tech 198 · food 176) · 40 mitų teiginių ·
-  101 mįslė (pool 73 be citatų/patarlių) · 10 detektyvo bylų (v2 perrašoma).
+  history 244 · pop 243 · geo 240 · tech 198 · food 176) · 40 mitų teiginių ·
+  101 mįslė (pool 73 be citatų/patarlių; lygiai L1=15/L2=45/L3=35/**L4=6** —
+  pildant pirmiausia L4 ir „klausimas" tipo 42) · **16 detektyvo bylų** (v2).
 - **Įrankiai functions/:** `_appcheck_fix.js` (App Check per API),
   `_audit_len.js` (ilgio kvapas), `_fix_len.js` (taisymo šablonas),
   `validateContent.js`, `gen.js` (+ pridėti ilgio-kvapo patikrą!).
-- Dienos limitas detektyve: 3 bylos/parą UTC (premium be ribos). AdMob — TEST ID.
+- ⚠️ Dienos limitas detektyve KODE laikinai **999** (TESTUI; `DETECTIVE_FREE_PER_DAY`
+  detectiveTypes.ts — PRIEŠ paleidimą grąžinti į 3; premium be ribos). AdMob — TEST ID.
   Kūrime VISOS temos open:true (prieš leidimą peržiūrėti!).
+- ✅ PILNAS AUDITAS 2026-06-13: tsc 0 klaidų · flutter analyze tik 2 seni info ·
+  visos 25 funkcijos enforceAppCheck:true · firestore.rules saugios (klientas
+  tik username) · visi 11 turinio failų validacija OK (ID unikalūs, ≤46, kabutės) ·
+  mitų/blitz/quiz baudos kode atitinka §5 · ilgio kvapas: likę 356 ryškūs
+  (gamta 187 · history 50 · pop 27 · tech 26 · food 23 · sport 24 · body 15 · geo 4).
 - Failų žemėlapis: serveris `phase2_backend/functions/src/` (index, gameConfig,
   triviaEngine/Registry/Types, *Content×9, mystery*, melt*, blitz*, myth*,
   detective*); klientas `math_game/lib/` (screens/, models/, services/, config/
