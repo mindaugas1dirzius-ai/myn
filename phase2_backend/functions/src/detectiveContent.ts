@@ -579,12 +579,15 @@ export function findDetectiveCase(id: string): DetectiveCase | undefined {
 export function pickDetectiveCase(
   lang: Lang,
   level: number,
-  solvedIds: string[]
+  solvedIds: string[],
+  requireBoard = false // 🕵️ lentos žaidimui — tik bylos su board
 ): { item: DetectiveCase; lang: Lang } | null {
   const solved = new Set(solvedIds);
   const tryLang = (l: Lang) => {
     const pool = DETECTIVE_CASES.filter(
-      (c) => c.level === level && c.texts[l] && !solved.has(c.id)
+      (c) =>
+        c.level === level && c.texts[l] && !solved.has(c.id) &&
+        (!requireBoard || ((c.texts[l]!.board?.length ?? 0) > 0))
     );
     if (pool.length === 0) return null;
     return pool[Math.floor(Math.random() * pool.length)];

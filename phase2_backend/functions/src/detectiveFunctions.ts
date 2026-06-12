@@ -252,8 +252,10 @@ export const startDetective = onCall(
         );
       }
 
+      // DU ATSKIRI ŽAIDIMAI: 2 — 🕵️ lenta (tik bylos su board) · 1 — ✍️ PRO.
+      const requireBoard = wantVariant === 2;
       const solvedIds: string[] = (data.detectiveSolved as string[]) ?? [];
-      const picked = pickDetectiveCase(lang, level, solvedIds);
+      const picked = pickDetectiveCase(lang, level, solvedIds, requireBoard);
       if (!picked) {
         throw new HttpsError(
           "failed-precondition",
@@ -271,8 +273,8 @@ export const startDetective = onCall(
         lives: DETECTIVE_LIVES,
         bought: [],
         startedAt: Date.now(),
-        // ✍️/🎯 variantas: lenta galima tik kai byla ją turi.
-        variant: hasBoard ? (wantVariant ?? 2) : 1,
+        // ✍️/🎯 variantas: lentos žaidime byla VISADA turi board (filtras).
+        variant: requireBoard && hasBoard ? 2 : 1,
         ...(hasBoard
           ? { boardOrder: shuffle(text.board!.map((_, i) => i)) }
           : {}),

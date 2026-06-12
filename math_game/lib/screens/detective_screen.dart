@@ -20,7 +20,10 @@ import '../widgets/neumorphic_button.dart';
 ///
 /// VISA TIESA SERVERYJE: žodis, atsakymai, bankas, gyvybės ir laikas — tik ten.
 class DetectiveScreen extends StatefulWidget {
-  const DetectiveScreen({super.key});
+  /// DU ATSKIRI ŽAIDIMAI (savininko sprendimas): 2 — 🕵️ įtariamųjų lenta
+  /// (be rašymo), 1 — ✍️ PRO: žodį rašai pats, be pasiūlymų (+25 %).
+  final int variant;
+  const DetectiveScreen({super.key, this.variant = 2});
 
   @override
   State<DetectiveScreen> createState() => _DetectiveScreenState();
@@ -43,7 +46,9 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
 
   /// 🎯 lentos būsena: žaidėjo išbrauktos kortelės (TIK kosmetika, kliente).
   final Set<int> _eliminated = {};
-  bool _typingMode = false; // ✍️ vietoj lentos (kai byla lentą turi)
+
+  /// Ar tai ✍️ PRO žaidimas (rašymas be pasiūlymų) — pagal serverio būseną.
+  bool get _typingMode => (_view?.variant ?? widget.variant) == 1;
 
   String? _sosText; // nupirkta SOS mįslė
   bool _sosAvailable = false;
@@ -172,14 +177,13 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
     });
     try {
       final lang = _isLt ? 'lt' : 'en';
-      final v = await DetectiveApi.start(lang, level);
+      final v = await DetectiveApi.start(lang, level, widget.variant);
       if (!mounted) return;
       SoundService.instance.swoosh();
       setState(() {
         _view = v;
         _serverOffsetMs =
             v.serverNow - DateTime.now().millisecondsSinceEpoch;
-        _typingMode = !v.hasBoard || v.variant == 1;
         _sosAvailable = v.sosAvailable;
         _sosText = v.sosText;
         _lockedAt = v.lockedAt;
@@ -700,7 +704,10 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: AppColors.textSecondary),
-        title: Text('🕵️ ${_t('Detektyvas', 'Detective')}',
+        title: Text(
+            widget.variant == 1
+                ? '✍️ ${_t('Detektyvas PRO', 'Detective PRO')}'
+                : '🕵️ ${_t('Detektyvas', 'Detective')}',
             style: const TextStyle(color: AppColors.textPrimary)),
         actions: [
           if (_phase == _Phase.playing)
@@ -889,20 +896,10 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
           if (_sosText == null && _sosAvailable) _sosCard(v),
           if (boardMode) ...[
             _suspectBoard(v),
-            const SizedBox(height: 10),
-            _modeToggle(
-                '✍️ ${_t('RAŠYTI PAČIAM (+25 %)', 'TYPE IT MYSELF (+25%)')}',
-                () => setState(() => _typingMode = true)),
           ] else ...[
             _poolArea(v),
             const SizedBox(height: 10),
             _guessRow(),
-            if (v.hasBoard) ...[
-              const SizedBox(height: 8),
-              _modeToggle(
-                  '🎯 ${_t('ĮTARIAMŲJŲ LENTA', 'SUSPECT BOARD')}',
-                  () => setState(() => _typingMode = false)),
-            ],
           ],
           const SizedBox(height: 16),
           _market(v),
@@ -1144,28 +1141,6 @@ class _DetectiveScreenState extends State<DetectiveScreen> {
           ],
         ),
       ],
-    );
-  }
-
-  Widget _modeToggle(String label, VoidCallback onTap) {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: _busy ? null : onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 9),
-        decoration: BoxDecoration(
-          color: AppColors.surface,
-          borderRadius: BorderRadius.circular(12),
-          border:
-              Border.all(color: AppColors.neonBlue.withValues(alpha: 0.55)),
-        ),
-        child: Text(label,
-            style: const TextStyle(
-                color: AppColors.neonBlue,
-                fontWeight: FontWeight.bold,
-                fontSize: 12.5,
-                letterSpacing: 0.6)),
-      ),
     );
   }
 

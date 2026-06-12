@@ -16,10 +16,11 @@ class DetectiveApi {
       jsonDecode(jsonEncode(data)) as Map<String, dynamic>;
 
   /// Pradeda naują bylą (arba grąžina aktyvią — resume).
-  static Future<DetectiveView> start(String lang, int level) async {
-    final r = await _functions
-        .httpsCallable('startDetective')
-        .call(<String, dynamic>{'lang': lang, 'level': level});
+  /// [variant]: 2 — 🕵️ įtariamųjų lenta · 1 — ✍️ PRO (rašymas, +25 %).
+  static Future<DetectiveView> start(
+      String lang, int level, int variant) async {
+    final r = await _functions.httpsCallable('startDetective').call(
+        <String, dynamic>{'lang': lang, 'level': level, 'variant': variant});
     return DetectiveView.fromJson(_decode(r.data));
   }
 
