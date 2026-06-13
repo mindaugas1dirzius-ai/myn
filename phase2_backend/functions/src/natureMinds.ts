@@ -25,13 +25,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🗣️",
     translations: {
       en: {
-        question: "Which bird is famous for copying human words?",
+        question: "The bird famous for copying human words",
         correct: "Parrot",
         distractors: ["Sparrow", "Pigeon", "Duck", "Owl", "Robin"],
         explanation: "Some parrots learn hundreds of words and even short phrases.",
       },
       lt: {
-        question: "Kuris paukštis garsus tuo, kad mėgdžioja žmogaus žodžius?",
+        question: "Paukštis, garsus žmogaus žodžių mėgdžiojimu",
         correct: "Papūga",
         distractors: ["Žvirblis", "Balandis", "Antis", "Pelėda", "Liepsnelė"],
         explanation: "Kai kurios papūgos išmoksta šimtus žodžių ir net trumpas frazes.",
@@ -73,13 +73,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "💡",
     translations: {
       en: {
-        question: "Which clever sea animal 'talks' with clicks and learns tricks fast?",
+        question: "The clever sea animal that 'talks' in clicks and learns tricks fast",
         correct: "Dolphin",
         distractors: ["Tuna", "Shark", "Jellyfish", "Crab", "Seahorse"],
         explanation: "Dolphins are among the smartest animals in the ocean.",
       },
       lt: {
-        question: "Kuris gudrus jūros gyvūnas kalba spragsėjimais ir greit išmoksta triukų?",
+        question: "Gudrus jūros gyvūnas, spragsėjimais kalbantis ir greit išmokstantis triukų",
         correct: "Delfinas",
         distractors: ["Tunas", "Ryklys", "Medūza", "Krabas", "Jūrų arkliukas"],
         explanation: "Delfinai yra vieni protingiausių vandenyno gyvūnų.",
@@ -121,13 +121,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🧩",
     translations: {
       en: {
-        question: "Which animal hides nuts and digs them up again later?",
+        question: "The animal that hides nuts and digs them up again later",
         correct: "Squirrel",
         distractors: ["Rabbit", "Mouse", "Hedgehog", "Mole", "Fox"],
         explanation: "It uses memory and smell to find food it buried months ago.",
       },
       lt: {
-        question: "Kuris gyvūnas slepia riešutus ir vėliau juos vėl atsikasa?",
+        question: "Gyvūnas, slepiantis riešutus ir vėliau juos vėl atsikasantis",
         correct: "Voverė",
         distractors: ["Triušis", "Pelė", "Ežys", "Kurmis", "Lapė"],
         explanation: "Ji pasitelkia atmintį ir uoslę, kad rastų prieš mėnesius užkastą maistą.",
@@ -193,13 +193,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🧠",
     translations: {
       en: {
-        question: "Which farm animal is far smarter than people expect, learning tricks fast?",
+        question: "The farm animal far smarter than people expect, learning tricks fast",
         correct: "Pig",
         distractors: ["Sheep", "Cow", "Duck", "Goat", "Hen"],
         explanation: "Pigs can learn their name, simple games and even tidy their pen.",
       },
       lt: {
-        question: "Kuris ūkio gyvūnas kur kas protingesnis, nei manoma, greit išmoksta triukų?",
+        question: "Ūkio gyvūnas, kur kas protingesnis, nei manoma, ir greit išmokstantis triukų",
         correct: "Kiaulė",
         distractors: ["Avis", "Karvė", "Antis", "Ožka", "Višta"],
         explanation: "Kiaulės išmoksta savo vardą, paprastus žaidimus ir net susitvarko gardą.",
@@ -217,13 +217,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🧩",
     translations: {
       en: {
-        question: "Which animal works as a team to build dams across streams?",
+        question: "The animal that teams up to build dams across streams",
         correct: "Beaver",
         distractors: ["Otter", "Duck", "Frog", "Fish", "Turtle"],
         explanation: "Beavers fell trees and stack them to flood a safe pond home.",
       },
       lt: {
-        question: "Kuris gyvūnas, veikdamas drauge, stato užtvankas per upelius?",
+        question: "Gyvūnas, drauge statantis užtvankas per upelius",
         correct: "Bebras",
         distractors: ["Ūdra", "Antis", "Varlė", "Žuvis", "Vėžlys"],
         explanation: "Bebrai verčia medžius ir juos krauna, kad užtvindytų saugų tvenkinį-namus.",
@@ -315,13 +315,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🛠️",
     translations: {
       en: {
-        question: "Which animal uses a rock as a tool to crack open shellfish?",
+        question: "The animal that uses a rock as a tool to crack open shellfish",
         correct: "Sea otter",
         distractors: ["Seal", "Dolphin", "Penguin", "Walrus", "Beaver"],
         explanation: "It floats on its back and bangs the shell on a stone on its chest.",
       },
       lt: {
-        question: "Kuris gyvūnas naudoja akmenį kaip įrankį moliuskams skelti?",
+        question: "Gyvūnas, naudojantis akmenį kaip įrankį moliuskams skelti",
         correct: "Jūrų ūdra",
         distractors: ["Ruonis", "Delfinas", "Pingvinas", "Vėplys", "Bebras"],
         explanation: "Ji plūduriuoja ant nugaros ir daužo kiautą į akmenį ant krūtinės.",
@@ -339,13 +339,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🧩",
     translations: {
       en: {
-        question: "Which bird hides thousands of seeds and recalls the spots months later?",
+        question: "The bird that hides thousands of seeds and recalls the spots months later",
         correct: "Nutcracker",
         distractors: ["Pigeon", "Duck", "Swan", "Sparrow", "Seagull"],
         explanation: "Its astonishing memory maps thousands of buried snacks.",
       },
       lt: {
-        question: "Kuris paukštis paslepia tūkstančius sėklų ir po mėnesių prisimena vietas?",
+        question: "Paukštis, paslepiantis tūkstančius sėklų ir po mėnesių prisimenantis vietas",
         correct: "Riešutinė",
         distractors: ["Balandis", "Antis", "Gulbė", "Žvirblis", "Žuvėdra"],
         explanation: "Jos nuostabi atmintis žymi tūkstančius užkastų skanėstų.",
@@ -509,13 +509,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🪞",
     translations: {
       en: {
-        question: "Which bird was the first shown to recognise itself in a mirror?",
+        question: "The first bird shown to recognise itself in a mirror",
         correct: "Magpie",
         distractors: ["Sparrow", "Pigeon", "Robin", "Crow", "Duck"],
         explanation: "In a famous 2008 study a marked magpie seemed to use the mirror to reach the spot — though later attempts were mixed.",
       },
       lt: {
-        question: "Kuris paukštis pirmas pasižymėjo atpažįstantis save veidrodyje?",
+        question: "Paukštis, pirmas pasižymėjęs gebėjimu atpažinti save veidrodyje",
         correct: "Šarka",
         distractors: ["Žvirblis", "Balandis", "Liepsnelė", "Varna", "Antis"],
         explanation: "Garsiame 2008 m. tyrime pažymėta šarka tarsi naudojosi veidrodžiu, kad pasiektų dėmę, nors vėlesni bandymai buvo nevienodi.",
@@ -581,13 +581,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🧠",
     translations: {
       en: {
-        question: "Which animal teaches its young special hunting tricks, passing on 'culture'?",
+        question: "The animal that teaches its young special hunting tricks, passing on 'culture'",
         correct: "Orca",
         distractors: ["Tuna", "Jellyfish", "Crab", "Seahorse", "Eel"],
         explanation: "Different pods have their own methods, taught from parent to calf.",
       },
       lt: {
-        question: "Kuris gyvūnas moko jauniklius ypatingų medžioklės gudrybių, perduoda kultūrą?",
+        question: "Gyvūnas, mokantis jauniklius ypatingų medžioklės gudrybių ir taip perduodantis kultūrą",
         correct: "Orka",
         distractors: ["Tunas", "Medūza", "Krabas", "Jūrų arkliukas", "Ungurys"],
         explanation: "Skirtingi būriai turi savo būdus, perduodamus iš tėvų jaunikliams.",
@@ -895,13 +895,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🧠",
     translations: {
       en: {
-        question: "Which fish was trained to tell different human faces apart?",
+        question: "The fish trained to tell different human faces apart",
         correct: "Archerfish",
         distractors: ["Tuna", "Cod", "Salmon", "Herring", "Carp"],
         explanation: "It spat at the correct face for a reward, sorting dozens of them.",
       },
       lt: {
-        question: "Kuri žuvis buvo išmokyta atskirti skirtingus žmonių veidus?",
+        question: "Žuvis, išmokyta atskirti skirtingus žmonių veidus",
         correct: "Šaulė žuvis",
         distractors: ["Tunas", "Menkė", "Lašiša", "Silkė", "Karpis"],
         explanation: "Už atlygį ji spjaudavo į teisingą veidą, atskirdama dešimtis jų.",
@@ -967,13 +967,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🗣️",
     translations: {
       en: {
-        question: "Which animals have regional 'dialects' in their calls, like accents?",
+        question: "The animals with regional 'dialects' in their calls, like accents",
         correct: "Whales",
         distractors: ["Snakes", "Frogs", "Crabs", "Jellyfish", "Snails"],
         explanation: "Groups in different areas sing differently, and the songs slowly change like fashions.",
       },
       lt: {
-        question: "Kurie gyvūnai turi vietinius garsų dialektus, tarsi akcentus?",
+        question: "Gyvūnai, turintys vietinius garsų dialektus, tarsi akcentus",
         correct: "Banginiai",
         distractors: ["Gyvatės", "Varlės", "Krabai", "Medūzos", "Sraigės"],
         explanation: "Skirtingų vietų grupės dainuoja kitaip, o dainos lėtai kinta tarsi mados.",

@@ -25,13 +25,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🎨",
     translations: {
       en: {
-        question: "Which reptile is famous for changing its skin colour?",
+        question: "The reptile famous for changing its skin colour",
         correct: "Chameleon",
         distractors: ["Iguana", "Gecko", "Skink", "Turtle", "Crocodile"],
         explanation: "It shifts colour mostly to show mood and warm up, not just to hide.",
       },
       lt: {
-        question: "Kuris ropliukas garsus tuo, kad keičia odos spalvą?",
+        question: "Roplys, garsus odos spalvos keitimu",
         correct: "Chameleonas",
         distractors: ["Iguana", "Gekonas", "Scinkas", "Vėžlys", "Krokodilas"],
         explanation: "Spalvą keičia daugiausia parodydamas nuotaiką ir šildydamasis, ne tik slėpdamasis.",
@@ -73,13 +73,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🔊",
     translations: {
       en: {
-        question: "Which flying animal hunts in the dark using sound echoes?",
+        question: "The flying animal that hunts in the dark by sound echoes",
         correct: "Bat",
         distractors: ["Owl", "Moth", "Eagle", "Sparrow", "Swallow"],
         explanation: "It sends out squeaks and listens to the echoes to 'see' insects.",
       },
       lt: {
-        question: "Kuris skraidantis gyvūnas medžioja tamsoje pagal garso aidą?",
+        question: "Skraidantis gyvūnas, tamsoje medžiojantis pagal garso aidą",
         correct: "Šikšnosparnis",
         distractors: ["Pelėda", "Drugys", "Erelis", "Žvirblis", "Kregždė"],
         explanation: "Jis siunčia cypsėjimus ir pagal aidą tarsi mato vabzdžius.",
@@ -121,13 +121,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "♻️",
     translations: {
       en: {
-        question: "Which animal can grow back a tail it has lost?",
+        question: "The animal that can grow back a tail it has lost",
         correct: "Lizard",
         distractors: ["Frog", "Snake", "Turtle", "Bird", "Mouse"],
         explanation: "It can drop its tail to escape, then slowly grow a new one.",
       },
       lt: {
-        question: "Kuris gyvūnas gali užsiauginti naują nukritusią uodegą?",
+        question: "Gyvūnas, galintis užsiauginti naują nukritusią uodegą",
         correct: "Driežas",
         distractors: ["Varlė", "Gyvatė", "Vėžlys", "Paukštis", "Pelė"],
         explanation: "Jis gali numesti uodegą pabėgdamas, o paskui lėtai užsiauginti naują.",
@@ -169,13 +169,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🌟",
     translations: {
       en: {
-        question: "Which insect can make its own glowing light at night?",
+        question: "The insect that makes its own glowing light at night",
         correct: "Firefly",
         distractors: ["Ant", "Bee", "Spider", "Moth", "Wasp"],
         explanation: "A chemical reaction in its body produces cool, glowing light.",
       },
       lt: {
-        question: "Kuris vabzdys naktį gali sukurti savo švytinčią šviesą?",
+        question: "Vabzdys, naktį sukuriantis savo švytinčią šviesą",
         correct: "Jonvabalis",
         distractors: ["Skruzdėlė", "Bitė", "Voras", "Kandis", "Vapsva"],
         explanation: "Cheminė reakcija jo kūne sukuria šaltą, švytinčią šviesą.",
@@ -217,13 +217,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🌊",
     translations: {
       en: {
-        question: "Which fish puffs up into a spiky ball to avoid being eaten?",
+        question: "The fish that puffs into a spiky ball to avoid being eaten",
         correct: "Pufferfish",
         distractors: ["Jellyfish", "Crab", "Seahorse", "Starfish", "Eel"],
         explanation: "It gulps water and swells up so it is too big and prickly to swallow.",
       },
       lt: {
-        question: "Kuri žuvis išsipučia į dygliuotą kamuolį, kad jos nesuėstų?",
+        question: "Žuvis, kuri išsipučia į dygliuotą kamuolį, kad jos nesuėstų",
         correct: "Kamuolinė žuvis",
         distractors: ["Medūza", "Krabas", "Jūrų arkliukas", "Jūrų žvaigždė", "Ungurys"],
         explanation: "Ji prisiryja vandens ir taip išsipučia, kad tampa per didelė ir dygli.",
@@ -241,13 +241,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "✨",
     translations: {
       en: {
-        question: "Which lizard can climb up smooth glass with its sticky toes?",
+        question: "The lizard that climbs smooth glass with its sticky toes",
         correct: "Gecko",
         distractors: ["Iguana", "Chameleon", "Skink", "Snake", "Turtle"],
         explanation: "Millions of tiny hairs on its toes grip even shiny surfaces.",
       },
       lt: {
-        question: "Kuris driežas lipniomis kojų pagalvėlėmis užlipa net stiklu?",
+        question: "Driežas, lipniomis kojų pagalvėlėmis užlipantis net stiklu",
         correct: "Gekonas",
         distractors: ["Iguana", "Chameleonas", "Scinkas", "Gyvatė", "Vėžlys"],
         explanation: "Milijonai mažyčių plaukelių ant pirštų sukimba net su lygiu paviršiumi.",
@@ -291,13 +291,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🧊",
     translations: {
       en: {
-        question: "Which animal can freeze almost solid in winter and thaw back alive?",
+        question: "The animal that freezes almost solid in winter and thaws back alive",
         correct: "Wood frog",
         distractors: ["Toad", "Newt", "Lizard", "Snail", "Turtle"],
         explanation: "Natural antifreeze protects its cells while its heart even stops.",
       },
       lt: {
-        question: "Kuris gyvūnas žiemą gali beveik užšalti ir atšilęs vėl atgyti?",
+        question: "Gyvūnas, kuris žiemą gali beveik užšalti ir atšilęs vėl atgyti",
         correct: "Miško varlė",
         distractors: ["Rupūžė", "Tritonas", "Driežas", "Sraigė", "Vėžlys"],
         explanation: "Natūralus antifrizas saugo ląsteles, nors širdis net sustoja.",
@@ -387,13 +387,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🧭",
     translations: {
       en: {
-        question: "Which animal uses Earth's magnetic field to find its birth beach?",
+        question: "The animal that uses Earth's magnetic field to find its birth beach",
         correct: "Sea turtle",
         distractors: ["Dolphin", "Shark", "Penguin", "Seal", "Crab"],
         explanation: "Decades later it returns across the ocean to where it hatched.",
       },
       lt: {
-        question: "Kuris gyvūnas pagal Žemės magnetinį lauką randa savo gimtąjį paplūdimį?",
+        question: "Pagal Žemės magnetinį lauką savo gimtąjį paplūdimį randantis gyvūnas",
         correct: "Jūrų vėžlys",
         distractors: ["Delfinas", "Ryklys", "Pingvinas", "Ruonis", "Krabas"],
         explanation: "Po dešimtmečių jis grįžta per vandenyną ten, kur išsirito.",
@@ -435,13 +435,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🎨",
     translations: {
       en: {
-        question: "Which sea animal can change both colour and skin texture to hide?",
+        question: "The sea animal that changes both colour and skin texture to hide",
         correct: "Octopus",
         distractors: ["Tuna", "Crab", "Jellyfish", "Seahorse", "Eel"],
         explanation: "In a blink it can match coral, sand or rock almost perfectly.",
       },
       lt: {
-        question: "Kuris jūros gyvūnas slėpdamasis keičia ir spalvą, ir odos faktūrą?",
+        question: "Jūros gyvūnas, kuris slėpdamasis keičia ir spalvą, ir odos faktūrą",
         correct: "Aštuonkojis",
         distractors: ["Tunas", "Krabas", "Medūza", "Jūrų arkliukas", "Ungurys"],
         explanation: "Per akimirką jis beveik tobulai pamėgdžioja koralą, smėlį ar akmenį.",
@@ -533,13 +533,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "⚡",
     translations: {
       en: {
-        question: "Which mammal finds underwater prey using electric sensors in its bill?",
+        question: "The mammal that finds underwater prey using electric sensors in its bill",
         correct: "Platypus",
         distractors: ["Otter", "Beaver", "Seal", "Dolphin", "Walrus"],
         explanation: "It hunts with eyes shut, sensing the tiny electric pulses of prey.",
       },
       lt: {
-        question: "Kuris žinduolis vandenyje grobį randa snapo elektros jutikliais?",
+        question: "Žinduolis, vandenyje grobį randantis snapo elektros jutikliais",
         correct: "Ančiasnapis",
         distractors: ["Ūdra", "Bebras", "Ruonis", "Delfinas", "Vėplys"],
         explanation: "Jis medžioja užmerktomis akimis, jausdamas mažyčius grobio impulsus.",
@@ -677,13 +677,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "💪",
     translations: {
       en: {
-        question: "Which insect can pull over 1000 times its own body weight?",
+        question: "The insect that can pull over 1000 times its own body weight",
         correct: "Dung beetle",
         distractors: ["Stag beetle", "Ladybug", "Weevil", "Firefly", "Cricket"],
         explanation: "Relative to its size, it is one of the strongest animals alive.",
       },
       lt: {
-        question: "Kuris vabzdys gali patempti daugiau nei 1000 kartų už save sunkesnį svorį?",
+        question: "Vabzdys, galintis patempti daugiau nei 1000 kartų už save sunkesnį svorį",
         correct: "Mėšlavabalis",
         distractors: ["Elniavabalis", "Boružė", "Straubliukas", "Jonvabalis", "Svirplys"],
         explanation: "Pagal savo dydį jis vienas stipriausių gyvūnų pasaulyje.",
@@ -725,13 +725,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "♻️",
     translations: {
       en: {
-        question: "Which creature can grow a whole new body from just a tiny piece?",
+        question: "The creature that can grow a whole new body from a tiny piece",
         correct: "Planarian worm",
         distractors: ["Frog", "Mouse", "Snake", "A pet goldfish", "Sparrow"],
         explanation: "Cut into pieces, each piece can rebuild a complete worm, head and all.",
       },
       lt: {
-        question: "Kuris padaras gali užsiauginti visą naują kūną vos iš mažo gabalėlio?",
+        question: "Padaras, iš mažo gabalėlio užsiauginantis visą naują kūną",
         correct: "Plokščioji kirmėlė",
         distractors: ["Varlė", "Pelė", "Gyvatė", "Auksinė žuvelė", "Žvirblis"],
         explanation: "Supjaustyta į dalis, kiekviena dalis atstato visą kirmėlę su galva.",
@@ -871,13 +871,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🦈",
     translations: {
       en: {
-        question: "Which animal endlessly grows fresh teeth, replacing lost ones for life?",
+        question: "The animal that endlessly grows fresh teeth, replacing lost ones for life",
         correct: "Shark",
         distractors: ["Lion", "Wolf", "Bear", "Tiger", "Horse"],
         explanation: "Rows of spare teeth roll forward, so it never runs out.",
       },
       lt: {
-        question: "Kuris gyvūnas be perstojo augina naujus dantis, visą gyvenimą keisdamas prarastus?",
+        question: "Gyvūnas, be perstojo auginantis naujus dantis ir visą gyvenimą keičiantis prarastus",
         correct: "Ryklys",
         distractors: ["Liūtas", "Vilkas", "Lokys", "Tigras", "Arklys"],
         explanation: "Atsarginių dantų eilės slenka į priekį, tad jų niekada netrūksta.",
@@ -895,13 +895,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🌊",
     translations: {
       en: {
-        question: "Which sea slug steals and reuses the stingers of the animals it eats?",
+        question: "The sea slug that steals and reuses the stingers of animals it eats",
         correct: "Nudibranch",
         distractors: ["Octopus", "Seahorse", "Clownfish", "Starfish", "Crab"],
         explanation: "It moves a jellyfish's sting cells into its own body to fight back.",
       },
       lt: {
-        question: "Kuris jūrų šliužas pavagia ir panaudoja suėstų gyvūnų geluonis?",
+        question: "Jūrų šliužas, pavagiantis ir panaudojantis suėstų gyvūnų geluonis",
         correct: "Nudibranchas",
         distractors: ["Aštuonkojis", "Jūrų arkliukas", "Klounžuvė", "Jūrų žvaigždė", "Krabas"],
         explanation: "Medūzos gėlimo ląsteles jis perkelia į savo kūną, kad galėtų gintis.",
