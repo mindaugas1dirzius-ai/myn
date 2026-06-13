@@ -153,6 +153,7 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 - **Turinys:** trivijos+gamta 2 525 kl. (gamta 720 · sport 270 · body 255 ·
   history 244 · pop 243 · geo 240 · tech 177 · food 176 · **cosmos 200 ✅BAIGTA**) · 40 mitų ·
   (cosmos 200 = planets + astronauts + universe + rockets + spacerace, po 40, visi 10/lygiui) ·
+  **mythology 40 NAUJA** (greek potemė pilna; norse/egypt/creatures Greitai). Viso ~2 565.
   101 mįslė (pool 73 be citatų/patarlių; lygiai L1=15/L2=45/L3=35/**L4=6** —
   pildant pirmiausia L4 ir „klausimas" tipo 42) · **16 detektyvo bylų** (v2).
 - **Įrankiai functions/:** `_appcheck_fix.js` (App Check per API),
@@ -205,8 +206,14 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
      10/lygiui, atrakinti telefone. Mažų failų šablonas (cosmos<X>.ts + indeksas).
    - 🎨 DIZAINAS: kiekviena pradinio meniu tema turi SAVĄ spalvą (app_theme.dart
      theme* spalvos + theme_catalog accent) — savininkas: „negražu vienodos spalvos".
-   - ⏭️ LIKĘ #51 naujos temos: 🏺 Mitologija · 📏 Rekordai · 🏷️ Prekių ženklai ·
-     🚂 Transportas (tas pats receptas kaip Kosmosui; potemės TURINIO_PLANAS.md).
+   - ⏳ **🏺 MITOLOGIJA PRADĖTA (2026-06-13):** ATSKIRA tema (kodas `mythology`,
+     spalva epinė raudona). SAUGA: tik SENOVĖS mitai. ✅ ⚡ **Graikų/romėnų** potemė
+     PILNA (myt_gr_001–040, 10/lygiui; failas `mythologyGreek.ts`; adversariai
+     patikrinta 40/40 OK). ⬜ 🔨 Šiaurės · 🐫 Egiptas · 🐉 Būtybės — „Greitai", po 40.
+     Wiring kaip Kosmosui (triviaTypes+mythology, registry, subThemeConfig, unlock,
+     themeEmoji, theme_catalog kortelė, trivia_topic_screen, app_strings).
+   - ⏭️ LIKĘ #51 naujos temos: 📏 Rekordai · 🏷️ Prekių ženklai · 🚂 Transportas.
+   - ⏭️ PASKUI #50 / „3 BANGA": po ≥2 potemes esamoms temoms (TURINIO_PLANAS.md).
      Wiring: triviaTypes(+cosmos) · triviaRegistry(+move) · subThemeConfig(cosmos
      5 potemės, tech be space) · unlockConfig · themeEmoji(🌌) · theme_catalog ·
      trivia_topic_screen(tech be space kortelės, cosmos +spacerace) · app_strings.

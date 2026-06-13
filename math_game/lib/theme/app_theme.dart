@@ -38,6 +38,7 @@ class AppColors {
   static const Color themeBody = Color(0xFFFF6B6B); // koralinė
   static const Color themeCosmos = Color(0xFF6C5CE7); // indigo
   static const Color themeMyth = Color(0xFFE84DFF); // purpurinė
+  static const Color themeMythology = Color(0xFFC0392B); // epinė raudona
 
   // Būsenos
   static const Color correct = Color(0xFF2BD576); // teisinga (pulse)

@@ -52,14 +52,15 @@ export const DEFAULT_TOPIC: NatureTopic = "facts";
  *   "food"    — Maistas ir gėrimai;
  *   "sport"   — Sportas;
  *   "body"    — Žmogaus kūnas;
- *   "cosmos"  — Kosmosas (planetos, astronautai, visata, raketos; 2026-06-13).
+ *   "cosmos"  — Kosmosas (planetos, astronautai, visata, raketos; 2026-06-13);
+ *   "mythology" — Mitologija ir legendos (graikų/šiaurės/egipto; SENOVĖS mitai).
  *
  * Matematika, „Atspėk paslaptį" ir „Blitz" NĖRA trivija (atskiri varikliai),
  * todėl čia jų NĖRA.
  */
 export type TriviaCategory =
   | "nature" | "pop" | "geo" | "history"
-  | "tech" | "food" | "sport" | "body" | "cosmos";
+  | "tech" | "food" | "sport" | "body" | "cosmos" | "mythology";
 
 /** Vienos kalbos turinys: klausimas, teisingas, klaidingi variantai. */
 export interface LocalizedContent {

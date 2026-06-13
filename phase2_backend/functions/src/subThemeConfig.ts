@@ -120,6 +120,14 @@ export const TRIVIA_SUBTHEMES: Record<
     universe: ["universe"],
     rockets: ["rockets"],
   },
+  // Mitologija: 4 potemės (2026-06-13). SENOVĖS mitai/legendos.
+  //   ⚡ greek (graikų+romėnų, ĮGYVENDINTA) · 🔨 norse · 🐫 egypt · 🐉 creatures (Greitai).
+  mythology: {
+    greek: ["greek"],
+    norse: ["norse"],
+    egypt: ["egypt"],
+    creatures: ["creatures"],
+  },
 };
 
 /** Ar tema turi bent vieną potemę (klientui — rodyti potemių parinkiklį)? */

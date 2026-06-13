@@ -62,6 +62,9 @@ class AppStrings {
   String get categoryCosmos => _pick('Kosmosas', 'Space');
   String get categoryCosmosDesc =>
       _pick('Planetos, žvaigždės ir misijos', 'Planets, stars and missions');
+  String get categoryMythology => _pick('Mitologija', 'Mythology');
+  String get categoryMythologyDesc =>
+      _pick('Dievai, herojai ir legendos', 'Gods, heroes and legends');
   String get categoryBlitz => _pick('Blitz', 'Blitz');
   String get categoryBlitzDesc =>
       _pick('Taip ar ne — greičiui', 'Yes or no — beat the clock');
@@ -176,6 +179,19 @@ class AppStrings {
   String get subCosmosRockets => _pick('Raketos ir tyrimai', 'Rockets & exploration');
   String get subCosmosRocketsDesc =>
       _pick('Raketos, zondai, teleskopai', 'Rockets, probes, telescopes');
+  // Mitologija — potemės
+  String get subMythGreek => _pick('Graikų ir romėnų mitai', 'Greek & Roman myths');
+  String get subMythGreekDesc =>
+      _pick('Dzeusas, Olimpas, herojai, pabaisos', 'Zeus, Olympus, heroes, monsters');
+  String get subMythNorse => _pick('Šiaurės mitai', 'Norse myths');
+  String get subMythNorseDesc =>
+      _pick('Toras, Odinas, Valhala, milžinai', 'Thor, Odin, Valhalla, giants');
+  String get subMythEgypt => _pick('Egiptas ir Rytai', 'Egypt & the East');
+  String get subMythEgyptDesc =>
+      _pick('Anubis, Ra, dievai ir legendos', 'Anubis, Ra, gods and legends');
+  String get subMythCreatures => _pick('Būtybės ir legendos', 'Beasts & legends');
+  String get subMythCreaturesDesc =>
+      _pick('Drakonai, Atlantida, karalius Artūras', 'Dragons, Atlantis, King Arthur');
   // Žmogaus kūnas — potemės „protmūšio" stiliumi (įdomu, ne vadovėlis)
   String get subBodyBrain => _pick('Smegenų paslaptys', 'Brain secrets');
   String get subBodyBrainDesc =>

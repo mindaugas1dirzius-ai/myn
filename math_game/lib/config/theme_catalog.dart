@@ -162,6 +162,15 @@ final List<GameTheme> kThemes = <GameTheme>[
     subtitle: (s) => s.categoryCosmosDesc,
   ),
   GameTheme(
+    code: 'mythology',
+    emoji: '🏺',
+    accent: AppColors.themeMythology,
+    kind: ThemeKind.trivia,
+    open: true, // 🏺 Mitologija — nauja tema (2026-06-13), potemė „Graikai" pilna
+    title: (s) => s.categoryMythology,
+    subtitle: (s) => s.categoryMythologyDesc,
+  ),
+  GameTheme(
     code: 'blitz',
     emoji: '⚡',
     accent: AppColors.levelMedium,
