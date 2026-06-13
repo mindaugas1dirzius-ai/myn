@@ -63,7 +63,7 @@ final List<GameTheme> kThemes = <GameTheme>[
   GameTheme(
     code: 'math',
     emoji: '🧮',
-    accent: AppColors.levelEasy,
+    accent: AppColors.neonBlue,
     kind: ThemeKind.math,
     open: true,
     title: (s) => s.categoryMath,
@@ -72,7 +72,7 @@ final List<GameTheme> kThemes = <GameTheme>[
   GameTheme(
     code: 'nature',
     emoji: '🌿',
-    accent: AppColors.levelExtreme,
+    accent: AppColors.levelEasy,
     kind: ThemeKind.nature,
     open: true,
     title: (s) => s.categoryNature,
@@ -81,7 +81,7 @@ final List<GameTheme> kThemes = <GameTheme>[
   GameTheme(
     code: 'mystery',
     emoji: '🕵️',
-    accent: AppColors.neonBlue,
+    accent: AppColors.levelExtreme,
     kind: ThemeKind.mystery,
     open: true,
     title: (s) => s.lang == AppLang.lt ? 'Atspėk paslaptį' : 'Guess the Mystery',
@@ -101,7 +101,7 @@ final List<GameTheme> kThemes = <GameTheme>[
   GameTheme(
     code: 'geo',
     emoji: '🌍',
-    accent: AppColors.levelEasy,
+    accent: AppColors.themeGeo,
     kind: ThemeKind.trivia,
     open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categoryGeo,
@@ -110,7 +110,7 @@ final List<GameTheme> kThemes = <GameTheme>[
   GameTheme(
     code: 'history',
     emoji: '🏛️',
-    accent: AppColors.levelMedium,
+    accent: AppColors.themeHistory,
     kind: ThemeKind.trivia,
     open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categoryHistory,
@@ -119,7 +119,7 @@ final List<GameTheme> kThemes = <GameTheme>[
   GameTheme(
     code: 'tech',
     emoji: '🔬',
-    accent: AppColors.neonBlue,
+    accent: AppColors.themeTech,
     kind: ThemeKind.trivia,
     open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categoryTech,
@@ -128,7 +128,7 @@ final List<GameTheme> kThemes = <GameTheme>[
   GameTheme(
     code: 'food',
     emoji: '🍔',
-    accent: AppColors.levelHard,
+    accent: AppColors.themeFood,
     kind: ThemeKind.trivia,
     open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categoryFood,
@@ -137,7 +137,7 @@ final List<GameTheme> kThemes = <GameTheme>[
   GameTheme(
     code: 'sport',
     emoji: '⚽',
-    accent: AppColors.levelEasy,
+    accent: AppColors.themeSport,
     kind: ThemeKind.trivia,
     open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categorySport,
@@ -146,7 +146,7 @@ final List<GameTheme> kThemes = <GameTheme>[
   GameTheme(
     code: 'body',
     emoji: '🧠',
-    accent: AppColors.levelExtreme,
+    accent: AppColors.themeBody,
     kind: ThemeKind.trivia,
     open: true, // TESTAS (tik kūrime) — prieš paleidimą peržiūrėti
     title: (s) => s.categoryBody,
@@ -155,7 +155,7 @@ final List<GameTheme> kThemes = <GameTheme>[
   GameTheme(
     code: 'cosmos',
     emoji: '🌌',
-    accent: AppColors.levelExtreme,
+    accent: AppColors.themeCosmos,
     kind: ThemeKind.trivia,
     open: true, // 🌌 Kosmosas — nauja tema (2026-06-13), potemė „Planetos" pilna
     title: (s) => s.categoryCosmos,
@@ -173,7 +173,7 @@ final List<GameTheme> kThemes = <GameTheme>[
   GameTheme(
     code: 'myth',
     emoji: '🧐',
-    accent: AppColors.neonBlue,
+    accent: AppColors.themeMyth,
     kind: ThemeKind.myth,
     open: true, // 🧐 Tiesa ar mitas? VEIKIA (2026-06-12)
     title: (s) => s.categoryMyth,

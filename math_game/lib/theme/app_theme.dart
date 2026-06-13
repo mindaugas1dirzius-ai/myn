@@ -28,6 +28,17 @@ class AppColors {
   static const Color levelExtreme = Color(0xFFB14EFF); // ultravioletinė
   static const Color neonBlue = Color(0xFF00E5FF); // mix režimas
 
+  // --- Temų akcentai: kiekvienai pradinio meniu temai SAVA spalva (įvairovei).
+  // Naudojama TIK theme_catalog.dart kortelių rėmui/švytėjimui.
+  static const Color themeGeo = Color(0xFF1FE0C4); // turkis
+  static const Color themeHistory = Color(0xFFFFB23D); // gintaras
+  static const Color themeTech = Color(0xFF5B8CFF); // žydra
+  static const Color themeFood = Color(0xFFFF7A3D); // oranžinė
+  static const Color themeSport = Color(0xFF8DE63D); // laimo žalia
+  static const Color themeBody = Color(0xFFFF6B6B); // koralinė
+  static const Color themeCosmos = Color(0xFF6C5CE7); // indigo
+  static const Color themeMyth = Color(0xFFE84DFF); // purpurinė
+
   // Būsenos
   static const Color correct = Color(0xFF2BD576); // teisinga (pulse)
   static const Color wrong = Color(0xFFFF3B5C); // klaida (shake blyksnis)
