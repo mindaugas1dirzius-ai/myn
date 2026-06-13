@@ -153,7 +153,7 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 - **Turinys:** trivijos+gamta 2 525 kl. (gamta 720 · sport 270 · body 255 ·
   history 244 · pop 243 · geo 240 · tech 177 · food 176 · **cosmos 200 ✅BAIGTA**) · 40 mitų ·
   (cosmos 200 = planets + astronauts + universe + rockets + spacerace, po 40, visi 10/lygiui) ·
-  **mythology 120 NAUJA** (greek + norse + egypt pilnos; creatures Greitai). Viso ~2 645.
+  **mythology 160 ✅BAIGTA** (greek+norse+egypt+creatures po 40, visi 10/lygiui). Viso ~2 685.
   101 mįslė (pool 73 be citatų/patarlių; lygiai L1=15/L2=45/L3=35/**L4=6** —
   pildant pirmiausia L4 ir „klausimas" tipo 42) · **16 detektyvo bylų** (v2).
 - **Įrankiai functions/:** `_appcheck_fix.js` (App Check per API),
@@ -211,8 +211,10 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
      PILNA (myt_gr_001–040; mythologyGreek.ts; adversariai 40/40 OK). 🔨 **Šiaurės
      mitai** PILNA (myt_no_001–040; mythologyNorse.ts; Toras/Odinas/Ragnarokas;
      adversariai 40/40 OK). 🐫 **Egiptas ir Rytai** PILNA (myt_eg_001–040;
-     mythologyEgypt.ts; Egipto dievai + Mesopotamija; adversariai 38/40, 2 dviprasmybės
-     ištaisytos — Horas/Ra ir katė/Bastetė). ⬜ 🐉 Būtybės ir legendos — „Greitai", po 40.
+     mythologyEgypt.ts; Egipto dievai + Mesopotamija; adversariai 38/40, 2 ištaisytos).
+     🐉 **Būtybės ir legendos** PILNA (myt_cr_001–040; mythologyCreatures.ts; drakonai,
+     Artūras, Atlantida, kriptidai; adversariai 38/40, 2 ištaisytos — ghoul/skeletas,
+     sirenos/undinės). ✅ **MITOLOGIJA BAIGTA: 4 potemės × 40 = 160 kl.**
      Wiring kaip Kosmosui (triviaTypes+mythology, registry, subThemeConfig, unlock,
      themeEmoji, theme_catalog kortelė, trivia_topic_screen, app_strings).
    - ⏭️ LIKĘ #51 naujos temos: 📏 Rekordai · 🏷️ Prekių ženklai · 🚂 Transportas.
