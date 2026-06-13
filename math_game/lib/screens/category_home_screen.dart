@@ -66,20 +66,18 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  TextButton.icon(
+                  // „Profilis" užrašas pašalintas — žmogeliuko ikona visiems aiški.
+                  IconButton(
                     onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const ProfileScreen()),
                     ),
                     icon: const Icon(Icons.person,
-                        color: AppColors.textSecondary, size: 20),
-                    label: Text(s.profile,
-                        style: const TextStyle(
-                            color: AppColors.textSecondary,
-                            fontWeight: FontWeight.bold)),
+                        color: AppColors.textSecondary, size: 26),
+                    tooltip: s.profile,
                   ),
                   Image.asset(
                     'assets/images/logo.png',
-                    height: 52,
+                    height: 60,
                     fit: BoxFit.contain,
                   ),
                   TextButton.icon(
