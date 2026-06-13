@@ -162,6 +162,7 @@ KITO fakto (žemesnis lygis = plačiau žinomas; aukštesnis = obskurus/tikslūs
 5. **Jokių dublikatų** — nei to paties klausimo/fakto lygyje, nei TARP lygių, nei tarp
    potemių (rotacija per temą!). Tas pats objektas kitu faktu — OK.
 6. **Kultūrinis universalumas;** patarlės/citatos/posakiai — **NEKURIAMI NIEKADA**.
+7. **VARIANTŲ FORMA VIENODA + SUTAMPA SU KLAUSIMU (savininkas 2026-06-13, „linksniai nesutampa", rado žaisdamas):** visi 6 atsakymai TOS PAČIOS gramatinės formos IR atitinka klausimo linksnį. „Kam naudoja? → **Gaudyti** termitus" (bendratis, NE „Gaudytų"); „Kuo tampa? → instrumentalis"; jei vienas variantas vardininku — visi vardininku. Klausimas turi būti PAPRASTAS ir aiškus (supranti perskaitęs vieną kartą), be painių konstrukcijų ir be kabančių klausiamųjų žodelių (geriau aprašomoji forma).
 
 ---
 
