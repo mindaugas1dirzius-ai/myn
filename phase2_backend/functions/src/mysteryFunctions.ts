@@ -22,6 +22,7 @@ import { onCall, HttpsError } from "firebase-functions/v2/https";
 import * as admin from "firebase-admin";
 
 import { Lang } from "./triviaTypes";
+import { TESTING_UNLOCK_ALL } from "./gameConfig";
 import {
   MysteryItem,
   MysteryText,
@@ -175,7 +176,9 @@ export const startMystery = onCall(
     return await db.runTransaction(async (tx) => {
       const snap = await tx.get(userRef);
       const data = snap.data() ?? {};
-      const solvedIds: string[] = (data.mysterySolved as string[]) ?? [];
+      const solvedIds: string[] = TESTING_UNLOCK_ALL
+        ? []
+        : ((data.mysterySolved as string[]) ?? []);
       let state = data.mystery as MysteryState | undefined;
 
       let item = state ? findMystery(state.id) : undefined;
@@ -241,7 +244,9 @@ export const revealLetters = onCall(
       const snap = await tx.get(userRef);
       const data = snap.data() ?? {};
       const pending = (data.pendingMysteryLetters as number) ?? 0;
-      const solvedIds: string[] = (data.mysterySolved as string[]) ?? [];
+      const solvedIds: string[] = TESTING_UNLOCK_ALL
+        ? []
+        : ((data.mysterySolved as string[]) ?? []);
       let state = data.mystery as MysteryState | undefined;
       let item = state ? findMystery(state.id) : undefined;
       let content = item && state ? item.texts[state.lang] : undefined;
@@ -380,7 +385,9 @@ export const guessMystery = onCall(
       if (attemptsLeft <= 0) {
         // Bandymai išseko — paslaptis pralaimėta: atskleidžiam atsakymą ir
         // PARENKAM NAUJĄ paslaptį. Raktų balansas nepasikeičia (laimėjimo nėra).
-        const solvedIds: string[] = (data.mysterySolved as string[]) ?? [];
+        const solvedIds: string[] = TESTING_UNLOCK_ALL
+        ? []
+        : ((data.mysterySolved as string[]) ?? []);
         const picked =
           pickMystery(state.lang, [...solvedIds, state.id]) ??
           pickMystery(state.lang, solvedIds);
@@ -585,7 +592,9 @@ export const resetMystery = onCall(
     return await db.runTransaction(async (tx) => {
       const snap = await tx.get(userRef);
       const data = snap.data() ?? {};
-      const solvedIds: string[] = (data.mysterySolved as string[]) ?? [];
+      const solvedIds: string[] = TESTING_UNLOCK_ALL
+        ? []
+        : ((data.mysterySolved as string[]) ?? []);
       const current = data.mystery as MysteryState | undefined;
 
       const exclude = current ? [...solvedIds, current.id] : solvedIds;

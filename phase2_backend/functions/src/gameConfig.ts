@@ -48,6 +48,17 @@ export const ROTATION_KEEP = 150;
  *  abiejuose. Langas dengia net didžiausią temą (gamta ~720). */
 export const ROTATION_KEEP_CAT = 800;
 
+/**
+ * 🧪 TESTAVIMO JUNGIKLIS (savininkas 2026-06-13: „testavime noriu žaisti VISKĄ, visur").
+ * true = nuima VISUS žaidimo blokus, kad savininkas galėtų žaisti be ribų:
+ *   • matematikos užrakintus lygius (mix/brackets/algebra — be paketų/premium);
+ *   • „Atspėk paslaptį" — leidžia kartoti jau išspręstas paslaptis (jokio „Paslapčių dar nėra");
+ *   • Detektyvą — ignoruoja išspręstas bylas IR dienos nemokamų bylų limitą.
+ * ⚠️ PRIEŠ GOOGLE PLAY BŪTINA GRĄŽINTI Į false (kitaip viskas nemokama/be ribų).
+ * (Trivija/Blitz/Mitai blokų neturi — jie patys recikliuoja klausimus.)
+ */
+export const TESTING_UNLOCK_ALL = true;
+
 /** Matematikos šeimos (jų rotacija lieka per režimą — klausimai generuojami). */
 export const MATH_FAMILIES = new Set([
   "add", "sub", "mul", "div", "mix", "brackets", "algebra",

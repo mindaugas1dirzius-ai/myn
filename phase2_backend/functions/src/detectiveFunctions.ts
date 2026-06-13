@@ -18,6 +18,7 @@ import { onCall, HttpsError } from "firebase-functions/v2/https";
 import * as admin from "firebase-admin";
 
 import { Lang } from "./triviaTypes";
+import { TESTING_UNLOCK_ALL } from "./gameConfig";
 import {
   buildMask,
   buildPool,
@@ -248,7 +249,7 @@ export const startDetective = onCall(
       const premium = isPremium(data);
       const sameDay = (data.detectiveDate as string) === today;
       const count = sameDay ? ((data.detectiveCount as number) ?? 0) : 0;
-      if (!premium && count >= DETECTIVE_FREE_PER_DAY) {
+      if (!premium && count >= DETECTIVE_FREE_PER_DAY && !TESTING_UNLOCK_ALL) {
         throw new HttpsError(
           "resource-exhausted",
           "Šiandienos nemokamos bylos baigtos — grįžk rytoj!"
@@ -257,7 +258,10 @@ export const startDetective = onCall(
 
       // DU ATSKIRI ŽAIDIMAI: 2 — 🕵️ lenta (tik bylos su board) · 1 — ✍️ PRO.
       const requireBoard = wantVariant === 2;
-      const solvedIds: string[] = (data.detectiveSolved as string[]) ?? [];
+      // TESTING_UNLOCK_ALL: ignoruojam išspręstas bylas — galima kartoti visas.
+      const solvedIds: string[] = TESTING_UNLOCK_ALL
+        ? []
+        : ((data.detectiveSolved as string[]) ?? []);
       const picked = pickDetectiveCase(lang, level, solvedIds, requireBoard);
       if (!picked) {
         throw new HttpsError(

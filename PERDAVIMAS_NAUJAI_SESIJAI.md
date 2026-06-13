@@ -35,6 +35,13 @@
 
 ## 2. KAIP KURIAM KLAUSIMUS (metodika — privaloma kiekvienai partijai)
 
+> **🟥 AUKSO TAISYKLĖ (savininkas kartoja NUOLAT — niekada nepažeisti):**
+> 1. **TOBULAS vertimas** — klausimas vienodai aiškus ir natūralus LT IR EN kalbėtojams; JOKIŲ stiliaus ar kultūrinių nesusipratimų (perfrazuok pagal kultūrą, ne pažodžiui).
+> 2. **JOKIO jautraus/nešvaraus turinio:** jokios politikos, religijos/tikėjimo, rasės, tautinių/sienų ginčų, **narkotikų, alkoholio, vaistų-kaip-svaigalų**, smurto, sekso, keiksmų, nešvarių ar dviprasmiškų užuominų. Nieko, kas KĄ NORS įžeistų bet kurioje šalyje.
+> 3. **GARANTUOTAS šaltinis:** tik patikimi, neginčijami faktai (enciklopedijos, oficialios institucijos). Neaiškus/nepatvirtintas/„gandų" faktas — NERAŠOMAS. Abejoji — meti.
+> 4. **NAUJAUSIA info — turinys negali būti senas:** „aukščiausias/brangiausias/greičiausias/priklauso/čempionas" ir pan. web-PATIKRINTI, ar dar galioja (pvz. Unilever ledai 2025-12 atskirti). Rinktis STABILIUS faktus arba tikrinti naujausią informaciją kiekvienai partijai.
+> Ši taisyklė tikrinama abiejose QC bangose (§3) IR mano kritinėje peržiūroje prieš deploy.
+
 **Procesas:** idėja (galvok PLAČIAI — potemės pavadinimas ≠ riba; ieškok „oho" faktų iš gyvenimo) → faktą patikrini patikimuose šaltiniuose → sukomplektuoji (1 teisingas + 5 distraktoriai + paaiškinimas KODĖL + emoji + `sourceVerified` + `subTheme` + `level`) → LT+EN iškart (natūraliai, NE pažodžiui) → validacija → faktų patikra → stiliaus patikra → deploy.
 
 **🧰 DRAFT'INIMO METODAS (savininko valia 2026-06-13):** klausimų JUODRAŠČIUS generuoja **Sonnet 4.6 per `Workflow`** (po 1 agentą potemei = 4 agentai temai, su web paieška ir VISAIS šio §2 reikalavimais prompto), o **Opus (pagrindinė sesija) TIK tikrina, taiso, daro 2 QC bangas ir deploy'ina** — taip taupom Opus/plano limitus. ⚠️ Brands partija (2026-06-13) parašyta PAČIO Opus, nes ankstesnis perdavimas teigė, kad Sonnet workflow pakibo; PATIKRINTA — nauja sesija workflow'us sukioja be pakibimo (36 agentų QC suveikė), tad NUO 🚂 Transporto grąžinam Sonnet-juodraščių metodą. Jei Sonnet workflow vis dėlto pakibtų — krentam atgal į Opus rašymą.
@@ -188,7 +195,9 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 
 **Įrankiai `functions/` (untracked):** `validateContent.js`, `_audit_len.js`, `_fix_len.js`, `_appcheck_fix.js`, `_gap.js` (tema×potemė×lygis), `_checkcosmos.js` ir kt.
 
-**⚠️ Testo būsenos (PRIEŠ Play sutvarkyti):** `DETECTIVE_FREE_PER_DAY=999`→3; AdMob TEST ID→realūs (tik kai Play testavime); visos temos `open:true`; release APK R8; App Check debug→playIntegrity.
+**⚠️ Testo būsenos (PRIEŠ Play sutvarkyti):** **`TESTING_UNLOCK_ALL=true` (gameConfig.ts) → false** (nuima VISUS blokus: matematikos užraktą, „Atspėk paslaptį" išspręstas, Detektyvo išspręstas bylas + dienos limitą — kad savininkas testuose žaistų viską be ribų); `DETECTIVE_FREE_PER_DAY=999`→3; AdMob TEST ID→realūs (tik kai Play testavime); visos temos `open:true`; release APK R8; App Check debug→playIntegrity.
+- 🧪 **„Viska praeita / neina žaisti" KLAIDA ištaisyta 2026-06-13:** priežastis NE Blitz/Mitai (jie patys recikliuoja klausimus per `takeSome`), o IŠSPRĘSTŲ sekimas — „Atspėk paslaptį" (visas paslaptis išsprendus → „Paslapčių dar nėra") ir Detektyvas (visas bylas išsprendus + dienos limitas). Sprendimas: `TESTING_UNLOCK_ALL` jungiklis (`gameConfig.ts`), pritaikytas `index.ts` (math), `detectiveFunctions.ts`, `mysteryFunctions.ts`. Tik serveris — APK neliestas.
+- 🛡️ **Saugos turinio pataisymai (savininkas 2026-06-13: jokių narkotikų/religijos/nešvaraus):** brands 3 klausimai pakeisti — 7Up „litis"(vaistas)→Skittles; Quaker Oats(religija)→kas nupirko McDonald's; Canon „budizmas"(religija)→Cisco vardas iš San Francisko. Palikta tik SENOVĖS mitologija (Nike/Maserati/Mazda) — tas pats lygmuo kaip patvirtinta Mitologijos tema. Taisyklė įrašyta §2 „AUKSO TAISYKLĖ".
 
 ---
 

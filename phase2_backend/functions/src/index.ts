@@ -29,6 +29,7 @@ import {
   MATH_FAMILIES,
   QUIZ_WRONG_PENALTY,
   QUIZ_REWARD_MIN_CORRECT,
+  TESTING_UNLOCK_ALL,
 } from "./gameConfig";
 import { mergeRecent } from "./triviaEngine";
 import {
@@ -93,7 +94,8 @@ export const startGame = onCall(
     // Užrakintas lygis žaidžiamas TIK jei turi paketą (playPacks[mode] > 0)
     // arba aktyvią premium prenumeratą (Etapas B). Greita patikra prieš
     // generuojant klausimus — kad serveris nedirbtų be reikalo.
-    const locked = isLockedByDefault(family, level);
+    // TESTING_UNLOCK_ALL: testavime užrakinti lygiai žaidžiami be paketų.
+    const locked = isLockedByDefault(family, level) && !TESTING_UNLOCK_ALL;
     const isPremium = ((userData.premiumUntil as number) ?? 0) > Date.now();
     if (locked && !isPremium) {
       const packs = (userData.playPacks as Record<string, number>) ?? {};
