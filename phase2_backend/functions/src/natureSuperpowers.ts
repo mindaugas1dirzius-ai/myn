@@ -267,13 +267,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "💥",
     translations: {
       en: {
-        question: "The mantis shrimp is famous for an incredibly powerful what?",
+        question: "The mantis shrimp is famous for one incredibly powerful…",
         correct: "Punch",
         distractors: ["Bite", "Sting", "Kick", "Grip", "Squeeze"],
         explanation: "Its club-like arms hit so fast they can crack a crab's shell.",
       },
       lt: {
-        question: "Kuo neįtikėtinai galingu garsus mantišrimpas (rievžegė)?",
+        question: "Mantišrimpas (rievžegė) garsėja neįtikėtinai galingu…",
         correct: "Smūgiu",
         distractors: ["Įkandimu", "Gėlimu", "Spyriu", "Gniaužtu", "Suspaudimu"],
         explanation: "Jo lazdiškos letenos smogia taip greitai, kad sutrupina krabo kiautą.",

@@ -255,6 +255,31 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     },
   },
 
+  {
+    id: "nat_min_043",
+    category: "nature",
+    subTheme: "minds",
+    topic: "minds",
+    level: "lengvas",
+    isTrap: false,
+    sourceVerified: "Briefer et al. 2014, Frontiers in Zoology - goats remember a puzzle ~10 months",
+    emoji: "🐐",
+    translations: {
+      en: {
+        question: "How long can a goat remember how to solve a puzzle?",
+        correct: "For several years",
+        distractors: ["For just one day", "For about a week", "For one month", "Only a few minutes", "Only until evening"],
+        explanation: "Goats solved a fruit-box puzzle just as fast even after a 10-month break — strong long-term memory.",
+      },
+      lt: {
+        question: "Kiek laiko ožka atsimena, kaip išspręsti galvosūkį?",
+        correct: "Kelerius metus",
+        distractors: ["Tik vieną dieną", "Maždaug savaitę", "Tik vieną mėnesį", "Vos kelias minutes", "Tik iki vakaro"],
+        explanation: "Ožkos vaisių dėžutės galvosūkį po 10 mėnesių pertraukos išsprendė taip pat greitai — stipri ilgalaikė atmintis.",
+      },
+    },
+  },
+
   // ===================== VIDUTINIS (12–18 m. paauglys) =====================
   {
     id: "nat_min_011",
@@ -522,6 +547,81 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     },
   },
 
+  {
+    id: "nat_min_044",
+    category: "nature",
+    subTheme: "minds",
+    topic: "minds",
+    level: "vidutinis",
+    isTrap: false,
+    sourceVerified: "Schuster et al., Current Biology - archerfish predict prey landing point",
+    emoji: "💦",
+    translations: {
+      en: {
+        question: "The water-spitting archerfish calculates in advance mainly…",
+        correct: "The insect's landing spot",
+        distractors: ["The river current speed", "The shadow length", "The predator size", "The light bending angle", "The leaf thickness"],
+        explanation: "It doesn't just aim — it predicts where the knocked-down insect will land and darts there in milliseconds.",
+      },
+      lt: {
+        question: "Vandenį spjaudanti žuvis šaulys iš anksto apskaičiuoja…",
+        correct: "Vabzdžio kritimo vietą",
+        distractors: ["Upės srovės greitį", "Šešėlio ilgį", "Plėšrūno dydį", "Šviesos lūžio kampą", "Lapo storį"],
+        explanation: "Ji ne šiaip taikosi — apskaičiuoja, kur nukris numuštas vabzdys, ir per milisekundes plaukia į tą vietą.",
+      },
+    },
+  },
+
+  {
+    id: "nat_min_045",
+    category: "nature",
+    subTheme: "minds",
+    topic: "minds",
+    level: "vidutinis",
+    isTrap: false,
+    sourceVerified: "Meyer & Gunturkun 2017 - pigeons switch tasks as fast as humans",
+    emoji: "🐦",
+    translations: {
+      en: {
+        question: "Pigeons can switch between two tasks about as fast as…",
+        correct: "Humans",
+        distractors: ["Chimpanzees", "Dolphins", "Dogs", "Crows", "Robots"],
+        explanation: "Thanks to densely packed neurons, pigeons match — and sometimes beat — humans at switching between tasks.",
+      },
+      lt: {
+        question: "Tarp dviejų užduočių balandžiai persijungia maždaug taip greitai kaip…",
+        correct: "Žmonės",
+        distractors: ["Šimpanzės", "Delfinai", "Šunys", "Varnos", "Robotai"],
+        explanation: "Dėl tankiai išsidėsčiusių neuronų balandžiai persijungia tarp užduočių ne lėčiau, kartais net greičiau nei žmonės.",
+      },
+    },
+  },
+
+  {
+    id: "nat_min_046",
+    category: "nature",
+    subTheme: "minds",
+    topic: "minds",
+    level: "vidutinis",
+    isTrap: false,
+    sourceVerified: "Vacancy chains in hermit crabs - behavioural ecology",
+    emoji: "🐚",
+    translations: {
+      en: {
+        question: "How do hermit crabs solve a shortage of empty shells?",
+        correct: "They line up to swap shells",
+        distractors: ["They fight until one dies", "They build shells from sand", "They share one shell in pairs", "They steal from living snails", "They hide under leaves"],
+        explanation: "They queue from biggest to smallest, so each crab takes the shell left by the one ahead — a vacancy chain.",
+      },
+      lt: {
+        question: "Kaip vėžiai atsiskyrėliai sprendžia tuščių kiautų trūkumą?",
+        correct: "Sustoja į mainų eilę",
+        distractors: ["Kaunasi, kol vienas žūsta", "Pasidaro kiautą iš smėlio", "Po du gyvena viename", "Vagia iš gyvų sraigių", "Slepiasi po lapais"],
+        explanation: "Jie sustoja nuo didžiausio iki mažiausio, kad kiekvienas užimtų priekyje esančio paliktą kiautą — tvarkinga grandinė.",
+      },
+    },
+  },
+
   // ===================== SUNKUS (suaugęs, kuris domisi) =====================
   {
     id: "nat_min_021",
@@ -760,6 +860,81 @@ export const NATURE_MINDS: TriviaQuestion[] = [
         correct: "Nelygaus atlygio",
         distractors: ["Viso maisto", "Vandens", "Žaislų", "Miego", "Draugijos"],
         explanation: "Jei partneris už tą patį darbą gauna skanesnį skanėstą, jie protestuoja ir atsisako.",
+      },
+    },
+  },
+
+  {
+    id: "nat_min_047",
+    category: "nature",
+    subTheme: "minds",
+    topic: "minds",
+    level: "sunkus",
+    isTrap: false,
+    sourceVerified: "King, Soltis et al. - elephants have a specific alarm rumble for humans",
+    emoji: "🐘",
+    translations: {
+      en: {
+        question: "Elephants have a special low rumble that warns specifically about…",
+        correct: "Approaching humans",
+        distractors: ["A coming forest fire", "Nearby adult lions", "A heavy rainstorm", "A deep mud pit", "A venomous snake"],
+        explanation: "Researchers found a distinct rumble that means 'human' and makes the herd move away.",
+      },
+      lt: {
+        question: "Specialus žemas dramblių dundesys perspėja būtent apie…",
+        correct: "Artėjančius žmones",
+        distractors: ["Kylantį miško gaisrą", "Netoliese liūtus", "Stiprią liūtį", "Gilią purvo duobę", "Nuodingą gyvatę"],
+        explanation: "Tyrėjai aptiko atskirą dundesį, reiškiantį būtent žmogų — jį išgirdusi banda traukiasi tolyn.",
+      },
+    },
+  },
+
+  {
+    id: "nat_min_048",
+    category: "nature",
+    subTheme: "minds",
+    topic: "minds",
+    level: "sunkus",
+    isTrap: false,
+    sourceVerified: "Minta et al., Journal of Mammalogy - badger-coyote cooperative hunting",
+    emoji: "🦡",
+    translations: {
+      en: {
+        question: "The American badger often teams up to hunt with…",
+        correct: "Coyotes",
+        distractors: ["Golden eagles", "Rattlesnakes", "Grizzly bears", "Red foxes", "Wild turkeys"],
+        explanation: "Coyotes chase ground squirrels above ground while badgers dig them out — together they catch far more.",
+      },
+      lt: {
+        question: "Amerikinis barsukas neretai medžioja poroje su…",
+        correct: "Kojotais",
+        distractors: ["Kilniaisiais ereliais", "Barškuolėmis", "Lokiais grizliais", "Rudosiomis lapėmis", "Laukiniais kalakutais"],
+        explanation: "Kojotas gaudo dirvines voveres ant žemės, o barsukas iškasa pasislėpusias — kartu pagauna kur kas daugiau.",
+      },
+    },
+  },
+
+  {
+    id: "nat_min_049",
+    category: "nature",
+    subTheme: "minds",
+    topic: "minds",
+    level: "sunkus",
+    isTrap: false,
+    sourceVerified: "Bshary - cleaner wrasse tactical cheating of client fish",
+    emoji: "🐠",
+    translations: {
+      en: {
+        question: "How do cleaner fish sometimes cheat their big clients?",
+        correct: "They bite mucus when unwatched",
+        distractors: ["They change colour to hide", "They pretend to be dead", "They swim into the gills", "They lead them onto rocks", "They steal their eggs"],
+        explanation: "Cleaners prefer tasty client mucus over parasites, so they sneak a bite when the big fish isn't watching.",
+      },
+      lt: {
+        question: "Kaip žuvys valytojos kartais apgaudinėja stambius klientus?",
+        correct: "Kanda gleives, kai šie nemato",
+        distractors: ["Pakeičia spalvą ir slepiasi", "Apsimeta nugaišusios", "Įplaukia į žiaunas", "Nuveda prie aštrių uolų", "Vagia jų ikrus"],
+        explanation: "Valytojos labiau mėgsta skanias kliento gleives nei parazitus, tad kanda slapčia, kai didžioji žuvis nežiūri.",
       },
     },
   },
@@ -1026,6 +1201,56 @@ export const NATURE_MINDS: TriviaQuestion[] = [
         correct: "Popierinė vapsva",
         distractors: ["Naminė bitė", "Lapkirpė skruzdėlė", "Monarchas drugelis", "Vokiškoji vapsva", "Maldininkas"],
         explanation: "Popierinės vapsvos pagal unikalius veido raštus atpažįsta lizdo nares ir seka hierarchiją.",
+      },
+    },
+  },
+
+  {
+    id: "nat_min_050",
+    category: "nature",
+    subTheme: "minds",
+    topic: "minds",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Schwarz et al. - wood ants navigate backward using celestial and visual cues",
+    emoji: "🐜",
+    translations: {
+      en: {
+        question: "Dragging food backward, wood ants still find their way by…",
+        correct: "The sun and landmarks",
+        distractors: ["Only a scent trail", "Counting their steps", "Magnetic field lines", "Dropping leaf bits", "The wind direction only"],
+        explanation: "Even walking backward they pause, glance at the sky and surroundings, and keep their heading.",
+      },
+      lt: {
+        question: "Vilkdamos grobį atbulomis, miško skruzdėlės kelią randa pagal…",
+        correct: "Saulę ir orientyrus",
+        distractors: ["Tik kvapų taką", "Suskaičiuotus žingsnius", "Magnetinio lauko linijas", "Numestus lapų gabaliukus", "Tik vėjo kryptį"],
+        explanation: "Net eidamos atbulomis jos stabteli, dirsteli į dangų bei aplinką ir išlaiko teisingą kryptį.",
+      },
+    },
+  },
+
+  {
+    id: "nat_min_051",
+    category: "nature",
+    subTheme: "minds",
+    topic: "minds",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Mariette & Buchanan 2016, Science - zebra finch heat calls to eggs",
+    emoji: "🥚",
+    translations: {
+      en: {
+        question: "How do zebra finch parents warn their eggs about heat?",
+        correct: "By singing a special song",
+        distractors: ["By tapping on the shell", "By rolling the eggs", "By bringing wet moss", "By ruffling their feathers", "They cannot warn the eggs"],
+        explanation: "On hot days parents sing a special call; the embryo then adjusts its growth to cope better with the heat.",
+      },
+      lt: {
+        question: "Kaip zebrinių amadinų tėvai perspėja kiaušinius apie karštį?",
+        correct: "Giedodami specialią giesmę",
+        distractors: ["Belsdami į lukštą", "Vartydami kiaušinius", "Atnešdami drėgnų samanų", "Pašiaušdami plunksnas", "Niekaip — negali perspėti"],
+        explanation: "Karštą dieną tėvai gieda ypatingą giesmę — ją išgirdęs embrionas pakoreguoja augimą, kad geriau pakeltų karštį.",
       },
     },
   },
