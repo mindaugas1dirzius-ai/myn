@@ -182,7 +182,7 @@ export const RECORDS_HUMAN: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Guinness — record holders grow extremely long fingernails",
-    emoji: "💅",
+    emoji: "🧍",
     translations: {
       en: {
         question: "Which body part do some record holders grow incredibly long?",
@@ -205,7 +205,7 @@ export const RECORDS_HUMAN: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Competitive eating — hot-dog eating contests set records",
-    emoji: "🌭",
+    emoji: "⏱️",
     translations: {
       en: {
         question: "In which contest do people set records for how much they can eat fast?",
@@ -253,7 +253,7 @@ export const RECORDS_HUMAN: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Athletics — Usain Bolt holds the men's 100 m world record",
-    emoji: "⚡",
+    emoji: "🏃",
     translations: {
       en: {
         question: "Who holds the men's 100 m world record of 9.58 seconds?",
@@ -437,7 +437,7 @@ export const RECORDS_HUMAN: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Guinness — Robert Wadlow needed huge custom shoes",
-    emoji: "👞",
+    emoji: "📏",
     translations: {
       en: {
         question: "Because of his record height, Robert Wadlow needed huge custom-made...?",
@@ -485,7 +485,7 @@ export const RECORDS_HUMAN: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Olympics — Michael Phelps won a record 23 gold medals",
-    emoji: "🏊",
+    emoji: "🥇",
     translations: {
       en: {
         question: "Who won a record 23 Olympic gold medals?",
@@ -554,7 +554,7 @@ export const RECORDS_HUMAN: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Endurance — Wim Hof set records in extreme cold",
-    emoji: "❄️",
+    emoji: "💪",
     translations: {
       en: {
         question: "Wim Hof set many records by enduring extreme...?",
@@ -692,7 +692,7 @@ export const RECORDS_HUMAN: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Athletics — Armand Duplantis is the pole vault record star",
-    emoji: "🤸",
+    emoji: "🏟️",
     translations: {
       en: {
         question: "In which event does record-breaker Armand Duplantis compete?",
@@ -763,7 +763,7 @@ export const RECORDS_HUMAN: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Guinness — Jeanne Calment was from France",
-    emoji: "🇫🇷",
+    emoji: "🌍",
     translations: {
       en: {
         question: "In which country did the oldest person ever, Jeanne Calment, live?",
@@ -832,7 +832,7 @@ export const RECORDS_HUMAN: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Olympics — Michael Phelps's record was in swimming",
-    emoji: "🏊",
+    emoji: "🏅",
     translations: {
       en: {
         question: "In which sport did Michael Phelps win his record 23 gold medals?",
@@ -855,7 +855,7 @@ export const RECORDS_HUMAN: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Endurance — Wim Hof's nickname is 'The Iceman'",
-    emoji: "🧊",
+    emoji: "🏆",
     translations: {
       en: {
         question: "What is the nickname of cold-endurance record holder Wim Hof?",

@@ -278,7 +278,7 @@ export const RECORDS_WORLD: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: true,
     sourceVerified: "Geography — Antarctica is the largest desert overall (cold desert)",
-    emoji: "❄️",
+    emoji: "🏜️",
     translations: {
       en: {
         question: "What is the largest desert of any kind on Earth?",
@@ -347,7 +347,7 @@ export const RECORDS_WORLD: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "History — the Great Pyramid of Giza is the only surviving ancient wonder",
-    emoji: "🔺",
+    emoji: "🏺",
     translations: {
       en: {
         question: "Which ancient wonder of the world is the only one still standing?",
@@ -393,7 +393,7 @@ export const RECORDS_WORLD: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: true,
     sourceVerified: "Geography — Mauna Kea is tallest from base to peak (~10,210 m)",
-    emoji: "🌋",
+    emoji: "🏔️",
     translations: {
       en: {
         question: "Measured from its base, which is the tallest mountain on Earth?",
@@ -602,7 +602,7 @@ export const RECORDS_WORLD: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Geography — the Atacama Desert is in Chile",
-    emoji: "🇨🇱",
+    emoji: "🏜️",
     translations: {
       en: {
         question: "In which country is the Atacama, the driest desert?",
@@ -625,7 +625,7 @@ export const RECORDS_WORLD: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Geography — Greenland is an autonomous territory of Denmark",
-    emoji: "🇩🇰",
+    emoji: "🏝️",
     translations: {
       en: {
         question: "The largest island, Greenland, belongs to which country?",
@@ -671,7 +671,7 @@ export const RECORDS_WORLD: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Geography — the Dead Sea shore is the lowest dry land on Earth",
-    emoji: "🧂",
+    emoji: "🗺️",
     translations: {
       en: {
         question: "Which place is the lowest dry land on Earth?",
@@ -742,7 +742,7 @@ export const RECORDS_WORLD: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Meteorology — lowest natural temperature -89.2 °C (Vostok, 1983)",
-    emoji: "❄️",
+    emoji: "🌡️",
     translations: {
       en: {
         question: "What is the lowest natural air temperature ever recorded?",
@@ -880,7 +880,7 @@ export const RECORDS_WORLD: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: true,
     sourceVerified: "Geography — the mid-ocean ridge is the longest mountain range overall",
-    emoji: "🌊",
+    emoji: "🏔️",
     translations: {
       en: {
         question: "Including underwater, which is the longest mountain range on Earth?",
