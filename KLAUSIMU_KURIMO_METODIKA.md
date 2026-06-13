@@ -190,6 +190,16 @@ klausimo žodį į PRIEKĮ.**
 - ❌ „…delfinai rodo metapažinimą — kada jie **ką**?"
 - ✅ „**Ką** tiksliai pajunta delfinai, rodydami metapažinimą?"
 
+**🚨 SPĄSTAS #1b — MONOTONIŠKAS „KURIS…?" (savininkas 2026-06-13: „nervina, neprofesionalu"):**
+NEPRADĖK kiekvieno klausimo „Kuris/Kuri…?". ĮVAIRUOK pradžias ir, kur tinka, naudok
+**APRAŠOMĄJĄ (kabliuko) formą be klaustuko** — daug profesionaliau:
+- ❌ „Kuris vabzdys naktį gali sukurti savo švytinčią šviesą?"
+- ✅ „Vabzdys, naktį sukuriantis savo švytinčią šviesą" (atsakymas užbaigia mintį; klaustuko nereikia)
+- ✅ kiti variantai: „Šis gyvūnas ginasi bjauraus kvapo purslu", „Naktį medžioja pagal garso aidą…",
+  „Koks…?", „Ką…?" — kad partijoje pradžios būtų ĮVAIROS, ne vienodos.
+Skaičiams/kitiems, kur aprašomoji forma nelimpa — bent keisk pradžios žodį (ne visada „Kuris").
+Taikyti IR LT, IR EN (EN: „The insect that…" vietoj nuolatinio „Which…?"). Tikslas — ĮVAIROVĖ.
+
 **🚨 SPĄSTAS #2 — VIDINĖS KABUTĖS (sugriauna `tsc` build'ą!):**
 LT tekste **VENK vidinių kabučių VISAI** (perfrazuok). Jei naudoji ASCII `"` viduje — ji
 nutraukia JS string'ą → klaidų kaskada. (Jei BŪTINA — tik U+201E „atidaro / U+201D " uždaro,

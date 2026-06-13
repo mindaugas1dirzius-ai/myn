@@ -10,14 +10,16 @@
 
 ## 🚀 NUO KO PRADĖTI (naujai sesijai — PERSKAITYK PIRMA)
 
-- **Naujausias commit:** `669c5cb`, branch `claude/android-app-monetization-ads-RORMZ`. Prieš dirbant: `git fetch` + tikrink ahead/behind (viena sesija ant repo!).
+- **Branch:** `claude/android-app-monetization-ads-RORMZ`. Prieš dirbant: `git fetch` → `git log --oneline -1` (naujausias commit) → tikrink ahead/behind (⚠️ VIENA sesija ant repo vienu metu!).
 - **📘 KLAUSIMŲ KŪRIMO METODIKA — atskiras PILNAS dokumentas: `KLAUSIMU_KURIMO_METODIKA.md`** (kaip/kokius klausimus ieškom pagal potemes, šaltiniai, reikalavimai, formatas, emoji, LT spąstai, QC bangos, recipe'ai, checklist). **SKAITYK jį prieš rašydamas bet kokią partiją.**
 - **KAS PADARYTA (turinys):** ✅ 2 BANGA (visos naujos temos) BAIGTA — 🏷️ brands + 🚂 transport (po 160). ✅ 3 BANGA PRADĖTA — 🌿 Gamta: 🧬 Supergalios + 🧠 Gyvūnų protas (po 40 = 10/lygiui).
 - **KAS TOLIAU (eilės tvarka):**
-  1. **Daugiau 3 bangos potemių** (starteris po 10/lygiui=40). PIRMA pasiūlyk įdomias PLAČIAS potemes (METODIKA §3) → savininkas pasirenka → rašyk. Recipe: METODIKA §14 (⚠️ Gamta = §14B, skiriasi!). Kandidatai: §11 B + TURINIO_PLANAS „3 BANGA".
-  2. **Pildyti esamas potemes iki 150/lygiui** (=600 potemei) — galutinis kiekio tikslas.
-  3. **„⚠️ Pranešti apie klaidą" mygtukas** (BŪTINAS feature, §11 C) — kai savininkas pasakys daryti.
-  4. Šlifavimas iki Google Play (§11 C).
+  1. **🔤 KLAUSIMŲ STILIUS — perfrazuoti (savininkas patvirtino 2026-06-13):** NEpradėti klausimų monotonišku „Kuris…?"; naudoti ĮVAIRIAS pradžias + APRAŠOMĄJĄ (kabliuko) formą be klaustuko (METODIKA §10 „SPĄSTAS #1b"). Pvz. „Kuris vabzdys naktį sukuria švytinčią šviesą?" → „Vabzdys, naktį sukuriantis savo švytinčią šviesą". **Pradėti nuo 2 naujų Gamtos potemių** (Supergalios+Protas, kurias savininkas testuoja), tada PALAIPSNIUI kitos temos per fix-`Workflow` (1 agentas/failui). VISI NAUJI klausimai — iškart šiuo stiliumi. ⚠️ NEpridaryti atvirkščiai (kabantis žodis gale — irgi blogai); tikslas ĮVAIROVĖ. Po keitimo: validacija+ilgio kvapas+deploy.
+  2. **Daugiau 3 bangos potemių** (starteris po 10/lygiui=40). PIRMA pasiūlyk įdomias PLAČIAS potemes (METODIKA §3) → savininkas pasirenka → rašyk. Recipe: METODIKA §14 (⚠️ Gamta = §14B, skiriasi!). Kandidatai: §11 B + TURINIO_PLANAS „3 BANGA".
+  3. **Pildyti esamas potemes iki 150/lygiui** (=600 potemei) — galutinis kiekio tikslas.
+  4. **„⚠️ Pranešti apie klaidą" mygtukas** (BŪTINAS feature, §11 C) — kai savininkas pasakys daryti.
+  5. **🕵️ Detektyvas v2** — laukia savininko testo telefone (§11 B); paklausk savininko, ar jau testavo.
+  6. Šlifavimas iki Google Play (§11 C).
 - **KAIP DIRBTI:** pilna autonomija aptartiems darbams; **NEAIŠKU (ypač dizainas/išdėstymas) → KLAUSK, nespėliok** (§1). Klausimus **Opus rašo PATS** (ne Sonnet — METODIKA §13). Ciklas: parašai → patikra (tsc+validacija+ilgio kvapas) → **2 QC bangos** (faktai+stilius) → pataisos → deploy → APK (jei keitei Dart) → įdiegti → commit+push → **pildyk šį dokumentą** → pranešk savininkui LT, ką tikrinti.
 - **⏳ LAUKIA SAVININKO SPRENDIMO:** ar vėliau suvienodinti Gamtos kodą su kitomis temomis (`NatureTopic`+`startNatureGame` paveldas; žaidėjui jokio skirtumo; neskubu).
 
