@@ -34,6 +34,7 @@ const THEME_FALLBACK: Record<TriviaCategory, string> = {
   mythology: "🏛️",
   records: "🏆",
   brands: "🏷️",
+  transport: "🚂",
 };
 
 export function themeFallback(category: TriviaCategory): string {

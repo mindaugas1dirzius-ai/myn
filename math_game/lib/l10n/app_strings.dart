@@ -71,6 +71,9 @@ class AppStrings {
   String get categoryBrands => _pick('Prekių ženklai', 'Brands');
   String get categoryBrandsDesc =>
       _pick('Garsių ženklų istorijos ir vardai', 'Famous brand stories and names');
+  String get categoryTransport => _pick('Transportas', 'Transport');
+  String get categoryTransportDesc =>
+      _pick('Lėktuvai, laivai, traukiniai, kelionės', 'Planes, ships, trains, journeys');
   String get categoryExam => _pick('Egzaminų centras', 'Exam Center');
   String get categoryExamDesc =>
       _pick('Laikyk egzaminus, gauk diplomus', 'Take exams, earn diplomas');
@@ -227,6 +230,19 @@ class AppStrings {
   String get subBrandsNames => _pick('Vardų paslaptys', 'Name secrets');
   String get subBrandsNamesDesc =>
       _pick('Kodėl Apple, Google, Bluetooth', 'Why Apple, Google, Bluetooth');
+  // Transportas — potemės
+  String get subTransTrains => _pick('Traukiniai ir metro', 'Trains & metro');
+  String get subTransTrainsDesc =>
+      _pick('Greitieji, garlaiviai, požeminis', 'Bullet trains, steam, the Tube');
+  String get subTransAviation => _pick('Aviacija', 'Aviation');
+  String get subTransAviationDesc =>
+      _pick('Lėktuvai, sraigtasparniai, oro uostai', 'Planes, helicopters, airports');
+  String get subTransShips => _pick('Laivai ir jūros', 'Ships & seas');
+  String get subTransShipsDesc =>
+      _pick('Burlaiviai, Titanikas, kanalai', 'Sailing ships, Titanic, canals');
+  String get subTransRoutes => _pick('Garsieji maršrutai', 'Famous routes');
+  String get subTransRoutesDesc =>
+      _pick('Šilko kelias, Route 66, Orient Express', 'Silk Road, Route 66, Orient Express');
   // Žmogaus kūnas — potemės „protmūšio" stiliumi (įdomu, ne vadovėlis)
   String get subBodyBrain => _pick('Smegenų paslaptys', 'Brain secrets');
   String get subBodyBrainDesc =>

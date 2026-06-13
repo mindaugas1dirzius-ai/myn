@@ -24,6 +24,10 @@ import { COSMOS_QUESTIONS } from "./cosmosContent";
 import { MYTHOLOGY_QUESTIONS } from "./mythologyContent";
 import { RECORDS_QUESTIONS } from "./recordsContent";
 import { BRANDS_QUESTIONS } from "./brandsContent";
+import { TRANSPORT_TRAINS } from "./transportTrains";
+import { TRANSPORT_AVIATION } from "./transportAviation";
+import { TRANSPORT_SHIPS } from "./transportShips";
+import { TRANSPORT_ROUTES } from "./transportRoutes";
 
 /**
  * Temos, kurias aptarnauja BENDRAS startTriviaGame (be „nature" — ji atskira).
@@ -57,6 +61,12 @@ export const TRIVIA_REGISTRY: Record<GenericTriviaCategory, TriviaQuestion[]> = 
   mythology: MYTHOLOGY_QUESTIONS,
   records: RECORDS_QUESTIONS,
   brands: BRANDS_QUESTIONS,
+  transport: [
+    ...TRANSPORT_TRAINS,
+    ...TRANSPORT_AVIATION,
+    ...TRANSPORT_SHIPS,
+    ...TRANSPORT_ROUTES,
+  ],
 };
 
 /** Ar duotas tekstas yra žinoma bendro variklio tema? (type guard) */

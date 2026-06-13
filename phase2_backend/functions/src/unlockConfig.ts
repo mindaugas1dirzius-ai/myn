@@ -61,6 +61,7 @@ export const OPEN_TRIVIA_CATEGORIES = new Set<string>([
   "mythology", // 🏺 Mitologija — atrakinta 2026-06-13 (greek potemė turi turinio)
   "records", // 📏 Rekordai — atrakinta 2026-06-13 (human potemė turi turinio)
   "brands", // 🏷️ Prekių ženklai — atrakinta 2026-06-13 (visos 4 potemės pilnos)
+  "transport", // 🚂 Transportas — atrakinta 2026-06-13 (visos 4 potemės pilnos)
 ]);
 
 /** Ar žinių tema užrakinta pagal nutylėjimą? (kol nėra turinio → taip). */

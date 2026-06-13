@@ -145,6 +145,15 @@ export const TRIVIA_SUBTHEMES: Record<
     cars: ["cars"],
     names: ["names"],
   },
+  // Transportas: 4 potemės (2026-06-13). Istorija, rekordai, technologijos.
+  //   🚂 trains (traukiniai ir metro) · ✈️ aviation (aviacija) ·
+  //   🚢 ships (laivai ir jūrų kelionės) · 🧳 routes (garsūs maršrutai).
+  transport: {
+    trains: ["trains"],
+    aviation: ["aviation"],
+    ships: ["ships"],
+    routes: ["routes"],
+  },
 };
 
 /** Ar tema turi bent vieną potemę (klientui — rodyti potemių parinkiklį)? */

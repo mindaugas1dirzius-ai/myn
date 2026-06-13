@@ -62,7 +62,8 @@ export const DEFAULT_TOPIC: NatureTopic = "facts";
  */
 export type TriviaCategory =
   | "nature" | "pop" | "geo" | "history"
-  | "tech" | "food" | "sport" | "body" | "cosmos" | "mythology" | "records" | "brands";
+  | "tech" | "food" | "sport" | "body" | "cosmos" | "mythology" | "records" | "brands"
+  | "transport";
 
 /** Vienos kalbos turinys: klausimas, teisingas, klaidingi variantai. */
 export interface LocalizedContent {

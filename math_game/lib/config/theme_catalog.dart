@@ -190,6 +190,15 @@ final List<GameTheme> kThemes = <GameTheme>[
     subtitle: (s) => s.categoryBrandsDesc,
   ),
   GameTheme(
+    code: 'transport',
+    emoji: '🚂',
+    accent: AppColors.themeTransport,
+    kind: ThemeKind.trivia,
+    open: true, // 🚂 Transportas — nauja tema (2026-06-13), visos 4 potemės pilnos
+    title: (s) => s.categoryTransport,
+    subtitle: (s) => s.categoryTransportDesc,
+  ),
+  GameTheme(
     code: 'blitz',
     emoji: '⚡',
     accent: AppColors.levelMedium,
