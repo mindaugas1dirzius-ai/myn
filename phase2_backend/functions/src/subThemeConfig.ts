@@ -136,6 +136,15 @@ export const TRIVIA_SUBTHEMES: Record<
     laws: ["laws"],
     objects: ["objects"],
   },
+  // Prekių ženklai: 4 potemės (2026-06-13). Tik istoriniai/įsitvirtinę faktai.
+  //   🍟 food (maistas/gėrimai) · 👟 fashion (mada/daiktai) ·
+  //   🚗 cars (automobiliai/vardų kilmės) · 💡 names (vardų paslaptys).
+  brands: {
+    food: ["food"],
+    fashion: ["fashion"],
+    cars: ["cars"],
+    names: ["names"],
+  },
 };
 
 /** Ar tema turi bent vieną potemę (klientui — rodyti potemių parinkiklį)? */

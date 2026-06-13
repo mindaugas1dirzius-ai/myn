@@ -181,6 +181,15 @@ final List<GameTheme> kThemes = <GameTheme>[
     subtitle: (s) => s.categoryRecordsDesc,
   ),
   GameTheme(
+    code: 'brands',
+    emoji: '🏷️',
+    accent: AppColors.themeBrands,
+    kind: ThemeKind.trivia,
+    open: true, // 🏷️ Prekių ženklai — nauja tema (2026-06-13), visos 4 potemės pilnos
+    title: (s) => s.categoryBrands,
+    subtitle: (s) => s.categoryBrandsDesc,
+  ),
+  GameTheme(
     code: 'blitz',
     emoji: '⚡',
     accent: AppColors.levelMedium,

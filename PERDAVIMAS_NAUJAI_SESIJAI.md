@@ -37,6 +37,8 @@
 
 **Procesas:** idėja (galvok PLAČIAI — potemės pavadinimas ≠ riba; ieškok „oho" faktų iš gyvenimo) → faktą patikrini patikimuose šaltiniuose → sukomplektuoji (1 teisingas + 5 distraktoriai + paaiškinimas KODĖL + emoji + `sourceVerified` + `subTheme` + `level`) → LT+EN iškart (natūraliai, NE pažodžiui) → validacija → faktų patikra → stiliaus patikra → deploy.
 
+**🧰 DRAFT'INIMO METODAS (savininko valia 2026-06-13):** klausimų JUODRAŠČIUS generuoja **Sonnet 4.6 per `Workflow`** (po 1 agentą potemei = 4 agentai temai, su web paieška ir VISAIS šio §2 reikalavimais prompto), o **Opus (pagrindinė sesija) TIK tikrina, taiso, daro 2 QC bangas ir deploy'ina** — taip taupom Opus/plano limitus. ⚠️ Brands partija (2026-06-13) parašyta PAČIO Opus, nes ankstesnis perdavimas teigė, kad Sonnet workflow pakibo; PATIKRINTA — nauja sesija workflow'us sukioja be pakibimo (36 agentų QC suveikė), tad NUO 🚂 Transporto grąžinam Sonnet-juodraščių metodą. Jei Sonnet workflow vis dėlto pakibtų — krentam atgal į Opus rašymą.
+
 **🎚️ Amžiaus skalė (GELEŽINĖ — savininkui kritiška):**
 | Lygis | Kas atspėtų |
 |---|---|
@@ -167,7 +169,7 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 
 ---
 
-## 10. DABARTINĖ BŪSENA (2026-06-13, ~2 845 trivijos/gamtos kl.)
+## 10. DABARTINĖ BŪSENA (2026-06-13, ~3 005 trivijos/gamtos kl.)
 
 **Esamos temos (klausimų):** gamta 720 · sport 270 · body 255 · history 244 · pop 243 · geo 240 · tech 177 · food 176. + 40 mitų teiginių · 101 mįslė (pool 73; lygiai L1=15/L2=45/L3=35/**L4=6**) · 16 detektyvo bylų.
 
@@ -177,6 +179,7 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 - 📏 **REKORDAI — BAIGTA, 160 kl. (4/4 potemių).** 🏆 human · 🌍 world · 🤪 laws · 💎 **objects** PILNOS. 🌍 world (Burdž Chalifa, Everestas, Antarktida=didžiausia dykuma). 🤪 laws (Singapūro guma, La Tomatina, Romos laiptai, Šveicarijos jūrų kiaulytės). 💎 objects (40 kl., 2026-06-13: brangiausi/didžiausi daiktai + KAIP rekordai pasiekti [savininko idėja] — Salvator Mundi, Kalinanas, Hope, Mercedes 300 SLR, 1933 moneta; tyrimo Workflow su šaltiniais+aktualumu; QC: 3 faktų [Stradivarijui pridėta „aukcione"; Cobaino gitara perfrazuota, nes Gilmouro „Black Strat" 2026-03 pranoko] + 12 stiliaus). Failai `recordsHuman/World/Laws/Objects.ts` + `recordsContent.ts`. ⚠️ „Brangiausias/didžiausias kada nors" rekordai gali PASENTI — periodiškai web-tikrinti. ⚠️ Gyvūnų rekordai — GAMTOJE, NEkartoti; geo turi dalį tų pačių faktų — Rekorduose duoti KITU faktu/dydžiu.
 - 🚨 **EMOJI: skiriam DU dalykus (savininkas 2026-06-13):** (1) **KLAUSIMO emoji** (`q.emoji`, vienas prie klausimo) — NIEKADA neišduoda atsakymo: jokių vėliavų, kai atsakymas yra šalis (🇨🇱→Čilė); jokio daikto, kuris ir yra atsakymas (❄️→Antarktida, 👞→batai, ⚡→Dzeusas, 🦁→Sfinksas). Turi būti bendrinis temos ženklas, ĮVAIRUS (ne vienodas ant visų). (2) **ATSAKYMŲ mygtukų emoji** (`emojiForOption` — vėliavos prie šalių, instrumentai ir kt.) — GERAI, net gražu, paįvairina; NELIESTI (veikia „viskas-arba-nieko", todėl neišduoda). **PADARYTA (2026-06-13): VISOS temos sutvarkytos** — rekordai 18 + kosmosas/mitologija 109 + senos temos (gamta 84/geo/ist/pop/tech/maistas/sport/kūnas) 228 = **355 q.emoji** pakeisti per emoji-audito Workflow. Naujoms partijoms: iškart dėk NEUTRALŲ teminį q.emoji (ne atsakymo daiktą/vėliavą).
 - 🚨 **REKORDAI negali būti pasenę (savininkas 2026-06-13):** „aukščiausias/didžiausias/greičiausias" gali pasikeisti — BŪTINA web-patikra ar dar galioja (faktų QC lensas tai tikrina). Rinktis stabilius arba tikrinti naujausią info.
+- 🏷️ **PREKIŲ ŽENKLAI — PILNA tema, 160 kl. (4/4 potemių).** 🍟 food (Coca-Cola, McDonald's, Toblerone paslėptas lokys, Häagen-Dazs ne daniškas, Michelin gidas) · 👟 fashion (Adidas/Puma brolių vaidas, LEGO, IKEA, Velcro, Play-Doh) · 🚗 cars (Mercedes dukters vardas, Audi „klausyk", BMW propelerio mitas, Lamborghini traktoriai) · 💡 names (Google/googol, Bluetooth vikingų karalius, Nintendo 1889 kortos, Amazon „Cadabra"). Failai `brandsFood/Fashion/Cars/Names.ts` + `brandsContent.ts`; smaragdo spalva `themeBrands`. Parašė Opus; QC (32 faktų skeptikai+web + 4 stilius, 36 agentų Workflow): ištaisyta **11 faktų** (Porsche irgi turi stojantį žirgą→pakeista į „juodas žirgas geltoname"; LEGO distraktoriai Duplo/Mega Bloks irgi kaladėlės→„danų ženklas, su kaišteliais"; Dassler ir „partneriai"→bendraklasiai; Subaru 5 žvaigždės ne 6; **Unilever ledų rekordas PASENĘS — 2025-12 atskirta į The Magnum Ice Cream Co.→perfrazuota istoriškai**; Toblerone/Rubik „inspiracijos" mitai sušvelninti) + **35 LT stiliaus** (kalkės, giminė, „dvyuodegė" rašyba, „bendraįkūrėjas", „trenčkotas", kabantys „ką?/kaip?"). tsc/validacija/ilgio kvapas(0)/analyze OK; deploy+APK+commit. ⚠️ „brangiausias/didžiausias/priklauso" tipo faktai gali SENTI — periodiškai web-tikrinti (kaip Unilever).
 - 🎓 **Egzaminų centras** — placeholder kortelė meniu (užrakinta „Greitai", `ThemeKind.exam`, aukso spalva); mechanika vėliau (žr. `docs/planai/EGZAMINU_CENTRAS_PLANAS.md`).
 - 🎨 Visoms temoms priskirtos skirtingos spalvos.
 - 🔬🔤 Visas naujas turinys praėjo faktų IR stiliaus adversarines patikras (rado/ištaisyta realių klaidų).
@@ -193,7 +196,7 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 
 **A) TURINYS (tas pats §8 receptas, faktų+stiliaus Workflow kiekvienai partijai):**
 1. ✅ 📏 **REKORDAI BAIGTA** (4/4 potemės, 160 kl.) 2026-06-13. ⚠️ objects APK su atrakinta kortele PASTATYTAS, bet telefonas tuo metu buvo ATJUNGTAS — įdiegti `adb -s R5CX221CT5N install -r ...app-debug.apk`, kai bus prijungtas (turinys jau serveryje).
-2. 🏷️ **Prekių ženklai** (kodas `brands`) + 🚂 **Transportas** (kodas `transport`) — paskutinės 2 naujos temos (potemės `TURINIO_PLANAS.md`).
+2. ✅ 🏷️ **Prekių ženklai BAIGTA** (kodas `brands`, 4/4 potemės, 160 kl.) 2026-06-13 — parašyta+wiring+QC(36 agentų)+deploy `startTriviaGame`+APK įdiegtas+commit. Detalės §10. LIKO: 🚂 **Transportas** (kodas `transport`) — PASKUTINĖ nauja tema (potemės `TURINIO_PLANAS.md`: ✈️ aviacija · 🚢 laivai · 🚄 traukiniai/metro · 🧳 garsieji maršrutai). **Transportą daryti Sonnet-juodraščių metodu (žr. §2).**
 3. **3 BANGA — po ≥2 NAUJAS potemes ESAMOMS temoms** (savininko užsakymas; idėjos `TURINIO_PLANAS.md` „3 BANGA"): Gamta (🌋 stichijos, 🦠 mažasis pasaulis) · Pop (😂 internetas/memai, 🎮 žaidimų kultūra) · Istorija (🏰 riteriai/pilys, 🗺️ atradėjai) · Maistas (☕ gėrimai, 🍰 desertai) · Kūnas (🫀 širdis/kraujas, 🍎 mityba). + senesnės 1 bangos sėklinės (tech AI, pop superherojai, kūnas pojūčiai).
 4. Lygiagrečiai: senų temų „ilgio kvapas" (~356 ryškūs: gamta 187, istorija 50…) partijomis; mįslių „klausimas"+L4 pildymas; klausimų pildymas iki 150–200/lygiui.
 

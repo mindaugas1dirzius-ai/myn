@@ -68,6 +68,9 @@ class AppStrings {
   String get categoryRecords => _pick('Rekordai', 'Records');
   String get categoryRecordsDesc =>
       _pick('Rekordai ir nuostabios keistenybės', 'Records and amazing oddities');
+  String get categoryBrands => _pick('Prekių ženklai', 'Brands');
+  String get categoryBrandsDesc =>
+      _pick('Garsių ženklų istorijos ir vardai', 'Famous brand stories and names');
   String get categoryExam => _pick('Egzaminų centras', 'Exam Center');
   String get categoryExamDesc =>
       _pick('Laikyk egzaminus, gauk diplomus', 'Take exams, earn diplomas');
@@ -211,6 +214,19 @@ class AppStrings {
   String get subRecObjects => _pick('Daiktų rekordai', 'Object records');
   String get subRecObjectsDesc =>
       _pick('Brangiausi, didžiausi daiktai ir maistas', 'Priciest, biggest things and food');
+  // Prekių ženklai — potemės
+  String get subBrandsFood => _pick('Maistas ir gėrimai', 'Food & drinks');
+  String get subBrandsFoodDesc =>
+      _pick('Coca-Cola, McDonald’s, šokoladai', 'Coca-Cola, McDonald’s, chocolate');
+  String get subBrandsFashion => _pick('Mada ir daiktai', 'Fashion & objects');
+  String get subBrandsFashionDesc =>
+      _pick('Adidas, LEGO, IKEA, žaislai', 'Adidas, LEGO, IKEA, toys');
+  String get subBrandsCars => _pick('Automobiliai', 'Cars & machines');
+  String get subBrandsCarsDesc =>
+      _pick('Mašinų ženklų vardų kilmės', 'Where car badge names come from');
+  String get subBrandsNames => _pick('Vardų paslaptys', 'Name secrets');
+  String get subBrandsNamesDesc =>
+      _pick('Kodėl Apple, Google, Bluetooth', 'Why Apple, Google, Bluetooth');
   // Žmogaus kūnas — potemės „protmūšio" stiliumi (įdomu, ne vadovėlis)
   String get subBodyBrain => _pick('Smegenų paslaptys', 'Brain secrets');
   String get subBodyBrainDesc =>

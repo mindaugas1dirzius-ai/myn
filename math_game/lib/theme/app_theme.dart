@@ -41,6 +41,7 @@ class AppColors {
   static const Color themeMythology = Color(0xFFC0392B); // epinė raudona
   static const Color themeExam = Color(0xFFD4AF37); // diplomų auksas
   static const Color themeRecords = Color(0xFF2D9CDB); // mėlynojo kaspino mėlyna
+  static const Color themeBrands = Color(0xFF1FCB7A); // prekės ženklo smaragdas
 
   // Būsenos
   static const Color correct = Color(0xFF2BD576); // teisinga (pulse)
