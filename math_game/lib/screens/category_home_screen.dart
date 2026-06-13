@@ -56,7 +56,7 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
       body: AppBackground(
         child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.fromLTRB(24, 8, 24, 16),
           child: Column(
             children: [
               // Viršutinė juosta: Profilis (kairėje) + MAŽAS logotipas (centre,
@@ -66,14 +66,17 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // „Profilis" užrašas pašalintas — žmogeliuko ikona visiems aiški.
+                  // „Profilis" užrašas pašalintas — žmogeliuko ikona kampe, paspaudžiama.
                   IconButton(
                     onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const ProfileScreen()),
                     ),
                     icon: const Icon(Icons.person,
-                        color: AppColors.textSecondary, size: 26),
+                        color: AppColors.textSecondary, size: 28),
                     tooltip: s.profile,
+                    padding: EdgeInsets.zero,
+                    alignment: Alignment.centerLeft,
+                    visualDensity: VisualDensity.compact,
                   ),
                   Image.asset(
                     'assets/images/logo.png',
@@ -93,7 +96,7 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 8),
               Expanded(
                 // VISOS 11 temų rodomos iš vieno katalogo (theme_catalog.dart).
                 // Atrakinti temą = pakeisti `open: true` kataloge — čia nieko.
