@@ -166,14 +166,14 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 
 ---
 
-## 10. DABARTINĖ BŪSENA (2026-06-13, ~2 725 trivijos/gamtos kl.)
+## 10. DABARTINĖ BŪSENA (2026-06-13, ~2 765 trivijos/gamtos kl.)
 
 **Esamos temos (klausimų):** gamta 720 · sport 270 · body 255 · history 244 · pop 243 · geo 240 · tech 177 · food 176. + 40 mitų teiginių · 101 mįslė (pool 73; lygiai L1=15/L2=45/L3=35/**L4=6**) · 16 detektyvo bylų.
 
 **🆕 ŠIĄ SESIJĄ pastatyta:**
 - 🌌 **KOSMOSAS — PILNA tema, 200 kl.** (5 potemės po 40: 🪐 planets · 🚀 spacerace [perkelta iš tech „space" registro lygyje] · 🧑‍🚀 astronauts · 🔭 universe · 🛰️ rockets). Failai `cosmosPlanets/Astronauts/Universe/Rockets.ts` + `cosmosContent.ts`.
 - 🏺 **MITOLOGIJA — PILNA tema, 160 kl.** (4 potemės po 40: ⚡ greek · 🔨 norse · 🐫 egypt · 🐉 creatures). SAUGA: tik senovės mitai. Failai `mythologyGreek/Norse/Egypt/Creatures.ts` + `mythologyContent.ts`.
-- 📏 **REKORDAI — PRADĖTA, 40 kl.** (🏆 human PILNA; ⬜ world/laws/objects „Greitai"). Failai `recordsHuman.ts` + `recordsContent.ts`. ⚠️ Gyvūnų rekordai — GAMTOJE, NEkartoti.
+- 📏 **REKORDAI — 80 kl. (2/4 potemių).** 🏆 human PILNA + 🌍 **world PILNA** (40 kl., baigta 2026-06-13: pasaulio superlatyvai — Burdž Chalifa, Everestas, Marianos įduba, Antarktida=didžiausia dykuma ir kt.; QC: 2 faktų [Death Valley sušvelnintas, „Sirena Deep"→„Brownson Deep"] + 13 stiliaus pataisyta). ⬜ laws/objects „Greitai". Failai `recordsHuman.ts` + `recordsWorld.ts` + `recordsContent.ts`. ⚠️ Gyvūnų rekordai — GAMTOJE, NEkartoti; geo tema turi dalį tų pačių faktų — Rekorduose duodami KITU faktu/dydžiu.
 - 🎓 **Egzaminų centras** — placeholder kortelė meniu (užrakinta „Greitai", `ThemeKind.exam`, aukso spalva); mechanika vėliau (žr. `docs/planai/EGZAMINU_CENTRAS_PLANAS.md`).
 - 🎨 Visoms temoms priskirtos skirtingos spalvos.
 - 🔬🔤 Visas naujas turinys praėjo faktų IR stiliaus adversarines patikras (rado/ištaisyta realių klaidų).
@@ -189,7 +189,7 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 ## 11. DARBŲ EILĖ (kas liko, savininko patvirtinta)
 
 **A) TURINYS (tas pats §8 receptas, faktų+stiliaus Workflow kiekvienai partijai):**
-1. 📏 Rekordų likusios potemės: 🌍 Pasaulio · 🤪 Keisti įstatymai · 💎 Daiktų rekordai (po 40).
+1. 📏 Rekordų likusios potemės: 🤪 Keisti įstatymai (laws) · 💎 Daiktų rekordai (objects) (po 40). [🌍 Pasaulio (world) — BAIGTA 2026-06-13.]
 2. 🏷️ **Prekių ženklai** (kodas `brands`) + 🚂 **Transportas** (kodas `transport`) — paskutinės 2 naujos temos (potemės `TURINIO_PLANAS.md`).
 3. **3 BANGA — po ≥2 NAUJAS potemes ESAMOMS temoms** (savininko užsakymas; idėjos `TURINIO_PLANAS.md` „3 BANGA"): Gamta (🌋 stichijos, 🦠 mažasis pasaulis) · Pop (😂 internetas/memai, 🎮 žaidimų kultūra) · Istorija (🏰 riteriai/pilys, 🗺️ atradėjai) · Maistas (☕ gėrimai, 🍰 desertai) · Kūnas (🫀 širdis/kraujas, 🍎 mityba). + senesnės 1 bangos sėklinės (tech AI, pop superherojai, kūnas pojūčiai).
 4. Lygiagrečiai: senų temų „ilgio kvapas" (~356 ryškūs: gamta 187, istorija 50…) partijomis; mįslių „klausimas"+L4 pildymas; klausimų pildymas iki 150–200/lygiui.

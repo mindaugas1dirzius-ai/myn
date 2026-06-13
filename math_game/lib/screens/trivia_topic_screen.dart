@@ -189,7 +189,7 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subRecWorld,
             subtitle: s.subRecWorldDesc,
             accent: AppColors.neonBlue,
-            open: false,
+            open: true,
           ),
           _SubTheme(
             id: 'laws',
