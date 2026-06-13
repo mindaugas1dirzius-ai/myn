@@ -153,7 +153,7 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 - **Turinys:** trivijos+gamta 2 525 kl. (gamta 720 · sport 270 · body 255 ·
   history 244 · pop 243 · geo 240 · tech 177 · food 176 · **cosmos 200 ✅BAIGTA**) · 40 mitų ·
   (cosmos 200 = planets + astronauts + universe + rockets + spacerace, po 40, visi 10/lygiui) ·
-  **mythology 40 NAUJA** (greek potemė pilna; norse/egypt/creatures Greitai). Viso ~2 565.
+  **mythology 80 NAUJA** (greek + norse potemės pilnos; egypt/creatures Greitai). Viso ~2 605.
   101 mįslė (pool 73 be citatų/patarlių; lygiai L1=15/L2=45/L3=35/**L4=6** —
   pildant pirmiausia L4 ir „klausimas" tipo 42) · **16 detektyvo bylų** (v2).
 - **Įrankiai functions/:** `_appcheck_fix.js` (App Check per API),
@@ -208,8 +208,9 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
      theme* spalvos + theme_catalog accent) — savininkas: „negražu vienodos spalvos".
    - ⏳ **🏺 MITOLOGIJA PRADĖTA (2026-06-13):** ATSKIRA tema (kodas `mythology`,
      spalva epinė raudona). SAUGA: tik SENOVĖS mitai. ✅ ⚡ **Graikų/romėnų** potemė
-     PILNA (myt_gr_001–040, 10/lygiui; failas `mythologyGreek.ts`; adversariai
-     patikrinta 40/40 OK). ⬜ 🔨 Šiaurės · 🐫 Egiptas · 🐉 Būtybės — „Greitai", po 40.
+     PILNA (myt_gr_001–040; mythologyGreek.ts; adversariai 40/40 OK). 🔨 **Šiaurės
+     mitai** PILNA (myt_no_001–040; mythologyNorse.ts; Toras/Odinas/Ragnarokas;
+     adversariai 40/40 OK). ⬜ 🐫 Egiptas · 🐉 Būtybės — „Greitai", po 40.
      Wiring kaip Kosmosui (triviaTypes+mythology, registry, subThemeConfig, unlock,
      themeEmoji, theme_catalog kortelė, trivia_topic_screen, app_strings).
    - ⏭️ LIKĘ #51 naujos temos: 📏 Rekordai · 🏷️ Prekių ženklai · 🚂 Transportas.

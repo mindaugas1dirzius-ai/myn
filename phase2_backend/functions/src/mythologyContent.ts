@@ -14,8 +14,10 @@
 
 import { TriviaQuestion } from "./triviaTypes";
 import { MYTHOLOGY_GREEK } from "./mythologyGreek";
+import { MYTHOLOGY_NORSE } from "./mythologyNorse";
 
 export const MYTHOLOGY_QUESTIONS: TriviaQuestion[] = [
   ...MYTHOLOGY_GREEK,
-  // ...MYTHOLOGY_NORSE, ...MYTHOLOGY_EGYPT, ...MYTHOLOGY_CREATURES — pildoma partijomis.
+  ...MYTHOLOGY_NORSE,
+  // ...MYTHOLOGY_EGYPT, ...MYTHOLOGY_CREATURES — pildoma partijomis.
 ];
