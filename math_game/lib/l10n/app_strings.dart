@@ -65,6 +65,9 @@ class AppStrings {
   String get categoryMythology => _pick('Mitologija', 'Mythology');
   String get categoryMythologyDesc =>
       _pick('Dievai, herojai ir legendos', 'Gods, heroes and legends');
+  String get categoryRecords => _pick('Rekordai', 'Records');
+  String get categoryRecordsDesc =>
+      _pick('Rekordai ir nuostabios keistenybės', 'Records and amazing oddities');
   String get categoryExam => _pick('Egzaminų centras', 'Exam Center');
   String get categoryExamDesc =>
       _pick('Laikyk egzaminus, gauk diplomus', 'Take exams, earn diplomas');
@@ -195,6 +198,19 @@ class AppStrings {
   String get subMythCreatures => _pick('Būtybės ir legendos', 'Beasts & legends');
   String get subMythCreaturesDesc =>
       _pick('Drakonai, Atlantida, karalius Artūras', 'Dragons, Atlantis, King Arthur');
+  // Rekordai — potemės
+  String get subRecHuman => _pick('Žmonių rekordai', 'Human records');
+  String get subRecHumanDesc =>
+      _pick('Aukščiausias, greičiausias, seniausias', 'Tallest, fastest, oldest');
+  String get subRecWorld => _pick('Pasaulio rekordai', 'World records');
+  String get subRecWorldDesc =>
+      _pick('Statiniai, gamtos kraštutinumai', 'Structures, nature extremes');
+  String get subRecLaws => _pick('Keisti įstatymai', 'Weird laws');
+  String get subRecLawsDesc =>
+      _pick('Keisčiausi pasaulio įstatymai ir tradicijos', 'The strangest laws and traditions');
+  String get subRecObjects => _pick('Daiktų rekordai', 'Object records');
+  String get subRecObjectsDesc =>
+      _pick('Brangiausi, didžiausi daiktai ir maistas', 'Priciest, biggest things and food');
   // Žmogaus kūnas — potemės „protmūšio" stiliumi (įdomu, ne vadovėlis)
   String get subBodyBrain => _pick('Smegenų paslaptys', 'Brain secrets');
   String get subBodyBrainDesc =>

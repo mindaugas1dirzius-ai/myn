@@ -172,6 +172,15 @@ final List<GameTheme> kThemes = <GameTheme>[
     subtitle: (s) => s.categoryMythologyDesc,
   ),
   GameTheme(
+    code: 'records',
+    emoji: '🏆',
+    accent: AppColors.themeRecords,
+    kind: ThemeKind.trivia,
+    open: true, // 📏 Rekordai — nauja tema (2026-06-13), potemė „Žmonių rekordai" pilna
+    title: (s) => s.categoryRecords,
+    subtitle: (s) => s.categoryRecordsDesc,
+  ),
+  GameTheme(
     code: 'blitz',
     emoji: '⚡',
     accent: AppColors.levelMedium,

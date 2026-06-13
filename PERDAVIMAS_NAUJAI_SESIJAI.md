@@ -153,7 +153,8 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 - **Turinys:** trivijos+gamta 2 525 kl. (gamta 720 · sport 270 · body 255 ·
   history 244 · pop 243 · geo 240 · tech 177 · food 176 · **cosmos 200 ✅BAIGTA**) · 40 mitų ·
   (cosmos 200 = planets + astronauts + universe + rockets + spacerace, po 40, visi 10/lygiui) ·
-  **mythology 160 ✅BAIGTA** (greek+norse+egypt+creatures po 40, visi 10/lygiui). Viso ~2 685.
+  **mythology 160 ✅BAIGTA** (greek+norse+egypt+creatures po 40) · **records 40 NAUJA**
+  (human potemė pilna; world/laws/objects Greitai). Viso ~2 725.
   101 mįslė (pool 73 be citatų/patarlių; lygiai L1=15/L2=45/L3=35/**L4=6** —
   pildant pirmiausia L4 ir „klausimas" tipo 42) · **16 detektyvo bylų** (v2).
 - **Įrankiai functions/:** `_appcheck_fix.js` (App Check per API),
@@ -217,7 +218,12 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
      sirenos/undinės). ✅ **MITOLOGIJA BAIGTA: 4 potemės × 40 = 160 kl.**
      Wiring kaip Kosmosui (triviaTypes+mythology, registry, subThemeConfig, unlock,
      themeEmoji, theme_catalog kortelė, trivia_topic_screen, app_strings).
-   - ⏭️ LIKĘ #51 naujos temos: 📏 Rekordai · 🏷️ Prekių ženklai · 🚂 Transportas.
+   - ⏳ **📏 REKORDAI PRADĖTA (2026-06-13):** ATSKIRA tema (kodas `records`, spalva
+     mėlynojo kaspino). 🏆 **Žmonių rekordai** PILNA (rec_hu_001–040; recordsHuman.ts;
+     STABILŪS Gineso — Boltas/Wadlow/Calment; adversariai 37/40, 3 onlyOneCorrect
+     niuansai ištaisyti). ⬜ 🌍 Pasaulio · 🤪 Keisti įstatymai · 💎 Daiktų rekordai —
+     „Greitai", po 40 (gyvūnų rekordai — GAMTOJE, nekartoti).
+   - ⏭️ LIKĘ #51 naujos temos: 🏷️ Prekių ženklai · 🚂 Transportas.
    - ⏭️ PASKUI #50 / „3 BANGA": po ≥2 potemes esamoms temoms (TURINIO_PLANAS.md).
      Wiring: triviaTypes(+cosmos) · triviaRegistry(+move) · subThemeConfig(cosmos
      5 potemės, tech be space) · unlockConfig · themeEmoji(🌌) · theme_catalog ·

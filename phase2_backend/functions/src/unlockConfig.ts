@@ -59,6 +59,7 @@ export const TRIVIA_THEME_UNLOCK_COST = 150;
 export const OPEN_TRIVIA_CATEGORIES = new Set<string>([
   "cosmos", // 🌌 Kosmosas — atrakinta 2026-06-13 (planets potemė turi turinio)
   "mythology", // 🏺 Mitologija — atrakinta 2026-06-13 (greek potemė turi turinio)
+  "records", // 📏 Rekordai — atrakinta 2026-06-13 (human potemė turi turinio)
 ]);
 
 /** Ar žinių tema užrakinta pagal nutylėjimą? (kol nėra turinio → taip). */

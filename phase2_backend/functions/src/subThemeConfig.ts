@@ -128,6 +128,14 @@ export const TRIVIA_SUBTHEMES: Record<
     egypt: ["egypt"],
     creatures: ["creatures"],
   },
+  // Rekordai: 4 potemės (2026-06-13). Gyvūnų rekordai — GAMTOJE (čia nekartojama).
+  //   🏆 human (ĮGYVENDINTA) · 🌍 world · 🤪 laws · 💎 objects (Greitai).
+  records: {
+    human: ["human"],
+    world: ["world"],
+    laws: ["laws"],
+    objects: ["objects"],
+  },
 };
 
 /** Ar tema turi bent vieną potemę (klientui — rodyti potemių parinkiklį)? */
