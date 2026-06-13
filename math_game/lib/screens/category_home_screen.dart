@@ -198,6 +198,10 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
           MaterialPageRoute(builder: (_) => const MythGameScreen()),
         );
         break;
+      case ThemeKind.exam:
+        // 🎓 Egzaminų centras — placeholder. Kol open:false, ši šaka nepasiekiama;
+        // mechanika bus pridėta vėliau (docs/planai/EGZAMINU_CENTRAS_PLANAS.md).
+        break;
     }
   }
 

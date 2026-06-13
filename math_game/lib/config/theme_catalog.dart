@@ -19,6 +19,7 @@ enum ThemeKind {
   trivia,  // bendra žinių trivija → universalus lygių ekranas
   blitz,   // ⚡ „Taip/Ne" greitis (30 s / 1 min raundai)
   myth,    // 🧐 „Tiesa ar mitas?" (mūsų paruošti teiginiai + paaiškinimai)
+  exam,    // 🎓 Egzaminų centras (PLACEHOLDER; mechanika/potemės vėliau)
 }
 
 /// Vienos temos aprašas pradiniam ekranui ir maršrutams.
@@ -187,5 +188,14 @@ final List<GameTheme> kThemes = <GameTheme>[
     open: true, // 🧐 Tiesa ar mitas? VEIKIA (2026-06-12)
     title: (s) => s.categoryMyth,
     subtitle: (s) => s.categoryMythDesc,
+  ),
+  GameTheme(
+    code: 'examcenter',
+    emoji: '🎓',
+    accent: AppColors.themeExam,
+    kind: ThemeKind.exam,
+    open: false, // 🎓 PLACEHOLDER „Greitai" — mechanika/potemės vėliau (docs/planai/EGZAMINU_CENTRAS_PLANAS.md)
+    title: (s) => s.categoryExam,
+    subtitle: (s) => s.categoryExamDesc,
   ),
 ];

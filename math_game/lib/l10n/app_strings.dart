@@ -65,6 +65,9 @@ class AppStrings {
   String get categoryMythology => _pick('Mitologija', 'Mythology');
   String get categoryMythologyDesc =>
       _pick('Dievai, herojai ir legendos', 'Gods, heroes and legends');
+  String get categoryExam => _pick('Egzaminų centras', 'Exam Center');
+  String get categoryExamDesc =>
+      _pick('Laikyk egzaminus, gauk diplomus', 'Take exams, earn diplomas');
   String get categoryBlitz => _pick('Blitz', 'Blitz');
   String get categoryBlitzDesc =>
       _pick('Taip ar ne — greičiui', 'Yes or no — beat the clock');
