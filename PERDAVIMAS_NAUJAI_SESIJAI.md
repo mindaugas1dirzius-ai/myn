@@ -209,6 +209,7 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 - 🎛️ **Reklamų/monetizacijos VALDYMO SKYDELIS (savininko užsakymas 2026-06-13)** — custom web admin (Firebase backend): įjungti/išjungti reklamas, keisti jų dažnį/kainas, matyti pajamas + žaidėjų statistiką; reklamų kampanijų duomenis traukti per Windsor.ai jungtį. KŪRIMO darbas PO turinio etapo (ne jungtis — patys statom).
 
 **Vėliau (atskiri OK):** reklama už +1 gyvybę, dienos byla, serijos, dvikova, detektyvo bylų paketai.
+- 📹 **REKLAMINIS VIDEO (ateičiai, 2026-06-13 išbandyta):** statiški ekranai+tekstas+muzika = SILPNA (savininkas: „nieko nepareklamuosi"). Reikia TIKRO gameplay JUDESIO. ⚠️ adb `screenrecord` sugedo (45 KB) — naudoti telefono ĮMONTUOTĄ ekrano įrašytuvą (savininkas filmuoja 30–60 s žaidimo). Montažui **Canva Pro (apmokėta) UŽTENKA** — Descript NEpirkti (Free 100 AI kreditų išnaudoti, 720p+vandenženklis). 7 žaidimo ekranai išsaugoti `_p1..p7.png` (untracked). Descript testas: share.descript.com (struktūra OK, bet PNG neperkodavo).
 
 ---
 
