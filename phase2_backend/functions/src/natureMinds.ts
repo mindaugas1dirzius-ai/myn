@@ -49,13 +49,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🧠",
     translations: {
       en: {
-        question: "Which animal is famous for 'never forgetting' thanks to a great memory?",
+        question: "The animal famous for 'never forgetting', thanks to its great memory",
         correct: "Elephant",
         distractors: ["Mouse", "Rabbit", "Chicken", "Goldfish", "Frog"],
         explanation: "Herds remember faraway water holes and old friends for decades.",
       },
       lt: {
-        question: "Kuris gyvūnas dėl puikios atminties garsėja tuo, kad niekada nepamiršta?",
+        question: "Puikia atmintimi pagarsėjęs gyvūnas, niekada nepamirštantis",
         correct: "Dramblys",
         distractors: ["Pelė", "Triušis", "Višta", "Auksinė žuvelė", "Varlė"],
         explanation: "Bandos dešimtmečiais atsimena tolimas vandens vietas ir senus draugus.",
@@ -97,13 +97,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🧠",
     translations: {
       en: {
-        question: "Dogs are surprisingly good at understanding which human signal?",
+        question: "Dogs are surprisingly good at understanding one human signal",
         correct: "Pointing",
         distractors: ["Colours", "Maths", "Maps", "Music", "Reading"],
         explanation: "Dogs follow a pointing finger easily — even clever chimps struggle with it.",
       },
       lt: {
-        question: "Kurį žmogaus ženklą šunys supranta nuostabiai gerai?",
+        question: "Šunys nuostabiai gerai supranta vieną žmogaus ženklą",
         correct: "Rodymą pirštu",
         distractors: ["Spalvas", "Matematiką", "Žemėlapius", "Muziką", "Skaitymą"],
         explanation: "Šuo lengvai seka rodantį pirštą — net gudrioms šimpanzėms tai sunku.",
@@ -145,13 +145,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🧠",
     translations: {
       en: {
-        question: "Which black bird is famous for being clever and solving puzzles?",
+        question: "The black bird famous for being clever and solving puzzles",
         correct: "Crow",
         distractors: ["Sparrow", "Pigeon", "Duck", "Chicken", "Robin"],
         explanation: "Crows can work out tricky problems to reach a treat.",
       },
       lt: {
-        question: "Kuris juodas paukštis garsus gudrumu ir galvosūkių sprendimu?",
+        question: "Juodas paukštis, garsus gudrumu ir galvosūkių sprendimu",
         correct: "Varna",
         distractors: ["Žvirblis", "Balandis", "Antis", "Višta", "Liepsnelė"],
         explanation: "Varnos sugeba išspręsti keblias užduotis, kad pasiektų skanėstą.",
@@ -267,13 +267,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🗣️",
     translations: {
       en: {
-        question: "Which ape became famous for being taught hundreds of sign-language signs?",
+        question: "The ape that became famous for learning hundreds of sign-language signs",
         correct: "Gorilla",
         distractors: ["Orangutan", "Baboon", "Gibbon", "Lemur", "Macaque"],
         explanation: "A gorilla named Koko reportedly used hundreds of signs to share feelings and wants.",
       },
       lt: {
-        question: "Kuri beždžionė išgarsėjo išmokyta šimtų gestų kalbos ženklų?",
+        question: "Beždžionė, išgarsėjusi išmokyta šimtų gestų kalbos ženklų",
         correct: "Gorila",
         distractors: ["Orangutanas", "Babuinas", "Gibonas", "Lemūras", "Makaka"],
         explanation: "Pasakojama, kad gorila vardu Koko šimtais gestų dalijosi jausmais ir norais.",
@@ -411,13 +411,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🧠",
     translations: {
       en: {
-        question: "Which farm animal can recognise and remember dozens of faces for years?",
+        question: "The farm animal that can recognise and remember dozens of faces for years",
         correct: "Sheep",
         distractors: ["Cow", "Pig", "Goat", "Horse", "Duck"],
         explanation: "Tests show sheep remember about 50 faces of friends and people.",
       },
       lt: {
-        question: "Kuris ūkio gyvūnas gali atpažinti ir metų metus atsiminti dešimtis veidų?",
+        question: "Ūkio gyvūnas, gebantis atpažinti ir metų metus atsiminti dešimtis veidų",
         correct: "Avis",
         distractors: ["Karvė", "Kiaulė", "Ožka", "Arklys", "Antis"],
         explanation: "Tyrimai rodo, kad avys atsimena apie 50 draugų ir žmonių veidų.",
@@ -493,6 +493,31 @@ export const NATURE_MINDS: TriviaQuestion[] = [
         correct: "Maistą",
         distractors: ["Tik rankas", "Mažylius", "Akmenis", "Tik kailį", "Įrankius"],
         explanation: "Viena beždžionė nuplovė smėlėtas bulves; netrukus visa banda ją pamėgdžiojo.",
+      },
+    },
+  },
+
+  {
+    id: "nat_min_041",
+    category: "nature",
+    subTheme: "minds",
+    topic: "minds",
+    level: "vidutinis",
+    isTrap: false,
+    sourceVerified: "Bartal, Decety & Mason 2011, Science - rats free trapped cagemates",
+    emoji: "🤝",
+    translations: {
+      en: {
+        question: "How do rats show empathy toward a trapped companion?",
+        correct: "They free it from its cage",
+        distractors: ["They bring it extra food", "They run away to hide", "They attack the cage wall", "They make loud alarm calls", "They ignore it completely"],
+        explanation: "In experiments rats learned to open a cage to free a trapped friend, even before eating chocolate.",
+      },
+      lt: {
+        question: "Kaip žiurkės parodo empatiją įstrigusiam draugui?",
+        correct: "Išlaisvina jį iš narvo",
+        distractors: ["Atneša jam maisto", "Pabėga ir pasislepia", "Puola narvo sieneles", "Garsiai cypia iš baimės", "Visiškai jį ignoruoja"],
+        explanation: "Eksperimentuose žiurkės išmoko atidaryti narvą ir išlaisvinti draugą — net nesuvalgiusios šokolado.",
       },
     },
   },
@@ -605,13 +630,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🧩",
     translations: {
       en: {
-        question: "Which insects 'farm', growing fungus to eat on chewed-up leaves?",
+        question: "The insects that 'farm', growing fungus to eat on chewed-up leaves",
         correct: "Leafcutter ants",
         distractors: ["Rhino beetles", "Moths", "Flies", "Wasps", "Crickets"],
         explanation: "Their huge colonies run underground gardens with different jobs for each ant.",
       },
       lt: {
-        question: "Kurie vabzdžiai ūkininkauja — augina grybus maistui ant sukramtytų lapų?",
+        question: "Vabzdžiai, ūkininkaujantys ir auginantys grybus maistui ant sukramtytų lapų",
         correct: "Lapdorės skruzdėlės",
         distractors: ["Raganosiniai vabalai", "Drugiai", "Musės", "Vapsvos", "Naktiniai svirpliai"],
         explanation: "Jų didžiulės kolonijos valdo požeminius sodus su skirtingais darbais kiekvienai.",
@@ -775,13 +800,13 @@ export const NATURE_MINDS: TriviaQuestion[] = [
     emoji: "🪞",
     translations: {
       en: {
-        question: "Surprisingly, a cleaner wrasse recently passed a version of which test?",
+        question: "Surprisingly, a cleaner wrasse recently passed one famous test",
         correct: "The mirror test",
         distractors: ["A maze test", "A hearing test", "A counting test", "A speed test", "A taste test"],
         explanation: "It tried to remove a mark it could only see in a mirror — a first for a fish.",
       },
       lt: {
-        question: "Kurio testo versiją netikėtai neseniai išlaikė valytoja lūpažuvė?",
+        question: "Netikėtai valytoja lūpažuvė neseniai įveikė vieną garsų testą",
         correct: "Veidrodžio testą",
         distractors: ["Labirinto testą", "Klausos testą", "Skaičiavimo testą", "Greičio testą", "Skonio testą"],
         explanation: "Ji bandė pašalinti dėmę, kurią matė tik veidrodyje — pirmas toks atvejis žuviai.",
@@ -977,6 +1002,30 @@ export const NATURE_MINDS: TriviaQuestion[] = [
         correct: "Banginiai",
         distractors: ["Gyvatės", "Varlės", "Krabai", "Medūzos", "Sraigės"],
         explanation: "Skirtingų vietų grupės dainuoja kitaip, o dainos lėtai kinta tarsi mados.",
+      },
+    },
+  },
+  {
+    id: "nat_min_042",
+    category: "nature",
+    subTheme: "minds",
+    topic: "minds",
+    level: "ekstremalus",
+    isTrap: false,
+    sourceVerified: "Sheehan & Tibbetts 2011, Science - Polistes fuscatus individual face recognition",
+    emoji: "🧠",
+    translations: {
+      en: {
+        question: "The insect that can recognise the individual faces of its own species",
+        correct: "Paper wasp",
+        distractors: ["Honeybee", "Leafcutter ant", "Monarch butterfly", "German yellowjacket", "Praying mantis"],
+        explanation: "Polistes paper wasps read unique facial markings to know nestmates and track who ranks where.",
+      },
+      lt: {
+        question: "Vabzdys, atpažįstantis individualius savo rūšies veidus",
+        correct: "Popierinė vapsva",
+        distractors: ["Naminė bitė", "Lapkirpė skruzdėlė", "Monarchas drugelis", "Vokiškoji vapsva", "Maldininkas"],
+        explanation: "Popierinės vapsvos pagal unikalius veido raštus atpažįsta lizdo nares ir seka hierarchiją.",
       },
     },
   },

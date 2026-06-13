@@ -190,9 +190,10 @@ klausimo žodį į PRIEKĮ.**
 - ❌ „…delfinai rodo metapažinimą — kada jie **ką**?"
 - ✅ „**Ką** tiksliai pajunta delfinai, rodydami metapažinimą?"
 
-**🚨 SPĄSTAS #1b — MONOTONIŠKAS „KURIS…?" (savininkas 2026-06-13: „nervina, neprofesionalu"):**
-NEPRADĖK kiekvieno klausimo „Kuris/Kuri…?". ĮVAIRUOK pradžias ir, kur tinka, naudok
-**APRAŠOMĄJĄ (kabliuko) formą be klaustuko** — daug profesionaliau:
+**🚨 SPĄSTAS #1b — VENK „KURIS…?" PRADŽIOS (savininkas 2026-06-13 supyko DU kartus: „nervina, neprofesionalu", „nesąmonės"):**
+⛔ NENAUDOK „Kuris/Kuri/Kurie/Kurį/Kurio/Kurių…?" klausimo PRADŽIOJE — net keli per partiją yra blogai.
+DEFAULT — **APRAŠOMOJI (kabliuko) forma be klaustuko**; jei nelimpa, keisk pradžią į Ką/Kaip/Kur/Koks/Kuo.
+(„X, kuris/kurio…" VIDURY sakinio kaip jungtukas — OK, tai ne klausimo pradžia.) Daug profesionaliau:
 - ❌ „Kuris vabzdys naktį gali sukurti savo švytinčią šviesą?"
 - ✅ „Vabzdys, naktį sukuriantis savo švytinčią šviesą" (atsakymas užbaigia mintį; klaustuko nereikia)
 - ✅ kiti variantai: „Šis gyvūnas ginasi bjauraus kvapo purslu", „Naktį medžioja pagal garso aidą…",

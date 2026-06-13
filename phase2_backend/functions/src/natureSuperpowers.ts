@@ -49,13 +49,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🛡️",
     translations: {
       en: {
-        question: "Which animal sprays a horrible smell to scare off enemies?",
+        question: "The animal that sprays a foul smell to scare off enemies",
         correct: "Skunk",
         distractors: ["Fox", "Badger", "Raccoon", "Weasel", "Otter"],
         explanation: "Its spray can be smelled from far away and stings the eyes.",
       },
       lt: {
-        question: "Kuris gyvūnas purškia bjaurų kvapą, kad atbaidytų priešus?",
+        question: "Gyvūnas, purškiantis bjaurų kvapą priešams atbaidyti",
         correct: "Skunkas",
         distractors: ["Lapė", "Barsukas", "Meškėnas", "Žebenkštis", "Ūdra"],
         explanation: "Jo purslą galima užuosti iš toli, jis graužia akis.",
@@ -97,13 +97,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "💪",
     translations: {
       en: {
-        question: "Which tiny insect can lift many times its own body weight?",
+        question: "The tiny insect that lifts many times its own body weight",
         correct: "Ant",
         distractors: ["Butterfly", "Fly", "Mosquito", "Moth", "Ladybug"],
         explanation: "Its small muscles are very strong compared to its size.",
       },
       lt: {
-        question: "Kuris mažytis vabzdys gali pakelti daugkart už save sunkesnį svorį?",
+        question: "Mažytis vabzdys, pakeliantis daug kartų už save sunkesnį svorį",
         correct: "Skruzdėlė",
         distractors: ["Drugelis", "Musė", "Uodas", "Kandis", "Boružė"],
         explanation: "Jos maži raumenys, palyginti su dydžiu, labai stiprūs.",
@@ -145,13 +145,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "⚡",
     translations: {
       en: {
-        question: "Which water animal can give a powerful electric shock?",
+        question: "The water animal that delivers a powerful electric shock",
         correct: "Electric eel",
         distractors: ["Shark", "Tuna", "Salmon", "Cod", "Clownfish"],
         explanation: "It uses the shock to stun small fish and to defend itself.",
       },
       lt: {
-        question: "Kuris vandens gyvūnas gali smogti galingu elektros smūgiu?",
+        question: "Vandens gyvūnas, smogiantis galingu elektros smūgiu",
         correct: "Elektrinis ungurys",
         distractors: ["Ryklys", "Tunas", "Lašiša", "Menkė", "Vaivorykštinis upėtakis"],
         explanation: "Smūgiu jis apsvaigina mažas žuvis ir ginasi.",
@@ -193,13 +193,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🛡️",
     translations: {
       en: {
-        question: "Which animal rolls into a spiky ball when it feels scared?",
+        question: "The animal that rolls into a spiky ball when scared",
         correct: "Hedgehog",
         distractors: ["Porcupine", "Mole", "Rat", "Rabbit", "Squirrel"],
         explanation: "Curling up hides its soft belly and shows only sharp spines.",
       },
       lt: {
-        question: "Kuris gyvūnas išsigandęs susiriečia į dygliuotą kamuoliuką?",
+        question: "Žvėrelis, išsigandęs susiriečiantis į dygliuotą kamuoliuką",
         correct: "Ežys",
         distractors: ["Dygliatriušis", "Kurmis", "Žiurkė", "Triušis", "Voverė"],
         explanation: "Susirietęs paslepia minkštą pilvuką ir rodo tik aštrius spyglius.",
@@ -339,13 +339,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "⚡",
     translations: {
       en: {
-        question: "Which fish can sense the faint electric fields of hidden prey?",
+        question: "The fish that senses the faint electric fields of hidden prey",
         correct: "Shark",
         distractors: ["Tuna", "Salmon", "Cod", "Herring", "Mackerel"],
         explanation: "Tiny jelly-filled pores in its snout detect prey's muscle signals.",
       },
       lt: {
-        question: "Kuri žuvis junta silpną pasislėpusio grobio elektrinį lauką?",
+        question: "Žuvis, juntanti silpną pasislėpusio grobio elektrinį lauką",
         correct: "Ryklys",
         distractors: ["Tunas", "Lašiša", "Menkė", "Silkė", "Skumbrė"],
         explanation: "Mažytės poros snukyje pajunta grobio raumenų signalus.",
@@ -411,13 +411,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🕸️",
     translations: {
       en: {
-        question: "Which animal spins a sticky silk web to trap its food?",
+        question: "The animal that spins a sticky silk web to trap its food",
         correct: "Spider",
         distractors: ["Ant", "Bee", "Beetle", "Snail", "Worm"],
         explanation: "Its silk is, for its weight, stronger than steel.",
       },
       lt: {
-        question: "Kuris gyvūnas pina lipnų šilko tinklą maistui sugauti?",
+        question: "Gyvūnas, pinantis lipnų šilko tinklą maistui sugauti",
         correct: "Voras",
         distractors: ["Skruzdėlė", "Bitė", "Vabalas", "Sraigė", "Sliekas"],
         explanation: "Jo šilkas, palyginti su svoriu, stipresnis už plieną.",
@@ -483,13 +483,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🧊",
     translations: {
       en: {
-        question: "Which tiny creature can survive the vacuum of space and extreme cold?",
+        question: "The tiny creature that survives the vacuum of space and extreme cold",
         correct: "Tardigrade",
         distractors: ["Ant", "Tick", "Flea", "Mite", "Louse"],
         explanation: "It dries out into a tough state and revives when water returns.",
       },
       lt: {
-        question: "Kuris mažytis padaras išgyvena kosmoso vakuumą ir didžiulį šaltį?",
+        question: "Mažytis padaras, išgyvenantis kosmoso vakuumą ir didžiulį šaltį",
         correct: "Tardigradas",
         distractors: ["Skruzdėlė", "Erkė", "Blusa", "Erkutė", "Utėlė"],
         explanation: "Jis išdžiūsta į atsparią būseną ir atgyja, kai grįžta vanduo.",
@@ -605,13 +605,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🧊",
     translations: {
       en: {
-        question: "Which fish makes antifreeze proteins to live in icy Antarctic seas?",
+        question: "The fish that makes antifreeze proteins to live in icy Antarctic seas",
         correct: "Icefish",
         distractors: ["Tuna", "Marlin", "Herring", "Mackerel", "Anchovy"],
         explanation: "Its blood is even clear, with no red cells, yet it thrives in the cold.",
       },
       lt: {
-        question: "Kuri žuvis gamina antifrizo baltymus, kad gyventų ledinėse Antarktidos jūrose?",
+        question: "Žuvis, gaminanti antifrizo baltymus, kad gyventų ledinėse Antarktidos jūrose",
         correct: "Ledžuvė",
         distractors: ["Tunas", "Marlinas", "Silkė", "Skumbrė", "Ančiuvis"],
         explanation: "Jos kraujas net skaidrus, be raudonųjų ląstelių, bet šaltyje ji klesti.",
@@ -701,13 +701,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "☠️",
     translations: {
       en: {
-        question: "Which small frog carries one of nature's deadliest toxins on its skin?",
+        question: "The small frog that carries one of nature's deadliest toxins on its skin",
         correct: "Poison dart frog",
         distractors: ["Common tree frog", "Bullfrog", "Toad", "Tadpole", "Glass frog"],
         explanation: "Its bright colours warn predators not to touch it.",
       },
       lt: {
-        question: "Kuri maža varlė ant odos turi vieną mirtiniausių gamtos nuodų?",
+        question: "Maža varlė, ant odos turinti vieną mirtiniausių gamtos nuodų",
         correct: "Strėlinė varlė",
         distractors: ["Medvarlė", "Jautvarlė", "Rupūžė", "Buožgalvis", "Stiklinė varlė"],
         explanation: "Ryškios spalvos įspėja plėšrūnus jos neliesti.",
@@ -799,13 +799,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "♻️",
     translations: {
       en: {
-        question: "Besides limbs, the axolotl can even regrow parts of which organs?",
+        question: "Besides limbs, the axolotl can even regrow parts of certain organs",
         correct: "Heart and brain",
         distractors: ["Only skin", "Only tail", "Nothing else", "Only eyes", "Only bones"],
         explanation: "This is why researchers study it to understand healing.",
       },
       lt: {
-        question: "Kurių organų dalis, be galūnių, gali atsiauginti aksolotlis?",
+        question: "Be galūnių, aksolotlis gali atsiauginti net dalį tam tikrų organų",
         correct: "Širdies ir smegenų",
         distractors: ["Tik odos", "Tik uodegos galiuko", "Nieko kito", "Tik akių", "Tik kaulų"],
         explanation: "Todėl tyrėjai jį tiria norėdami suprasti gijimą.",
@@ -943,13 +943,13 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
     emoji: "🛡️",
     translations: {
       en: {
-        question: "Which beetle's armour is so tough it can survive being run over by a car?",
+        question: "The beetle with armour so tough it survives being run over by a car",
         correct: "Ironclad beetle",
         distractors: ["Stag beetle", "Ladybug", "Firefly", "Weevil", "Scarab"],
         explanation: "Its interlocking shell spreads the force so the beetle is not crushed.",
       },
       lt: {
-        question: "Kurio vabalo šarvas toks tvirtas, kad išgyvena net automobiliui pervažiavus?",
+        question: "Vabalas su tokiu tvirtu šarvu, kad išgyvena net automobiliui pervažiavus",
         correct: "Šarvuotasis vabalas",
         distractors: ["Didysis elniavabalis", "Boružė", "Jonvabalis", "Straubliukas", "Skarabėjas"],
         explanation: "Susikabinęs kiautas paskirsto jėgą, tad vabalas nesutraiškomas.",
