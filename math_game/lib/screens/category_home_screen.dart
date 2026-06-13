@@ -88,13 +88,12 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                 ],
               ),
               const SizedBox(height: 12),
-              Text(
-                s.appName,
-                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      fontSize: 34,
-                      letterSpacing: 4,
-                      color: AppColors.neonBlue,
-                    ),
+              // Logotipas (savininko sukurtas Canva: auksinės smegenys + karūna).
+              // Logotipe jau yra pavadinimas, tad atskiro teksto nerodom.
+              Image.asset(
+                'assets/images/logo.png',
+                height: 150,
+                fit: BoxFit.contain,
               ),
               const SizedBox(height: 8),
               Text(s.chooseCategory,
