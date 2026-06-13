@@ -45,7 +45,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Folklore — the unicorn, a horse with one horn",
-    emoji: "🦄",
+    emoji: "✨",
     translations: {
       en: {
         question: "Which legendary horse-like creature has a single horn on its head?",
@@ -91,7 +91,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Folklore — a mermaid is half woman, half fish",
-    emoji: "🧜",
+    emoji: "🐉",
     translations: {
       en: {
         question: "What do we call a legendary creature that is half woman, half fish?",
@@ -160,7 +160,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Cryptid folklore — Bigfoot of North American forests",
-    emoji: "🦶",
+    emoji: "📖",
     translations: {
       en: {
         question: "Which legend tells of a big, hairy ape-man in North American forests?",
@@ -183,7 +183,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Irish folklore — leprechauns guard a pot of gold",
-    emoji: "🍀",
+    emoji: "🔮",
     translations: {
       en: {
         question: "Which little magical being guards a pot of gold in Irish legend?",
@@ -206,7 +206,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Cryptid folklore — Nessie of Loch Ness, Scotland",
-    emoji: "🦕",
+    emoji: "🌫️",
     translations: {
       en: {
         question: "What nickname is given to the monster said to live in a Scottish lake?",
@@ -229,7 +229,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Folklore — the Kraken, a giant tentacled sea monster",
-    emoji: "🐙",
+    emoji: "🪄",
     translations: {
       en: {
         question: "Which huge legendary sea monster attacks ships with giant tentacles?",
@@ -300,7 +300,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Arthurian legend — Camelot, Arthur's court",
-    emoji: "🏰",
+    emoji: "🪨",
     translations: {
       en: {
         question: "What was the name of King Arthur's famous castle and court?",
@@ -323,7 +323,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Arthurian legend — the Round Table of equal knights",
-    emoji: "⭕",
+    emoji: "🪙",
     translations: {
       en: {
         question: "At what special table did Arthur's knights sit as equals?",
@@ -346,7 +346,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Folklore — the griffin (lion body, eagle head and wings)",
-    emoji: "🦅",
+    emoji: "✨",
     translations: {
       en: {
         question: "Which creature has a lion's body and an eagle's head and wings?",
@@ -392,7 +392,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Folklore — a werewolf changes shape at the full moon",
-    emoji: "🌕",
+    emoji: "🐉",
     translations: {
       en: {
         question: "In folklore, what creature turns from a human into a wolf at full moon?",
@@ -438,7 +438,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Cryptid folklore — the Yeti of the Himalayas",
-    emoji: "🏔️",
+    emoji: "📖",
     translations: {
       en: {
         question: "Which snow-dwelling ape-creature is said to roam the Himalayas?",
@@ -461,7 +461,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Folklore/literature — a genie grants wishes from a lamp",
-    emoji: "🪔",
+    emoji: "🔮",
     translations: {
       en: {
         question: "In old tales, what magical being grants wishes from a lamp?",
@@ -578,7 +578,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Arthurian legend — Avalon, where Arthur was taken to heal",
-    emoji: "🍎",
+    emoji: "🌫️",
     translations: {
       en: {
         question: "To which legendary island was King Arthur taken to be healed?",
@@ -601,7 +601,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Latin American folklore — the Chupacabra",
-    emoji: "🐐",
+    emoji: "🪄",
     translations: {
       en: {
         question: "Which Latin American legend describes a creature that drains goats' blood?",
@@ -647,7 +647,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Japanese folklore — the Kitsune, a shapeshifting fox spirit",
-    emoji: "🦊",
+    emoji: "🪨",
     translations: {
       en: {
         question: "What shape-shifting fox spirit appears in Japanese folklore?",
@@ -787,7 +787,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Persian legend — the manticore (lion, scorpion tail, human face)",
-    emoji: "🦂",
+    emoji: "🪙",
     translations: {
       en: {
         question: "Which Persian legend creature is a lion with a scorpion's tail and a human face?",
@@ -856,7 +856,7 @@ export const MYTHOLOGY_CREATURES: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Scottish/Irish folklore — selkies shed seal skin to become human",
-    emoji: "🦭",
+    emoji: "✨",
     translations: {
       en: {
         question: "Which legendary sea folk can shed their seal skin to become human?",

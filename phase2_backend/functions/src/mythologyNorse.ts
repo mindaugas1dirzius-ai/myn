@@ -716,7 +716,7 @@ export const MYTHOLOGY_NORSE: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Norse cosmology — Muspelheim, realm of fire",
-    emoji: "🔥",
+    emoji: "🌌",
     translations: {
       en: {
         question: "What is the blazing realm of the fire giants in Norse myth?",
@@ -739,7 +739,7 @@ export const MYTHOLOGY_NORSE: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Norse cosmology — Niflheim, realm of ice and mist",
-    emoji: "❄️",
+    emoji: "🪓",
     translations: {
       en: {
         question: "What is the cold, misty realm of ice in Norse cosmology?",

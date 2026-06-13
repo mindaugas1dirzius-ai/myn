@@ -20,7 +20,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Greek mythology — Zeus, king of the gods",
-    emoji: "⚡",
+    emoji: "🏛️",
     translations: {
       en: {
         question: "Who is the king of the Greek gods, ruler of the sky?",
@@ -43,7 +43,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Greek mythology — Poseidon, god of the sea",
-    emoji: "🌊",
+    emoji: "🏺",
     translations: {
       en: {
         question: "Which god rules the sea, carrying a three-pronged spear?",
@@ -89,7 +89,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Greek mythology — Heracles (Hercules) and his strength",
-    emoji: "💪",
+    emoji: "🗿",
     translations: {
       en: {
         question: "Which hero is famous for huge strength and twelve labors?",
@@ -112,7 +112,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Greek mythology — the centaur (half man, half horse)",
-    emoji: "🐴",
+    emoji: "📜",
     translations: {
       en: {
         question: "What creature has a horse's body and a man's upper half?",
@@ -135,7 +135,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Greek mythology — Pegasus, the winged horse",
-    emoji: "🐎",
+    emoji: "🪙",
     translations: {
       en: {
         question: "Which famous mythical horse has wings and can fly?",
@@ -158,7 +158,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Greek mythology — Hermes, the messenger god",
-    emoji: "👟",
+    emoji: "🎭",
     translations: {
       en: {
         question: "Who is the speedy messenger god with winged sandals?",
@@ -181,7 +181,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Greek mythology — the Cyclops, one-eyed giant",
-    emoji: "👁️",
+    emoji: "🏟️",
     translations: {
       en: {
         question: "Which giant in Greek myths has just a single eye?",
@@ -204,7 +204,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Greek mythology — Apollo, god of the sun and music",
-    emoji: "🎵",
+    emoji: "🗝️",
     translations: {
       en: {
         question: "Who is the Greek god of the sun, music and archery?",
@@ -227,7 +227,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Greek mythology — Hades rules the underworld",
-    emoji: "🔥",
+    emoji: "📯",
     translations: {
       en: {
         question: "Which god rules the dark world of the dead below?",
@@ -252,7 +252,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Greek mythology — Athena, goddess of wisdom",
-    emoji: "🦉",
+    emoji: "🏛️",
     translations: {
       en: {
         question: "Which goddess of wisdom sprang from Zeus's own head?",
@@ -275,7 +275,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Greek mythology — Cerberus guards the underworld",
-    emoji: "🐶",
+    emoji: "🏺",
     translations: {
       en: {
         question: "What three-headed dog guards the gates of the underworld?",
@@ -298,7 +298,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Greek mythology — Medusa turns onlookers to stone",
-    emoji: "🐍",
+    emoji: "🗿",
     translations: {
       en: {
         question: "Whose gaze was so terrible it turned people to stone?",
@@ -367,7 +367,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Roman mythology — Jupiter equals the Greek Zeus",
-    emoji: "⚡",
+    emoji: "📜",
     translations: {
       en: {
         question: "The Romans called their king of the gods, like Zeus, what?",
@@ -390,7 +390,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Mythology — Aphrodite is the Roman Venus",
-    emoji: "💗",
+    emoji: "🪙",
     translations: {
       en: {
         question: "Which Greek goddess of love did the Romans call Venus?",
@@ -413,7 +413,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Greek mythology — Achilles' only weak spot was his heel",
-    emoji: "🦶",
+    emoji: "🎭",
     translations: {
       en: {
         question: "Which warrior had only one weak spot — his heel?",
@@ -459,7 +459,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Roman mythology — Mars is the god of war (Greek Ares)",
-    emoji: "🛡️",
+    emoji: "🏟️",
     translations: {
       en: {
         question: "Who was the Roman god of war, matching the Greek Ares?",
@@ -484,7 +484,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Greek mythology — Atlas holds up the sky",
-    emoji: "🌍",
+    emoji: "🗝️",
     translations: {
       en: {
         question: "Which Titan was condemned to hold up the sky forever?",
@@ -507,7 +507,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Greek mythology — Prometheus stole fire for humankind",
-    emoji: "🔥",
+    emoji: "📯",
     translations: {
       en: {
         question: "Which Titan stole fire from the gods to give to humans?",
@@ -530,7 +530,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Greek mythology — the Chimera (lion, goat, serpent)",
-    emoji: "🦁",
+    emoji: "🏛️",
     translations: {
       en: {
         question: "Which monster had a lion's head, goat's body and snake's tail?",
@@ -576,7 +576,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Greek mythology — the Hydra regrew its heads",
-    emoji: "🐉",
+    emoji: "🏺",
     translations: {
       en: {
         question: "Which serpent grew two new heads each time one was cut off?",
@@ -645,7 +645,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Greek mythology — Orpheus entered the underworld for his wife",
-    emoji: "🎶",
+    emoji: "🗿",
     translations: {
       en: {
         question: "Which musician charmed the underworld to rescue his lost wife?",
@@ -668,7 +668,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Greek mythology — Demeter, goddess of the harvest",
-    emoji: "🌾",
+    emoji: "📜",
     translations: {
       en: {
         question: "Which goddess of the harvest is the mother of Persephone?",
@@ -691,7 +691,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Greek mythology — Hera, queen of the gods",
-    emoji: "👑",
+    emoji: "🪙",
     translations: {
       en: {
         question: "Who is the queen of the Greek gods and wife of Zeus?",
@@ -716,7 +716,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Greek mythology — Cronus, Titan father of Zeus",
-    emoji: "⏳",
+    emoji: "🎭",
     translations: {
       en: {
         question: "Which Titan ruled before Zeus and was his own father?",
@@ -739,7 +739,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Greek mythology — Nike, goddess of victory",
-    emoji: "🏆",
+    emoji: "🏟️",
     translations: {
       en: {
         question: "Which winged goddess of victory lends her name to a sports brand?",
@@ -785,7 +785,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Greek mythology — Eris threw the golden apple of discord",
-    emoji: "🍏",
+    emoji: "🗝️",
     translations: {
       en: {
         question: "Which goddess of discord threw the apple that sparked the Trojan War?",
@@ -808,7 +808,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Mythology — Hestia is the Greek counterpart of Roman Vesta",
-    emoji: "🔥",
+    emoji: "📯",
     translations: {
       en: {
         question: "Which Greek goddess of the hearth matches the Roman Vesta?",
@@ -831,7 +831,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Greek mythology — Gaia, primordial personification of Earth",
-    emoji: "🌍",
+    emoji: "🏛️",
     translations: {
       en: {
         question: "Who is the primordial Greek goddess who personifies the Earth?",
@@ -854,7 +854,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Greek mythology — Perseus beheaded Medusa using a shield",
-    emoji: "🛡️",
+    emoji: "🏺",
     translations: {
       en: {
         question: "Which hero beheaded Medusa by watching her in a polished shield?",
@@ -877,7 +877,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Greek mythology — Bellerophon tamed Pegasus, slew the Chimera",
-    emoji: "🐎",
+    emoji: "🗿",
     translations: {
       en: {
         question: "Which hero tamed Pegasus and killed the fire-breathing Chimera?",
@@ -900,7 +900,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Mythology — Minerva is the Roman counterpart of Athena",
-    emoji: "🦉",
+    emoji: "📜",
     translations: {
       en: {
         question: "What did the Romans name their goddess of wisdom, like Athena?",
@@ -923,7 +923,7 @@ export const MYTHOLOGY_GREEK: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Greek mythology — Hypnos is the personification of sleep",
-    emoji: "😴",
+    emoji: "🪙",
     translations: {
       en: {
         question: "Which Greek god personified sleep, brother of Death (Thanatos)?",

@@ -21,7 +21,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Anubis, jackal-headed god of the dead",
-    emoji: "🐺",
+    emoji: "🔺",
     translations: {
       en: {
         question: "Which Egyptian god has a jackal's head and guards the dead?",
@@ -44,7 +44,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Ra, the sun god",
-    emoji: "☀️",
+    emoji: "🏛️",
     translations: {
       en: {
         question: "Who is the Egyptian sun god, king of the gods?",
@@ -67,7 +67,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Ancient Egypt — mummification preserved the dead",
-    emoji: "🧻",
+    emoji: "📜",
     translations: {
       en: {
         question: "What did ancient Egyptians turn dead bodies into to preserve them?",
@@ -90,7 +90,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Horus, the falcon-headed sky god",
-    emoji: "🦅",
+    emoji: "⚱️",
     translations: {
       en: {
         question: "Which Egyptian sky god has the head of a falcon?",
@@ -113,7 +113,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Ancient Egypt — cats were sacred (goddess Bastet)",
-    emoji: "🐈",
+    emoji: "🗿",
     translations: {
       en: {
         question: "Which animal was especially sacred to the Egyptian goddess Bastet?",
@@ -136,7 +136,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Egyptian symbol — the ankh means life",
-    emoji: "🔑",
+    emoji: "📿",
     translations: {
       en: {
         question: "Which Egyptian symbol, a cross with a loop on top, means life?",
@@ -182,7 +182,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Ancient Egypt — the Great Sphinx (lion body, human head)",
-    emoji: "🦁",
+    emoji: "🪨",
     translations: {
       en: {
         question: "Which huge statue has a lion's body and a human head in Egypt?",
@@ -228,7 +228,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Egyptian symbol — the scarab beetle (rebirth, luck)",
-    emoji: "🪲",
+    emoji: "⛏️",
     translations: {
       en: {
         question: "Which beetle did Egyptians treasure as a lucky symbol of rebirth?",
@@ -299,7 +299,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Set, god of chaos, killed Osiris",
-    emoji: "🏜️",
+    emoji: "📯",
     translations: {
       en: {
         question: "Which Egyptian god of chaos murdered his own brother Osiris?",
@@ -345,7 +345,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Egyptian mythology — heart weighed against Maat's feather",
-    emoji: "⚖️",
+    emoji: "🪔",
     translations: {
       en: {
         question: "In the afterlife, the heart was weighed against a feather of which goddess?",
@@ -391,7 +391,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Sekhmet, lioness war goddess",
-    emoji: "🦁",
+    emoji: "🔺",
     translations: {
       en: {
         question: "Which fierce Egyptian goddess of war was shown as a lioness?",
@@ -414,7 +414,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Sobek, crocodile-headed god",
-    emoji: "🐊",
+    emoji: "🏛️",
     translations: {
       en: {
         question: "Which Egyptian god has the head of a crocodile?",
@@ -437,7 +437,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Egyptian symbol — the protective Eye of Horus",
-    emoji: "👁️",
+    emoji: "📜",
     translations: {
       en: {
         question: "The protective Eye amulet belongs to which falcon-headed god?",
@@ -600,7 +600,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Bastet, cat goddess, protector",
-    emoji: "🐈‍⬛",
+    emoji: "⚱️",
     translations: {
       en: {
         question: "Which gentle Egyptian goddess of home was shown as a cat?",
@@ -623,7 +623,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Hathor, cow-horned goddess of love",
-    emoji: "🐄",
+    emoji: "🗿",
     translations: {
       en: {
         question: "Which joyful Egyptian goddess of love wore cow horns and a sun disk?",
@@ -646,7 +646,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Mesopotamian mythology — the Epic of Gilgamesh's flood story",
-    emoji: "🌊",
+    emoji: "📿",
     translations: {
       en: {
         question: "The Epic of Gilgamesh includes an early famous story of a great...?",
@@ -669,7 +669,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Nut, the sky goddess arching over earth",
-    emoji: "🌌",
+    emoji: "🪨",
     translations: {
       en: {
         question: "Which Egyptian sky goddess arched her star-covered body over the earth?",
@@ -692,7 +692,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Geb, the earth god, husband of Nut",
-    emoji: "🌍",
+    emoji: "⛏️",
     translations: {
       en: {
         question: "Which Egyptian god of the earth was the husband of the sky goddess Nut?",
@@ -717,7 +717,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Khepri, scarab god of the dawn sun",
-    emoji: "🪲",
+    emoji: "📯",
     translations: {
       en: {
         question: "Which scarab-headed god rolled the morning sun into the sky?",
@@ -763,7 +763,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Khnum shaped humans on a potter's wheel",
-    emoji: "🏺",
+    emoji: "🪔",
     translations: {
       en: {
         question: "Which ram-headed god shaped human bodies on a potter's wheel?",
@@ -809,7 +809,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Mesopotamian mythology — Enki (Ea), god of wisdom and water",
-    emoji: "💧",
+    emoji: "🔺",
     translations: {
       en: {
         question: "Which Mesopotamian god of wisdom and water was called Enki or Ea?",
@@ -855,7 +855,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Mesopotamian mythology — Utnapishtim survived the flood",
-    emoji: "🛶",
+    emoji: "🏛️",
     translations: {
       en: {
         question: "In the Epic of Gilgamesh, who survived the flood and gained immortality?",
@@ -878,7 +878,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Mesopotamian mythology — Humbaba guarded the Cedar Forest",
-    emoji: "🌲",
+    emoji: "📜",
     translations: {
       en: {
         question: "Which monstrous guardian of the Cedar Forest did Gilgamesh slay?",
@@ -901,7 +901,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Egyptian mythology — Ptah, creator god of craftsmen",
-    emoji: "🔨",
+    emoji: "⚱️",
     translations: {
       en: {
         question: "Which Egyptian patron of craftsmen was said to create by speaking?",

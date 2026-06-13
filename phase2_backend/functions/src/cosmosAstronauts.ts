@@ -90,7 +90,7 @@ export const COSMOS_ASTRONAUTS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Spaceflight history — Laika, first animal to orbit (1957)",
-    emoji: "🐕",
+    emoji: "🚀",
     translations: {
       en: {
         question: "Which animal was the first to orbit the Earth, in 1957?",
@@ -113,7 +113,7 @@ export const COSMOS_ASTRONAUTS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "NASA — spacewalk (EVA)",
-    emoji: "🚶",
+    emoji: "🛰️",
     translations: {
       en: {
         question: "What do we call it when an astronaut goes outside the ship?",
@@ -136,7 +136,7 @@ export const COSMOS_ASTRONAUTS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Physics — space is a vacuum, sound cannot travel",
-    emoji: "🔇",
+    emoji: "🛸",
     translations: {
       en: {
         question: "Can astronauts hear sounds out in open space?",
@@ -159,7 +159,7 @@ export const COSMOS_ASTRONAUTS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "NASA — spacesuit helmet",
-    emoji: "🪖",
+    emoji: "🌌",
     translations: {
       en: {
         question: "What protects an astronaut's head inside the suit?",
@@ -391,7 +391,7 @@ export const COSMOS_ASTRONAUTS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Spaceflight history — Ham the chimpanzee (1961)",
-    emoji: "🐵",
+    emoji: "🔭",
     translations: {
       en: {
         question: "Before astronauts, which animal did the US launch in 1961?",
@@ -646,7 +646,7 @@ export const COSMOS_ASTRONAUTS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Psychology — the 'Overview Effect' (Frank White)",
-    emoji: "🌍",
+    emoji: "🌠",
     translations: {
       en: {
         question: "What is the 'Overview Effect' many astronauts describe?",
@@ -669,7 +669,7 @@ export const COSMOS_ASTRONAUTS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Space medicine — fluid shift puffs the face in microgravity",
-    emoji: "😮",
+    emoji: "☄️",
     translations: {
       en: {
         question: "What happens to an astronaut's face in microgravity?",
@@ -855,7 +855,7 @@ export const COSMOS_ASTRONAUTS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "History — Leonov's suit ballooned on the first spacewalk (1965)",
-    emoji: "🎈",
+    emoji: "🪐",
     translations: {
       en: {
         question: "On the first spacewalk, Leonov's suit dangerously...?",
@@ -878,7 +878,7 @@ export const COSMOS_ASTRONAUTS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Spacecraft engineering — heat shield protects on re-entry",
-    emoji: "🔥",
+    emoji: "🌖",
     translations: {
       en: {
         question: "What does a capsule's heat shield protect against on return?",
@@ -924,7 +924,7 @@ export const COSMOS_ASTRONAUTS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Space medicine — space adaptation syndrome (space sickness)",
-    emoji: "🤢",
+    emoji: "📡",
     translations: {
       en: {
         question: "What do most astronauts feel during their first days in orbit?",

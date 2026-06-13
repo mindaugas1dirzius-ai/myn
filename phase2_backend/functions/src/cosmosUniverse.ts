@@ -44,7 +44,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Astronomy — the Sun is a star",
-    emoji: "☀️",
+    emoji: "🔭",
     translations: {
       en: {
         question: "Is the Sun a planet or a star?",
@@ -67,7 +67,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Astronomy — a galaxy is a huge group of stars",
-    emoji: "🌌",
+    emoji: "🚀",
     translations: {
       en: {
         question: "What do we call a huge group of billions of stars?",
@@ -136,7 +136,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Astronomy — stars are far larger than planets",
-    emoji: "⭐",
+    emoji: "🛰️",
     translations: {
       en: {
         question: "Which is usually bigger — a star or a planet?",
@@ -159,7 +159,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Astronomy — nebula as a star-forming cloud",
-    emoji: "☁️",
+    emoji: "☄️",
     translations: {
       en: {
         question: "What do we call a giant cloud of gas where stars are born?",
@@ -253,7 +253,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Astronomy — a light-year measures distance",
-    emoji: "📏",
+    emoji: "🪐",
     translations: {
       en: {
         question: "A 'light-year' is a measure of what?",
@@ -322,7 +322,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Astronomy — the Milky Way is a spiral galaxy",
-    emoji: "🌀",
+    emoji: "🔬",
     translations: {
       en: {
         question: "What shape is our Milky Way galaxy?",
@@ -345,7 +345,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Astrophysics — blue stars are the hottest",
-    emoji: "🔵",
+    emoji: "📡",
     translations: {
       en: {
         question: "Red stars are cooler — which color marks the hottest stars?",
@@ -368,7 +368,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Astronomy — Polaris, the North Star",
-    emoji: "🧭",
+    emoji: "🛸",
     translations: {
       en: {
         question: "Which star sits above the North Pole and guides travelers?",
@@ -414,7 +414,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Cosmology — the Big Bang theory",
-    emoji: "💥",
+    emoji: "🌖",
     translations: {
       en: {
         question: "What is the theory of how the universe began?",
@@ -485,7 +485,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Astrophysics — supermassive black hole at galaxy center",
-    emoji: "⚫",
+    emoji: "🪨",
     translations: {
       en: {
         question: "What lurks at the very center of our Milky Way?",
@@ -600,7 +600,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Astrophysics — the Sun will become a red giant",
-    emoji: "🔴",
+    emoji: "🌑",
     translations: {
       en: {
         question: "What will our Sun swell into in about 5 billion years?",
@@ -786,7 +786,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Astronomy — Betelgeuse, red supergiant in Orion",
-    emoji: "🔴",
+    emoji: "⚗️",
     translations: {
       en: {
         question: "Which red supergiant in Orion may explode as a supernova someday?",
@@ -809,7 +809,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Astrophysics — redshift of receding galaxies",
-    emoji: "🔴",
+    emoji: "🧲",
     translations: {
       en: {
         question: "What do we call the stretching of light from a galaxy moving away?",
@@ -901,7 +901,7 @@ export const COSMOS_UNIVERSE: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Astrophysics — kilonova (neutron star merger) forges gold",
-    emoji: "💥",
+    emoji: "🔆",
     translations: {
       en: {
         question: "What blast, when two neutron stars merge, forges gold and platinum?",

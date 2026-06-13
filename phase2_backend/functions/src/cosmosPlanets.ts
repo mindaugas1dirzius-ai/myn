@@ -163,7 +163,7 @@ export const COSMOS_PLANETS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "NASA — Earth is the third planet from the Sun",
-    emoji: "🌎",
+    emoji: "🔭",
     translations: {
       en: {
         question: "Which planet is the third one from the Sun?",
@@ -186,7 +186,7 @@ export const COSMOS_PLANETS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "NASA — the Sun is far larger than Earth",
-    emoji: "☀️",
+    emoji: "🌌",
     translations: {
       en: {
         question: "Which is much bigger — the Sun or the Earth?",
@@ -209,7 +209,7 @@ export const COSMOS_PLANETS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Basic astronomy — a moon is a natural satellite",
-    emoji: "🌗",
+    emoji: "✨",
     translations: {
       en: {
         question: "What do we call a natural companion that orbits a planet?",
@@ -232,7 +232,7 @@ export const COSMOS_PLANETS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "NASA — Neptune is the farthest, coldest major planet",
-    emoji: "🔵",
+    emoji: "🚀",
     translations: {
       en: {
         question: "Which planet is famous for being very cold and far from the Sun?",
@@ -257,7 +257,7 @@ export const COSMOS_PLANETS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Roman mythology — Jupiter, king of the gods",
-    emoji: "⚡",
+    emoji: "🛰️",
     translations: {
       en: {
         question: "Which planet is named after the Roman king of the gods?",
@@ -303,7 +303,7 @@ export const COSMOS_PLANETS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "NASA — Saturn's density is less than water",
-    emoji: "🪐",
+    emoji: "☄️",
     translations: {
       en: {
         question: "Which planet is so light it could float in water?",
@@ -696,7 +696,7 @@ export const COSMOS_PLANETS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "NASA — Mars has planet-wide dust storms",
-    emoji: "🟠",
+    emoji: "🌠",
     translations: {
       en: {
         question: "Which planet has dust storms that can cover the whole globe?",

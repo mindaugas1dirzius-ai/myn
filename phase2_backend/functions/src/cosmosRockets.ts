@@ -578,7 +578,7 @@ export const COSMOS_ROCKETS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Chemistry — hydrogen + oxygen burn to water vapor",
-    emoji: "💧",
+    emoji: "🚀",
     translations: {
       en: {
         question: "Which clean fuel pair burns to leave only water vapor?",
@@ -670,7 +670,7 @@ export const COSMOS_ROCKETS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Spaceflight — ion engines use charged particles",
-    emoji: "⚡",
+    emoji: "🛰️",
     translations: {
       en: {
         question: "Which weak but very efficient engine pushes probes with charged gas?",
@@ -925,7 +925,7 @@ export const COSMOS_ROCKETS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Spaceflight — solar sails push using sunlight pressure",
-    emoji: "⛵",
+    emoji: "📡",
     translations: {
       en: {
         question: "What fuel-free method pushes a craft using sunlight on a big sail?",
