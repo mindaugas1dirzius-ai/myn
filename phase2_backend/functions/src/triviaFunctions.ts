@@ -50,7 +50,7 @@ const NATURE_LEVELS: Level[] = ["lengvas", "vidutinis", "sunkus", "ekstremalus"]
  * žemiau įvyks „Per mažai klausimų" — todėl klientas tokias užrakina („Greitai").
  */
 const NATURE_TOPICS: (NatureTopic | "mix")[] = [
-  "facts", "extinct", "plants", "mix",
+  "facts", "extinct", "plants", "superpowers", "minds", "mix",
 ];
 
 export const startNatureGame = onCall(

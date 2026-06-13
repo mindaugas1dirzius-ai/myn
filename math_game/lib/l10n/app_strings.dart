@@ -154,6 +154,12 @@ class AppStrings {
   String get topicPlants => _pick('Augalai', 'Plants');
   String get topicPlantsDesc =>
       _pick('Medžiai, gėlės, grybai', 'Trees, flowers, fungi');
+  String get topicSuperpowers => _pick('Gyvūnų supergalios', 'Animal superpowers');
+  String get topicSuperpowersDesc =>
+      _pick('Nuodai, kamufliažas, regeneracija', 'Venom, camouflage, regeneration');
+  String get topicMinds => _pick('Gyvūnų protas', 'Animal minds');
+  String get topicMindsDesc =>
+      _pick('Įrankiai, atmintis, gudrybės', 'Tools, memory, clever tricks');
   String get topicMix => _pick('Viskas iš eilės', 'Mixed');
   String get topicMixDesc =>
       _pick('Klausimai iš visų potemių', 'Questions from all topics');

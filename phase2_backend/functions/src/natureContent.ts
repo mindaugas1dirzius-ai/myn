@@ -18,8 +18,13 @@
  */
 
 import { TriviaQuestion } from "./triviaTypes";
+// Naujos potemės MAŽAIS failais (2026-06-13): prikabinamos čia, kad monolito neaugintume.
+import { NATURE_SUPERPOWERS } from "./natureSuperpowers";
+import { NATURE_MINDS } from "./natureMinds";
 
 export const NATURE_QUESTIONS: TriviaQuestion[] = [
+  ...NATURE_SUPERPOWERS,
+  ...NATURE_MINDS,
   // ======================= EASY (lengvas) =======================
   {
     id: "nat_animals_001",

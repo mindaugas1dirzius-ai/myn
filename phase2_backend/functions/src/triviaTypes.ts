@@ -34,7 +34,8 @@ export const DEFAULT_LANG: Lang = "en";
  * esamų 211 klausimų KEISTI NEREIKIA. ("mix" nėra klausimo žyma — tai
  * pasirinkimo režimas, traukiantis iš visų potemių; žr. triviaFunctions.)
  */
-export type NatureTopic = "facts" | "extinct" | "plants";
+export type NatureTopic =
+  | "facts" | "extinct" | "plants" | "superpowers" | "minds";
 
 /** Numatytoji potemė, jei klausimas neturi `topic` lauko. */
 export const DEFAULT_TOPIC: NatureTopic = "facts";

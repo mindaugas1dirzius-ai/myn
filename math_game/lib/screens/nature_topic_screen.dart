@@ -50,6 +50,22 @@ class NatureTopicScreen extends StatelessWidget {
         open: true,
       ),
       _TopicEntry(
+        id: 'superpowers',
+        emoji: '🧬',
+        title: s.topicSuperpowers,
+        subtitle: s.topicSuperpowersDesc,
+        accent: AppColors.levelHard,
+        open: true,
+      ),
+      _TopicEntry(
+        id: 'minds',
+        emoji: '🧠',
+        title: s.topicMinds,
+        subtitle: s.topicMindsDesc,
+        accent: AppColors.themeTech,
+        open: true,
+      ),
+      _TopicEntry(
         id: 'mix',
         emoji: '🎲',
         title: s.topicMix,
