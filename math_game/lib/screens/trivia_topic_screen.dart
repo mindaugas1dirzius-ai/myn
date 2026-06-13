@@ -196,7 +196,7 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subMythEgypt,
             subtitle: s.subMythEgyptDesc,
             accent: AppColors.themeHistory,
-            open: false,
+            open: true,
           ),
           _SubTheme(
             id: 'creatures',
