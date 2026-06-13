@@ -810,7 +810,7 @@ export const MYSTERIES: MysteryItem[] = [
     id: "mys_fakt_007",
     category: "faktas",
     level: 3,
-    sourceVerified: "Fizika: geležis plečiasi karštyje – Eifelio bokštas vasarą paaukštėja ~15 cm",
+    sourceVerified: "Fizika: geležis plečiasi karštyje – Eifelio bokštas vasarą išauga ~15 cm",
     texts: {
       en: {
         text: "The Eiffel Tower grows in summer",
@@ -819,7 +819,7 @@ export const MYSTERIES: MysteryItem[] = [
         hint2: "This landmark stands in Paris.",
       },
       lt: {
-        text: "Eifelio bokštas vasarą paaukštėja",
+        text: "Eifelio bokštas vasarą išauga",
         hint: "Faktas apie garsų geležinį statinį",
         hint1: "Nuo karščio metalas plečiasi, tad jis tampa aukštesnis.",
         hint2: "Šis statinys stovi Paryžiuje.",
