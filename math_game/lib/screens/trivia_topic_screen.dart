@@ -203,7 +203,7 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subCosmosUniverse,
             subtitle: s.subCosmosUniverseDesc,
             accent: AppColors.levelExtreme,
-            open: false,
+            open: true,
           ),
           _SubTheme(
             id: 'rockets',

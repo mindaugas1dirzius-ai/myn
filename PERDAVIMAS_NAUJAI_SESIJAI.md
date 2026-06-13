@@ -150,9 +150,9 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
 
 ## 8. DABARTINĖ BŪSENA (2026-06-13)
 
-- **Turinys:** trivijos+gamta 2 445 kl. (gamta 720 · sport 270 · body 255 ·
-  history 244 · pop 243 · geo 240 · tech 177 · food 176 · **cosmos 120 NAUJA**) · 40 mitų ·
-  (cosmos 120 = planets 40 + astronauts 40 + spacerace 40 [perkelta iš tech]) ·
+- **Turinys:** trivijos+gamta 2 485 kl. (gamta 720 · sport 270 · body 255 ·
+  history 244 · pop 243 · geo 240 · tech 177 · food 176 · **cosmos 160 NAUJA**) · 40 mitų ·
+  (cosmos 160 = planets 40 + astronauts 40 + universe 40 + spacerace 40 [perkelta iš tech]) ·
   101 mįslė (pool 73 be citatų/patarlių; lygiai L1=15/L2=45/L3=35/**L4=6** —
   pildant pirmiausia L4 ir „klausimas" tipo 42) · **16 detektyvo bylų** (v2).
 - **Įrankiai functions/:** `_appcheck_fix.js` (App Check per API),
@@ -198,8 +198,12 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
      - 🧑‍🚀 **Astronautai ir misijos** PILNA (cos_ast_001–040, 10/lygiui; mažas
        failas `cosmosAstronauts.ts`; ŽMONĖS kosmose — gyvenimas TKS, kūnas,
        garsūs pirmieji [Tereškova/Leonovas/Glenas], gyvūnai; NEkartoja spacerace).
-     - ⬜ 🔭 Visata · 🛰️ Raketos — „Greitai", pildoma po 40 (tas pats receptas:
-       naujas mažas failas → cosmosContent import → trivia_topic_screen open:true).
+     - 🔭 **Visata ir žvaigždės** PILNA (cos_uni_001–040; galaktikos, žvaigždės,
+       juodosios skylės, Big Bang; failas `cosmosUniverse.ts`; NEkartoja spacerace).
+     - ⬜ 🛰️ Raketos ir tyrimai — paskutinė potemė, „Greitai", pildoma po 40
+       (receptas: naujas mažas failas → cosmosContent import → open:true).
+   - 🎨 DIZAINAS: kiekviena pradinio meniu tema turi SAVĄ spalvą (app_theme.dart
+     theme* spalvos + theme_catalog accent) — savininkas: „negražu vienodos spalvos".
      Wiring: triviaTypes(+cosmos) · triviaRegistry(+move) · subThemeConfig(cosmos
      5 potemės, tech be space) · unlockConfig · themeEmoji(🌌) · theme_catalog ·
      trivia_topic_screen(tech be space kortelės, cosmos +spacerace) · app_strings.
