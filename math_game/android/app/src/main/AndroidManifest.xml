@@ -2,7 +2,7 @@
     <!-- Reikia INTERNET reklamoms ir Firebase (paprastai jau būna, dedam aiškiai) -->
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="math_game"
+        android:label="Minalect Arena"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 

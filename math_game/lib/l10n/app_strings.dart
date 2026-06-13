@@ -27,7 +27,7 @@ class AppStrings {
   String get pickLevel => _pick('Pasirink lygį', 'Pick a level');
 
   // --- Kategorijų meniu (pradinis langas: matematika / gamta / ...) ---
-  String get appName => 'BRAIN ARENA';
+  String get appName => 'Minalect Arena';
   String get chooseCategory =>
       _pick('Pasirink temą', 'Choose a category');
   String get categoryMath => _pick('Matematika', 'Math');

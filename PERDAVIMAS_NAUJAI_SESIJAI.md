@@ -10,7 +10,7 @@
 
 ## 0. SANTRAUKA (30 sekundžių)
 
-- **„BRAIN ARENA"** — Flutter (Android) + Firebase protų žaidimų platforma vakarų rinkoms (10 kalbų), kelias į **Google Play** + uždarbį (reklamos, premium).
+- **„Minalect Arena"** (PAVADINIMAS PAKEISTAS 2026-06-13 iš „BRAIN ARENA"; savininko valia) — Flutter (Android) + Firebase protų žaidimų platforma vakarų rinkoms (10 kalbų), kelias į **Google Play** + uždarbį (reklamos, premium). **Logotipas:** savininko Canva dizainas (auksinės smegenys + karūna + laurai), `math_game/assets/images/logo.png` — fonas pašalintas (permatomas, per Jimp), rodomas pradinio ekrano viršuje vietoj teksto pavadinimo. Canva design_id `DAHMd4xFhd0`.
 - **4 ramsčiai (svarbos eile): 1) SAUGA · 2) FAKTŲ TEISINGUMAS · 3) ĮVAIROVĖ (nieko nesikartoja, įdomu) · 4) UŽDARBIS.**
 - Server-authoritative; turinys serveryje (Cloud Functions TS), klientas (Flutter) tik rodo.
 - Dabar etapas: **statom turinį + temas** (Google Play dar negreitai, savininkas pasakys kada).
