@@ -18,10 +18,11 @@ import { TriviaQuestion } from "./triviaTypes";
 import { COSMOS_PLANETS } from "./cosmosPlanets";
 import { COSMOS_ASTRONAUTS } from "./cosmosAstronauts";
 import { COSMOS_UNIVERSE } from "./cosmosUniverse";
+import { COSMOS_ROCKETS } from "./cosmosRockets";
 
 export const COSMOS_QUESTIONS: TriviaQuestion[] = [
   ...COSMOS_PLANETS,
   ...COSMOS_ASTRONAUTS,
   ...COSMOS_UNIVERSE,
-  // ...COSMOS_ROCKETS — pildoma partijomis.
+  ...COSMOS_ROCKETS,
 ];
