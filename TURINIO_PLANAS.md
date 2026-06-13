@@ -65,8 +65,25 @@ Visi klausimai: tarptautiški, neįžeidžiantys, be religijos/politikos/ginčyt
 - 🚄 Traukiniai ir metro (Orient Express, greičiausi)
 - 🧳 Garsieji maršrutai (Šilko kelias, Route 66)
 
+## 3 BANGA — naujos potemės ESAMOMS temoms (savininkas 2026-06-13: „per mažai potemių")
+
+> Daryti PO naujų temų (Mitologija/Rekordai/Prekių ženklai/Transportas). Po ~40 kl.
+> (10/lygiui), tas pats receptas kaip Kosmosui (mažas failas + indeksas + open:true).
+> Idėjos brainstormintos — savininkas dar gali patvirtinti/keisti prieš darant.
+
+| Tema | Naujos potemės (≥2) | Žyma |
+|------|---------------------|------|
+| 🌿 Gamta | 🌋 Gamtos stichijos (ugnikalniai, žemės drebėjimai, audros) · 🦠 Mažasis pasaulis (vabzdžiai, mikrobai, voratinkliai) | disasters · micro |
+| 🎬 Pop | 😂 Internetas ir memai (virusiniai dalykai, soc. tinklai) · 🎮 Žaidimų kultūra (populiarūs žaidimai, esportas) | internet · gaming |
+| 🏛️ Istorija | 🏰 Riteriai ir pilys (viduramžiai, šarvai, turnyrai) · 🗺️ Atradėjai ir keliautojai (Kolumbas, Magelanas, Markas Polas) | knights · explorers |
+| 🍔 Maistas | ☕ Gėrimų pasaulis (kava, arbata, gazuoti — istorijos) · 🍰 Desertai ir saldumynai (tortai, šokoladas, ledai) | drinks · desserts |
+| 🧠 Žmogaus kūnas | 🫀 Širdis ir kraujas (kraujotaka, įdomybės) · 🍎 Mityba ir energija (kaip maistas maitina kūną) | heart · nutrition |
+
+(Plius jau anksčiau 1 bangoje planuotos: gamta ocean/animalrecords; istorija pirates/egypt;
+maistas desserts; pop superheroes; kūnas sleep/senses — jas irgi pabaigti.)
+
 ## KOKYBĖS KARTELĖ (kiekvienai partijai)
 - Sunkumas griežtai pagal amžiaus skalę; mano kritinė peržiūra prieš deploy
 - Stiliaus gidas (pagal pasaulio viktorinų tyrimą) — be sausų faktų, su „oho" efektu
 - Įvairios klausimų pradžios; jokio „atsakymo klausime"; emoji neatskleidžia atsakymo
-- validateContent + tsc + deploy + patikra telefone + commit/push + pranešimas vartotojui
+- validateContent + tsc + ilgio kvapas + deploy + patikra telefone + commit/push + pranešimas
