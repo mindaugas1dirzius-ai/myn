@@ -28,6 +28,7 @@
 - **📣 PRANEŠK PO KIEKVIENO PAKEITIMO** lietuviškai: ką padarei ir KĄ TIKSLIAI patikrinti telefone.
 - **🐢 NESKUBĖK:** kokybė > greitis. Klaidą radus — pirma sutvark, tik tada toliau. Nešok prie kitos partijos, kol esama netvarkinga.
 - **👤 VIENA SESIJA ant repo vienu metu!** (2026-06-13 buvo incidentas — dvi sesijos lietė tuos pačius failus.) Prieš push visada `git fetch` + tikrink ahead/behind; jei behind — pirma `pull/merge`.
+- **🔄 NAUJOS SESIJOS sprendimą priima CLAUDE (savininkas 2026-06-13):** savininkas NENORI pats sekti — Claude PATS pasako, kada verta nauja sesija. TIK švariame taške (nieko nebaigto; deploy+commit+perdavimas atnaujinti) IR kai kontekstas ~90%+ ARBA atsakymai lėtėja ARBA reikia taupyti plano limitus. Saugumui nebūtina (viskas perdavime+atmintyje+GitHub). NIEKADA vidury darbo ar kai sukasi workflow.
 - **Geležinė taisyklė:** naujiems DIDELIEMS sumanymams — pirma planas + sauga, tada kodas. Aptartiems — autonomija iki galo.
 
 ---
