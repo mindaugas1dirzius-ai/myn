@@ -205,6 +205,7 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 - 👤 PROFILIS pilnas; 🎨 dizainas žaidimo viduje (taškučiai+serija — ATSARGIAI su nature/math ekranais).
 - 🌍 PAPILDOMOS KALBOS (es/it/pl/de/fr/uk/pt/ar) — vertimas PAGAL KULTŪRĄ, ne pažodžiui.
 - 🔒 Techninis auditas: R8/release fix, App Check→playIntegrity, tikri AdMob ID, rate-limiting, Firestore TTL.
+- 🎛️ **Reklamų/monetizacijos VALDYMO SKYDELIS (savininko užsakymas 2026-06-13)** — custom web admin (Firebase backend): įjungti/išjungti reklamas, keisti jų dažnį/kainas, matyti pajamas + žaidėjų statistiką; reklamų kampanijų duomenis traukti per Windsor.ai jungtį. KŪRIMO darbas PO turinio etapo (ne jungtis — patys statom).
 
 **Vėliau (atskiri OK):** reklama už +1 gyvybę, dienos byla, serijos, dvikova, detektyvo bylų paketai.
 
