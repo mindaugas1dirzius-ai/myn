@@ -394,8 +394,8 @@ export const NATURE_MINDS: TriviaQuestion[] = [
       },
       lt: {
         question: "Kam šimpanzės naudoja ploną pagaliuką kaip įrankį?",
-        correct: "Gaudytų termitus",
-        distractors: ["Šukuotų plaukus", "Kurtų ugnį", "Pieštų", "Skaičiuotų", "Valytų dantis"],
+        correct: "Gaudyti termitus",
+        distractors: ["Šukuoti plaukus", "Kurti ugnį", "Piešti", "Skaičiuoti", "Valyti dantis"],
         explanation: "Jos kiša pagaliuką į termityną ir nulaižo prilipusius termitus.",
       },
     },
@@ -441,7 +441,7 @@ export const NATURE_MINDS: TriviaQuestion[] = [
         explanation: "Each dolphin invents its own whistle and others use it to call it.",
       },
       lt: {
-        question: "Kuo delfinams tampa unikalus švilpesys, kuriuo jie šaukia vienas kitą?",
+        question: "Kas delfinams yra jų unikalus atpažinimo švilpesys?",
         correct: "Vardas",
         distractors: ["Daina", "Spalva", "Burbulas", "Kvapas", "Šokis"],
         explanation: "Kiekvienas delfinas sukuria savo švilpesį, kiti juo jį pasišaukia.",
@@ -708,7 +708,7 @@ export const NATURE_MINDS: TriviaQuestion[] = [
         explanation: "Some dogs can smell cancer or warn of a coming seizure.",
       },
       lt: {
-        question: "Ką užuosti gali būti išmokyti šunys, kurie yra gudrūs ir uoslūs?",
+        question: "Ką užuosti išmokomi gudrūs, uoslūs šunys?",
         correct: "Ligas",
         distractors: ["Melą", "Vaiduoklius", "Wi-Fi", "Metalus", "Skaičius"],
         explanation: "Kai kurie šunys užuodžia vėžį ar perspėja apie artėjantį priepuolį.",
@@ -854,7 +854,7 @@ export const NATURE_MINDS: TriviaQuestion[] = [
         explanation: "They waited for a tastier shrimp instead of grabbing an instant snack.",
       },
       lt: {
-        question: "Į kurį testą panašiai sepijos parodė savitvardą, dėl geresnio kąsnio atsispyrusios prastesniam?",
+        question: "Laukdamos geresnio kąsnio, sepijos parodė savitvardą lyg per garsų testą",
         correct: "Zefyro testą",
         distractors: ["Veidrodžio testą", "Labirinto testą", "Tiuringo testą", "Klausos testą", "Regos testą"],
         explanation: "Jos laukė skanesnės krevetės, užuot stvėrusios momentinį užkandį.",

@@ -223,7 +223,7 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
         explanation: "It gulps water and swells up so it is too big and prickly to swallow.",
       },
       lt: {
-        question: "Žuvis, kuri išsipučia į dygliuotą kamuolį, kad jos nesuėstų",
+        question: "Žuvis, išsipučianti į dygliuotą kamuolį, kad nebūtų suėsta",
         correct: "Kamuolinė žuvis",
         distractors: ["Medūza", "Krabas", "Jūrų arkliukas", "Jūrų žvaigždė", "Ungurys"],
         explanation: "Ji prisiryja vandens ir taip išsipučia, kad tampa per didelė ir dygli.",
@@ -297,7 +297,7 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
         explanation: "Natural antifreeze protects its cells while its heart even stops.",
       },
       lt: {
-        question: "Gyvūnas, kuris žiemą gali beveik užšalti ir atšilęs vėl atgyti",
+        question: "Gyvūnas, žiemą beveik užšąlantis ir atšilęs vėl atgyjantis",
         correct: "Miško varlė",
         distractors: ["Rupūžė", "Tritonas", "Driežas", "Sraigė", "Vėžlys"],
         explanation: "Natūralus antifrizas saugo ląsteles, nors širdis net sustoja.",
@@ -321,7 +321,7 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
         explanation: "It mixes two chemicals that react and burst out almost boiling.",
       },
       lt: {
-        question: "Koks yra gynybinis purslas, kurį šaudo bombardyrvabalis?",
+        question: "Koks gynybinis purslas trykšta iš bombardyrvabalio?",
         correct: "Verdantis karštas",
         distractors: ["Ledinis", "Klijingas", "Saldus kaip medus", "Švytintis", "Užšaldytas"],
         explanation: "Jis sumaišo dvi medžiagas, kurios sureaguoja ir išsiveržia beveik verdančios.",
@@ -441,7 +441,7 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
         explanation: "In a blink it can match coral, sand or rock almost perfectly.",
       },
       lt: {
-        question: "Jūros gyvūnas, kuris slėpdamasis keičia ir spalvą, ir odos faktūrą",
+        question: "Jūros gyvūnas, slėpdamasis keičiantis ir spalvą, ir odos faktūrą",
         correct: "Aštuonkojis",
         distractors: ["Tunas", "Krabas", "Medūza", "Jūrų arkliukas", "Ungurys"],
         explanation: "Per akimirką jis beveik tobulai pamėgdžioja koralą, smėlį ar akmenį.",
@@ -757,7 +757,7 @@ export const NATURE_SUPERPOWERS: TriviaQuestion[] = [
         explanation: "It lives next to water up to about 80°C and is among the most heat-tolerant animals known.",
       },
       lt: {
-        question: "Iki kokios maždaug temperatūros įkaista gelmių versmės, prie kurių gyvena Pompėjos kirmėlė?",
+        question: "Iki kokios maždaug temperatūros įkaista gelmių versmės, kur gyvena Pompėjos kirmėlė?",
         correct: "80°C",
         distractors: ["20°C", "40°C", "200°C", "400°C", "5°C"],
         explanation: "Ji gyvena šalia vandens, įkaistančio iki apie 80°C, ir yra viena atspariausių karščiui gyvūnų, kokius žinome.",
