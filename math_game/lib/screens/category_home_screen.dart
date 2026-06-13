@@ -66,22 +66,29 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // „Profilis" užrašas pašalintas — žmogeliuko ikona kampe, paspaudžiama.
-                  IconButton(
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => const ProfileScreen()),
-                    ),
-                    icon: const Icon(Icons.person,
-                        color: AppColors.textSecondary, size: 28),
-                    tooltip: s.profile,
-                    padding: EdgeInsets.zero,
-                    alignment: Alignment.centerLeft,
-                    visualDensity: VisualDensity.compact,
-                  ),
-                  Image.asset(
-                    'assets/images/logo.png',
-                    height: 60,
-                    fit: BoxFit.contain,
+                  // KAIRĖJE KAMPE, vienas šalia kito: žmogeliuko ikona (profilis,
+                  // paspaudžiama) + logotipas ŠALIA jos (NE per vidurį).
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const ProfileScreen()),
+                        ),
+                        icon: const Icon(Icons.person,
+                            color: AppColors.textSecondary, size: 28),
+                        tooltip: s.profile,
+                        padding: EdgeInsets.zero,
+                        constraints: const BoxConstraints(),
+                        visualDensity: VisualDensity.compact,
+                      ),
+                      const SizedBox(width: 10),
+                      Image.asset(
+                        'assets/images/logo.png',
+                        height: 48,
+                        fit: BoxFit.contain,
+                      ),
+                    ],
                   ),
                   TextButton.icon(
                     onPressed: () => languageController.toggle(s.lang),
