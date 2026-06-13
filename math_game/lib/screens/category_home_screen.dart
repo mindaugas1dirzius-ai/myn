@@ -87,18 +87,16 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: 12),
-              // Logotipas (savininko sukurtas Canva: auksinės smegenys + karūna).
-              // Logotipe jau yra pavadinimas, tad atskiro teksto nerodom.
+              const SizedBox(height: 6),
+              // Logotipas (savininko Canva ženklas, perdažytas pagal app paletę,
+              // permatomas fonas). KOMPAKTIŠKAS — kad matytųsi kuo daugiau temų.
+              // „Pasirink temą" tekstas pašalintas (savininkas: ir taip aišku).
               Image.asset(
                 'assets/images/logo.png',
-                height: 150,
+                height: 72,
                 fit: BoxFit.contain,
               ),
-              const SizedBox(height: 8),
-              Text(s.chooseCategory,
-                  style: Theme.of(context).textTheme.bodyMedium),
-              const SizedBox(height: 28),
+              const SizedBox(height: 14),
               Expanded(
                 // VISOS 11 temų rodomos iš vieno katalogo (theme_catalog.dart).
                 // Atrakinti temą = pakeisti `open: true` kataloge — čia nieko.
