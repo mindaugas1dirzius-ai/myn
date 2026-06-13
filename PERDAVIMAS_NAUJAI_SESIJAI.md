@@ -8,6 +8,21 @@
 
 ---
 
+## 🚀 NUO KO PRADĖTI (naujai sesijai — PERSKAITYK PIRMA)
+
+- **Naujausias commit:** `669c5cb`, branch `claude/android-app-monetization-ads-RORMZ`. Prieš dirbant: `git fetch` + tikrink ahead/behind (viena sesija ant repo!).
+- **📘 KLAUSIMŲ KŪRIMO METODIKA — atskiras PILNAS dokumentas: `KLAUSIMU_KURIMO_METODIKA.md`** (kaip/kokius klausimus ieškom pagal potemes, šaltiniai, reikalavimai, formatas, emoji, LT spąstai, QC bangos, recipe'ai, checklist). **SKAITYK jį prieš rašydamas bet kokią partiją.**
+- **KAS PADARYTA (turinys):** ✅ 2 BANGA (visos naujos temos) BAIGTA — 🏷️ brands + 🚂 transport (po 160). ✅ 3 BANGA PRADĖTA — 🌿 Gamta: 🧬 Supergalios + 🧠 Gyvūnų protas (po 40 = 10/lygiui).
+- **KAS TOLIAU (eilės tvarka):**
+  1. **Daugiau 3 bangos potemių** (starteris po 10/lygiui=40). PIRMA pasiūlyk įdomias PLAČIAS potemes (METODIKA §3) → savininkas pasirenka → rašyk. Recipe: METODIKA §14 (⚠️ Gamta = §14B, skiriasi!). Kandidatai: §11 B + TURINIO_PLANAS „3 BANGA".
+  2. **Pildyti esamas potemes iki 150/lygiui** (=600 potemei) — galutinis kiekio tikslas.
+  3. **„⚠️ Pranešti apie klaidą" mygtukas** (BŪTINAS feature, §11 C) — kai savininkas pasakys daryti.
+  4. Šlifavimas iki Google Play (§11 C).
+- **KAIP DIRBTI:** pilna autonomija aptartiems darbams; **NEAIŠKU (ypač dizainas/išdėstymas) → KLAUSK, nespėliok** (§1). Klausimus **Opus rašo PATS** (ne Sonnet — METODIKA §13). Ciklas: parašai → patikra (tsc+validacija+ilgio kvapas) → **2 QC bangos** (faktai+stilius) → pataisos → deploy → APK (jei keitei Dart) → įdiegti → commit+push → **pildyk šį dokumentą** → pranešk savininkui LT, ką tikrinti.
+- **⏳ LAUKIA SAVININKO SPRENDIMO:** ar vėliau suvienodinti Gamtos kodą su kitomis temomis (`NatureTopic`+`startNatureGame` paveldas; žaidėjui jokio skirtumo; neskubu).
+
+---
+
 ## 0. SANTRAUKA (30 sekundžių)
 
 - **„Minalect Arena"** (PAVADINIMAS PAKEISTAS 2026-06-13 iš „BRAIN ARENA"; savininko valia) — Flutter (Android) + Firebase protų žaidimų platforma vakarų rinkoms (10 kalbų), kelias į **Google Play** + uždarbį (reklamos, premium). **Logotipas:** savininko Canva dizainas (auksinės smegenys + karūna + laurai), `math_game/assets/images/logo.png` — fonas pašalintas (permatomas, per Jimp), rodomas pradinio ekrano viršuje vietoj teksto pavadinimo. Canva design_id `DAHMd4xFhd0`.
@@ -245,6 +260,7 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 ## 13. ATMINTIS, PLANAI IR DOKUMENTAI
 
 - **Atmintis:** `C:\Users\minda\.claude\projects\C--Users-minda-OneDrive-Desktop\memory\` — `MEMORY.md` indeksas + temų failai (`project_math_game`, `feedback_question_writing_rules`, `feedback_coding_rules`, `project_appcheck_debug_token` ir kt.). **Po reikšmingo darbo atnaujink atitinkamą failą.**
+- **📘 `KLAUSIMU_KURIMO_METODIKA.md` — PILNA klausimų kūrimo metodika (PRIVALOMA prieš rašant): procesas, AUKSO taisyklė, potemių paieška, šaltiniai, sunkumo skalė, kiekio tikslas, formatas, ilgio kvapas, emoji, LT spąstai (kabantis žodis + vidinės kabutės), QC 2 bangos, recipe'ai (potemė/tema, Gamta atskirai), įrankiai, checklist.**
 - **Planai repo:** `TURINIO_PLANAS.md` (temos+potemės, 3 banga) · `KLAUSIMU_STILIAUS_GIDAS.md` (10 auksinių taisyklių) · `docs/planai/` (DETEKTYVAS, RAIDZIU_TIRPIMAS, TAIP_NE_BLITZ, **EGZAMINU_CENTRAS**) · `DIZAINAS.md` · `STRATEGIJA.md` · `PLETROS_PLANAS.md`.
 
 ---
