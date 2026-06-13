@@ -237,19 +237,16 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 - **Canva** — dizainas (ikonos, Play grafika, baneriai) + video mp4 eksportas.
 - **Claude in Chrome** — naršyklės valdymas (jei reikia).
 - **visualize** (įmontuotas) — greiti SVG/HTML mockup'ai pokalbyje (kaip Artifacts).
+- **Descript** — video montažas/kūrimas iš teksto (PRIJUNGTA 2026-06-13).
+- **LILT** — profesionalus vertimas su žmogaus patikra, 10 kalbų planui (PRIJUNGTA 2026-06-13).
+- **Sentry** — crash/klaidų stebėjimas gyvai po paleidimo (PRIJUNGTA 2026-06-13).
 
-**🔥 Verta prijungti DABAR (reklaminiams video — savininkas nori muzika+garsai+montažas):**
-- **Descript** — video montažas/kūrimas iš teksto (tikras video editorius per jungtį).
-- **ElevenLabs** — muzika, garso efektai, įgarsinimas (balsas).
-- (HyperFrames/HeyGen — motion graphics; neprivaloma.)
-- → Komplektas: **Descript + ElevenLabs + Canva** = įtraukiantys reklaminiai klipai.
-
-**🔒 Apie paleidimą (sauga/monitoringas):**
-- **Sentry** — crash/klaidų stebėjimas gyvai (labai naudinga po Play paleidimo).
-- **Snyk** — programos saugos skenavimas; **Socket** — priklausomybių patikra.
+**🔥 Dar galima prijungti (neprivaloma):**
+- **ElevenLabs** — muzika, garso efektai, įgarsinimas (jei Descript garso neužteks).
+- **Snyk** — saugos skenavimas; **Socket** — priklausomybių patikra.
+- → Video komplektas: **Descript + Canva** (+ ElevenLabs garsui) = įtraukiantys klipai.
 
 **🌍 Vėliau (plėtra/marketingas):**
-- **LILT** — profesionalus vertimas (10 kalbų planui — su žmogaus patikra).
 - **Windsor.ai** — Meta/Google/TikTok reklamų analitika; **Bitly** — nuorodos/QR; **Semrush/Ahrefs** — ASO.
 - **Splice** — garsų biblioteka; **Cloudinary** — media saugykla/apdorojimas.
 
