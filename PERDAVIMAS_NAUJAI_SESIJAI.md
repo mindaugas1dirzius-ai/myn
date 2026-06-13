@@ -229,6 +229,35 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 
 ---
 
+## 🔌 ĮRANKIAI IR JUNGTYS (Connectors) — ką turime ir galime naudoti
+
+**✅ Prijungta ir naudojama:**
+- **GitHub** — kodas/repo (commit/push).
+- **Canva** — dizainas (ikonos, Play grafika, baneriai) + video mp4 eksportas.
+- **Claude in Chrome** — naršyklės valdymas (jei reikia).
+- **visualize** (įmontuotas) — greiti SVG/HTML mockup'ai pokalbyje (kaip Artifacts).
+
+**🔥 Verta prijungti DABAR (reklaminiams video — savininkas nori muzika+garsai+montažas):**
+- **Descript** — video montažas/kūrimas iš teksto (tikras video editorius per jungtį).
+- **ElevenLabs** — muzika, garso efektai, įgarsinimas (balsas).
+- (HyperFrames/HeyGen — motion graphics; neprivaloma.)
+- → Komplektas: **Descript + ElevenLabs + Canva** = įtraukiantys reklaminiai klipai.
+
+**🔒 Apie paleidimą (sauga/monitoringas):**
+- **Sentry** — crash/klaidų stebėjimas gyvai (labai naudinga po Play paleidimo).
+- **Snyk** — programos saugos skenavimas; **Socket** — priklausomybių patikra.
+
+**🌍 Vėliau (plėtra/marketingas):**
+- **LILT** — profesionalus vertimas (10 kalbų planui — su žmogaus patikra).
+- **Windsor.ai** — Meta/Google/TikTok reklamų analitika; **Bitly** — nuorodos/QR; **Semrush/Ahrefs** — ASO.
+- **Splice** — garsų biblioteka; **Cloudinary** — media saugykla/apdorojimas.
+
+**⚠️ Ko NĖRA (svarbu žinoti):**
+- **Google Play / App Store įdiegimo jungties NĖRA.** Į Play diegiama RANKINIU būdu per Play Console (vėliau galima CI/fastlane). Funkcijų deploy — `firebase-tools` CLI. iOS/Safari NEAKTUALU (žaidimas — Android).
+- **Reklamų valdymo skydelio** gatavos jungties nėra, BET GALIMA PASIDARYTI: ateityje sukursim custom web admin skydelį (Firebase backend), kur savininkas valdytų monetizaciją/reklamų nustatymus ir matytų statistiką; kampanijų duomenis trauktume per Windsor.ai. Tai KŪRIMO darbas, ne jungtis.
+
+---
+
 ## 14. ❓ PASITIKRINIMO KLAUSIMAI (ar nauja sesija suprato)
 
 1. Kodėl negalima dirbti dviem sesijom vienu metu ir kodėl `git add -A` pavojinga?
