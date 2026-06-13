@@ -29,7 +29,7 @@ export const MYTHOLOGY_NORSE: TriviaQuestion[] = [
         explanation: "Thor protects gods and humans with his thunderous hammer.",
       },
       lt: {
-        question: "Kuris šiaurės dievas valdo griaustinį ir nešioja galingą kūjį?",
+        question: "Kuris šiaurės dievas valdo griaustinį ir laiko rankoje galingą kūjį?",
         correct: "Toras",
         distractors: ["Odinas", "Lokis", "Frėja", "Tiras", "Baldras"],
         explanation: "Toras gina dievus ir žmones savo griausmingu kūju.",
@@ -468,7 +468,7 @@ export const MYTHOLOGY_NORSE: TriviaQuestion[] = [
         explanation: "Tyr placed his hand in the wolf's jaws as a pledge of trust.",
       },
       lt: {
-        question: "Kuris narsus šiaurės dievas neteko rankos milžiniškam vilkui?",
+        question: "Kuriam narsiam šiaurės dievui milžiniškas vilkas nukando ranką?",
         correct: "Tiras",
         distractors: ["Toras", "Odinas", "Lokis", "Baldras", "Heimdalis"],
         explanation: "Tiras įdėjo ranką vilkui į nasrus kaip pasitikėjimo ženklą.",
@@ -585,7 +585,7 @@ export const MYTHOLOGY_NORSE: TriviaQuestion[] = [
         explanation: "Its blast will be heard across all nine worlds.",
       },
       lt: {
-        question: "Kokiu ragu Heimdalis pratrūks, įspėdamas, kad prasidėjo Ragnarokas?",
+        question: "Kokiu ragu Heimdalis sutrimituos, įspėdamas, kad prasidėjo Ragnarokas?",
         correct: "Gjalarhornas",
         distractors: ["Gungniras", "Mjolniras", "Bifrostas", "Gleipniras", "Draupniras"],
         explanation: "Jo gausmas nuaidės per visus devynis pasaulius.",
@@ -771,7 +771,7 @@ export const MYTHOLOGY_NORSE: TriviaQuestion[] = [
         explanation: "Surtr's flaming sword sets the nine worlds ablaze.",
       },
       lt: {
-        question: "Kuris ugnies milžinas per Ragnaroką paskandins pasaulį liepsnose?",
+        question: "Kuris ugnies milžinas per Ragnaroką apims pasaulį liepsnomis?",
         correct: "Surtas",
         distractors: ["Ymiras", "Fenriras", "Trimas", "Hrungniras", "Mimiras"],
         explanation: "Liepsnojantis Surto kalavijas padega visus devynis pasaulius.",

@@ -146,6 +146,13 @@ rezultatai rodo „✅ +X 💥 −Y" + paaiškinimą, kodėl be monetų. Tylus 0
    (_fix_len.js šablonas: bloko-scoped, ≤46 tikrina).
 7. Variantai ≤46 simb. (kiekviena kalba!); detalės → explanation; emoji
    neišduoda atsakymo (assembleOptions saugikliai); LT natūrali kalba.
+   🆕 **LT/EN STILIAUS PERŽIŪRA (savininkas 2026-06-13: „lietuviškai taip nesirašo"):**
+   po naujos partijos PALEISTI redaktoriaus peržiūrą (Workflow „style-review-new-content"
+   šablonas: 1 agentas/failui, žymi nerangias/pažodines/giminės frazes su rewrite'ais).
+   Dažni LT spąstai, kuriuos taisiau: pažodinis vertimas iš EN; giminės nesutapimas
+   („Kuris pabaisa"→„Kuri", „Koks ... dvasia"→„Kokia"); „nešioja žinutes"→„perduoda
+   žinias"; padalyvio dangling („Pagavęs ... jis"→„Pagavus"). FAKTŲ patikra (kita
+   Workflow) ir STILIAUS peržiūra — DVI atskiros QC bangos kiekvienai partijai.
 8. Mįslių pildymo prioritetas: „klausimas" tipo (melt fondas 42!) + L4 (tik 6).
 
 ## 8. DABARTINĖ BŪSENA (2026-06-13)

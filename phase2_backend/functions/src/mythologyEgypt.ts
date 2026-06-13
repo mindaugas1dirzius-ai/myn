@@ -76,7 +76,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
         explanation: "Bodies were dried and wrapped so the soul could live on.",
       },
       lt: {
-        question: "Į ką senovės egiptiečiai vertė mirusiųjų kūnus, kad išsaugotų?",
+        question: "Į ką senovės egiptiečiai paversdavo mirusiųjų kūnus, kad juos išsaugotų?",
         correct: "Mumijas",
         distractors: ["Statulas", "Fosilijas", "Akmenis", "Robotus", "Deimantus"],
         explanation: "Kūnai buvo džiovinami ir vyniojami, kad siela gyventų toliau.",
@@ -446,7 +446,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
         explanation: "The Eye of Horus was worn as a charm for health and safety.",
       },
       lt: {
-        question: "Apsauginis Akies amuletas priklauso kuriam sakalagalviui dievui?",
+        question: "Kurio sakalagalvio dievo yra apsauginis Akies amuletas?",
         correct: "Horui",
         distractors: ["Anubiui", "Setui", "Totui", "Sobekui", "Gebui"],
         explanation: "Horo akis buvo nešiojama kaip sveikatos ir saugumo talismanas.",
@@ -540,7 +540,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
         explanation: "From Tiamat's defeated body the world itself was made.",
       },
       lt: {
-        question: "Koks vardas chaoso slibinės iš sūraus vandens Mesopotamijos mite?",
+        question: "Koks Mesopotamijos mite yra sūraus vandens chaoso slibinės vardas?",
         correct: "Tiamatė",
         distractors: ["Apepas", "Jormungandas", "Tifonas", "Leviatanas", "Hidra"],
         explanation: "Iš nugalėtos Tiamatės kūno buvo sukurtas pats pasaulis.",
@@ -586,7 +586,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
         explanation: "Ziggurats rose in steps with a shrine to a god at the top.",
       },
       lt: {
-        question: "Kaip vadinamos senovės Mesopotamijos pakopinės šventyklos bokštai?",
+        question: "Kaip vadinami senovės Mesopotamijos pakopiniai šventyklų bokštai?",
         correct: "Ziguratai",
         distractors: ["Pagodos", "Obeliskai", "Piramidės", "Stupos", "Minaretai"],
         explanation: "Ziguratai kilo pakopomis, o viršuje stovėjo dievo šventovė.",
@@ -798,7 +798,7 @@ export const MYTHOLOGY_EGYPT: TriviaQuestion[] = [
         question: "Kokiose specialiose urnose egiptiečiai laikė mumijos organus?",
         correct: "Kanopinėse urnose",
         distractors: ["Molio puoduose", "Amforose", "Sarkofaguose", "Stiklo vazose", "Bronzos katiluose"],
-        explanation: "Keturias urnas, saugomas Horo sūnų, užpildydavo organai.",
+        explanation: "Organai būdavo dedami į keturias urnas, kurias saugojo Horo sūnūs.",
       },
     },
   },
