@@ -93,7 +93,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Botany (banana color)",
-    emoji: "🍌",
+    emoji: "🍴",
     translations: {
       en: {
         question: "What color is a ripe banana?",
@@ -185,7 +185,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Botany (carrot color)",
-    emoji: "🥕",
+    emoji: "🍽️",
     translations: {
       en: {
         question: "What color is a typical carrot?",
@@ -417,7 +417,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Food science (guacamole from avocado)",
-    emoji: "🥑",
+    emoji: "🍳",
     translations: {
       en: {
         question: "Guacamole is made mainly from which fruit?",
@@ -741,7 +741,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Culinary history (sashimi, Japan)",
-    emoji: "🐟",
+    emoji: "🥘",
     translations: {
       en: {
         question: "Sashimi is thinly sliced raw what?",
@@ -948,7 +948,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Paprikos milteliai malami iš džiovintų saldžiųjų paprikų",
-    emoji: "🌶️",
+    emoji: "🍽️",
     translations: {
       en: {
         question: "Which dried red vegetable is ground into the spice that colors goulash?",
@@ -1111,7 +1111,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Nutrition (vitamin C and scurvy)",
-    emoji: "🍊",
+    emoji: "🧑‍🍳",
     translations: {
       en: {
         question: "Lack of which vitamin causes scurvy?",
@@ -1410,7 +1410,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Strawberry color",
-    emoji: "🍓",
+    emoji: "👨‍🍳",
     translations: {
       en: {
         question: "What color is a ripe strawberry?",
@@ -1433,7 +1433,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Raisins are dried grapes",
-    emoji: "🍇",
+    emoji: "🍳",
     translations: {
       en: {
         question: "Which fruit is dried to make raisins?",
@@ -1479,7 +1479,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Beef from cattle",
-    emoji: "🐄",
+    emoji: "🥄",
     translations: {
       en: {
         question: "Beef comes from which animal?",
@@ -1502,7 +1502,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Popcorn from corn",
-    emoji: "🌽",
+    emoji: "🔪",
     translations: {
       en: {
         question: "Popcorn is made from which grain?",
@@ -1525,7 +1525,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Orange juice from oranges",
-    emoji: "🍊",
+    emoji: "🧑‍🍳",
     translations: {
       en: {
         question: "Which drink is made by squeezing oranges?",
@@ -1548,7 +1548,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Peanut butter from peanuts",
-    emoji: "🥜",
+    emoji: "🍽️",
     translations: {
       en: {
         question: "Peanut butter is made mainly from what?",
@@ -1594,7 +1594,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Ketchup from tomatoes",
-    emoji: "🍅",
+    emoji: "🍶",
     translations: {
       en: {
         question: "Ketchup is made mainly from which food?",
@@ -1640,7 +1640,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Onion makes eyes water",
-    emoji: "🧅",
+    emoji: "🫕",
     translations: {
       en: {
         question: "Which vegetable often makes you cry when cut?",
@@ -1686,7 +1686,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Lettuce used in salad",
-    emoji: "🥗",
+    emoji: "🍴",
     translations: {
       en: {
         question: "Lettuce is most often used to make which dish?",
@@ -1709,7 +1709,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Milk color",
-    emoji: "🥛",
+    emoji: "🥘",
     translations: {
       en: {
         question: "What is the usual color of cow's milk?",
@@ -1732,7 +1732,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Cherry is a stone fruit",
-    emoji: "🍒",
+    emoji: "👨‍🍳",
     translations: {
       en: {
         question: "Which small red fruit grows on a tree with a stone inside?",
@@ -1755,7 +1755,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Klevų sirupas verdamas iš klevo sulos",
-    emoji: "🍁",
+    emoji: "🥄",
     translations: {
       en: {
         question: "Maple syrup is boiled down from the sap of which tree?",
@@ -1824,7 +1824,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Cider from apples",
-    emoji: "🍎",
+    emoji: "🔪",
     translations: {
       en: {
         question: "Which fruit is used to make traditional cider?",
@@ -2031,7 +2031,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Sauerkraut from cabbage",
-    emoji: "🥬",
+    emoji: "🍶",
     translations: {
       en: {
         question: "Which vegetable is the main ingredient of sauerkraut?",
@@ -2077,7 +2077,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Marmalade from oranges",
-    emoji: "🍊",
+    emoji: "🧑‍🍳",
     translations: {
       en: {
         question: "Which fruit is the main ingredient of classic marmalade?",
@@ -2215,7 +2215,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Scoville scale measures heat",
-    emoji: "🌶️",
+    emoji: "👨‍🍳",
     translations: {
       en: {
         question: "The Scoville scale measures what in food?",
@@ -2307,7 +2307,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Vitamin D added to milk",
-    emoji: "🌞",
+    emoji: "🍶",
     translations: {
       en: {
         question: "Which vitamin, made by sunlight on skin, is added to milk?",
@@ -2793,7 +2793,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Escargot is cooked land snails (France)",
-    emoji: "🐌",
+    emoji: "🍴",
     translations: {
       en: {
         question: "Escargot, a French dish, is made from which animal?",
@@ -2816,7 +2816,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Kimchi is fermented napa cabbage (Korea)",
-    emoji: "🥬",
+    emoji: "🫕",
     translations: {
       en: {
         question: "Korean kimchi is most often made from which vegetable?",
@@ -2933,7 +2933,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Escamoles are ant larvae (Mexico)",
-    emoji: "🐜",
+    emoji: "🥘",
     translations: {
       en: {
         question: "Mexican 'escamoles' are the edible larvae of which insect?",
@@ -2956,7 +2956,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Hákarl is fermented Greenland shark (Iceland)",
-    emoji: "🦈",
+    emoji: "🍳",
     translations: {
       en: {
         question: "Iceland's 'hákarl' is fermented meat of which animal?",
@@ -3004,7 +3004,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Sannakji is freshly cut octopus (Korea)",
-    emoji: "🐙",
+    emoji: "🥄",
     translations: {
       en: {
         question: "Korean 'sannakji' serves still-moving pieces of which animal?",
@@ -3119,7 +3119,7 @@ export const FOOD_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Black ivory coffee beans pass through elephants (Thailand)",
-    emoji: "🐘",
+    emoji: "🔪",
     translations: {
       en: {
         question: "'Black ivory' coffee uses beans digested by which large animal?",

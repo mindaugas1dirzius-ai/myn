@@ -1134,7 +1134,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Athletics (Usain Bolt sprint records)",
-    emoji: "⚡",
+    emoji: "🏟️",
     translations: {
       en: {
         question: "Usain Bolt set world records in which athletics event?",
@@ -1330,7 +1330,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Cycling jersey (Tour de France yellow leader)",
-    emoji: "🟨",
+    emoji: "🏅",
     translations: {
       en: {
         question: "What color jersey does the Tour de France leader wear?",
@@ -2446,7 +2446,7 @@ export const SPORT_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Snooker black ball worth most",
-    emoji: "🎱",
+    emoji: "🏆",
     translations: {
       en: {
         question: "In snooker, which ball is worth the most points?",

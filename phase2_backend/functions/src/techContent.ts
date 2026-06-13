@@ -1066,7 +1066,7 @@ export const TECH_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Chemistry (gold symbol Au, from aurum)",
-    emoji: "🥇",
+    emoji: "⚙️",
     translations: {
       en: {
         question: "What is the chemical symbol for gold?",
@@ -1434,7 +1434,7 @@ export const TECH_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Everyday devices",
-    emoji: "📞",
+    emoji: "🔬",
     translations: {
       en: {
         question: "What device lets you call people far away?",
@@ -2768,7 +2768,7 @@ export const TECH_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Physics — Newton's laws of motion",
-    emoji: "🍎",
+    emoji: "🖥️",
     translations: {
       en: {
         question: "Who formulated the three laws of motion?",
@@ -2888,7 +2888,7 @@ export const TECH_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Pokémon (Game Freak / Nintendo)",
-    emoji: "⚡",
+    emoji: "📡",
     translations: {
       en: {
         question: "Which yellow Pokémon is the most famous?",
@@ -3306,7 +3306,7 @@ export const TECH_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Mario debut — Donkey Kong (1981)",
-    emoji: "🦍",
+    emoji: "🔧",
     translations: {
       en: {
         question: "In which 1981 arcade game did Mario first appear?",
@@ -3584,7 +3584,7 @@ export const TECH_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Super Mario Bros. (1985) bundled with NES",
-    emoji: "🍄",
+    emoji: "🔌",
     translations: {
       en: {
         question: "Which 1985 NES game revived the US console market?",

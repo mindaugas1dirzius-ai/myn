@@ -74,7 +74,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🐶",
+    emoji: "🌍",
     translations: {
       en: {
         question: "What is a baby dog called?",
@@ -120,7 +120,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🦒",
+    emoji: "🌿",
     translations: {
       en: {
         question: "What is the tallest animal in the world?",
@@ -143,7 +143,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🐧",
+    emoji: "🐾",
     translations: {
       en: {
         question: "Which of these birds cannot fly?",
@@ -189,7 +189,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🐆",
+    emoji: "🌳",
     translations: {
       en: {
         question: "What is the fastest land animal?",
@@ -235,7 +235,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General biology (metamorphosis)",
-    emoji: "🦋",
+    emoji: "🏞️",
     translations: {
       en: {
         question: "What does a caterpillar turn into?",
@@ -304,7 +304,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🦜",
+    emoji: "🪺",
     translations: {
       en: {
         question: "Which bird can copy human speech?",
@@ -373,7 +373,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🐸",
+    emoji: "🌱",
     translations: {
       en: {
         question: "What is a baby frog called?",
@@ -419,7 +419,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🦇",
+    emoji: "🍃",
     translations: {
       en: {
         question: "Which animal sleeps hanging upside down?",
@@ -442,7 +442,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🐄",
+    emoji: "🌎",
     translations: {
       en: {
         question: "Which farm animal gives us milk?",
@@ -465,7 +465,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🦓",
+    emoji: "🌲",
     translations: {
       en: {
         question: "Which animal has black and white stripes?",
@@ -559,7 +559,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Common culture / zoology",
-    emoji: "🦁",
+    emoji: "🌴",
     translations: {
       en: {
         question: "Which animal is often called the 'King of the Jungle'?",
@@ -678,7 +678,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🦘",
+    emoji: "🏕️",
     translations: {
       en: {
         question: "Which animal carries its baby in a pouch?",
@@ -701,7 +701,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🐢",
+    emoji: "🪨",
     translations: {
       en: {
         question: "Which animal has a hard shell on its back?",
@@ -747,7 +747,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🐰",
+    emoji: "🌾",
     translations: {
       en: {
         question: "Which animal loves to eat carrots?",
@@ -770,7 +770,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🦉",
+    emoji: "🍂",
     translations: {
       en: {
         question: "Which bird is awake at night?",
@@ -793,7 +793,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General zoology (encyclopedic)",
-    emoji: "🐷",
+    emoji: "🌷",
     translations: {
       en: {
         question: "Which farm animal is usually pink?",
@@ -956,7 +956,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Zoology (largest big cat)",
-    emoji: "🐅",
+    emoji: "🐾",
     translations: {
       en: {
         question: "What is the largest big cat species?",
@@ -1048,7 +1048,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Zoology (koala fingerprints)",
-    emoji: "🐨",
+    emoji: "🌍",
     translations: {
       en: {
         question: "Which animal has fingerprints almost identical to humans?",
@@ -1163,7 +1163,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Zoology (sloth)",
-    emoji: "🦥",
+    emoji: "🌿",
     translations: {
       en: {
         question: "Which is the slowest mammal in the world?",
@@ -1441,7 +1441,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: true,
     sourceVerified: "WHO / public health (deadliest animal to humans)",
-    emoji: "🦟",
+    emoji: "🌳",
     translations: {
       en: {
         question: "Which animal kills the most people each year?",
@@ -1813,7 +1813,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Zoology (largest cat species)",
-    emoji: "🐯",
+    emoji: "🏞️",
     translations: {
       en: {
         question: "What is the largest species of cat?",
@@ -2233,7 +2233,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: true,
     sourceVerified: "Zoology (elephants cannot jump)",
-    emoji: "🐘",
+    emoji: "🪺",
     translations: {
       en: {
         question: "Which animal cannot jump at all?",
@@ -2465,7 +2465,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Ichthyology (electric eel)",
-    emoji: "⚡",
+    emoji: "🌱",
     translations: {
       en: {
         question: "Which animal can produce a strong electric shock?",
@@ -2488,7 +2488,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Ichthyology (pufferfish toxin)",
-    emoji: "🐡",
+    emoji: "🍃",
     translations: {
       en: {
         question: "Which fish puffs up into a ball and is poisonous?",
@@ -2557,7 +2557,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Marine biology (anglerfish lure)",
-    emoji: "🎣",
+    emoji: "🌍",
     translations: {
       en: {
         question: "How does the deep-sea anglerfish attract its prey?",
@@ -2766,7 +2766,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: true,
     sourceVerified: "Paleontology (birds are living dinosaurs)",
-    emoji: "🦖",
+    emoji: "🌎",
     translations: {
       en: {
         question: "Modern birds evolved from which ancient animals?",
@@ -2791,7 +2791,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: true,
     sourceVerified: "Mycology (mushrooms are fungi)",
-    emoji: "🍄",
+    emoji: "🌲",
     translations: {
       en: {
         question: "A mushroom is a type of what?",
@@ -2883,7 +2883,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Zoology (beavers build dams)",
-    emoji: "🦫",
+    emoji: "🌴",
     translations: {
       en: {
         question: "Which animal builds dams across rivers?",
@@ -2906,7 +2906,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Entomology (ladybugs eat aphids)",
-    emoji: "🐞",
+    emoji: "🏕️",
     translations: {
       en: {
         question: "Which insect helps gardens by eating plant pests (aphids)?",
@@ -3069,7 +3069,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Entomology (firefly bioluminescence)",
-    emoji: "✨",
+    emoji: "🪨",
     translations: {
       en: {
         question: "Which insect can glow in the dark?",
@@ -3115,7 +3115,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Herpetology (snakes shed skin)",
-    emoji: "🐍",
+    emoji: "🌾",
     translations: {
       en: {
         question: "Which animals shed their whole skin in one piece as they grow?",
@@ -3299,7 +3299,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: true,
     sourceVerified: "Marine biology (barnacle is a crustacean)",
-    emoji: "🦐",
+    emoji: "🍂",
     translations: {
       en: {
         question: "A barnacle is actually a type of what?",
@@ -3368,7 +3368,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Zoology (porcupine quills)",
-    emoji: "🦔",
+    emoji: "🌷",
     translations: {
       en: {
         question: "Which animal defends itself with sharp quills?",
@@ -3485,7 +3485,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Marine biology (colossal squid, largest invertebrate)",
-    emoji: "🦑",
+    emoji: "🌿",
     translations: {
       en: {
         question: "What is the largest invertebrate (animal without a backbone)?",
@@ -3738,7 +3738,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Biology (tardigrade extremophile)",
-    emoji: "🐻",
+    emoji: "🌲",
     translations: {
       en: {
         question: "Which tiny creature can survive even the vacuum of outer space?",
@@ -3888,7 +3888,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Biology (ampullae of Lorenzini in sharks)",
-    emoji: "⚡",
+    emoji: "🐾",
     translations: {
       en: {
         question: "Sharks have special pores called 'ampullae of Lorenzini'. What do they sense?",
@@ -3992,7 +3992,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Ichthyology (archerfish hunting)",
-    emoji: "💦",
+    emoji: "🌳",
     translations: {
       en: {
         question: "How does the archerfish catch insects sitting on plants above the water?",
@@ -4108,7 +4108,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Entomology (bombardier beetle defense)",
-    emoji: "💥",
+    emoji: "🏞️",
     translations: {
       en: {
         question: "How does the bombardier beetle defend itself?",
@@ -4143,7 +4143,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Human anatomy (tooth enamel hardness)",
-    emoji: "🦷",
+    emoji: "🪺",
     translations: {
       en: {
         question: "What is the hardest substance produced by the human body?",
@@ -4212,7 +4212,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Marine biology (octopus hemocyanin, copper-based blood)",
-    emoji: "🐙",
+    emoji: "🌱",
     translations: {
       en: {
         question: "Which animal has blue blood because it uses copper instead of iron to carry oxygen?",
@@ -4235,7 +4235,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Salamandros gali atauginti prarastas galūnes",
-    emoji: "🦎",
+    emoji: "🍃",
     translations: {
       en: {
         question: "Which animal can regrow a lost leg or tail?",
@@ -4281,7 +4281,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Entomology (dung beetle strength relative to body weight)",
-    emoji: "🪲",
+    emoji: "🌎",
     translations: {
       en: {
         question: "Which insect is the strongest in the world relative to its body weight?",
@@ -4963,7 +4963,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Ornithology (emperor penguin dive depth)",
-    emoji: "🐧",
+    emoji: "🌴",
     translations: {
       en: {
         question: "Which bird can dive the deepest, reaching over 500 m underwater?",
@@ -4986,7 +4986,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Marine biology (Greenland shark longevity)",
-    emoji: "🦈",
+    emoji: "🏕️",
     translations: {
       en: {
         question: "Which vertebrate is the longest-living, with some individuals over 270 years old?",
@@ -5125,7 +5125,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Zoology (tardigrade survived open space, 2007 study)",
-    emoji: "🐻",
+    emoji: "🪨",
     translations: {
       en: {
         question: "Which tiny animal has survived the vacuum and radiation of open space?",
@@ -5148,7 +5148,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Marine biology (Turritopsis dohrnii biological immortality)",
-    emoji: "🪼",
+    emoji: "🌾",
     translations: {
       en: {
         question: "Which animal is called 'biologically immortal' because it can revert to its young stage?",
@@ -5171,7 +5171,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Marine biology (mantis shrimp photoreceptors)",
-    emoji: "🦐",
+    emoji: "🍂",
     translations: {
       en: {
         question: "Which animal has the most complex eyes, with up to 16 types of color receptors?",
@@ -5401,7 +5401,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Zoology (honey badger venom resistance)",
-    emoji: "🦡",
+    emoji: "🌷",
     translations: {
       en: {
         question: "Which fearless animal can survive snake bites that would kill most animals?",
@@ -5585,7 +5585,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General knowledge (horses are ridden, neigh)",
-    emoji: "🐴",
+    emoji: "🌿",
     translations: {
       en: {
         question: "Which large farm animal do people ride and that says 'neigh'?",
@@ -5608,7 +5608,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General knowledge (frogs hop and croak near water)",
-    emoji: "🐸",
+    emoji: "🐾",
     translations: {
       en: {
         question: "Which green animal hops and croaks near ponds?",
@@ -5631,7 +5631,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Zoology (snails carry a shell)",
-    emoji: "🐌",
+    emoji: "🌳",
     translations: {
       en: {
         question: "Which animal carries its house — a shell — on its back?",
@@ -5654,7 +5654,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Marine biology (dolphins are air-breathing mammals)",
-    emoji: "🐬",
+    emoji: "🏞️",
     translations: {
       en: {
         question: "Which sea animal is a mammal that must come up for air to breathe?",
@@ -5677,7 +5677,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Zoology (camel hump stores fat)",
-    emoji: "🐪",
+    emoji: "🪺",
     translations: {
       en: {
         question: "Which desert animal has a hump on its back?",
@@ -5723,7 +5723,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Arachnology (spiders spin webs)",
-    emoji: "🕸️",
+    emoji: "🌱",
     translations: {
       en: {
         question: "Which creature spins a web to catch its food?",
@@ -5746,7 +5746,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Herpetology (snakes have no legs)",
-    emoji: "🐍",
+    emoji: "🍃",
     translations: {
       en: {
         question: "Which animal has no legs and moves by slithering on the ground?",
@@ -5769,7 +5769,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Entomology (ants carry heavy loads)",
-    emoji: "🐜",
+    emoji: "🌎",
     translations: {
       en: {
         question: "Which tiny insect can carry objects much heavier than itself?",
@@ -5815,7 +5815,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Marine biology (starfish have five arms, can regrow)",
-    emoji: "⭐",
+    emoji: "🌲",
     translations: {
       en: {
         question: "Which sea creature is shaped like a star with five arms?",
@@ -5838,7 +5838,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Ornithology (ducks swim and quack)",
-    emoji: "🦆",
+    emoji: "🌴",
     translations: {
       en: {
         question: "Which bird swims on ponds and says 'quack'?",
@@ -6137,7 +6137,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Marine biology (sea cucumber evisceration)",
-    emoji: "🥒",
+    emoji: "🏕️",
     translations: {
       en: {
         question: "Which sea animal can eject its inner organs to scare predators, then regrow them?",
@@ -6367,7 +6367,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Zoology (algae grow in sloth fur)",
-    emoji: "🦥",
+    emoji: "🪨",
     translations: {
       en: {
         question: "In which animal's fur do green algae grow, helping it hide?",
@@ -6781,7 +6781,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Flamingai dažnai miega stovėdami ant vienos kojos",
-    emoji: "🦩",
+    emoji: "🌾",
     translations: {
       en: {
         question: "Which pink bird often sleeps standing on one leg?",
@@ -6873,7 +6873,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Zoology (kangaroo cannot move backwards)",
-    emoji: "🦘",
+    emoji: "🍂",
     translations: {
       en: {
         question: "Which animal is famous for being unable to move backwards?",
@@ -7103,7 +7103,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Zoology (koala fingerprints resemble human prints)",
-    emoji: "🐨",
+    emoji: "🌷",
     translations: {
       en: {
         question: "Which animal has fingerprints almost indistinguishable from a human's?",
@@ -7126,7 +7126,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Ichthyology (pufferfish tetrodotoxin and inflation)",
-    emoji: "🐡",
+    emoji: "🌍",
     translations: {
       en: {
         question: "Which fish carries a deadly toxin (as in fugu) and puffs up with water when threatened?",
@@ -7149,7 +7149,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Marine biology (anglerfish bioluminescent lure)",
-    emoji: "🎣",
+    emoji: "🌿",
     translations: {
       en: {
         question: "How does the deep-sea anglerfish attract prey in total darkness?",
@@ -7747,7 +7747,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature knowledge (everyday animals)",
-    emoji: "🐮",
+    emoji: "🐾",
     translations: {
       en: {
         question: "What is a baby cow called?",
@@ -7770,7 +7770,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature knowledge (everyday animals)",
-    emoji: "🐴",
+    emoji: "🌳",
     translations: {
       en: {
         question: "What is a baby horse called?",
@@ -7793,7 +7793,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature knowledge (everyday animals)",
-    emoji: "🦘",
+    emoji: "🏞️",
     translations: {
       en: {
         question: "What is a baby kangaroo called?",
@@ -7862,7 +7862,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature knowledge (everyday animals)",
-    emoji: "🐶",
+    emoji: "🪺",
     translations: {
       en: {
         question: "Which animal is often called man's best friend?",
@@ -7885,7 +7885,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature knowledge (everyday animals)",
-    emoji: "🐱",
+    emoji: "🌱",
     translations: {
       en: {
         question: "Which pet purrs and likes to chase mice?",
@@ -7908,7 +7908,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature knowledge (everyday animals)",
-    emoji: "🐑",
+    emoji: "🍃",
     translations: {
       en: {
         question: "Which farm animal gives us wool?",
@@ -7931,7 +7931,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature knowledge (everyday animals)",
-    emoji: "🦩",
+    emoji: "🌎",
     translations: {
       en: {
         question: "Which pink bird often stands on one leg?",
@@ -7954,7 +7954,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature knowledge (everyday animals)",
-    emoji: "🦚",
+    emoji: "🌲",
     translations: {
       en: {
         question: "Which bird is famous for its colourful fan-shaped tail?",
@@ -7977,7 +7977,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature knowledge (everyday animals)",
-    emoji: "🐠",
+    emoji: "🌴",
     translations: {
       en: {
         question: "Which small pet fish is often kept in a bowl?",
@@ -8000,7 +8000,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature knowledge (everyday animals)",
-    emoji: "🐿️",
+    emoji: "🏕️",
     translations: {
       en: {
         question: "Which bushy-tailed animal stores nuts for winter?",
@@ -8023,7 +8023,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature knowledge (everyday animals)",
-    emoji: "🦊",
+    emoji: "🪨",
     translations: {
       en: {
         question: "Which wild animal has orange fur and a bushy tail?",
@@ -8529,7 +8529,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Expert-verified nature facts (extreme)",
-    emoji: "🦑",
+    emoji: "🌍",
     translations: {
       en: {
         question: "Which animal has the largest eyes of all, about the size of a dinner plate?",
@@ -8805,7 +8805,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature facts (easy, kids)",
-    emoji: "🐋",
+    emoji: "🌾",
     translations: {
       en: {
         question: "What is the largest animal on Earth?",
@@ -9035,7 +9035,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "General nature facts (easy, kids)",
-    emoji: "🐙",
+    emoji: "🍂",
     translations: {
       en: {
         question: "Which sea animal has eight arms?",
@@ -11059,7 +11059,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "General nature facts (medium)",
-    emoji: "🦉",
+    emoji: "🌷",
     translations: {
       en: {
         question: "Which bird hunts silently at night and can turn its head very far?",
@@ -11082,7 +11082,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "General nature facts (medium)",
-    emoji: "🦅",
+    emoji: "🌍",
     translations: {
       en: {
         question: "Which large bird of prey has very sharp eyesight to spot far-off prey?",
@@ -14078,7 +14078,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Ice Age fauna (woolly mammoth)",
-    emoji: "🦣",
+    emoji: "🌿",
     translations: {
       en: {
         question: "Which Ice Age animal looked like a hairy elephant with tusks?",
@@ -15623,7 +15623,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Food botany (raisins are dried grapes)",
-    emoji: "🍇",
+    emoji: "🐾",
     translations: {
       en: {
         question: "Which fruit is dried to make raisins?",
@@ -15767,7 +15767,7 @@ export const NATURE_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Food botany (potato tubers)",
-    emoji: "🥔",
+    emoji: "🌳",
     translations: {
       en: {
         question: "Which food crop grows underground?",

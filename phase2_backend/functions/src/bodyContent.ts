@@ -24,7 +24,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Anatomy (heart pumps blood)",
-    emoji: "❤️",
+    emoji: "⚕️",
     translations: {
       en: {
         question: "Which organ pumps blood around the body?",
@@ -47,7 +47,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Anatomy (lungs for breathing)",
-    emoji: "🫁",
+    emoji: "🏥",
     translations: {
       en: {
         question: "Which organs do you use to breathe?",
@@ -70,7 +70,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Senses (eyes for sight)",
-    emoji: "👁️",
+    emoji: "💊",
     translations: {
       en: {
         question: "Which body part do you use to see?",
@@ -93,7 +93,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Anatomy (skull protects brain)",
-    emoji: "💀",
+    emoji: "🩹",
     translations: {
       en: {
         question: "Which bones protect the brain?",
@@ -116,7 +116,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Senses (ears for hearing)",
-    emoji: "👂",
+    emoji: "🧫",
     translations: {
       en: {
         question: "Which body part do you use to hear?",
@@ -139,7 +139,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Anatomy (teeth for chewing)",
-    emoji: "🦷",
+    emoji: "🧪",
     translations: {
       en: {
         question: "What do we use to chew food?",
@@ -185,7 +185,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Anatomy (blood is red)",
-    emoji: "🩸",
+    emoji: "🔬",
     translations: {
       en: {
         question: "What color is human blood?",
@@ -208,7 +208,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Anatomy (fingers count, 5 per hand)",
-    emoji: "✋",
+    emoji: "🩻",
     translations: {
       en: {
         question: "How many fingers are on one human hand?",
@@ -231,7 +231,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Senses (nose for smell)",
-    emoji: "👃",
+    emoji: "📋",
     translations: {
       en: {
         question: "Which body part do you use to smell?",
@@ -254,7 +254,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Anatomy (brain controls body)",
-    emoji: "🧠",
+    emoji: "🧴",
     translations: {
       en: {
         question: "Which organ controls thinking and the body?",
@@ -277,7 +277,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Senses (tongue for taste)",
-    emoji: "👅",
+    emoji: "💉",
     translations: {
       en: {
         question: "Which body part lets you taste food?",
@@ -300,7 +300,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Anatomy (bones make skeleton)",
-    emoji: "🦴",
+    emoji: "🩼",
     translations: {
       en: {
         question: "What is the framework of bones in the body called?",
@@ -323,7 +323,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Anatomy (muscles move body)",
-    emoji: "💪",
+    emoji: "📊",
     translations: {
       en: {
         question: "What lets your body move and lift things?",
@@ -346,7 +346,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Anatomy (hair grows on head)",
-    emoji: "💇",
+    emoji: "🔎",
     translations: {
       en: {
         question: "Where does hair grow most on people?",
@@ -394,7 +394,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Anatomy (kidneys filter blood)",
-    emoji: "🫘",
+    emoji: "🧴",
     translations: {
       en: {
         question: "Which organs filter waste from the blood?",
@@ -486,7 +486,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Anatomy (biceps in the arm)",
-    emoji: "💪",
+    emoji: "💉",
     translations: {
       en: {
         question: "The biceps muscle is found in which body part?",
@@ -578,7 +578,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Anatomy (lungs come in a pair)",
-    emoji: "🫁",
+    emoji: "🩼",
     translations: {
       en: {
         question: "How many lungs does a person normally have?",
@@ -624,7 +624,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Anatomy (eardrum in the ear)",
-    emoji: "👂",
+    emoji: "📊",
     translations: {
       en: {
         question: "The eardrum is part of which organ?",
@@ -764,7 +764,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Anatomy (stapes is smallest bone, in ear)",
-    emoji: "👂",
+    emoji: "🏥",
     translations: {
       en: {
         question: "The smallest bone in the body is found in which organ?",
@@ -856,7 +856,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Anatomy (white cells fight infection)",
-    emoji: "🛡️",
+    emoji: "💊",
     translations: {
       en: {
         question: "Which blood cells help fight infection?",
@@ -1088,7 +1088,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Biology (DNA carries genetic code)",
-    emoji: "🧬",
+    emoji: "🩹",
     translations: {
       en: {
         question: "Which molecule carries our genetic information?",
@@ -1203,7 +1203,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Biology (cell powerhouse mitochondria)",
-    emoji: "🔋",
+    emoji: "🧫",
     translations: {
       en: {
         question: "Which cell part is called the powerhouse of the cell?",
@@ -1422,7 +1422,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Legs used for walking",
-    emoji: "🦵",
+    emoji: "⚕️",
     translations: {
       en: {
         question: "Which body parts do you mainly use to walk?",
@@ -1445,7 +1445,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Nails grow on fingertips",
-    emoji: "💅",
+    emoji: "🏥",
     translations: {
       en: {
         question: "What hard part grows at the tips of your fingers?",
@@ -1468,7 +1468,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Humans have 2 eyes",
-    emoji: "👀",
+    emoji: "💊",
     translations: {
       en: {
         question: "How many eyes does a person normally have?",
@@ -1491,7 +1491,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Tears come from eyes when crying",
-    emoji: "😢",
+    emoji: "🩹",
     translations: {
       en: {
         question: "What liquid comes from your eyes when you cry?",
@@ -1514,7 +1514,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Hand has palm and fingers",
-    emoji: "✋",
+    emoji: "🧫",
     translations: {
       en: {
         question: "Which body part has a palm and fingers?",
@@ -1675,7 +1675,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Head holds the brain",
-    emoji: "🧠",
+    emoji: "🧪",
     translations: {
       en: {
         question: "What is the top part of the body that holds the brain called?",
@@ -1698,7 +1698,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Shoes go on feet",
-    emoji: "🦶",
+    emoji: "🔬",
     translations: {
       en: {
         question: "On which body part do you wear shoes?",
@@ -1721,7 +1721,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Mouth used to speak and eat",
-    emoji: "👄",
+    emoji: "🩻",
     translations: {
       en: {
         question: "Which part of the face do you use to speak and eat?",
@@ -1744,7 +1744,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Body needs sleep to rest",
-    emoji: "😴",
+    emoji: "📋",
     translations: {
       en: {
         question: "What does your body mainly need to rest at night?",
@@ -1813,7 +1813,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Skin makes vitamin D from sunlight",
-    emoji: "☀️",
+    emoji: "🔎",
     translations: {
       en: {
         question: "Which vitamin does our skin make from sunlight?",
@@ -1951,7 +1951,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Thyroid controls metabolism",
-    emoji: "🦋",
+    emoji: "🔎",
     translations: {
       en: {
         question: "Which gland in the neck controls metabolism?",
@@ -2089,7 +2089,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Circulatory system: heart and vessels",
-    emoji: "❤️",
+    emoji: "⚕️",
     translations: {
       en: {
         question: "Which body system includes the heart and blood vessels?",
@@ -2807,7 +2807,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Brain controls thought and memory",
-    emoji: "🧠",
+    emoji: "🧪",
     translations: {
       en: {
         question: "Which organ lets you think and remember?",
@@ -2991,7 +2991,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Learning builds new neural connections",
-    emoji: "🔗",
+    emoji: "🔬",
     translations: {
       en: {
         question: "Learning helps the brain build new...",
@@ -3060,7 +3060,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Brain uses much of the body's energy",
-    emoji: "🔋",
+    emoji: "🩻",
     translations: {
       en: {
         question: "For its size, the brain uses a lot of...",
@@ -3106,7 +3106,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Brain signals are electrical",
-    emoji: "⚡",
+    emoji: "📋",
     translations: {
       en: {
         question: "Signals travel in the brain as tiny...",
@@ -3154,7 +3154,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Cerebellum controls balance and coordination",
-    emoji: "🤸",
+    emoji: "🧴",
     translations: {
       en: {
         question: "Which brain part controls balance and coordination?",
@@ -3292,7 +3292,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Corpus callosum joins the hemispheres",
-    emoji: "🌉",
+    emoji: "💉",
     translations: {
       en: {
         question: "The left and right hemispheres are joined by the...",
@@ -3361,7 +3361,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Synapses are gaps where neurons connect",
-    emoji: "🔗",
+    emoji: "🩼",
     translations: {
       en: {
         question: "Tiny gaps where neurons pass signals are called...",
@@ -3384,7 +3384,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Dopamine is linked to reward and motivation",
-    emoji: "😀",
+    emoji: "📊",
     translations: {
       en: {
         question: "Which brain chemical is linked to reward and motivation?",
@@ -3476,7 +3476,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Amygdala processes fear and emotion",
-    emoji: "😨",
+    emoji: "🔎",
     translations: {
       en: {
         question: "Which small brain part processes fear and emotion?",
@@ -3593,7 +3593,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Broca's area is for speech production",
-    emoji: "🗣️",
+    emoji: "⚕️",
     translations: {
       en: {
         question: "Broca's area is mainly linked to...",
@@ -3685,7 +3685,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Hypothalamus regulates temperature and hunger",
-    emoji: "🌡️",
+    emoji: "🏥",
     translations: {
       en: {
         question: "Which part regulates body temperature and hunger?",
@@ -3986,7 +3986,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Sodium influx starts an action potential",
-    emoji: "🧂",
+    emoji: "💊",
     translations: {
       en: {
         question: "Which ion rushes in to start an action potential?",
@@ -4078,7 +4078,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Neuroplasticity is the brain's ability to rewire",
-    emoji: "🔄",
+    emoji: "🩹",
     translations: {
       en: {
         question: "Neuroplasticity is the brain's ability to...",
@@ -4336,7 +4336,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Largest muscle is in the buttocks",
-    emoji: "🍑",
+    emoji: "🧫",
     translations: {
       en: {
         question: "The body's largest muscle is in the...",
@@ -4405,7 +4405,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Biceps are upper-arm muscles",
-    emoji: "💪",
+    emoji: "🧪",
     translations: {
       en: {
         question: "The bulging muscle on the front of the upper arm is the...",
@@ -4451,7 +4451,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Vitamin D helps bones absorb calcium",
-    emoji: "☀️",
+    emoji: "⚕️",
     translations: {
       en: {
         question: "Which vitamin helps bones absorb calcium?",
@@ -4497,7 +4497,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Diaphragm helps breathing",
-    emoji: "🫁",
+    emoji: "🔬",
     translations: {
       en: {
         question: "Which muscle below the lungs helps you breathe?",
@@ -4591,7 +4591,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Smallest bone is in the ear",
-    emoji: "👂",
+    emoji: "🩻",
     translations: {
       en: {
         question: "The smallest bone in the body is found in the...",
@@ -4614,7 +4614,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: true,
     sourceVerified: "Jaw muscle is strongest by force",
-    emoji: "😬",
+    emoji: "📋",
     translations: {
       en: {
         question: "Which muscle is the strongest by the force it makes?",
@@ -4637,7 +4637,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Heart muscle works nonstop",
-    emoji: "❤️",
+    emoji: "🧴",
     translations: {
       en: {
         question: "Which muscle works nonstop and never tires?",
@@ -5099,7 +5099,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Heart is made of cardiac muscle",
-    emoji: "❤️",
+    emoji: "💉",
     translations: {
       en: {
         question: "The heart is made of which type of muscle?",
@@ -5308,7 +5308,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "ATP powers muscle contraction",
-    emoji: "🔋",
+    emoji: "🩼",
     translations: {
       en: {
         question: "Which molecule supplies energy for muscle contraction?",
@@ -5561,7 +5561,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Femur is the strongest bone",
-    emoji: "🦵",
+    emoji: "📊",
     translations: {
       en: {
         question: "Which bone can bear the most weight before breaking?",
@@ -5589,7 +5589,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: true,
     sourceVerified: "Blood is red, not blue, inside the body",
-    emoji: "🩸",
+    emoji: "🏥",
     translations: {
       en: {
         question: "What color is your blood inside your body?",
@@ -5773,7 +5773,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Heart is about the size of a fist",
-    emoji: "✊",
+    emoji: "💊",
     translations: {
       en: {
         question: "The heart is about the size of your...",
@@ -5819,7 +5819,7 @@ export const BODY_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Doctors listen to the heart with a stethoscope",
-    emoji: "🩺",
+    emoji: "🩹",
     translations: {
       en: {
         question: "A doctor listens to your heart with a...",

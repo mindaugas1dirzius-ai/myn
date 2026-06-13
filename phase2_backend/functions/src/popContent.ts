@@ -25,7 +25,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Disney (Mickey Mouse is a mouse)",
-    emoji: "🐭",
+    emoji: "🎬",
     translations: {
       en: {
         question: "What kind of animal is Mickey Mouse?",
@@ -48,7 +48,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Film (The Lion King setting)",
-    emoji: "🦁",
+    emoji: "🎮",
     translations: {
       en: {
         question: "Which animal is the hero Simba in The Lion King?",
@@ -117,7 +117,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Comics (Spider-Man powers)",
-    emoji: "🕷️",
+    emoji: "🎵",
     translations: {
       en: {
         question: "Which animal gives Spider-Man his name?",
@@ -140,7 +140,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Comics (Batman city is Gotham)",
-    emoji: "🦇",
+    emoji: "📺",
     translations: {
       en: {
         question: "Which animal inspires Batman's costume?",
@@ -163,7 +163,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Film (Frozen sisters)",
-    emoji: "❄️",
+    emoji: "🍿",
     translations: {
       en: {
         question: "In Frozen, Elsa has the power to control what?",
@@ -209,7 +209,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Music (guitar is string instrument)",
-    emoji: "🎸",
+    emoji: "🎭",
     translations: {
       en: {
         question: "Which of these is a string instrument?",
@@ -255,7 +255,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Cartoon (Tom and Jerry, cat and mouse)",
-    emoji: "🐱",
+    emoji: "⭐",
     translations: {
       en: {
         question: "In Tom and Jerry, Tom is what animal?",
@@ -324,7 +324,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Cartoon (Winnie the Pooh loves honey)",
-    emoji: "🍯",
+    emoji: "📚",
     translations: {
       en: {
         question: "What food does Winnie the Pooh love most?",
@@ -347,7 +347,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Film (Harry Potter is a wizard)",
-    emoji: "🧙",
+    emoji: "🎨",
     translations: {
       en: {
         question: "What is Harry Potter trained to become?",
@@ -441,7 +441,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Games (Tetris falling shapes)",
-    emoji: "🟦",
+    emoji: "🕹️",
     translations: {
       en: {
         question: "In the game Tetris, you arrange falling what?",
@@ -464,7 +464,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Film (Jurassic Park dinosaurs)",
-    emoji: "🦖",
+    emoji: "🎟️",
     translations: {
       en: {
         question: "The Jurassic Park films are famous for bringing back what?",
@@ -510,7 +510,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Music (piano has black and white keys)",
-    emoji: "🎹",
+    emoji: "📀",
     translations: {
       en: {
         question: "A piano is played by pressing what?",
@@ -533,7 +533,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Film (E.T. is an alien)",
-    emoji: "👽",
+    emoji: "🎬",
     translations: {
       en: {
         question: "In the classic film E.T., what is E.T.?",
@@ -625,7 +625,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Film (Finding Nemo, clownfish)",
-    emoji: "🐠",
+    emoji: "🎮",
     translations: {
       en: {
         question: "In Finding Nemo, what kind of fish is Nemo?",
@@ -765,7 +765,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "1995 m. geriausio filmo Oskaras — Forrest Gump (įveikė Pulp Fiction)",
-    emoji: "🪶",
+    emoji: "🎭",
     translations: {
       en: {
         question: "Which film beat Pulp Fiction for the Best Picture Oscar?",
@@ -788,7 +788,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Books (Sherlock Holmes is a detective)",
-    emoji: "🔍",
+    emoji: "📚",
     translations: {
       en: {
         question: "What is the profession of Sherlock Holmes?",
@@ -834,7 +834,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Film (Back to the Future time machine car)",
-    emoji: "🚗",
+    emoji: "⭐",
     translations: {
       en: {
         question: "In Back to the Future, the time machine is built into a what?",
@@ -995,7 +995,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Books (Dracula is a vampire)",
-    emoji: "🧛",
+    emoji: "🎨",
     translations: {
       en: {
         question: "The famous character Count Dracula is what kind of creature?",
@@ -1112,7 +1112,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Tetris — first video game played in space (1993, Game Boy aboard Mir)",
-    emoji: "🟦",
+    emoji: "🎟️",
     translations: {
       en: {
         question: "Which video game was the first ever played in space (1993)?",
@@ -1227,7 +1227,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Animation (Snow White first Disney feature 1937)",
-    emoji: "🍎",
+    emoji: "📀",
     translations: {
       en: {
         question: "Which was Disney's first full-length animated feature?",
@@ -1250,7 +1250,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Games (Pong early arcade game)",
-    emoji: "🏓",
+    emoji: "🎬",
     translations: {
       en: {
         question: "The early arcade game Pong is based on which sport?",
@@ -1273,7 +1273,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Books (Robinson Crusoe stranded on island)",
-    emoji: "🏝️",
+    emoji: "🎮",
     translations: {
       en: {
         question: "The classic character Robinson Crusoe is stranded where?",
@@ -1342,7 +1342,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Books (Alice in Wonderland by Lewis Carroll)",
-    emoji: "🐇",
+    emoji: "🎵",
     translations: {
       en: {
         question: "In Alice in Wonderland, Alice follows which animal down a hole?",
@@ -1434,7 +1434,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Bugs Bunny is a rabbit",
-    emoji: "🐰",
+    emoji: "📺",
     translations: {
       en: {
         question: "What kind of animal is Bugs Bunny?",
@@ -1457,7 +1457,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Cinderella loses a glass slipper",
-    emoji: "👠",
+    emoji: "🍿",
     translations: {
       en: {
         question: "In Cinderella, what does she lose at midnight?",
@@ -1480,7 +1480,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Snow White and seven dwarfs",
-    emoji: "7️⃣",
+    emoji: "🎭",
     translations: {
       en: {
         question: "How many dwarfs become friends with Snow White?",
@@ -1503,7 +1503,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Donald Duck is a duck",
-    emoji: "🦆",
+    emoji: "⭐",
     translations: {
       en: {
         question: "What kind of animal is Donald Duck?",
@@ -1526,7 +1526,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Mušamiesiems instrumentams priklauso būgnai",
-    emoji: "🥁",
+    emoji: "📚",
     translations: {
       en: {
         question: "Which instrument do you play by hitting it with sticks?",
@@ -1572,7 +1572,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Garfield is a cat",
-    emoji: "🐱",
+    emoji: "🎨",
     translations: {
       en: {
         question: "What kind of animal is Garfield?",
@@ -1595,7 +1595,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "The Hulk is green",
-    emoji: "💚",
+    emoji: "🕹️",
     translations: {
       en: {
         question: "What color is the comic hero the Hulk?",
@@ -1618,7 +1618,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Saxophone is a wind instrument",
-    emoji: "🎷",
+    emoji: "🎟️",
     translations: {
       en: {
         question: "Which instrument do you blow into and is common in jazz?",
@@ -1664,7 +1664,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Dumbo is an elephant",
-    emoji: "🐘",
+    emoji: "📀",
     translations: {
       en: {
         question: "What kind of animal is Disney's Dumbo?",
@@ -1687,7 +1687,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Ariel is a mermaid",
-    emoji: "🧜",
+    emoji: "🎬",
     translations: {
       en: {
         question: "In The Little Mermaid, Ariel is a what?",
@@ -1733,7 +1733,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Guitar has 6 strings",
-    emoji: "🎸",
+    emoji: "🎮",
     translations: {
       en: {
         question: "Which 6-stringed instrument is strummed in pop music?",
@@ -1848,7 +1848,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Thor is Norse god of thunder",
-    emoji: "⚡",
+    emoji: "🎵",
     translations: {
       en: {
         question: "In Norse myth, who is the god of thunder with a hammer?",
@@ -2078,7 +2078,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "Aladdin's lamp holds a genie",
-    emoji: "🪔",
+    emoji: "📺",
     translations: {
       en: {
         question: "In Aladdin, which object holds a wish-granting genie?",
@@ -2239,7 +2239,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Jupiter is Roman king of gods",
-    emoji: "⚡",
+    emoji: "🕹️",
     translations: {
       en: {
         question: "In Roman mythology, who is the king of the gods?",
@@ -2954,7 +2954,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "The Flintstones — animacinė šeima, gyvenanti akmens amžiuje",
-    emoji: "🦕",
+    emoji: "🎵",
     translations: {
       en: {
         question: "In which age do the cartoon Flintstones live?",
@@ -3069,7 +3069,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Sporto transliacijas per TV pasakoja komentatorius",
-    emoji: "🎙️",
+    emoji: "📺",
     translations: {
       en: {
         question: "Who describes a sports match on TV while it happens?",
@@ -3347,7 +3347,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "vidutinis",
     isTrap: false,
     sourceVerified: "The Office veiksmas vyksta popieriaus įmonėje Dunder Mifflin",
-    emoji: "📎",
+    emoji: "🍿",
     translations: {
       en: {
         question: "What kind of company is the setting of The Office?",
@@ -3740,7 +3740,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Big Brother formato dalyviai uždaromi name su kameromis",
-    emoji: "👁️",
+    emoji: "🍿",
     translations: {
       en: {
         question: "Which reality show locks contestants in a house full of cameras?",
@@ -3903,7 +3903,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "M*A*S*H finalą 1983 m. žiūrėjo ~106 mln. — JAV serialų rekordas",
-    emoji: "🚁",
+    emoji: "⭐",
     translations: {
       en: {
         question: "Which series finale set the all-time US audience record in 1983?",
@@ -4762,7 +4762,7 @@ export const POP_QUESTIONS: TriviaQuestion[] = [
     level: "ekstremalus",
     isTrap: false,
     sourceVerified: "Beauty and the Beast (1991) — pirmoji animacija, nominuota geriausio filmo Oskarui",
-    emoji: "🕯️",
+    emoji: "🎭",
     translations: {
       en: {
         question: "Which was the first animated film nominated for the Best Picture Oscar?",

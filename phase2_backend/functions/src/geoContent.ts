@@ -1911,7 +1911,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
     level: "lengvas",
     isTrap: false,
     sourceVerified: "Geography (Tokyo and Osaka are in Japan)",
-    emoji: "🗾",
+    emoji: "🏙️",
     translations: {
       en: {
         question: "Which country has the cities Tokyo and Osaka?",
@@ -3447,7 +3447,7 @@ export const GEO_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Geography (France has 12 time zones with territories)",
-    emoji: "🇫🇷",
+    emoji: "🌐",
     translations: {
       en: {
         question: "Counting its overseas territories, which country has the most time zones, 12?",

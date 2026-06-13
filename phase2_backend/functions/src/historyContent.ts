@@ -1375,7 +1375,7 @@ export const HISTORY_QUESTIONS: TriviaQuestion[] = [
     level: "sunkus",
     isTrap: false,
     sourceVerified: "Gizos piramidė — vienintelis išlikęs senovės pasaulio stebuklas",
-    emoji: "🔺",
+    emoji: "🏛️",
     translations: {
       en: {
         question: "Which of the Seven Wonders of the ancient world still stands today?",
