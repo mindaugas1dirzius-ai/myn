@@ -166,14 +166,14 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 
 ---
 
-## 10. DABARTINĖ BŪSENA (2026-06-13, ~2 805 trivijos/gamtos kl.)
+## 10. DABARTINĖ BŪSENA (2026-06-13, ~2 845 trivijos/gamtos kl.)
 
 **Esamos temos (klausimų):** gamta 720 · sport 270 · body 255 · history 244 · pop 243 · geo 240 · tech 177 · food 176. + 40 mitų teiginių · 101 mįslė (pool 73; lygiai L1=15/L2=45/L3=35/**L4=6**) · 16 detektyvo bylų.
 
 **🆕 ŠIĄ SESIJĄ pastatyta:**
 - 🌌 **KOSMOSAS — PILNA tema, 200 kl.** (5 potemės po 40: 🪐 planets · 🚀 spacerace [perkelta iš tech „space" registro lygyje] · 🧑‍🚀 astronauts · 🔭 universe · 🛰️ rockets). Failai `cosmosPlanets/Astronauts/Universe/Rockets.ts` + `cosmosContent.ts`.
 - 🏺 **MITOLOGIJA — PILNA tema, 160 kl.** (4 potemės po 40: ⚡ greek · 🔨 norse · 🐫 egypt · 🐉 creatures). SAUGA: tik senovės mitai. Failai `mythologyGreek/Norse/Egypt/Creatures.ts` + `mythologyContent.ts`.
-- 📏 **REKORDAI — 120 kl. (3/4 potemių).** 🏆 human + 🌍 world + 🤪 **laws PILNOS**. 🌍 world (pasaulio superlatyvai: Burdž Chalifa, Everestas, Antarktida=didžiausia dykuma). 🤪 laws (40 kl., baigta 2026-06-13: keisti įstatymai/tradicijos — Singapūro guma, La Tomatina, Romos laiptai, Šveicarijos jūrų kiaulytės, Londono Tauro varnai; faktai per **tyrimo Workflow su šaltiniais**; QC: 9 faktų [dažniausiai „distraktorius irgi teisingas" → pakeisti; UAE pašalintas dėl neutralumo] + 15 stiliaus). ⬜ tik objects „Greitai". Failai `recordsHuman/World/Laws.ts` + `recordsContent.ts`. ⚠️ Gyvūnų rekordai — GAMTOJE, NEkartoti; geo turi dalį tų pačių faktų — Rekorduose duoti KITU faktu/dydžiu.
+- 📏 **REKORDAI — BAIGTA, 160 kl. (4/4 potemių).** 🏆 human · 🌍 world · 🤪 laws · 💎 **objects** PILNOS. 🌍 world (Burdž Chalifa, Everestas, Antarktida=didžiausia dykuma). 🤪 laws (Singapūro guma, La Tomatina, Romos laiptai, Šveicarijos jūrų kiaulytės). 💎 objects (40 kl., 2026-06-13: brangiausi/didžiausi daiktai + KAIP rekordai pasiekti [savininko idėja] — Salvator Mundi, Kalinanas, Hope, Mercedes 300 SLR, 1933 moneta; tyrimo Workflow su šaltiniais+aktualumu; QC: 3 faktų [Stradivarijui pridėta „aukcione"; Cobaino gitara perfrazuota, nes Gilmouro „Black Strat" 2026-03 pranoko] + 12 stiliaus). Failai `recordsHuman/World/Laws/Objects.ts` + `recordsContent.ts`. ⚠️ „Brangiausias/didžiausias kada nors" rekordai gali PASENTI — periodiškai web-tikrinti. ⚠️ Gyvūnų rekordai — GAMTOJE, NEkartoti; geo turi dalį tų pačių faktų — Rekorduose duoti KITU faktu/dydžiu.
 - 🚨 **EMOJI: skiriam DU dalykus (savininkas 2026-06-13):** (1) **KLAUSIMO emoji** (`q.emoji`, vienas prie klausimo) — NIEKADA neišduoda atsakymo: jokių vėliavų, kai atsakymas yra šalis (🇨🇱→Čilė); jokio daikto, kuris ir yra atsakymas (❄️→Antarktida, 👞→batai, ⚡→Dzeusas, 🦁→Sfinksas). Turi būti bendrinis temos ženklas, ĮVAIRUS (ne vienodas ant visų). (2) **ATSAKYMŲ mygtukų emoji** (`emojiForOption` — vėliavos prie šalių, instrumentai ir kt.) — GERAI, net gražu, paįvairina; NELIESTI (veikia „viskas-arba-nieko", todėl neišduoda). **PADARYTA (2026-06-13): VISOS temos sutvarkytos** — rekordai 18 + kosmosas/mitologija 109 + senos temos (gamta 84/geo/ist/pop/tech/maistas/sport/kūnas) 228 = **355 q.emoji** pakeisti per emoji-audito Workflow. Naujoms partijoms: iškart dėk NEUTRALŲ teminį q.emoji (ne atsakymo daiktą/vėliavą).
 - 🚨 **REKORDAI negali būti pasenę (savininkas 2026-06-13):** „aukščiausias/didžiausias/greičiausias" gali pasikeisti — BŪTINA web-patikra ar dar galioja (faktų QC lensas tai tikrina). Rinktis stabilius arba tikrinti naujausią info.
 - 🎓 **Egzaminų centras** — placeholder kortelė meniu (užrakinta „Greitai", `ThemeKind.exam`, aukso spalva); mechanika vėliau (žr. `docs/planai/EGZAMINU_CENTRAS_PLANAS.md`).
@@ -191,7 +191,7 @@ Po kiekvienos naujos klausimų partijos PALEISK DU atskirus adversarinius `Workf
 ## 11. DARBŲ EILĖ (kas liko, savininko patvirtinta)
 
 **A) TURINYS (tas pats §8 receptas, faktų+stiliaus Workflow kiekvienai partijai):**
-1. 📏 Rekordų likusi potemė: 💎 **Daiktų ir maisto rekordai** (objects) (40). [🌍 world + 🤪 laws — BAIGTA 2026-06-13.] 💡 savininko idėja: ne tik „kas didžiausias", bet ir įdomūs faktai KAIP tie rekordai buvo daromi (iš Gineso knygos).
+1. ✅ 📏 **REKORDAI BAIGTA** (4/4 potemės, 160 kl.) 2026-06-13. ⚠️ objects APK su atrakinta kortele PASTATYTAS, bet telefonas tuo metu buvo ATJUNGTAS — įdiegti `adb -s R5CX221CT5N install -r ...app-debug.apk`, kai bus prijungtas (turinys jau serveryje).
 2. 🏷️ **Prekių ženklai** (kodas `brands`) + 🚂 **Transportas** (kodas `transport`) — paskutinės 2 naujos temos (potemės `TURINIO_PLANAS.md`).
 3. **3 BANGA — po ≥2 NAUJAS potemes ESAMOMS temoms** (savininko užsakymas; idėjos `TURINIO_PLANAS.md` „3 BANGA"): Gamta (🌋 stichijos, 🦠 mažasis pasaulis) · Pop (😂 internetas/memai, 🎮 žaidimų kultūra) · Istorija (🏰 riteriai/pilys, 🗺️ atradėjai) · Maistas (☕ gėrimai, 🍰 desertai) · Kūnas (🫀 širdis/kraujas, 🍎 mityba). + senesnės 1 bangos sėklinės (tech AI, pop superherojai, kūnas pojūčiai).
 4. Lygiagrečiai: senų temų „ilgio kvapas" (~356 ryškūs: gamta 187, istorija 50…) partijomis; mįslių „klausimas"+L4 pildymas; klausimų pildymas iki 150–200/lygiui.

@@ -205,7 +205,7 @@ class TriviaTopicScreen extends StatelessWidget {
             title: s.subRecObjects,
             subtitle: s.subRecObjectsDesc,
             accent: AppColors.levelExtreme,
-            open: false,
+            open: true,
           ),
           _SubTheme(
             id: 'mix',
