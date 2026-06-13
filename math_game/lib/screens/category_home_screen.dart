@@ -59,9 +59,12 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
           padding: const EdgeInsets.all(24),
           child: Column(
             children: [
-              // Viršutinė juosta: Profilis (kairėje) + kalbos jungiklis (dešinėje).
+              // Viršutinė juosta: Profilis (kairėje) + MAŽAS logotipas (centre,
+              // ANTRAEILIS — temos svarbiausios) + kalbos jungiklis (dešinėje).
+              // Logotipas juostoje → jokio tuščio tarpo viršuje, daugiau vietos temoms.
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   TextButton.icon(
                     onPressed: () => Navigator.of(context).push(
@@ -73,6 +76,11 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                         style: const TextStyle(
                             color: AppColors.textSecondary,
                             fontWeight: FontWeight.bold)),
+                  ),
+                  Image.asset(
+                    'assets/images/logo.png',
+                    height: 52,
+                    fit: BoxFit.contain,
                   ),
                   TextButton.icon(
                     onPressed: () => languageController.toggle(s.lang),
@@ -86,15 +94,6 @@ class _CategoryHomeScreenState extends State<CategoryHomeScreen> {
                     ),
                   ),
                 ],
-              ),
-              const SizedBox(height: 4),
-              // Logotipas (savininko Canva ženklas, perdažytas pagal app paletę,
-              // permatomas + apkarpytas fonas). Proporcingas dydis, arčiau viršaus;
-              // „Pasirink temą" tekstas pašalintas (savininkas: ir taip aišku).
-              Image.asset(
-                'assets/images/logo.png',
-                height: 128,
-                fit: BoxFit.contain,
               ),
               const SizedBox(height: 14),
               Expanded(
